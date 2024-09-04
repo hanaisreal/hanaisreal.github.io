@@ -1,7 +1,6 @@
-// src/components/About.tsx
 import React from 'react';
 
-const About: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <div className="home">
       <header>
@@ -43,7 +42,6 @@ const About: React.FC = () => {
         </ul>
       </section>
 
-
       <section className="contact">
         <h2>Get in Touch</h2>
         <ul>
@@ -56,4 +54,4 @@ const About: React.FC = () => {
   );
 };
 
-export default About;
+export default Home;
