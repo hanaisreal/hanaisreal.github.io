@@ -2,16 +2,16 @@ import React from 'react';
 import './Portfolio.css';
 import { projects } from './data/projectData'
 import { researchExperiences } from './data/researchData';
-import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiDocument } from 'react-icons/hi';
 
 const Portfolio: React.FC = () => {
   return (
     <div className="portfolio-container">
       <header className="center-align">
+      <img src="/path-to-your-profile-picture.jpg" alt="Hana Oh" className="profile-picture" />
         <h1>Hana Oh</h1>
-        <p>Undergraduate Student</p>
-        <p>Seoul National University</p>
+        <p className="university">Seoul National University</p>
         <p className="email">ohhanathefirst@gmail.com</p>
         
         <div className="social-links">
@@ -27,15 +27,19 @@ const Portfolio: React.FC = () => {
         </div>
       </header>
 
-      <section className="education">
-        <h2>Education</h2>
-        <ul>
-          <li>
-            <h3>Bachelor's Degree in Computer Science and Business Administration</h3>
-            <p>Seoul National University, Sep 2019 - Feb 2025 (Graduating soon)</p>
-          </li>
-        </ul>
+      <hr className="divider" />
+    
+      <section className="about-me">
+        <h2>Hey there, I'm Hana Oh! 👋</h2>
+        <p>📚 Undergraduate student pursuing Computer Science and Business Administration at Seoul National University, with a diverse international background in China and Indonesia.</p>
+        <p>I am passionate about Human-Computer Interaction (HCI) and exploring how technology can seamlessly integrate into people's lives. My academic background in both CS and Business equips me with the ability to approach problems from both a technical and user-centric perspective. I'm particularly excited about designing intuitive systems that make meaningful impacts on people's daily interactions with technology.</p>
+        <p>My current research focuses on two key areas within HCI:</p>
+        <ol>
+          <li>Human-AI Interaction: Developing solutions that enhance medical imaging analysis through AI-driven technologies, ensuring that these systems are user-friendly for both professionals and patients.</li>
+          <li>Improving Educational Tools: Creating innovative solutions to improve online learning environments, enhancing both student learning and teacher engagement in asynchronous educational settings.</li>
+        </ol>
       </section>
+
 
       <section className="experience">
         <h2>Research Experience</h2>
