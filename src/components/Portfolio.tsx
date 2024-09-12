@@ -2,27 +2,30 @@ import React from 'react';
 import './Portfolio.css';
 import { projects } from './data/projectData'
 import { researchExperiences } from './data/researchData';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { HiDocument } from 'react-icons/hi';
 
 const Portfolio: React.FC = () => {
   return (
     <div className="portfolio-container">
-      <header>
+      <header className="center-align">
         <h1>Hana Oh</h1>
         <p>Undergraduate Student</p>
         <p>Seoul National University</p>
+        <p className="email">ohhanathefirst@gmail.com</p>
+        
+        <div className="social-links">
+          <a href="/path-to-your-cv.pdf" target="_blank" rel="noopener noreferrer">
+            <HiDocument className="icon" />
+          </a>
+          <a href="https://github.com/hanaisreal" target="_blank" rel="noopener noreferrer">
+            <FaGithub className="icon" />
+          </a>
+          <a href="https://linkedin.com/in/hana-oh-921945290/" target="_blank" rel="noopener noreferrer">
+            <FaLinkedin className="icon" />
+          </a>
+        </div>
       </header>
-
-      <section className="about">
-        <img src="/profile-photo.jpg" alt="Hana Oh" className="profile-photo" />
-      </section>
-
-      <section className="contact">
-        <ul>
-          <li>Phone: (+82) 01.2357.9772</li>
-          <li>Email: hana2001@snu.ac.kr</li>
-          <li>LinkedIn: <a href="https://www.linkedin.com/in/hana-oh-921945290/">linkedin.com/in/hana-oh-921945290/</a></li>
-        </ul>
-      </section>
 
       <section className="education">
         <h2>Education</h2>

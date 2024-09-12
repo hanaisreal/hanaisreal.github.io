@@ -50,3 +50,31 @@ ul {
 section {
   margin-bottom: 30px;
 }
+
+.portfolio-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.center-align {
+  text-align: center;
+}
+
+.email {
+  font-family: monospace;
+  margin-top: 10px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.icon {
+  font-size: 24px;
+  color: #0a2240; /* Adjust color as needed */
+}
+
