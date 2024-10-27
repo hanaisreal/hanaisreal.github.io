@@ -5,24 +5,18 @@ export interface Project {
     skills: string[];
     role: string;
     image?: string;
+    duration?: string;
+    github?: string;
   }
   
   export const projects: Project[] = [
-    {
-      title: "Categorization of Words Based on Functional and Compositional Attributes",
-      description: "This research project investigates the cognitive processes of word categorization, focusing on how individuals classify ambiguous items like vegetables and fruits. Through a reaction time experiment using image stimuli, the study aims to determine whether people rely more on compositional features or functional attributes when categorizing words with unclear usage.",
-      tags: ["Language", "Cognition", "Experiment"],
-      skills: ["Psychopy", "Python"],
-      role: "Solo project",
-      image: "https://prod-files-secure.s3.us-west-2.amazonaws.com/33e26bf2-ab28-4389-9eb6-312bdc562552/35bccecd-18fc-4b3c-87be-de85012dc750/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-09-09_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_12.06.21.png"
-    },
     {
       title: "A Comparative Network Analysis of Lyrical Evolution in K-pop and Western Pop Music (1991-2020)",
       description: "This project employs semantic network analysis to examine and compare the lyrical structures of K-pop and Western pop songs from 1991 to 2020. By analyzing top chart hits in five-year intervals, the study explores the evolution of lyrical themes, linguistic patterns, and centrality of key terms.",
       tags: ["Network Analysis", "Music", "Linguistics"],
       skills: ["Gephi", "Excel"],
       role: "Data preprocessing using Excel to extract meaningful terms in the lyrics. Network visualization using Gephi.",
-      image: "https://prod-files-secure.s3.us-west-2.amazonaws.com/33e26bf2-ab28-4389-9eb6-312bdc562552/dde239e4-4858-4b60-b2ba-b0785ec6c8b9/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-09-09_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_1.42.31.png"
+      image: "pictures/gephi.png"
     },
     {
       title: "Health Data Analysis and Visualization System",
@@ -30,7 +24,7 @@ export interface Project {
       tags: ["Data Analysis", "Health", "Visualization"],
       skills: ["Data Analysis", "Visualization"],
       role: "Developer",
-      image: "https://prod-files-secure.s3.us-west-2.amazonaws.com/33e26bf2-ab28-4389-9eb6-312bdc562552/2069c027-51cb-4927-8248-66e91bd1b199/output2.png"
+      image: "pictures/건강검진/건강검진1.png"
     },
     {
       title: "Sustainable Tourism Service for Underutilized Destinations",
@@ -38,6 +32,52 @@ export interface Project {
       tags: ["Tourism", "Big Data", "Machine Learning"],
       skills: ["Web Crawling", "Data Visualization", "Market Trend Analysis"],
       role: "Identifying the necessary data for data analysis and Crawling reviews and blog from Naver blogs to extract keywords of tourist spots.",
-      image: "https://prod-files-secure.s3.us-west-2.amazonaws.com/33e26bf2-ab28-4389-9eb6-312bdc562552/3f24e54a-c221-4772-9e32-ac923572bd5c/%E1%84%89%E1%85%A9%E1%84%89%E1%85%A7%E1%86%AF%E1%84%87%E1%85%B5%E1%86%A8%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5%E1%84%8E%E1%85%A2%E1%86%AF%E1%84%85%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%B5.png"
-    }
+      image: "pictures/소셜빅데이터챌린지.png"
+    },
+    {
+      title: "Development of DICOM Viewer for Segmentation of Medical Image",
+      description: "A semester project with Infinite Healthcare as a team of 3, integrated the MedSAM model for 3D image segmentation with an open-source DICOM viewer.",
+      tags: ["MedSAM", "DICOM Viewer", "UX", "Segmentation"],
+      skills: ["Pyqt5", "Pytorch", "CthreeD"],
+      role: "Fine-tuned the MedSAM model using TCIA and BTCV datasets, which contain CT scans of major organs.",
+      image: "pictures/infinitt healthcare.png",
+      github: "https://github.com/sggithi/DICOM-Viewer-MedSAM"
+    },
+    {
+      title: "Task Management Web Application",
+      description: "Developed a responsive task management web application, featuring Todo/In-progress/Done functionality and customizable timer notifications",
+      tags: ["Web Development", "Task Management", "Responsive Design"],
+      skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "DaisyUI"],
+      role: "Full-stack developer, implementing both frontend and backend functionality",
+      image: "",
+      github:"https://github.com/hanaisreal/notifyMe"
+    },
+    {
+      title: "Voice-Driven Interface for Senior Adult Autobiography",
+      description: "Designed and developed a voice-driven interface using GPT-4 API and speech to text API to create autobiographies through natural speech interaction. Won 2nd award from Daejeon city.",
+      tags: ["Voice Interface", "AI", "Accessibility", "Senior Technology"],
+      skills: ["React", "TypeScript", "PWA", "GPT-4 API", "Speech-to-Text API"],
+      role: "Lead developer, focusing on voice interface implementation and AI integration",
+      image: "",
+      duration: "Feb 2024 - June 2024"
+    },
+    {
+      title: "SNU x Upstage LLM Hackathon: AI Relationship Coaching Service",
+      description: "Developed an AI-powered relationship advisory platform that analyzes KakaoTalk conversations and provides personalized guidance through multi-agent AI consultation.",
+      tags: ["AI", "Relationship Coaching", "Chat Analysis", "Hackathon"],
+      skills: ["Streamlit", "React", "LLM", "Multi-agent AI"],
+      role: "Developer, focusing on conversation analysis and AI consultation implementation",
+      image: "",
+      duration: "May 2024"
+    },
+    {
+      title: "LetmeCU - Rate and Connect your taste with CU",
+      description: "Developed a review website for CU convenience store that connects company and customers. Features include specialized product review systems, customized recommendations based on user preferences, and comprehensive product browsing with sorting capabilities. Implemented user authentication, real-time review updates, and search functionality with categories and tags. Successfully resolved technical challenges including UI flickering issues and improved sorting system based on user ratings.",
+      tags: ["Web Development", "Full Stack", "Review Platform", "Recommendation System", "E-commerce"],
+      skills: ["React", "Node.js", "WSGI", "Django", "MySQL", "UI/UX Design"],
+      role: "Full-stack developer in a 4-person team, focusing on user authentication implementation, review system development, and UI/UX improvements. Led the resolution of critical UI issues and enhancement of the sorting system.",
+      image: "pictures/LetmeCU.png",
+      duration: "2023"
+  }
+
   ];

@@ -9,13 +9,13 @@ const Portfolio: React.FC = () => {
   return (
     <div className="portfolio-container">
       <header className="center-align">
-      <img src="/path-to-your-profile-picture.jpg" alt="Hana Oh" className="profile-picture" />
+      <img src="pictures/profile.jpeg" alt="Hana Oh" className="profile-picture" />
         <h1>Hana Oh</h1>
         <p className="university">Seoul National University</p>
-        <p className="email">ohhanathefirst@gmail.com</p>
+        <p className="email">ohhanathefirst at gmail dot com</p>
         
         <div className="social-links">
-          <a href="/path-to-your-cv.pdf" target="_blank" rel="noopener noreferrer">
+          <a href="/path-to-your-cv.pdf" target="_blank" rel="noopener noreferrer"> 
             <HiDocument className="icon" />
           </a>
           <a href="https://github.com/hanaisreal" target="_blank" rel="noopener noreferrer">

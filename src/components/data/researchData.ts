@@ -8,9 +8,9 @@ export interface ResearchExperience {
   
   export const researchExperiences: ResearchExperience[] = [
     {
-      title: "Undergraduate Research, Infinite Healthcare",
-      description: "Development and Optimization of a 3D Segmentation DICOM Viewer Utilizing MedSAM for Enhanced Medical Image Analysis",
-      advisor: "Hyeonsang Eom"
+      title: "Undergraduate Research Project, HCI Theory and Practice",
+      description: "Understanding Post-retirement Identity Crisis Through Digital Interventions: A Qualitative Investigation of Recently Retired Adults’ Psychosocial Needs",
+      advisor: "Hajin Lim"
     },
     {
       title: "Undergraduate Intern, SNU HCI Lab",
