@@ -1,6 +1,6 @@
 import React from 'react';
 import './Portfolio.css';
-import { projects } from './data/projectData'
+import { projects } from './data/projectData';
 import { researchExperiences } from './data/researchData';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiDocument } from 'react-icons/hi';
@@ -9,13 +9,13 @@ const Portfolio: React.FC = () => {
   return (
     <div className="portfolio-container">
       <header className="center-align">
-      <img src="pictures/profile.jpeg" alt="Hana Oh" className="profile-picture" />
+        <img src="pictures/profile.jpeg" alt="Hana Oh" className="profile-picture" />
         <h1>Hana Oh</h1>
         <p className="university">Seoul National University</p>
         <p className="email">ohhanathefirst at gmail dot com</p>
         
         <div className="social-links">
-          <a href="/path-to-your-cv.pdf" target="_blank" rel="noopener noreferrer"> 
+          <a href="/path-to-your-cv.pdf" target="_blank" rel="noopener noreferrer">
             <HiDocument className="icon" />
           </a>
           <a href="https://github.com/hanaisreal" target="_blank" rel="noopener noreferrer">
@@ -40,7 +40,6 @@ const Portfolio: React.FC = () => {
         </ol>
       </section>
 
-
       <section className="experience">
         <h2>Research Experience</h2>
         {researchExperiences.map((experience, index) => (
@@ -57,7 +56,20 @@ const Portfolio: React.FC = () => {
         {projects.map((project, index) => (
           <div key={index} className="project-card">
             <h3>{project.title}</h3>
-            {project.image && <img src={project.image} alt={project.title} className="project-image" />}
+
+            {/* Display image if it exists */}
+            {project.image && (
+              <img src={project.image} alt={project.title} className="project-image" />
+            )}
+
+            {/* Display video if it exists */}
+            {project.video && (
+              <video controls className="project-video">
+                <source src={project.video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+
             <p>{project.description}</p>
             <p><strong>Skills:</strong> {project.skills.join(', ')}</p>
             <p><strong>Role:</strong> {project.role}</p>

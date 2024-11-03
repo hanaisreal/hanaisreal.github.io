@@ -7,25 +7,10 @@ export interface Project {
     image?: string;
     duration?: string;
     github?: string;
+    video?: string;
   }
   
   export const projects: Project[] = [
-    {
-      title: "A Comparative Network Analysis of Lyrical Evolution in K-pop and Western Pop Music (1991-2020)",
-      description: "This project employs semantic network analysis to examine and compare the lyrical structures of K-pop and Western pop songs from 1991 to 2020. By analyzing top chart hits in five-year intervals, the study explores the evolution of lyrical themes, linguistic patterns, and centrality of key terms.",
-      tags: ["Network Analysis", "Music", "Linguistics"],
-      skills: ["Gephi", "Excel"],
-      role: "Data preprocessing using Excel to extract meaningful terms in the lyrics. Network visualization using Gephi.",
-      image: "pictures/gephi.png"
-    },
-    {
-      title: "Health Data Analysis and Visualization System",
-      description: "This project developed a health data analysis and visualization system that diagnoses users' health based on metrics like BMI and blood pressure, using 2019 health examination data. The system also provides visual insights into the correlations between lifestyle factors and health risks, emphasizing the significant impact of smoking and drinking on hypertension and obesity.",
-      tags: ["Data Analysis", "Health", "Visualization"],
-      skills: ["Data Analysis", "Visualization"],
-      role: "Developer",
-      image: "pictures/건강검진/건강검진1.png"
-    },
     {
       title: "Sustainable Tourism Service for Underutilized Destinations",
       description: "This project addresses the issue of overtourism by developing a service that connects underutilized tourist destinations with local communities. Utilizing data from national statistics portals and the Korea Tourism Data Lab, the team identified less-visited areas and categorized attractions using machine learning techniques based on travel themes.",
@@ -49,7 +34,7 @@ export interface Project {
       tags: ["Web Development", "Task Management", "Responsive Design"],
       skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "DaisyUI"],
       role: "Full-stack developer, implementing both frontend and backend functionality",
-      image: "",
+      video:"videos/NotifyMe.mp4",
       github:"https://github.com/hanaisreal/notifyMe"
     },
     {
@@ -58,7 +43,7 @@ export interface Project {
       tags: ["Voice Interface", "AI", "Accessibility", "Senior Technology"],
       skills: ["React", "TypeScript", "PWA", "GPT-4 API", "Speech-to-Text API"],
       role: "Lead developer, focusing on voice interface implementation and AI integration",
-      image: "",
+      video: "videos/LivRecord.mp4",
       duration: "Feb 2024 - June 2024"
     },
     {
@@ -67,7 +52,6 @@ export interface Project {
       tags: ["AI", "Relationship Coaching", "Chat Analysis", "Hackathon"],
       skills: ["Streamlit", "React", "LLM", "Multi-agent AI"],
       role: "Developer, focusing on conversation analysis and AI consultation implementation",
-      image: "",
       duration: "May 2024"
     },
     {
@@ -78,6 +62,22 @@ export interface Project {
       role: "Full-stack developer in a 4-person team, focusing on user authentication implementation, review system development, and UI/UX improvements. Led the resolution of critical UI issues and enhancement of the sorting system.",
       image: "pictures/LetmeCU.png",
       duration: "2023"
-  }
+  },
+  {
+    title: "A Comparative Network Analysis of Lyrical Evolution in K-pop and Western Pop Music (1991-2020)",
+    description: "This project employs semantic network analysis to examine and compare the lyrical structures of K-pop and Western pop songs from 1991 to 2020. By analyzing top chart hits in five-year intervals, the study explores the evolution of lyrical themes, linguistic patterns, and centrality of key terms.",
+    tags: ["Network Analysis", "Music", "Linguistics"],
+    skills: ["Gephi", "Excel"],
+    role: "Data preprocessing using Excel to extract meaningful terms in the lyrics. Network visualization using Gephi.",
+    image: "pictures/gephi.png"
+  },
+  {
+    title: "Health Data Analysis and Visualization System",
+    description: "This project developed a health data analysis and visualization system that diagnoses users' health based on metrics like BMI and blood pressure, using 2019 health examination data. The system also provides visual insights into the correlations between lifestyle factors and health risks, emphasizing the significant impact of smoking and drinking on hypertension and obesity.",
+    tags: ["Data Analysis", "Health", "Visualization"],
+    skills: ["Data Analysis", "Visualization"],
+    role: "Developer",
+    image: "pictures/건강검진/건강검진1.png"
+  },
 
   ];

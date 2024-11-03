@@ -97,11 +97,21 @@ section {
   margin-bottom: 30px;
 }
 
-.portfolio-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+.portfolio-container .project-image {
+  width: 100%;
+  max-width: 300px; /* Set a maximum width to keep images uniform */
+  height: auto;
+  object-fit: cover; /* Ensures images maintain aspect ratio */
+  margin-bottom: 10px;
 }
+
+.portfolio-container .project-video {
+  width: 100%;
+  max-width: 300px; /* Set a maximum width to keep videos consistent */
+  height: auto;
+  margin-bottom: 10px;
+}
+
 
 .center-align {
   text-align: center;
