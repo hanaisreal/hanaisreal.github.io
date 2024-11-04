@@ -21,7 +21,7 @@ export interface Project {
     },
     {
       title: "Development of DICOM Viewer for Segmentation of Medical Image",
-      description: "A semester project with Infinite Healthcare as a team of 3, integrated the MedSAM model for 3D image segmentation with an open-source DICOM viewer.",
+      description: "A semester project with Infinite Healthcare as a team of 3, integrated the MedSAM model for 3D image segmentation with an open-source DICOM viewer. By using MedSAM model(image segmentation model) and DICOM viewer in the opensource, I connected the model so that the 3D segmentation on medical image would run on a local computer. Also, I participated in finetuning the MedSAM model specific to its organ(like liver because the change in pixel of the image is drastic). For the DICOM Viewer development, I used python with libraries like CthreeD and PyQt5.  ",
       tags: ["MedSAM", "DICOM Viewer", "UX", "Segmentation"],
       skills: ["Pyqt5", "Pytorch", "CthreeD"],
       role: "Fine-tuned the MedSAM model using TCIA and BTCV datasets, which contain CT scans of major organs.",
@@ -52,17 +52,9 @@ export interface Project {
       tags: ["AI", "Relationship Coaching", "Chat Analysis", "Hackathon"],
       skills: ["Streamlit", "React", "LLM", "Multi-agent AI"],
       role: "Developer, focusing on conversation analysis and AI consultation implementation",
+      image: "pictures/upstage2.png",
       duration: "May 2024"
     },
-    {
-      title: "LetmeCU - Rate and Connect your taste with CU",
-      description: "Developed a review website for CU convenience store that connects company and customers. Features include specialized product review systems, customized recommendations based on user preferences, and comprehensive product browsing with sorting capabilities. Implemented user authentication, real-time review updates, and search functionality with categories and tags. Successfully resolved technical challenges including UI flickering issues and improved sorting system based on user ratings.",
-      tags: ["Web Development", "Full Stack", "Review Platform", "Recommendation System", "E-commerce"],
-      skills: ["React", "Node.js", "WSGI", "Django", "MySQL", "UI/UX Design"],
-      role: "Full-stack developer in a 4-person team, focusing on user authentication implementation, review system development, and UI/UX improvements. Led the resolution of critical UI issues and enhancement of the sorting system.",
-      image: "pictures/LetmeCU.png",
-      duration: "2023"
-  },
   {
     title: "A Comparative Network Analysis of Lyrical Evolution in K-pop and Western Pop Music (1991-2020)",
     description: "This project employs semantic network analysis to examine and compare the lyrical structures of K-pop and Western pop songs from 1991 to 2020. By analyzing top chart hits in five-year intervals, the study explores the evolution of lyrical themes, linguistic patterns, and centrality of key terms.",
@@ -72,12 +64,13 @@ export interface Project {
     image: "pictures/gephi.png"
   },
   {
-    title: "Health Data Analysis and Visualization System",
-    description: "This project developed a health data analysis and visualization system that diagnoses users' health based on metrics like BMI and blood pressure, using 2019 health examination data. The system also provides visual insights into the correlations between lifestyle factors and health risks, emphasizing the significant impact of smoking and drinking on hypertension and obesity.",
-    tags: ["Data Analysis", "Health", "Visualization"],
-    skills: ["Data Analysis", "Visualization"],
-    role: "Developer",
-    image: "pictures/건강검진/건강검진1.png"
-  },
+    title: "LetmeCU - Rate and Connect your taste with CU",
+    description: "Developed a review website for CU convenience store that connects company and customers. Features include specialized product review systems, customized recommendations based on user preferences, and comprehensive product browsing with sorting capabilities. Implemented user authentication, real-time review updates, and search functionality with categories and tags. Successfully resolved technical challenges including UI flickering issues and improved sorting system based on user ratings.",
+    tags: ["Web Development", "Full Stack", "Review Platform", "Recommendation System", "E-commerce"],
+    skills: ["React", "Node.js", "WSGI", "Django", "MySQL", "UI/UX Design"],
+    role: "Full-stack developer in a 4-person team, focusing on user authentication implementation, review system development, and UI/UX improvements. Led the resolution of critical UI issues and enhancement of the sorting system.",
+    image: "pictures/LetmeCU.png",
+    duration: "2023"
+}
 
   ];

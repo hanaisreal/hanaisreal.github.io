@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Portfolio.css';
-import { projects } from './data/projectData';
+import { projects, Project } from './data/projectData';
 import { researchExperiences } from './data/researchData';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiDocument } from 'react-icons/hi';
 
 const Portfolio: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isFading, setIsFading] = useState(false);
+
+  // Open the modal by setting the selected project
+  const openModal = (project: Project) => {
+    setSelectedProject(project);
+    setIsFading(false);
+  };
+
+  // Close the modal with fade-out effect
+  const closeModal = () => {
+    setIsFading(true);
+    setTimeout(() => {
+      setSelectedProject(null);
+      setIsFading(false);
+    }, 300); // Wait for the fade-out animation to complete
+  };
+
   return (
     <div className="portfolio-container">
       <header className="center-align">
@@ -28,17 +46,18 @@ const Portfolio: React.FC = () => {
       </header>
 
       <hr className="divider" />
-    
+
       <section className="about-me">
         <h2>Hey there, I'm Hana Oh! 👋</h2>
         <p>📚 Undergraduate student pursuing Computer Science and Business Administration at Seoul National University, with a diverse international background in China and Indonesia.</p>
         <p>I am passionate about Human-Computer Interaction (HCI) and exploring how technology can seamlessly integrate into people's lives. My academic background in both CS and Business equips me with the ability to approach problems from both a technical and user-centric perspective. I'm particularly excited about designing intuitive systems that make meaningful impacts on people's daily interactions with technology.</p>
         <p>My current research focuses on two key areas within HCI:</p>
         <ol>
-          <li>Human-AI Interaction: Developing solutions that enhance medical imaging analysis through AI-driven technologies, ensuring that these systems are user-friendly for both professionals and patients.</li>
-          <li>Improving Educational Tools: Creating innovative solutions to improve online learning environments, enhancing both student learning and teacher engagement in asynchronous educational settings.</li>
+          <li>🤖 Human-AI Interaction: My work focuses on designing AI-driven tools that prioritize seamless communication, accessibility, and adaptability across diverse applications. Whether developing a 🗣️ voice-driven interface for seniors to record personal stories, creating 💬 relationship coaching tools that interpret nuanced conversational data, or building intuitive 🏥 platforms for medical professionals, I aim to make AI a responsive partner in everyday tasks. Each project reflects my commitment to understanding unique user needs and delivering AI solutions that enhance both user engagement and practical utility.</li>
+          <li>Enhancing Learning Experiences: Developing interactive tools and personalized AI-driven platforms that support student engagement and provide meaningful feedback, empowering both students and educators in diverse educational settings.</li>
         </ol>
       </section>
+
 
       <section className="experience">
         <h2>Research Experience</h2>
@@ -53,34 +72,57 @@ const Portfolio: React.FC = () => {
 
       <section className="projects">
         <h2>Projects</h2>
-        {projects.map((project, index) => (
-          <div key={index} className="project-card">
-            <h3>{project.title}</h3>
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className="project-card"
+              onClick={() => openModal(project)} // Open modal when clicking anywhere on the card
+            >
+              <h3>{project.title}</h3>
+              
+              {project.image && (
+                <img src={project.image} alt={project.title} className="project-image" />
+              )}
+              {project.video && (
+                <video controls className="project-video">
+                  <source src={project.video} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
 
-            {/* Display image if it exists */}
-            {project.image && (
-              <img src={project.image} alt={project.title} className="project-image" />
+              <p>
+                {project.description.slice(0, 100)}...{' '}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {selectedProject && (
+        <div
+          className={`modal-overlay ${isFading ? 'fade-out' : ''}`}
+          onClick={closeModal} // Close the modal when clicking outside of modal content
+        >
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()} // Prevent click inside the modal content from closing it
+          >
+            <span className="close-button" onClick={closeModal}>&times;</span>
+            <h3>{selectedProject.title}</h3>
+            {selectedProject.image && (
+              <img src={selectedProject.image} alt={selectedProject.title} className="modal-image" />
             )}
-
-            {/* Display video if it exists */}
-            {project.video && (
-              <video controls className="project-video">
-                <source src={project.video} type="video/mp4" />
+            {selectedProject.video && (
+              <video controls className="modal-video">
+                <source src={selectedProject.video} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             )}
-
-            <p>{project.description}</p>
-            <p><strong>Skills:</strong> {project.skills.join(', ')}</p>
-            <p><strong>Role:</strong> {project.role}</p>
-            <div className="tags">
-              {project.tags.map((tag, tagIndex) => (
-                <span key={tagIndex} className="tag">{tag}</span>
-              ))}
-            </div>
+            <p>{selectedProject.description}</p>
           </div>
-        ))}
-      </section>
+        </div>
+      )}
     </div>
   );
 };
