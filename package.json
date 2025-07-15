@@ -2,7 +2,7 @@
   "name": "portfolio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hanaisreal.github.io/hanaisreal.github.io",
+  "homepage": "https://hanaisreal.github.io",
   "dependencies": {
     "@react-spring/parallax": "^9.7.5",
     "@testing-library/jest-dom": "^6.1.4",
