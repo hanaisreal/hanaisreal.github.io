@@ -17,7 +17,7 @@ export interface Project {
       tags: ["Tourism", "Big Data", "Machine Learning"],
       skills: ["Web Crawling", "Data Visualization", "Market Trend Analysis"],
       role: "Identifying the necessary data for data analysis and Crawling reviews and blog from Naver blogs to extract keywords of tourist spots.",
-      image: "pictures/소셜빅데이터챌린지.png"
+      image: `${process.env.PUBLIC_URL}/pictures/소셜빅데이터챌린지.png`
     },
     {
       title: "Development of DICOM Viewer for Segmentation of Medical Image",
@@ -25,7 +25,7 @@ export interface Project {
       tags: ["MedSAM", "DICOM Viewer", "UX", "Segmentation"],
       skills: ["Pyqt5", "Pytorch", "CthreeD"],
       role: "Fine-tuned the MedSAM model using TCIA and BTCV datasets, which contain CT scans of major organs.",
-      image: "pictures/infinitt healthcare.png",
+      image: `${process.env.PUBLIC_URL}/pictures/infinitt healthcare.png`,
       github: "https://github.com/sggithi/DICOM-Viewer-MedSAM"
     },
     {
@@ -34,7 +34,7 @@ export interface Project {
       tags: ["Web Development", "Task Management", "Responsive Design"],
       skills: ["Next.js", "React", "TypeScript", "Tailwind CSS", "DaisyUI"],
       role: "Full-stack developer, implementing both frontend and backend functionality",
-      video:"videos/NotifyMe.mp4",
+      video: `${process.env.PUBLIC_URL}/videos/NotifyMe.mp4`,
       github:"https://github.com/hanaisreal/notifyMe"
     },
     {
@@ -43,7 +43,7 @@ export interface Project {
       tags: ["Voice Interface", "AI", "Accessibility", "Senior Technology"],
       skills: ["React", "TypeScript", "PWA", "GPT-4 API", "Speech-to-Text API"],
       role: "Lead developer, focusing on voice interface implementation and AI integration",
-      video: "videos/LivRecord.mp4",
+      video: `${process.env.PUBLIC_URL}/videos/LivRecord.mp4`,
       duration: "Feb 2024 - June 2024"
     },
     {
@@ -52,7 +52,7 @@ export interface Project {
       tags: ["AI", "Relationship Coaching", "Chat Analysis", "Hackathon"],
       skills: ["Streamlit", "React", "LLM", "Multi-agent AI"],
       role: "Developer, focusing on conversation analysis and AI consultation implementation",
-      image: "pictures/upstage2.png",
+      image: `${process.env.PUBLIC_URL}/pictures/upstage2.png`,
       duration: "May 2024"
     },
   {
@@ -61,7 +61,7 @@ export interface Project {
     tags: ["Network Analysis", "Music", "Linguistics"],
     skills: ["Gephi", "Excel"],
     role: "Data preprocessing using Excel to extract meaningful terms in the lyrics. Network visualization using Gephi.",
-    image: "pictures/gephi.png"
+    image: `${process.env.PUBLIC_URL}/pictures/gephi.png`
   },
   {
     title: "LetmeCU - Rate and Connect your taste with CU",
@@ -69,8 +69,7 @@ export interface Project {
     tags: ["Web Development", "Full Stack", "Review Platform", "Recommendation System", "E-commerce"],
     skills: ["React", "Node.js", "WSGI", "Django", "MySQL", "UI/UX Design"],
     role: "Full-stack developer in a 4-person team, focusing on user authentication implementation, review system development, and UI/UX improvements. Led the resolution of critical UI issues and enhancement of the sorting system.",
-    image: "pictures/LetmeCU.png",
+    image: `${process.env.PUBLIC_URL}/pictures/LetmeCU.png`,
     duration: "2023"
 }
-
   ];
