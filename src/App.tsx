@@ -10,7 +10,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
       </Routes>
       <footer>
-        <p>&copy; 2024 Hana Oh. All rights reserved.</p>
+        <p>&copy; 2025 Hana Oh. All rights reserved.</p>
       </footer>
     </div>
   );
