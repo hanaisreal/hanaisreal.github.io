@@ -14,6 +14,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+@media (pointer: fine) {
+  body,
+  a,
+  button {
+    cursor: none;
+  }
+}
+
 .new-portfolio {
   background: radial-gradient(circle at 15% 10%, rgba(76, 29, 149, 0.45), transparent 50%),
     radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.45), transparent 45%),
@@ -45,6 +53,90 @@ body {
 
 .text-themePurpleLight {
   color: #d8b4fe;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
+  opacity: 0;
+  z-index: 2000;
+  background: radial-gradient(circle at 30% 30%, #fde68a 0%, #f472b6 55%, #ec4899 100%);
+  border-radius: 6px 6px 2px 2px;
+  box-shadow: 0 0 18px rgba(244, 114, 182, 0.55);
+  transition: transform 0.08s ease-out, opacity 0.25s ease-out;
+}
+
+.custom-cursor::before,
+.custom-cursor::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.custom-cursor::before {
+  top: -8px;
+  left: 0;
+}
+
+.custom-cursor::after {
+  left: -8px;
+  top: 0;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 0;
+  z-index: 1999;
+  border: 1px solid rgba(248, 187, 208, 0.5);
+  box-shadow: 0 0 18px rgba(244, 114, 182, 0.35);
+  backdrop-filter: blur(4px);
+  transition: transform 0.16s ease-out, opacity 0.3s ease-out, width 0.2s ease, height 0.2s ease;
+}
+
+.custom-cursor-ring::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+.custom-cursor.is-visible,
+.custom-cursor-ring.is-visible {
+  opacity: 1;
+}
+
+.custom-cursor.is-active {
+  transform: translate3d(-50%, -50%, 0) rotate(45deg) scale(0.8);
+}
+
+.custom-cursor-ring.is-active {
+  width: 26px;
+  height: 26px;
+  border-color: rgba(250, 204, 21, 0.6);
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.35);
+}
+
+@media (pointer: coarse) {
+  .custom-cursor,
+  .custom-cursor-ring {
+    display: none;
+  }
 }
 
 .border-themeMint {
@@ -169,14 +261,65 @@ body {
 
 .hero__identity {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 0.45rem 1.2rem;
+  grid-template-columns: auto;
+  gap: 1.4rem;
+  align-items: flex-start;
   justify-items: start;
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: clamp(1.6rem, 4vw, 3rem);
-  color: #c084fc;
-  letter-spacing: 0.24em;
+}
+
+.hero__portrait {
+  position: relative;
+  width: clamp(180px, 24vw, 220px);
+  aspect-ratio: 1;
+  border-radius: 32px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  box-shadow: 0 28px 60px -32px rgba(99, 102, 241, 0.45);
+}
+
+.hero__portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(110%);
+}
+
+.hero__portrait-glow {
+  position: absolute;
+  inset: -25%;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.3), transparent 65%);
+  filter: blur(28px);
+  z-index: -1;
+}
+
+.hero__name {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: start;
+}
+
+.hero__name-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1.8rem;
+  border-radius: 999px;
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  font-family: 'Sora', 'Inter', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #f8fafc;
   text-transform: uppercase;
+}
+
+.hero__name-sub {
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: rgba(226, 232, 240, 0.78);
+  max-width: 30ch;
+  line-height: 1.65;
 }
 
 .hero__copy {
@@ -376,10 +519,16 @@ body {
 @media (min-width: 992px) {
   .hero__content {
     display: grid;
-    grid-template-columns: minmax(260px, 1fr) minmax(0, 620px);
-    align-items: start;
+    grid-template-columns: minmax(280px, 320px) minmax(0, 660px);
+    align-items: center;
     column-gap: clamp(1.4rem, 3.5vw, 2.4rem);
-    row-gap: 1.2rem;
+    row-gap: 1.4rem;
+  }
+
+  .hero__identity {
+    align-self: start;
+    justify-items: start;
+    gap: 1.25rem;
   }
 
   .hero__identity {

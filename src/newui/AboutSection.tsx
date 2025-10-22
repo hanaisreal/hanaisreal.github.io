@@ -1,9 +1,35 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+
+const sectionVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: 'easeOut' },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.2, duration: 0.6, ease: 'easeOut' },
+  },
+};
 
 const AboutSection: React.FC = () => (
-  <section id="about" className="hana-section hana-section--light">
+  <motion.section
+    id="about"
+    className="hana-section hana-section--light"
+    variants={sectionVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+  >
     <div className="section-inner section-grid-two">
-      <div className="about__intro">
+      <motion.div className="about__intro" variants={sectionVariants}>
         <span className="section-eyebrow text-themePurple">
           About
         </span>
@@ -20,9 +46,9 @@ const AboutSection: React.FC = () => (
           and computer vision tools that respect context and support agency. I love collaborating with diverse teams
           where research insights turn into crafted experiences.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="about__focus-card">
+      <motion.div className="about__focus-card" variants={cardVariants}>
         <h3>Focus areas</h3>
         <ul>
           <li>
@@ -56,9 +82,9 @@ const AboutSection: React.FC = () => (
             </div>
           </li>
         </ul>
-      </div>
+      </motion.div>
     </div>
-  </section>
+  </motion.section>
 );
 
 export default AboutSection;
