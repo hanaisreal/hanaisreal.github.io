@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Navigation from './Navigation';
+import ResearchInterestsViz from './ResearchInterestsViz';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { HiOutlineMail } from 'react-icons/hi';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -33,10 +36,31 @@ const bodyVariants = {
     transition: { duration: 0.7, ease: 'easeOut' },
   },
 };
+const contactLinks = [
+  {
+    label: 'Email',
+    href: 'mailto:hana2001@snu.ac.kr',
+    icon: <HiOutlineMail />,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/in/hana-oh-921945290/',
+    icon: <FaLinkedin />,
+  },
+  {
+    label: 'GitHub',
+    href: 'https://github.com/hanaisreal',
+    icon: <FaGithub />,
+  },
+];
 
-const HeroSection: React.FC = () => (
+interface HeroSectionProps {
+  isChristmasTheme?: boolean;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({ isChristmasTheme = false }) => (
   <motion.section
-    className="hero"
+    className={`hero hana-section hana-section--light ${isChristmasTheme ? 'hero--christmas' : ''}`}
     id="home"
     initial="hidden"
     animate="visible"
@@ -44,49 +68,100 @@ const HeroSection: React.FC = () => (
   >
     <div className="hero__inner">
       <motion.header className="hero__header" variants={headerVariants}>
-        <h1>Hana Oh</h1>
-        <p className="hero__subtitle">
-          Human-centered technologist shaping delightful AI experiences.
-        </p>
         <Navigation />
       </motion.header>
 
       <hr className="hero__divider" />
 
       <motion.div className="hero__body" variants={bodyVariants}>
-        <motion.figure
-          className="hero__portrait"
-          initial={{ opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
-        >
-          <img
-            src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
-            alt="Hana Oh"
-          />
-        </motion.figure>
+        <motion.div className="hero__portrait-section">
+          <motion.figure
+            className="hero__portrait"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
+          >
+            <img
+              src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
+              alt="Hana Oh"
+            />
+          </motion.figure>
+
+          <motion.div
+            className="hero__name-section"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6, ease: 'easeOut' }}
+          >
+            <h1 className="hero__name">
+              {isChristmasTheme ? '🎄 Hana Oh 🎅' : 'Hana Oh'}
+            </h1>
+            <p className="hero__title">
+              {isChristmasTheme
+                ? '🎁 Computer Science & Business Student • HCI Researcher • Holiday Researcher 🎁'
+                : 'Computer Science & Business Student • HCI Researcher'
+              }
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="hero__contact-links"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
+          >
+            {contactLinks.map((link) => (
+              <motion.a
+                key={link.label}
+                href={link.href}
+                className="hero__contact-link"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                title={link.label}
+              >
+                {link.icon}
+              </motion.a>
+            ))}
+          </motion.div>
+        </motion.div>
 
         <motion.div className="hero__copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <h2>Designer &amp; developer exploring humane AI experiences</h2>
-          <p>
-            I’m Hana Oh, a Computer Science and Business Administration student at Seoul National University.
-            With an international upbringing across China and Indonesia, I combine cultural empathy with technical
-            rigor to craft meaningful human-computer interactions. My work spans AI-powered storytelling, medical
-            imaging tools, and data-driven services that support real people in moments that matter.
+          <p className="hero__description">
+            My research lies at the intersection of human-AI interaction, NLP, and AI (broadly human-computer interaction). I'm interested in understanding how people interact with AI systems and designing interfaces that preserve <span className="hero__highlight-term hero__highlight--agency">human agency</span> in collaborative workflows.
           </p>
           <p>
-            Currently, I’m focused on blending human-centered research with intelligent systems design, building
-            interfaces that feel supportive, conversational, and trustworthy—whether that’s empowering seniors to
-            capture life stories or helping students receive compassionate feedback from AI collaborators.
+          I am currently interested in building conversational systems that support <span className="hero__highlight-term hero__highlight--perspective">perspective-taking</span> and reasoning to foster <span className="hero__highlight-term hero__highlight--thinking">critical thinking</span>.
+            My previous work has been around building systems for personalized AI interventions for <span className="hero__highlight-term hero__highlight--resilience">digital resilience</span>, and analyzing human interaction with AI in educational contexts.
+            I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.
           </p>
-          <ul className="hero__highlights">
-            <li>HCI researcher turning qualitative insight into product strategy.</li>
-            <li>Exploring AI and empathy to craft voice-first and conversational tools.</li>
-            <li>Design systems advocate translating research into inclusive interfaces.</li>
-          </ul>
+          <p>
+            Besides, I love to travel, write, swim, and <span className="hero__highlight-term hero__highlight--draw">draw</span> :)
+          </p>
         </motion.div>
       </motion.div>
     </div>
+
+    <motion.section
+      className="hana-section hana-section--light"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
+    >
+      <div className="section-inner">
+        <motion.div className="research-interests__intro">
+          <span className="section-eyebrow text-themePurple">
+            Research Interests
+          </span>
+        </motion.div>
+
+        <ResearchInterestsViz />
+
+        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', textAlign: 'center', color: 'var(--muted)' }}>
+          My research interests are broad, but they all tie to advancing human capabilities through
+          thoughtful AI design that preserves agency and supports critical thinking.
+        </p>
+      </div>
+    </motion.section>
   </motion.section>
 );
 

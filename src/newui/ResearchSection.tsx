@@ -23,7 +23,7 @@ const cardVariants = {
 const ResearchSection: React.FC = () => (
   <motion.section
     id="research"
-    className="hana-section hana-section--white"
+    className="hana-section hana-section--light research-timeline"
     variants={sectionVariants}
     initial="hidden"
     whileInView="visible"
@@ -35,41 +35,55 @@ const ResearchSection: React.FC = () => (
           Research
         </span>
         <h2>
-          Translating qualitative insight into compassionate technology
+          Research Experiences
         </h2>
         <p>
-          From identity transitions to student counseling, my research explores how we can use AI respectfully.
-          I lean on interviews, affinity diagramming, and rapid prototyping to uncover the human motivation behind
-          every dataset.
+          During my studies at Seoul National University, I conducted research focusing on human-AI interaction patterns and system design.
         </p>
       </motion.div>
 
-      <motion.div
-        className="research__grid"
-        variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-      >
-        {researchExperiences.map((experience) => (
+      <div className="timeline">
+        <div className="timeline__line"></div>
+        {researchExperiences.map((experience, index) => (
           <motion.article
-            key={experience.title}
-            className="research__card hana-card-hover"
+            key={experience.lab}
+            className="timeline__item"
             variants={cardVariants}
-            whileHover={{ y: -6 }}
-            whileTap={{ scale: 0.99 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ delay: index * 0.2 }}
           >
-            <div className="research__card-heading">
-              <h3>{experience.title}</h3>
-              <span>{experience.duration}</span>
+            <div className="timeline__marker"></div>
+            <div className="timeline__content">
+              <div className="timeline__header">
+                <h3>{experience.lab}</h3>
+                <span className="timeline__duration">{experience.overallDuration}</span>
+              </div>
+
+              <div className="timeline__lab-info">
+                <p className="timeline__institution">{experience.institution}</p>
+                <p className="timeline__advisor">{experience.advisor}</p>
+              </div>
+
+              <div className="timeline__projects">
+                {experience.projects.map((project, projectIndex) => (
+                  <div key={project.projectTitle} className="timeline__project">
+                    <h4 className="timeline__project-title">{project.projectTitle}</h4>
+                    <p className="timeline__project-description">{project.description}</p>
+                    <div className="timeline__tags">
+                      {project.keyTechnologies.map((tech) => (
+                        <span key={tech} className="timeline__tag">{tech}</span>
+                      ))}
+                    </div>
+                    <span className="timeline__project-duration">{project.duration}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <p>{experience.description}</p>
-            <div className="research__tags">
-              {experience.keyTechnologies.map((tech) => (
-                <span key={tech}>{tech}</span>
-              ))}
-            </div>
-            <p className="research__advisor">Advisor: {experience.advisor}</p>
           </motion.article>
         ))}
-      </motion.div>
+      </div>
     </div>
   </motion.section>
 );

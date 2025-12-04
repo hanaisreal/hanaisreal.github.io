@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HeroSection from './HeroSection';
-import AboutSection from './AboutSection';
 import ResearchSection from './ResearchSection';
+import PublicationsSection from './PublicationsSection';
 import ProjectsSection from './ProjectsSection';
 import ContactSection from './ContactSection';
+import ChristmasToggle from './ChristmasToggle';
+import StickyHeader from './StickyHeader';
 import './newPortfolio.css';
 
-const NewPortfolio: React.FC = () => (
-  <main className="new-portfolio">
-    <HeroSection />
-    <AboutSection />
-    <ResearchSection />
-    <ProjectsSection />
-    <ContactSection />
-  </main>
-);
+const NewPortfolio: React.FC = () => {
+  const [isChristmasTheme, setIsChristmasTheme] = useState(false);
+
+  return (
+    <main className={`new-portfolio ${isChristmasTheme ? 'christmas-theme' : ''}`}>
+      <StickyHeader />
+      <ChristmasToggle onToggle={setIsChristmasTheme} />
+      <HeroSection isChristmasTheme={isChristmasTheme} />
+      <PublicationsSection />
+      <ResearchSection />
+      <ProjectsSection />
+      <ContactSection />
+    </main>
+  );
+};
 
 export default NewPortfolio;
