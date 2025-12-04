@@ -5,6 +5,7 @@ import PublicationsSection from './PublicationsSection';
 import ProjectsSection from './ProjectsSection';
 import ContactSection from './ContactSection';
 import ChristmasToggle from './ChristmasToggle';
+import StickyHeader from './StickyHeader';
 import './newPortfolio.css';
 
 const NewPortfolio: React.FC = () => {
@@ -12,6 +13,7 @@ const NewPortfolio: React.FC = () => {
 
   return (
     <main className={`new-portfolio ${isChristmasTheme ? 'christmas-theme' : ''}`}>
+      <StickyHeader />
       <ChristmasToggle onToggle={setIsChristmasTheme} />
       <HeroSection isChristmasTheme={isChristmasTheme} />
       <PublicationsSection />

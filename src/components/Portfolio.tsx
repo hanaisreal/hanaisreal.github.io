@@ -63,9 +63,22 @@ const Portfolio: React.FC = () => {
         <h2>Research Experience</h2>
         {researchExperiences.map((experience, index) => (
           <div key={index} className="experience-card">
-            <h3>{experience.title}</h3>
-            <p>{experience.description}</p>
+            <h3>{experience.lab}</h3>
+            <p>{experience.institution}</p>
             <p>Advisor: {experience.advisor}</p>
+            <p>Duration: {experience.overallDuration}</p>
+            {experience.projects.map((project, projectIndex) => (
+              <div key={projectIndex} className="project-item">
+                <h4>{project.projectTitle}</h4>
+                <p>{project.description}</p>
+                <p>Duration: {project.duration}</p>
+                <div className="tech-tags">
+                  {project.keyTechnologies.map((tech, techIndex) => (
+                    <span key={techIndex} className="tech-tag">{tech}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         ))}
       </section>

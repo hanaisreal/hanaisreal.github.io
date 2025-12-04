@@ -46,7 +46,7 @@ const ResearchSection: React.FC = () => (
         <div className="timeline__line"></div>
         {researchExperiences.map((experience, index) => (
           <motion.article
-            key={experience.title}
+            key={experience.lab}
             className="timeline__item"
             variants={cardVariants}
             initial="hidden"
@@ -57,16 +57,29 @@ const ResearchSection: React.FC = () => (
             <div className="timeline__marker"></div>
             <div className="timeline__content">
               <div className="timeline__header">
-                <h3>{experience.title}</h3>
-                <span className="timeline__duration">{experience.duration}</span>
+                <h3>{experience.lab}</h3>
+                <span className="timeline__duration">{experience.overallDuration}</span>
               </div>
-              <p className="timeline__description">{experience.description}</p>
-              <div className="timeline__tags">
-                {experience.keyTechnologies.map((tech) => (
-                  <span key={tech} className="timeline__tag">{tech}</span>
+
+              <div className="timeline__lab-info">
+                <p className="timeline__institution">{experience.institution}</p>
+                <p className="timeline__advisor">{experience.advisor}</p>
+              </div>
+
+              <div className="timeline__projects">
+                {experience.projects.map((project, projectIndex) => (
+                  <div key={project.projectTitle} className="timeline__project">
+                    <h4 className="timeline__project-title">{project.projectTitle}</h4>
+                    <p className="timeline__project-description">{project.description}</p>
+                    <div className="timeline__tags">
+                      {project.keyTechnologies.map((tech) => (
+                        <span key={tech} className="timeline__tag">{tech}</span>
+                      ))}
+                    </div>
+                    <span className="timeline__project-duration">{project.duration}</span>
+                  </div>
                 ))}
               </div>
-              <p className="timeline__advisor">Advisor: {experience.advisor}</p>
             </div>
           </motion.article>
         ))}

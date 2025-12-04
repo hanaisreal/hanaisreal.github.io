@@ -1,0 +1,516 @@
+/* Wordbank Page Styles */
+
+.wordbank-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-top: 4rem; /* Space for sticky header */
+}
+
+.wordbank-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.wordbank-container {
+  width: 100%;
+}
+
+/* Header */
+.wordbank-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.wordbank-back-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.wordbank-back-link:hover {
+  background: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.wordbank-title {
+  font-family: 'Lora', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 0 0 1rem 0;
+}
+
+.wordbank-subtitle {
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Controls */
+.wordbank-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.wordbank-search {
+  display: flex;
+  justify-content: center;
+}
+
+.wordbank-search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9rem;
+  background: var(--bg-contrast);
+  color: var(--text);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.wordbank-search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(179, 139, 89, 0.1);
+}
+
+.wordbank-categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.wordbank-category-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-contrast);
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wordbank-category-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.wordbank-category-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Count */
+.wordbank-count {
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Word Grid */
+.wordbank-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.word-card {
+  background: var(--bg-contrast);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.word-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), rgba(179, 139, 89, 0.3));
+}
+
+.word-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.word-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.word-title-section {
+  flex: 1;
+}
+
+.word-title {
+  font-family: 'Lora', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
+}
+
+.word-hanja {
+  font-family: 'Noto Sans CJK', 'Microsoft YaHei', serif;
+  font-size: 1.1rem;
+  color: var(--muted);
+  display: block;
+  font-weight: 400;
+  margin-top: 0.25rem;
+}
+
+.word-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.word-category {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+}
+
+.word-type {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-strong);
+  background: var(--border);
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+}
+
+.word-philosopher {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.word-meaning {
+  font-family: 'Lora', serif;
+  color: var(--text);
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.word-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.word-date {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.word-language {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.word-read-more {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.word-read-more:hover {
+  color: var(--text-strong);
+}
+
+/* Empty State */
+.wordbank-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted);
+}
+
+.wordbank-empty h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text);
+}
+
+/* Modal */
+.word-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 16, 10, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  z-index: 1000;
+}
+
+.word-modal {
+  background: var(--bg-contrast);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.word-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--muted);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.word-modal-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.word-modal-content {
+  padding: 2rem;
+}
+
+.word-modal-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.word-modal-title-section {
+  margin-bottom: 1rem;
+}
+
+.word-modal-title {
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 0 0 0.5rem 0;
+}
+
+.word-modal-hanja {
+  font-family: 'Noto Sans CJK', 'Microsoft YaHei', serif;
+  font-size: 1.5rem;
+  color: var(--muted);
+  display: block;
+  font-weight: 400;
+}
+
+.word-modal-badges {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.word-modal-category {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+}
+
+.word-modal-type {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-strong);
+  background: var(--border);
+  padding: 0.25rem 0.6rem;
+  border-radius: 10px;
+}
+
+.word-modal-philosopher {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+  background: var(--accent-soft);
+  border-radius: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.word-modal-philosopher h3 {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0 0 0.5rem 0;
+}
+
+.word-modal-philosopher p {
+  font-family: 'Lora', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-strong);
+  margin: 0;
+}
+
+.word-modal-language {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: normal;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.word-modal-meaning,
+.word-modal-feeling {
+  margin-bottom: 1.5rem;
+}
+
+.word-modal-meaning h3,
+.word-modal-feeling h3 {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin: 0 0 0.75rem 0;
+}
+
+.word-modal-meaning p,
+.word-modal-feeling p {
+  font-family: 'Lora', serif;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.word-modal-meta {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .wordbank-main {
+    padding: 1.5rem 1rem;
+  }
+
+  .wordbank-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .word-card {
+    padding: 1.25rem;
+  }
+
+  .word-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .word-modal {
+    margin: 1rem;
+    max-height: 90vh;
+  }
+
+  .word-modal-content {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wordbank-categories {
+    gap: 0.5rem;
+  }
+
+  .wordbank-category-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
+  }
+}
