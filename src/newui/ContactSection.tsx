@@ -54,9 +54,7 @@ const ContactSection: React.FC = () => (
         transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
         viewport={{ once: true, amount: 0.4 }}
       >
-        I'm interested in research collaborations, graduate opportunities, and discussions about human-AI interaction
-        in educational contexts. Feel free to reach out if you'd like to discuss potential research projects or
-        academic opportunities.
+        I'm always open to discussing research collaborations, HCI projects, or opportunities in human-centered computing and AI.
       </motion.p>
       <motion.div
         className="contact__links"

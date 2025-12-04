@@ -23,7 +23,7 @@ const cardVariants = {
 const ResearchSection: React.FC = () => (
   <motion.section
     id="research"
-    className="hana-section hana-section--white research-timeline"
+    className="hana-section hana-section--light research-timeline"
     variants={sectionVariants}
     initial="hidden"
     whileInView="visible"
@@ -35,11 +35,10 @@ const ResearchSection: React.FC = () => (
           Research
         </span>
         <h2>
-          Experience across multiple labs
+          Research Experiences
         </h2>
         <p>
-          During my studies at Seoul National University, I conducted research across multiple labs including
-          KIXLAB (KAIST), HCI+DLab (SNU), and HCCLab (SNU), focusing on human-AI interaction patterns and system design.
+          During my studies at Seoul National University, I conducted research focusing on human-AI interaction patterns and system design.
         </p>
       </motion.div>
 

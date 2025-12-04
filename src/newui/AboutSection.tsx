@@ -38,13 +38,13 @@ const AboutSection: React.FC = () => (
           Research at the intersection of HCI and AI
         </h2>
         <p>
-          I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.
           My research focuses on understanding how people interact with AI systems and designing interfaces that support
           rather than replace human reasoning.
         </p>
         <p>
           Through work across multiple research labs, I've analyzed large-scale interaction data, designed personalized
           AI interventions, and investigated how conversational systems can support perspective-taking and reasoning.
+          I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.
         </p>
       </motion.div>
 
