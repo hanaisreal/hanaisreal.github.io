@@ -6,7 +6,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 const contactLinks = [
   {
     label: 'Email',
-    href: 'mailto:ohhanathefirst@gmail.com',
+    href: 'mailto:hana2001@snu.ac.kr',
     icon: <HiOutlineMail />,
   },
   {
@@ -46,7 +46,7 @@ const ContactSection: React.FC = () => (
         transition={{ delay: 0.2, duration: 0.65, ease: 'easeOut' }}
         viewport={{ once: true, amount: 0.4 }}
       >
-        Let&apos;s build the next story together
+        Get in touch
       </motion.h2>
       <motion.p
         initial={{ opacity: 0, y: 18 }}
@@ -54,8 +54,9 @@ const ContactSection: React.FC = () => (
         transition={{ delay: 0.3, duration: 0.6, ease: 'easeOut' }}
         viewport={{ once: true, amount: 0.4 }}
       >
-        I’m currently open to research collaborations, internships, and thoughtful conversations about AI, design,
-        and education. Drop me a line—coffee chat invitations always welcome.
+        I'm interested in research collaborations, graduate opportunities, and discussions about human-AI interaction
+        in educational contexts. Feel free to reach out if you'd like to discuss potential research projects or
+        academic opportunities.
       </motion.p>
       <motion.div
         className="contact__links"
@@ -93,7 +94,7 @@ const ContactSection: React.FC = () => (
         transition={{ delay: 0.6, duration: 0.5, ease: 'easeOut' }}
         viewport={{ once: true, amount: 0.4 }}
       >
-        © {new Date().getFullYear()} Hana Oh. Crafted with curiosity and care.
+        © {new Date().getFullYear()} Hana Oh. Built with Curiosity and Care.
       </motion.p>
     </div>
   </motion.section>
