@@ -47,9 +47,7 @@ const ComingSoon: React.FC = () => {
               </motion.div>
 
               <h1 className="coming-soon-title">
-                Something Beautiful
-                <br />
-                is Coming Soon
+                Coming Soon
               </h1>
 
               <p className="coming-soon-description">
@@ -62,18 +60,7 @@ const ComingSoon: React.FC = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
               >
-                <div className="feature-item">
-                  <span className="feature-icon">🫧</span>
-                  <span>Physics-based bubbles</span>
-                </div>
-                <div className="feature-item">
-                  <span className="feature-icon">🌈</span>
-                  <span>Iridescent effects</span>
-                </div>
-                <div className="feature-item">
-                  <span className="feature-icon">🎯</span>
-                  <span>Interactive word exploration</span>
-                </div>
+                
               </motion.div>
 
               <motion.p

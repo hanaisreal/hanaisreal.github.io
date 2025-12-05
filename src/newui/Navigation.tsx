@@ -12,8 +12,8 @@ const navItems: NavItem[] = [
   { label: 'Publications', href: '#publications' },
   { label: 'Research', href: '#research' },
   { label: 'Projects', href: '#projects' },
+  { label: 'Blog', href: '/blog', isExternal: true },
   { label: 'Wordbank', href: '/wordbank', isExternal: true },
-  { label: 'Contact', href: '#contact' },
 ];
 
 const Navigation: React.FC = () => {
