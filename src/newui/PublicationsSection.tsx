@@ -33,10 +33,6 @@ const PublicationsSection: React.FC = () => (
       <motion.div className="publications__intro" variants={sectionVariants}>
         <span className="section-eyebrow text-themePink">Publications</span>
         <h2>Research contributions</h2>
-        <p>
-          My research has resulted in publications at top-tier HCI venues, focusing on
-          human-AI interaction in educational and social contexts.
-        </p>
       </motion.div>
 
       <motion.div
