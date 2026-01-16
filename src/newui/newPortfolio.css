@@ -240,6 +240,34 @@ ul {
   background: var(--bg-contrast);
 }
 
+/* Hover effect for profile picture switching */
+.hero__portrait--hover-effect {
+  position: relative;
+  cursor: pointer;
+}
+
+.hero__portrait-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.hero__portrait-img--main {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__portrait-img--hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
 .hero__contact-links {
   display: flex;
   gap: 1rem;
