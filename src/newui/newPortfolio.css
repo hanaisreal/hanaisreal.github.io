@@ -238,6 +238,9 @@ ul {
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-contrast);
+  width: 180px;  /* Set fixed width */
+  height: 180px; /* Set fixed height */
+  margin: 0 auto; /* Center the portrait */
 }
 
 /* Hover effect for profile picture switching */
@@ -249,13 +252,15 @@ ul {
 .hero__portrait-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   transition: opacity 0.3s ease-in-out;
 }
 
 .hero__portrait-img--main {
   position: relative;
   z-index: 1;
+  object-fit: cover;
+  object-position: center 20%; /* Slightly down from the top */
 }
 
 .hero__portrait-img--hover {

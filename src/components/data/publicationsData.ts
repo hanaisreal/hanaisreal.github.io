@@ -29,9 +29,9 @@ export const publications: Publication[] = [
   {
     year: "2025",
     title: "Supporting Young Historians: Real-World Lessons from AI-Enabled Active Learning in Classrooms",
-    authors: "Hyungwoo Song, Kieun Park, Hana Oh, Hoyeol Yang, Yeonjoon Kim, Jung Lee, Dongseok Heo, Jaehoon Choi, Minchae Kim, Jueon Lee, Bongwon Suh",
+    authors: "Hyungwoo Song, Kieun Park, Hana Oh, Hoyeol Yang",
     venue: "Computer & Education Journal",
-    status: "In Preparation",
+    status: "Under Review",
     type: "journal"
   }
 ];
