@@ -12,6 +12,7 @@ const navItems: NavItem[] = [
   { label: 'Publications', href: '#publications' },
   { label: 'Research', href: '#research' },
   { label: 'Projects', href: '#projects' },
+  // { label: 'Reading List', href: '#reading' },
   // { label: 'Blog', href: '/blog', isExternal: true },
   // { label: 'Wordbank', href: '/wordbank', isExternal: true },
 ];

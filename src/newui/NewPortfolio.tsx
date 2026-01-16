@@ -3,6 +3,7 @@ import HeroSection from './HeroSection';
 import ResearchSection from './ResearchSection';
 import PublicationsSection from './PublicationsSection';
 import ProjectsSection from './ProjectsSection';
+// import BlogPostsSection from './BlogPostsSection';
 import ContactSection from './ContactSection';
 import ChristmasToggle from './ChristmasToggle';
 import StickyHeader from './StickyHeader';
@@ -21,6 +22,7 @@ const NewPortfolio: React.FC = () => {
       <PublicationsSection />
       <ResearchSection />
       <ProjectsSection />
+      {/* <BlogPostsSection /> */}
       <ContactSection />
     </main>
   );
