@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Navigation from './Navigation';
 import ResearchInterestsViz from './ResearchInterestsViz';
@@ -58,7 +58,10 @@ interface HeroSectionProps {
   isChristmasTheme?: boolean;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ isChristmasTheme = false }) => (
+const HeroSection: React.FC<HeroSectionProps> = ({ isChristmasTheme = false }) => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
   <motion.section
     className={`hero hana-section hana-section--light ${isChristmasTheme ? 'hero--christmas' : ''}`}
     id="home"
@@ -76,14 +79,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isChristmasTheme = false }) =
       <motion.div className="hero__body" variants={bodyVariants}>
         <motion.div className="hero__portrait-section">
           <motion.figure
-            className="hero__portrait"
+            className="hero__portrait hero__portrait--hover-effect"
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
+            <img
+              src={`${process.env.PUBLIC_URL}/pictures/profile_main.png`}
+              alt="Hana Oh"
+              className="hero__portrait-img hero__portrait-img--main"
+              style={{ opacity: isHovered ? 0 : 1 }}
+            />
             <img
               src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
               alt="Hana Oh"
+              className="hero__portrait-img hero__portrait-img--hover"
+              style={{ opacity: isHovered ? 1 : 0 }}
             />
           </motion.figure>
 
@@ -163,6 +176,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ isChristmasTheme = false }) =
       </div>
     </motion.section>
   </motion.section>
-);
+  );
+};
 
 export default HeroSection;

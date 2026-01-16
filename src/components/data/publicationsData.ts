@@ -15,7 +15,7 @@ export const publications: Publication[] = [
     title: "DeepAware: Using Experiential Deepfake Simulations to Enhance Cybersecurity Awareness in Older Adults",
     authors: "Hana Oh, Eunbi Lee, Seungju Shin, Keyeun Lee, Miran Pyun, Hajin Lim",
     venue: "CHI 2026",
-    status: "Under Review: Revise & Resubmit",
+    status: "Accepted",
     type: "conference"
   },
   {
@@ -23,7 +23,7 @@ export const publications: Publication[] = [
     title: "When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms",
     authors: "Junho Myung, Hyunseung Lim, Hana Oh, Hyoungwook Jin, Nayeon Kang, So-Yeon Ahn, Hwajung Hong, Alice Oh, Juho Kim",
     venue: "CHI 2026",
-    status: "Under Review: Revise & Resubmit",
+    status: "Accepted",
     type: "conference"
   },
   {
