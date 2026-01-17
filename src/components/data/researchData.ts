@@ -24,7 +24,7 @@ export const researchExperiences: ResearchExperience[] = [
       projects: [
         {
           projectTitle: "DeepAware: Cybersecurity Education for Older Adults",
-          description: "Led the design of a personalized simulation system to foster cybersecurity awareness in older adults using experiential deepfake simulations. Conducted end-to-end system building and mixed-method studies. Paper under review at CHI 2026 (Revise & Resubmit).",
+          description: "Led the design of a personalized simulation system to foster cybersecurity awareness in older adults using experiential deepfake simulations. Conducted end-to-end system building and mixed-method studies. Paper accepted at CHI 2026.",
           duration: "Mar 2024 – ongoing",
           keyTechnologies: ["Mixed-method study", "System building", "Thematic analysis"]
         }

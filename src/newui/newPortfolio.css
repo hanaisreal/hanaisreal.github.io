@@ -238,6 +238,9 @@ ul {
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-contrast);
+  width: 180px;  /* Set fixed width */
+  height: 180px; /* Set fixed height */
+  margin: 0 auto; /* Center the portrait */
 }
 
 /* Hover effect for profile picture switching */
@@ -249,13 +252,15 @@ ul {
 .hero__portrait-img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   transition: opacity 0.3s ease-in-out;
 }
 
 .hero__portrait-img--main {
   position: relative;
   z-index: 1;
+  object-fit: cover;
+  object-position: center 20%; /* Slightly down from the top */
 }
 
 .hero__portrait-img--hover {
@@ -1841,6 +1846,96 @@ ul {
 
 .timeline__projects {
   margin-top: 1.5rem;
+}
+
+/* Blog Posts Section */
+.blog-posts {
+  padding: 4rem 0;
+}
+
+.blog-posts__intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.blog-posts__list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.blog-post-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: var(--bg-contrast);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-post-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.blog-post-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.blog-post-item__category {
+  font-size: 0.75rem;
+  font-family: 'Space Mono', monospace;
+  color: var(--themePurple);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.blog-post-item__date {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.blog-post-item__title {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.blog-post-item__link {
+  color: var(--text-strong);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.blog-post-item__link:hover {
+  color: var(--themePurple);
+}
+
+.blog-post-item__icon {
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+.blog-post-item__author {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0 0.75rem 0;
+}
+
+.blog-post-item__thoughts {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-style: italic;
+  margin: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
 }
 
 .timeline__project {
