@@ -1,5 +1,3 @@
-// publicationsData.ts
-
 export interface Publication {
   year: string;
   title: string;
@@ -7,6 +5,8 @@ export interface Publication {
   venue: string;
   status: string;
   type: 'conference' | 'journal' | 'workshop';
+  bestPaper?: boolean;
+  insight?: string;
 }
 
 export const publications: Publication[] = [
@@ -16,7 +16,8 @@ export const publications: Publication[] = [
     authors: "Hana Oh, Eunbi Lee, Seungju Shin, Keyeun Lee, Miran Pyun, Hajin Lim",
     venue: "CHI 2026",
     status: "Accepted",
-    type: "conference"
+    type: "conference",
+    insight: "What if older adults could experience a deepfake before encountering one in the wild?"
   },
   {
     year: "2026",
@@ -24,14 +25,17 @@ export const publications: Publication[] = [
     authors: "Junho Myung, Hyunseung Lim, Hana Oh, Hyoungwook Jin, Nayeon Kang, So-Yeon Ahn, Hwajung Hong, Alice Oh, Juho Kim",
     venue: "CHI 2026",
     status: "Accepted",
-    type: "conference"
+    type: "conference",
+    bestPaper: true,
+    insight: "When the AI scaffold fails mid-lesson, what do students actually do?"
   },
   {
     year: "2025",
     title: "Supporting Young Historians: Real-World Lessons from AI-Enabled Active Learning in Classrooms",
     authors: "Hyungwoo Song, Kieun Park, Hana Oh, Hoyeol Yang",
-    venue: "Computer & Education Journal",
+    venue: "Computers & Education",
     status: "Under Review",
-    type: "journal"
+    type: "journal",
+    insight: "AI as a thinking partner, not a shortcut, for history education."
   }
 ];

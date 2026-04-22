@@ -2,90 +2,104 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { researchExperiences } from '../components/data/researchData';
 
-const sectionVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: 'easeOut' },
+const themes = [
+  {
+    num: 'Theme 01',
+    name: 'Human Agency\nin AI Systems',
+    desc: 'Designing AI systems that augment rather than replace human decision-making. Studying how interface design shapes perceived control and autonomy in collaborative workflows.',
+    tags: ['Human-AI Interaction', 'Interface Design', 'Agency'],
   },
-};
+  {
+    num: 'Theme 02',
+    name: 'AI in\nEducation',
+    desc: 'How LLM-based tools reshape learning, critical thinking, and student autonomy in real classroom settings — field studies grounded in actual classroom deployment.',
+    tags: ['Educational Technology', 'LLMs', 'Critical Thinking'],
+  },
+  {
+    num: 'Theme 03',
+    name: 'Digital Resilience\n& Literacy',
+    desc: 'Building literacy and protective capabilities for vulnerable populations — older adults and young learners — navigating AI-generated misinformation and deepfakes.',
+    tags: ['Deepfakes', 'Older Adults', 'Cybersecurity'],
+  },
+];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: 'easeOut' },
-  },
-};
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { duration: 0.65, delay, ease: 'easeOut' },
+});
 
 const ResearchSection: React.FC = () => (
-  <motion.section
-    id="research"
-    className="hana-section hana-section--light research-timeline"
-    variants={sectionVariants}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.2 }}
-  >
-    <div className="section-inner research">
-      <motion.div className="research__intro" variants={sectionVariants}>
-        <span className="section-eyebrow text-themePurple">
-          Research
-        </span>
-        <h2>
-          Research Experiences
-        </h2>
-        <p>
-          During my studies at Seoul National University, I conducted research focusing on human-AI interaction patterns and system design.
-        </p>
-      </motion.div>
+  <section id="research">
+    {/* ── THEMES ── */}
+    <div className="ed-section-rule">
+      <div className="ed-section-rule__inner">
+        <span className="ed-section-num">§ 03</span>
+        <span className="ed-section-label">Research Themes</span>
+        <div className="ed-section-rule__line" />
+      </div>
+    </div>
 
-      <div className="timeline">
-        <div className="timeline__line"></div>
-        {researchExperiences.map((experience, index) => (
-          <motion.article
-            key={experience.lab}
-            className="timeline__item"
-            variants={cardVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ delay: index * 0.2 }}
-          >
-            <div className="timeline__marker"></div>
-            <div className="timeline__content">
-              <div className="timeline__header">
-                <h3>{experience.lab}</h3>
-                <span className="timeline__duration">{experience.overallDuration}</span>
-              </div>
-
-              <div className="timeline__lab-info">
-                <p className="timeline__institution">{experience.institution}</p>
-                <p className="timeline__advisor">{experience.advisor}</p>
-              </div>
-
-              <div className="timeline__projects">
-                {experience.projects.map((project, projectIndex) => (
-                  <div key={project.projectTitle} className="timeline__project">
-                    <h4 className="timeline__project-title">{project.projectTitle}</h4>
-                    <p className="timeline__project-description">{project.description}</p>
-                    <div className="timeline__tags">
-                      {project.keyTechnologies.map((tech) => (
-                        <span key={tech} className="timeline__tag">{tech}</span>
-                      ))}
-                    </div>
-                    <span className="timeline__project-duration">{project.duration}</span>
-                  </div>
-                ))}
-              </div>
+    <div className="ed-themes">
+      <div className="ed-themes__grid">
+        {themes.map((t, i) => (
+          <motion.div key={t.num} className="ed-theme" {...fadeUp(i * 0.1)}>
+            <div className="ed-theme__num">{t.num}</div>
+            <h3 className="ed-theme__name" style={{ whiteSpace: 'pre-line' }}>
+              {t.name}
+            </h3>
+            <p className="ed-theme__desc">{t.desc}</p>
+            <div className="ed-theme__tags">
+              {t.tags.map((tag) => (
+                <span key={tag} className="ed-theme__tag">{tag}</span>
+              ))}
             </div>
-          </motion.article>
+          </motion.div>
         ))}
       </div>
     </div>
-  </motion.section>
+
+    {/* ── EXPERIENCE ── */}
+    <div className="ed-section-rule">
+      <div className="ed-section-rule__inner">
+        <span className="ed-section-num">§ 04</span>
+        <span className="ed-section-label">Research Experience</span>
+        <div className="ed-section-rule__line" />
+      </div>
+    </div>
+
+    <div className="ed-exp">
+      <div className="ed-exp__list">
+        {researchExperiences.map((exp, i) => (
+          <motion.div key={exp.lab} className="ed-exp__row" {...fadeUp(i * 0.1)}>
+            <div>
+              <p className="ed-exp__lab">{exp.lab}</p>
+              <p className="ed-exp__advisor">
+                {exp.advisor} · {exp.institution}
+              </p>
+            </div>
+
+            <div>
+              {exp.projects.map((proj) => (
+                <div key={proj.projectTitle} style={{ marginBottom: '0.75rem' }}>
+                  <h4 className="ed-exp__project-title">{proj.projectTitle}</h4>
+                  <p className="ed-exp__project-desc">{proj.description}</p>
+                  <div className="ed-exp__tags">
+                    {proj.keyTechnologies.map((t) => (
+                      <span key={t} className="ed-exp__tag">{t}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="ed-exp__period">{exp.overallDuration}</div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </section>
 );
 
 export default ResearchSection;

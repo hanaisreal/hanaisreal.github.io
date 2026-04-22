@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hana Oh — HCI Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper:       #f5f2eb;
+  --paper-alt:   #edeae1;
+  --ink:         #18140e;
+  --ink-mid:     #4a4540;
+  --ink-soft:    #8a847c;
+  --rule:        #18140e;
+  --rule-light:  #cec9bf;
+  --navy:        #1b3561;
+  --navy-light:  #e8edf5;
+  --red:         #9e2b25;
+  --col-w:       1100px;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'Space Mono', monospace;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+
+.wrap {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* ─────────────────────────────────────────
+   MASTHEAD
+───────────────────────────────────────── */
+.masthead {
+  border-bottom: 3px solid var(--rule);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 200;
+}
+
+.masthead-inner {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: stretch;
+  height: 3rem;
+}
+
+.masthead-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  padding-right: 2rem;
+  border-right: 1.5px solid var(--rule);
+  flex-shrink: 0;
+}
+
+.masthead-nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+  border-left: 1.5px solid var(--rule);
+}
+
+.masthead-nav a {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0 1.25rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-right: 1.5px solid var(--rule);
+  transition: background 0.15s, color 0.15s;
+  color: var(--ink-mid);
+}
+
+.masthead-nav a:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.masthead-date {
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  padding-left: 1.5rem;
+}
+
+/* ─────────────────────────────────────────
+   HERO — NEWSPAPER FRONT PAGE
+───────────────────────────────────────── */
+.hero {
+  border-bottom: 3px solid var(--rule);
+}
+
+.hero-inner {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  min-height: 88vh;
+}
+
+.hero-divider {
+  background: var(--rule);
+  margin: 0;
+}
+
+/* LEFT */
+.hero-left {
+  padding: 3.5rem 3rem 3.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-kicker {
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  font-weight: 900;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.15em;
+}
+
+.hero-name-italic {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 8vw, 7.5rem);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--navy);
+  margin-bottom: 2rem;
+}
+
+.hero-role-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: auto;
+}
+
+.hero-role-list li {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero-role-list li::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  flex-shrink: 0;
+}
+
+.hero-award {
+  margin-top: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.award-badge {
+  border: 2px solid var(--red);
+  color: var(--red);
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  white-space: nowrap;
+}
+
+.award-caption {
+  font-size: 0.6rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.hero-contacts {
+  margin-top: 2rem;
+  display: flex;
+  gap: 0;
+  border-top: 1px solid var(--rule-light);
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.hero-contact-link {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.6rem 0.9rem 0.6rem 0;
+  color: var(--navy);
+  transition: color 0.15s;
+  border-right: 1px solid var(--rule-light);
+  margin-right: 0.9rem;
+}
+
+.hero-contact-link:last-child {
+  border-right: none;
+  margin-right: 0;
+}
+
+.hero-contact-link:hover { color: var(--ink); }
+
+/* RIGHT */
+.hero-right {
+  padding: 3.5rem 0 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  max-width: 280px;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+}
+
+.hero-photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: grayscale(20%) contrast(1.05);
+  transition: filter 0.5s ease;
+}
+
+.hero-photo-wrap:hover img { filter: grayscale(0%) contrast(1.0); }
+
+.hero-photo-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.75rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.hero-photo-wrap:hover .hero-photo-caption { opacity: 1; }
+
+.hero-standfirst {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.hero-standfirst strong {
+  font-weight: 700;
+  font-style: italic;
+  color: var(--navy);
+}
+
+.hero-body {
+  font-size: 0.75rem;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  border-top: 1px solid var(--rule-light);
+  padding-top: 1rem;
+}
+
+.hero-body p + p { margin-top: 0.75rem; }
+
+/* ─────────────────────────────────────────
+   SECTION HEADER — NEWSPAPER RULE
+───────────────────────────────────────── */
+.section-rule {
+  border-bottom: 1px solid var(--rule-light);
+}
+
+.section-rule-inner {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  height: 2.5rem;
+}
+
+.section-num {
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+}
+
+.section-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.section-rule-inner::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-light);
+  margin-left: 1rem;
+}
+
+/* ─────────────────────────────────────────
+   NEWS STRIP
+───────────────────────────────────────── */
+.news-strip {
+  border-bottom: 2px solid var(--rule);
+}
+
+.news-strip-inner {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.news-col {
+  padding: 1.75rem 1.5rem 1.75rem 0;
+  border-right: 1px solid var(--rule-light);
+}
+
+.news-col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+.news-col:not(:first-child) { padding-left: 1.5rem; }
+
+.news-col-date {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.news-col-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.news-col-text .award-mark {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.news-col-text .venue-mark {
+  font-style: italic;
+  color: var(--navy);
+}
+
+/* ─────────────────────────────────────────
+   PUBLICATIONS
+───────────────────────────────────────── */
+.pubs-section {
+  border-bottom: 2px solid var(--rule);
+}
+
+.pubs-list {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.pub-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr 7.5rem;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  align-items: start;
+  position: relative;
+}
+
+.pub-item:last-child { border-bottom: none; }
+
+.pub-year {
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  padding-top: 0.2rem;
+}
+
+.pub-center {}
+
+.pub-title-wrap { position: relative; }
+
+.pub-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
+  cursor: default;
+  transition: color 0.2s;
+}
+
+.pub-item:hover .pub-title { color: var(--navy); }
+
+/* Pull quote */
+.pub-insight {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.35s ease, margin 0.35s ease;
+  margin-bottom: 0;
+}
+
+.pub-item:hover .pub-insight {
+  max-height: 4rem;
+  opacity: 1;
+  margin-bottom: 0.75rem;
+}
+
+.pub-insight-inner {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--navy);
+  line-height: 1.55;
+  padding-left: 0.875rem;
+  border-left: 2px solid var(--navy);
+}
+
+.pub-authors {
+  font-size: 0.62rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.pub-authors .me {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pub-right { text-align: right; }
+
+.pub-venue {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.pub-status {
+  display: inline-block;
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule-light);
+  padding: 0.2rem 0.5rem;
+  color: var(--ink-soft);
+}
+
+.pub-status--accepted {
+  border-color: var(--navy);
+  color: var(--navy);
+  background: var(--navy-light);
+}
+
+/* ─────────────────────────────────────────
+   RESEARCH THEMES — 3 COL
+───────────────────────────────────────── */
+.themes-section {
+  border-bottom: 2px solid var(--rule);
+}
+
+.themes-grid {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.theme-col {
+  padding: 2.5rem 2rem 2.5rem 0;
+  border-right: 1px solid var(--rule-light);
+}
+
+.theme-col:last-child { border-right: none; }
+.theme-col:not(:first-child) { padding-left: 2rem; }
+
+.theme-num {
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+}
+
+.theme-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1.5px solid var(--rule);
+}
+
+.theme-desc {
+  font-size: 0.7rem;
+  color: var(--ink-mid);
+  line-height: 1.8;
+}
+
+.theme-tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.theme-tag {
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule-light);
+  padding: 0.2rem 0.5rem;
+  color: var(--ink-soft);
+}
+
+/* ─────────────────────────────────────────
+   EXPERIENCE — TABLE LAYOUT
+───────────────────────────────────────── */
+.exp-section {
+  border-bottom: 2px solid var(--rule);
+  background: var(--paper-alt);
+}
+
+.exp-list {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.exp-row {
+  display: grid;
+  grid-template-columns: 10rem 1fr 7rem;
+  gap: 2rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--rule-light);
+  align-items: start;
+  transition: background 0.2s;
+}
+
+.exp-row:last-child { border-bottom: none; }
+
+.exp-row:hover {
+  background: rgba(0,0,0,0.03);
+  margin: 0 -2.5rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.exp-lab {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+
+.exp-advisor {
+  font-size: 0.55rem;
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+  letter-spacing: 0.04em;
+}
+
+.exp-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.exp-project-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.exp-project-desc {
+  font-size: 0.62rem;
+  color: var(--ink-mid);
+  line-height: 1.75;
+}
+
+.exp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.exp-tag {
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule-light);
+  padding: 0.15rem 0.45rem;
+  color: var(--ink-soft);
+}
+
+.exp-period {
+  font-size: 0.55rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────── */
+.footer {
+  border-top: 3px solid var(--rule);
+  border-bottom: none;
+}
+
+.footer-inner {
+  max-width: var(--col-w);
+  margin: 0 auto;
+  padding: 1.25rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.footer-links {
+  display: flex;
+  gap: 0;
+}
+
+.footer-links a {
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  padding: 0 1rem;
+  border-right: 1px solid var(--rule-light);
+  transition: color 0.15s;
+}
+
+.footer-links a:first-child { padding-left: 0; }
+.footer-links a:last-child { border-right: none; padding-right: 0; }
+.footer-links a:hover { color: var(--navy); }
+
+/* ─────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.1s; }
+.d2 { transition-delay: 0.2s; }
+.d3 { transition-delay: 0.3s; }
+.d4 { transition-delay: 0.4s; }
+
+/* HERO entrance */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-name         { animation: riseIn 0.9s 0.05s both cubic-bezier(.16,1,.3,1); }
+.hero-name-italic  { animation: riseIn 0.9s 0.18s both cubic-bezier(.16,1,.3,1); }
+.hero-role-list    { animation: riseIn 0.8s 0.32s both cubic-bezier(.16,1,.3,1); }
+.hero-award        { animation: riseIn 0.8s 0.45s both cubic-bezier(.16,1,.3,1); }
+.hero-contacts     { animation: riseIn 0.7s 0.55s both cubic-bezier(.16,1,.3,1); }
+.hero-standfirst   { animation: riseIn 0.9s 0.25s both cubic-bezier(.16,1,.3,1); }
+.hero-body         { animation: riseIn 0.8s 0.40s both cubic-bezier(.16,1,.3,1); }
+.hero-photo-wrap   { animation: riseIn 0.9s 0.10s both cubic-bezier(.16,1,.3,1); }
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ── -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="masthead-brand">Hana Oh</div>
+    <span class="masthead-date">Seoul National University · 2025</span>
+    <nav class="masthead-nav">
+      <a href="#news">News</a>
+      <a href="#pubs">Publications</a>
+      <a href="#research">Research</a>
+      <a href="#experience">Experience</a>
+      <a href="#">CV ↓</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <!-- LEFT -->
+    <div class="hero-left">
+      <div class="hero-kicker">HCI Researcher · Human–AI Interaction</div>
+
+      <h1 class="hero-name">Hana</h1>
+      <div class="hero-name-italic">Oh</div>
+
+      <ul class="hero-role-list">
+        <li>Human–AI Interaction</li>
+        <li>Educational Technology</li>
+        <li>Digital Resilience &amp; Literacy</li>
+        <li>Critical Thinking Systems</li>
+      </ul>
+
+      <div class="hero-award">
+        <span class="award-badge">★ CHI 2025 Best Paper</span>
+        <span class="award-caption">w/ Junho Myung et al.<br>KAIST × SNU</span>
+      </div>
+
+      <div class="hero-contacts">
+        <a class="hero-contact-link" href="mailto:hana2001@snu.ac.kr">Email</a>
+        <a class="hero-contact-link" href="#">LinkedIn</a>
+        <a class="hero-contact-link" href="#">GitHub</a>
+        <a class="hero-contact-link" href="#">CV ↓</a>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="hero-divider"></div>
+
+    <!-- RIGHT -->
+    <div class="hero-right">
+      <div class="hero-photo-wrap">
+        <!-- profile photo placeholder — replace src with actual path -->
+        <img src="../public/pictures/profile_main.png"
+             onerror="this.style.background='#d8d4ca'; this.removeAttribute('src')"
+             alt="Hana Oh">
+        <div class="hero-photo-caption">Hana Oh · Seoul, 2024</div>
+      </div>
+
+      <p class="hero-standfirst">
+        I study how people <strong>think with AI</strong> — and what happens to human reasoning when intelligent systems take over the cognitive work.
+      </p>
+
+      <div class="hero-body">
+        <p>My research sits at the intersection of human-AI interaction, NLP, and educational technology. I design and study AI systems that preserve human agency: systems that augment rather than replace.</p>
+        <p>Recent projects include experiential deepfake simulations for older adults, LLM-based writing scaffolds in K-12 EFL classrooms, and AI-assisted history education.</p>
+        <p>I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── NEWS ── -->
+<div id="news">
+  <div class="section-rule">
+    <div class="section-rule-inner">
+      <span class="section-num">§ 01</span>
+      <span class="section-label">News</span>
+    </div>
+  </div>
+
+  <div class="news-strip">
+    <div class="news-strip-inner">
+      <div class="news-col reveal">
+        <div class="news-col-date">Apr 2025</div>
+        <p class="news-col-text"><span class="award-mark">🏆 Best Paper Award</span> at CHI 2025 — co-authored with Junho Myung, Hyoungwook Jin et al.</p>
+      </div>
+      <div class="news-col reveal d1">
+        <div class="news-col-date">Jan 2025</div>
+        <p class="news-col-text">Two papers accepted to <span class="venue-mark">CHI 2026</span> — DeepAware (1st author) and When Scaffolding Breaks.</p>
+      </div>
+      <div class="news-col reveal d2">
+        <div class="news-col-date">Feb 2025</div>
+        <p class="news-col-text">Graduated from Seoul National University — B.S. Computer Science &amp; Business Administration.</p>
+      </div>
+      <div class="news-col reveal d3">
+        <div class="news-col-date">2024</div>
+        <p class="news-col-text">Research at <span class="venue-mark">KIXLAB (KAIST)</span>, HCI+Design Lab, and Human Computing Lab (SNU).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PUBLICATIONS ── -->
+<div id="pubs">
+  <div class="section-rule">
+    <div class="section-rule-inner">
+      <span class="section-num">§ 02</span>
+      <span class="section-label">Publications</span>
+    </div>
+  </div>
+
+  <div class="pubs-section">
+    <div class="pubs-list">
+
+      <div class="pub-item reveal">
+        <div class="pub-year">2026</div>
+        <div class="pub-center">
+          <div class="pub-title-wrap">
+            <div class="pub-title">DeepAware: Using Experiential Deepfake Simulations to Enhance Cybersecurity Awareness in Older Adults</div>
+          </div>
+          <div class="pub-insight">
+            <div class="pub-insight-inner">"What if older adults could experience a deepfake before encountering one in the wild?"</div>
+          </div>
+          <div class="pub-authors">
+            <span class="me">Hana Oh</span>, Eunbi Lee, Seungju Shin, Keyeun Lee, Miran Pyun, Hajin Lim
+          </div>
+        </div>
+        <div class="pub-right">
+          <span class="pub-venue">CHI 2026</span>
+          <span class="pub-status pub-status--accepted">Accepted</span>
+        </div>
+      </div>
+
+      <div class="pub-item reveal d1">
+        <div class="pub-year">2026</div>
+        <div class="pub-center">
+          <div class="pub-title-wrap">
+            <div class="pub-title">When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms</div>
+          </div>
+          <div class="pub-insight">
+            <div class="pub-insight-inner">"When the AI scaffold fails mid-lesson, what do students actually do?"</div>
+          </div>
+          <div class="pub-authors">
+            Junho Myung, Hyunseung Lim, <span class="me">Hana Oh</span>, Hyoungwook Jin, Nayeon Kang, So-Yeon Ahn, Hwajung Hong, Alice Oh, Juho Kim
+          </div>
+        </div>
+        <div class="pub-right">
+          <span class="pub-venue">CHI 2026</span>
+          <span class="pub-status pub-status--accepted">Accepted</span>
+        </div>
+      </div>
+
+      <div class="pub-item reveal d2">
+        <div class="pub-year">2025</div>
+        <div class="pub-center">
+          <div class="pub-title-wrap">
+            <div class="pub-title">Supporting Young Historians: Real-World Lessons from AI-Enabled Active Learning in Classrooms</div>
+          </div>
+          <div class="pub-insight">
+            <div class="pub-insight-inner">"AI as a thinking partner, not a shortcut, for history education."</div>
+          </div>
+          <div class="pub-authors">
+            Hyungwoo Song, Kieun Park, <span class="me">Hana Oh</span>, Hoyeol Yang
+          </div>
+        </div>
+        <div class="pub-right">
+          <span class="pub-venue">Comp. &amp; Edu.</span>
+          <span class="pub-status">Under Review</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── RESEARCH THEMES ── -->
+<div id="research">
+  <div class="section-rule">
+    <div class="section-rule-inner">
+      <span class="section-num">§ 03</span>
+      <span class="section-label">Research Themes</span>
+    </div>
+  </div>
+
+  <div class="themes-section">
+    <div class="themes-grid">
+      <div class="theme-col reveal">
+        <div class="theme-num">Theme 01</div>
+        <div class="theme-name">Human Agency<br>in AI Systems</div>
+        <p class="theme-desc">Designing AI systems that augment rather than replace human decision-making. Studying how interface design shapes perceived control and autonomy in human-AI collaborative workflows.</p>
+        <div class="theme-tags">
+          <span class="theme-tag">Human-AI Interaction</span>
+          <span class="theme-tag">Interface Design</span>
+          <span class="theme-tag">Agency</span>
+        </div>
+      </div>
+      <div class="theme-col reveal d1">
+        <div class="theme-num">Theme 02</div>
+        <div class="theme-name">AI in<br>Education</div>
+        <p class="theme-desc">How LLM-based tools reshape learning, critical thinking, and student autonomy in real classroom settings — field studies rather than controlled lab experiments.</p>
+        <div class="theme-tags">
+          <span class="theme-tag">EdTech</span>
+          <span class="theme-tag">LLMs</span>
+          <span class="theme-tag">Critical Thinking</span>
+        </div>
+      </div>
+      <div class="theme-col reveal d2">
+        <div class="theme-num">Theme 03</div>
+        <div class="theme-name">Digital Resilience<br>&amp; Literacy</div>
+        <p class="theme-desc">Building literacy and protective capabilities for vulnerable populations — older adults, young learners — navigating AI-generated misinformation and deepfakes.</p>
+        <div class="theme-tags">
+          <span class="theme-tag">Deepfakes</span>
+          <span class="theme-tag">Older Adults</span>
+          <span class="theme-tag">Cybersecurity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── EXPERIENCE ── -->
+<div id="experience">
+  <div class="section-rule">
+    <div class="section-rule-inner">
+      <span class="section-num">§ 04</span>
+      <span class="section-label">Research Experience</span>
+    </div>
+  </div>
+
+  <div class="exp-section">
+    <div class="exp-list">
+
+      <div class="exp-row reveal">
+        <div>
+          <div class="exp-lab">HCI+Design Lab</div>
+          <div class="exp-advisor">Prof. Hajin Lim · SNU</div>
+        </div>
+        <div class="exp-projects">
+          <div>
+            <div class="exp-project-title">DeepAware: Cybersecurity Education for Older Adults</div>
+            <p class="exp-project-desc">Led end-to-end design of a personalized simulation system using experiential deepfake encounters. Conducted mixed-method studies; paper accepted at CHI 2026.</p>
+            <div class="exp-tags">
+              <span class="exp-tag">Mixed-method</span>
+              <span class="exp-tag">System building</span>
+              <span class="exp-tag">Thematic analysis</span>
+            </div>
+          </div>
+        </div>
+        <div class="exp-period">Mar 2024 – ongoing</div>
+      </div>
+
+      <div class="exp-row reveal d1">
+        <div>
+          <div class="exp-lab">Human Computing Lab</div>
+          <div class="exp-advisor">Prof. Bongwon Suh · SNU</div>
+        </div>
+        <div class="exp-projects">
+          <div>
+            <div class="exp-project-title">AI-Assisted History Education (HistoriaCraft)</div>
+            <p class="exp-project-desc">In-the-wild study of AI-assisted history education; analyzed 11,000+ utterances from real classroom interactions to understand how AI supports active learning.</p>
+            <div class="exp-tags">
+              <span class="exp-tag">Log coding</span>
+              <span class="exp-tag">Classroom obs.</span>
+              <span class="exp-tag">Thematic analysis</span>
+            </div>
+          </div>
+        </div>
+        <div class="exp-period">Dec 2023 – ongoing</div>
+      </div>
+
+      <div class="exp-row reveal d2">
+        <div>
+          <div class="exp-lab">KIXLAB</div>
+          <div class="exp-advisor">Prof. Juho Kim · KAIST</div>
+        </div>
+        <div class="exp-projects">
+          <div>
+            <div class="exp-project-title">Student–AI Writing Scaffolding Analysis</div>
+            <p class="exp-project-desc">Analyzed 14,000+ student-AI dialogue logs to identify scaffolding failures in LLM-based writing tools used in K-12 EFL classrooms. Developed novel codebooks for large-scale interaction data.</p>
+            <div class="exp-tags">
+              <span class="exp-tag">Log analysis</span>
+              <span class="exp-tag">Qual. coding</span>
+              <span class="exp-tag">Educational AI</span>
+            </div>
+          </div>
+        </div>
+        <div class="exp-period">Jan – Jun 2024</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-name">Hana Oh</div>
+    <nav class="footer-links">
+      <a href="mailto:hana2001@snu.ac.kr">hana2001@snu.ac.kr</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">GitHub</a>
+      <a href="#">CV ↓</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // Active nav highlight
+  const sections = ['news','pubs','research','experience'];
+  const navLinks = document.querySelectorAll('.masthead-nav a');
+
+  const secObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => {
+          l.style.background = '';
+          l.style.color = '';
+        });
+        const link = document.querySelector(`.masthead-nav a[href="#${e.target.id}"]`);
+        if (link) {
+          link.style.background = 'var(--ink)';
+          link.style.color = 'var(--paper)';
+        }
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) secObs.observe(el);
+  });
+</script>
+</body>
+</html>

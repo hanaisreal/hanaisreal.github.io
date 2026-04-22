@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option C — Slow Essay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Space+Mono:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --white: #fafaf8;
+    --ink: #1a1a1a;
+    --ink-soft: #5a5a5a;
+    --accent: #2d4a7a;
+    --accent-warm: #8b6914;
+    --red: #b83232;
+    --line: #e0ddd8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Lora', serif;
+    background: var(--white);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── sticky nav ── */
+  .sidenav {
+    position: fixed;
+    top: 50%;
+    right: 2rem;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 100;
+  }
+
+  .sidenav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+
+  .sidenav-dot.active,
+  .sidenav-dot:hover {
+    background: var(--accent);
+    transform: scale(1.5);
+  }
+
+  /* ── each panel ── */
+  .panel {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem max(3rem, calc((100vw - 640px) / 2));
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ── INTRO panel ── */
+  .panel--intro {
+    background: var(--white);
+  }
+
+  .mono-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 3rem;
+  }
+
+  .intro-text {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .intro-text .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .intro-text .line.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .intro-text em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .intro-text .warm {
+    color: var(--accent-warm);
+  }
+
+  .intro-sub {
+    margin-top: 3rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-soft);
+    line-height: 2;
+    opacity: 0;
+    transition: opacity 1s 0.6s;
+  }
+
+  .intro-sub.visible { opacity: 1; }
+
+  .intro-links {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    opacity: 0;
+    transition: opacity 1s 0.9s;
+  }
+
+  .intro-links.visible { opacity: 1; }
+
+  .intro-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+
+  /* ── AWARD panel ── */
+  .panel--award {
+    background: #fdf9f3;
+  }
+
+  .award-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.5rem;
+  }
+
+  .award-heading {
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    line-height: 1.3;
+    max-width: 22ch;
+  }
+
+  .award-detail {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    max-width: 50ch;
+  }
+
+  .award-meta {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .award-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--red);
+    color: var(--red);
+    padding: 0.4rem 0.9rem;
+  }
+
+  /* ── NARRATIVE panel ── */
+  .panel--narrative {
+    background: var(--white);
+  }
+
+  .narrative-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+  }
+
+  .narrative-body {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    max-width: 58ch;
+    color: var(--ink);
+  }
+
+  .narrative-body p + p {
+    margin-top: 1.5rem;
+  }
+
+  .narrative-body strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .narrative-body .aside {
+    display: block;
+    margin-top: 1.5rem;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--line);
+    color: var(--ink-soft);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* ── PUBLICATIONS panel ── */
+  .panel--pubs {
+    background: #f4f1ec;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    min-height: auto;
+  }
+
+  .pubs-list {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .pub-entry {
+    padding: 2rem 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1.5rem;
+    cursor: default;
+    transition: background 0.2s;
+  }
+
+  .pub-entry:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .pub-entry:hover {
+    background: rgba(45, 74, 122, 0.04);
+    margin: 0 -2rem;
+    padding: 2rem;
+  }
+
+  .pub-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-soft);
+    padding-top: 0.3rem;
+  }
+
+  .pub-body {}
+
+  .pub-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.45;
+    margin-bottom: 0.5rem;
+  }
+
+  .pub-authors {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 0.4rem;
+  }
+
+  .pub-authors .me {
+    color: var(--ink);
+    text-decoration: underline;
+  }
+
+  .pub-venue-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .pub-venue {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .pub-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    padding: 0.15rem 0.5rem;
+  }
+
+  /* ── THEMES panel ── */
+  .panel--themes {
+    background: var(--white);
+    min-height: auto;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .themes-grid {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .theme-card {
+    padding: 0;
+  }
+
+  .theme-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.75rem;
+  }
+
+  .theme-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+    border-bottom: 1.5px solid var(--ink);
+    padding-bottom: 0.75rem;
+  }
+
+  .theme-desc {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  .panel--footer {
+    min-height: auto;
+    padding: 2rem max(3rem, calc((100vw - 640px) / 2));
+    border-bottom: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .footer-name {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover {
+    color: white;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.85s ease, transform 0.85s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.25s; }
+  .reveal-delay-3 { transition-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- Side nav dots -->
+<nav class="sidenav" id="sidenav">
+  <div class="sidenav-dot active" data-target="intro"></div>
+  <div class="sidenav-dot" data-target="award"></div>
+  <div class="sidenav-dot" data-target="narrative"></div>
+  <div class="sidenav-dot" data-target="pubs"></div>
+  <div class="sidenav-dot" data-target="themes"></div>
+</nav>
+
+<!-- PANEL 1: INTRO -->
+<section class="panel panel--intro" id="intro">
+  <div class="mono-label">Hana Oh — HCI Researcher</div>
+
+  <p class="intro-text">
+    <span class="line">I study how people</span>
+    <span class="line"><em>think with AI—</em></span>
+    <span class="line">and what we lose</span>
+    <span class="line">when they stop <span class="warm">thinking for themselves.</span></span>
+  </p>
+
+  <p class="intro-sub">
+    Seoul National University  ·  CS &amp; Business  ·  hana2001@snu.ac.kr
+  </p>
+
+  <div class="intro-links">
+    <a href="#">Email</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">GitHub</a>
+    <a href="#">CV</a>
+  </div>
+</section>
+
+<!-- PANEL 2: AWARD -->
+<section class="panel panel--award" id="award">
+  <div class="award-eyebrow reveal">★ Recognition</div>
+  <h2 class="award-heading reveal reveal-delay-1">CHI 2025<br>Best Paper Award</h2>
+  <p class="award-detail reveal reveal-delay-2">
+    Awarded at the ACM CHI Conference on Human Factors in Computing Systems — the premier venue in HCI.
+    Co-authored with Junho Myung and collaborators at KAIST and Seoul National University.
+  </p>
+  <div class="award-meta reveal reveal-delay-3">
+    <div class="award-badge">Best Paper — CHI 2025</div>
+    <span style="font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--ink-soft);">w/ Junho Myung et al.</span>
+  </div>
+</section>
+
+<!-- PANEL 3: NARRATIVE -->
+<section class="panel panel--narrative" id="narrative">
+  <div class="narrative-label reveal">My Research</div>
+  <div class="narrative-body reveal reveal-delay-1">
+    <p>
+      I became interested in HCI because I kept noticing a gap — the gap between what AI <strong>can</strong> do and what it <strong>should</strong> do. Most systems optimize for efficiency. I'm more interested in what happens to human thinking in the process.
+    </p>
+    <p>
+      My work spans two connected threads. One is about <strong>protection</strong>: helping older adults recognize deepfakes, building digital literacy through experience rather than instruction. The other is about <strong>learning</strong>: understanding how students interact with LLM writing tools in real classrooms, where the scaffolding sometimes helps and sometimes breaks.
+    </p>
+    <span class="aside">
+      Both threads share the same question: when AI takes on cognitive work, does it make us more capable — or less?
+    </span>
+  </div>
+</section>
+
+<!-- PANEL 4: PUBLICATIONS -->
+<section class="panel panel--pubs" id="pubs">
+  <div class="mono-label reveal">Publications</div>
+  <div class="pubs-list">
+
+    <div class="pub-entry reveal">
+      <div class="pub-num">01</div>
+      <div class="pub-body">
+        <div class="pub-title">DeepAware: Using Experiential Deepfake Simulations to Enhance Cybersecurity Awareness in Older Adults</div>
+        <div class="pub-authors"><span class="me">Hana Oh</span>, Eunbi Lee, Seungju Shin, Keyeun Lee, Miran Pyun, Hajin Lim</div>
+        <div class="pub-venue-row">
+          <span class="pub-venue">CHI 2026</span>
+          <span class="pub-status">Accepted</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-entry reveal reveal-delay-1">
+      <div class="pub-num">02</div>
+      <div class="pub-body">
+        <div class="pub-title">When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms</div>
+        <div class="pub-authors">Junho Myung, Hyunseung Lim, <span class="me">Hana Oh</span>, Hyoungwook Jin, Nayeon Kang, So-Yeon Ahn, Hwajung Hong, Alice Oh, Juho Kim</div>
+        <div class="pub-venue-row">
+          <span class="pub-venue">CHI 2026</span>
+          <span class="pub-status">Accepted</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-entry reveal reveal-delay-2">
+      <div class="pub-num">03</div>
+      <div class="pub-body">
+        <div class="pub-title">Supporting Young Historians: Real-World Lessons from AI-Enabled Active Learning in Classrooms</div>
+        <div class="pub-authors">Hyungwoo Song, Kieun Park, <span class="me">Hana Oh</span>, Hoyeol Yang</div>
+        <div class="pub-venue-row">
+          <span class="pub-venue">Computers &amp; Education</span>
+          <span class="pub-status">Under Review</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PANEL 5: THEMES -->
+<section class="panel panel--themes" id="themes">
+  <div class="mono-label reveal">Research Themes</div>
+  <div class="themes-grid">
+    <div class="theme-card reveal">
+      <div class="theme-num">01</div>
+      <div class="theme-name">Human Agency in AI</div>
+      <p class="theme-desc">Preserving meaningful human control in AI-mediated workflows. Interface design that supports rather than supplants decision-making.</p>
+    </div>
+    <div class="theme-card reveal reveal-delay-1">
+      <div class="theme-num">02</div>
+      <div class="theme-name">AI in Education</div>
+      <p class="theme-desc">How LLM-based tools reshape learning, critical thinking, and student autonomy in real-world K-12 and higher-ed contexts.</p>
+    </div>
+    <div class="theme-card reveal reveal-delay-2">
+      <div class="theme-num">03</div>
+      <div class="theme-name">Digital Resilience</div>
+      <p class="theme-desc">Building literacy and protective capabilities for vulnerable populations navigating AI-generated misinformation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="panel panel--footer">
+  <div class="footer-name">Hana Oh</div>
+  <div class="footer-links">
+    <a href="mailto:hana2001@snu.ac.kr">Email</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">GitHub</a>
+  </div>
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  reveals.forEach(el => obs.observe(el));
+
+  // Intro text lines
+  const lines = document.querySelectorAll('.intro-text .line');
+  const introSub = document.querySelector('.intro-sub');
+  const introLinks = document.querySelector('.intro-links');
+
+  setTimeout(() => {
+    lines.forEach((line, i) => {
+      setTimeout(() => line.classList.add('visible'), i * 220);
+    });
+    setTimeout(() => {
+      introSub.classList.add('visible');
+      introLinks.classList.add('visible');
+    }, lines.length * 220 + 300);
+  }, 300);
+
+  // Sidenav dots
+  const panels = document.querySelectorAll('.panel[id]');
+  const dots = document.querySelectorAll('.sidenav-dot');
+
+  const panelObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        dots.forEach(d => d.classList.remove('active'));
+        const idx = [...panels].indexOf(e.target);
+        if (dots[idx]) dots[idx].classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  panels.forEach(p => panelObs.observe(p));
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      panels[i].scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // pub hover background fix
+  document.querySelectorAll('.pub-entry').forEach(entry => {
+    entry.addEventListener('mouseenter', () => {
+      const parent = entry.closest('.pubs-list');
+      const padding = window.getComputedStyle(entry.closest('.panel')).paddingLeft;
+    });
+  });
+</script>
+</body>
+</html>

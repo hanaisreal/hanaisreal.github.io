@@ -1,181 +1,116 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import Navigation from './Navigation';
-import ResearchInterestsViz from './ResearchInterestsViz';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { HiOutlineMail } from 'react-icons/hi';
 
-const containerVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.65,
-      ease: 'easeOut',
-      when: 'beforeChildren',
-      staggerChildren: 0.12,
-    },
-  },
-};
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] },
+});
 
-const headerVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
-  },
-};
-
-const bodyVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: 'easeOut' },
-  },
-};
-const contactLinks = [
-  {
-    label: 'Email',
-    href: 'mailto:hana2001@snu.ac.kr',
-    icon: <HiOutlineMail />,
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/in/hana-oh-921945290/',
-    icon: <FaLinkedin />,
-  },
-  {
-    label: 'GitHub',
-    href: 'https://github.com/hanaisreal',
-    icon: <FaGithub />,
-  },
+const roles = [
+  'Human–AI Interaction',
+  'Educational Technology',
+  'Digital Resilience & Literacy',
+  'Critical Thinking Systems',
 ];
 
-interface HeroSectionProps {
-  isChristmasTheme?: boolean;
-}
+const contactLinks = [
+  { label: 'Email',    href: 'mailto:hana2001@snu.ac.kr' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hana-oh-921945290/' },
+  { label: 'GitHub',   href: 'https://github.com/hanaisreal' },
+];
 
-const HeroSection: React.FC<HeroSectionProps> = ({ isChristmasTheme = false }) => {
-  const [isHovered, setIsHovered] = useState(false);
+const HeroSection: React.FC = () => {
+  const [hovered, setHovered] = useState(false);
 
   return (
-  <motion.section
-    className={`hero hana-section hana-section--light ${isChristmasTheme ? 'hero--christmas' : ''}`}
-    id="home"
-    initial="hidden"
-    animate="visible"
-    variants={containerVariants}
-  >
-    <div className="hero__inner">
-      <motion.header className="hero__header" variants={headerVariants}>
-        <Navigation />
-      </motion.header>
+    <section className="ed-hero" id="home">
+      <div className="ed-hero__grid">
 
-      <hr className="hero__divider" />
+        {/* ── LEFT ── */}
+        <div className="ed-hero__left">
+          <motion.p className="ed-hero__kicker" {...fadeUp(0.05)}>
+            HCI Researcher · Human–AI Interaction
+          </motion.p>
 
-      <motion.div className="hero__body" variants={bodyVariants}>
-        <motion.div className="hero__portrait-section">
-          <motion.figure
-            className="hero__portrait hero__portrait--hover-effect"
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+          <motion.h1 className="ed-hero__name" {...fadeUp(0.1)}>
+            Hana
+          </motion.h1>
+          <motion.div className="ed-hero__name-italic" {...fadeUp(0.2)}>
+            Oh
+          </motion.div>
+
+          <motion.ul className="ed-hero__role-list" {...fadeUp(0.3)}>
+            {roles.map((r) => (
+              <li key={r}>
+                <span className="ed-hero__role-dot" />
+                {r}
+              </li>
+            ))}
+          </motion.ul>
+
+          <motion.div className="ed-hero__contacts" {...fadeUp(0.45)}>
+            {contactLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="ed-hero__contact-link"
+                target={l.href.startsWith('mailto') ? undefined : '_blank'}
+                rel="noopener noreferrer"
+              >
+                {l.label}
+              </a>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* ── DIVIDER ── */}
+        <div className="ed-hero__col-divider" />
+
+        {/* ── RIGHT ── */}
+        <div className="ed-hero__right">
+          <motion.div
+            className="ed-hero__photo-wrap"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
           >
             <img
               src={`${process.env.PUBLIC_URL}/pictures/profile_main.png`}
               alt="Hana Oh"
-              className="hero__portrait-img hero__portrait-img--main"
-              style={{ opacity: isHovered ? 0 : 1 }}
+              className="ed-hero__photo"
+              style={{ opacity: hovered ? 0 : 1, position: 'absolute', inset: 0 }}
             />
             <img
               src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
               alt="Hana Oh"
-              className="hero__portrait-img hero__portrait-img--hover"
-              style={{ opacity: isHovered ? 1 : 0 }}
+              className="ed-hero__photo"
+              style={{ opacity: hovered ? 1 : 0, position: 'absolute', inset: 0 }}
             />
-          </motion.figure>
+            <div className="ed-hero__photo-caption">Hana Oh · Seoul, 2024</div>
+          </motion.div>
 
-          <motion.div
-            className="hero__name-section"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6, ease: 'easeOut' }}
-          >
-            <h1 className="hero__name">
-              {isChristmasTheme ? '🎄 Hana Oh 🎅' : 'Hana Oh'}
-            </h1>
-            <p className="hero__title">
-              {isChristmasTheme
-                ? '🎁 Computer Science & Business Student • HCI Researcher • Holiday Researcher 🎁'
-                : 'Computer Science & Business Student • HCI Researcher'
-              }
+          <motion.p className="ed-hero__standfirst" {...fadeUp(0.25)}>
+            I study how people <strong>think with AI</strong> — and what happens to human reasoning when intelligent systems take over the cognitive work.
+          </motion.p>
+
+          <motion.div className="ed-hero__body" {...fadeUp(0.38)}>
+            <p>
+              My research sits at the intersection of human–AI interaction, NLP, and educational technology. I design and study AI systems that preserve human agency — systems that augment rather than replace.
+            </p>
+            <p>
+              Recent projects include experiential deepfake simulations for older adults, LLM-based writing scaffolds in K-12 EFL classrooms, and AI-assisted history education in real classroom settings.
+            </p>
+            <p>
+              I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.
             </p>
           </motion.div>
+        </div>
 
-          <motion.div
-            className="hero__contact-links"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
-          >
-            {contactLinks.map((link) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                className="hero__contact-link"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                title={link.label}
-              >
-                {link.icon}
-              </motion.a>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        <motion.div className="hero__copy" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <p className="hero__description">
-            My research lies at the intersection of human-AI interaction, NLP, and AI (broadly human-computer interaction). I'm interested in understanding how people interact with AI systems and designing interfaces that preserve <span className="hero__highlight-term hero__highlight--agency">human agency</span> in collaborative workflows.
-          </p>
-          <p>
-          I am currently interested in building conversational systems that support <span className="hero__highlight-term hero__highlight--perspective">perspective-taking</span> and reasoning to foster <span className="hero__highlight-term hero__highlight--thinking">critical thinking</span>.
-            My previous work has been around building systems for personalized AI interventions for <span className="hero__highlight-term hero__highlight--resilience">digital resilience</span>, and analyzing human interaction with AI in educational contexts.
-            I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.
-          </p>
-          <p>
-            Besides, I love to travel, write, swim, and <span className="hero__highlight-term hero__highlight--draw">draw</span> :)
-          </p>
-        </motion.div>
-      </motion.div>
-    </div>
-
-    <motion.section
-      className="hana-section hana-section--light"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
-    >
-      <div className="section-inner">
-        <motion.div className="research-interests__intro">
-          <span className="section-eyebrow text-themePurple">
-            Research Interests
-          </span>
-        </motion.div>
-
-        <ResearchInterestsViz />
-
-        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', textAlign: 'center', color: 'var(--muted)' }}>
-          My research interests are broad, but they all tie to advancing human capabilities through
-          thoughtful AI design that preserves agency and supports critical thinking.
-        </p>
       </div>
-    </motion.section>
-  </motion.section>
+    </section>
   );
 };
 
