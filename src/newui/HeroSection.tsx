@@ -30,17 +30,19 @@ const HeroSection: React.FC = () => {
         {/* ── LEFT ── */}
         <div className="ed-hero__left">
           <motion.p className="ed-hero__kicker" {...fadeUp(0.05)}>
-            HCI Researcher · Human–AI Interaction
+            HCI Researcher · Seoul National University
           </motion.p>
 
           <motion.h1 className="ed-hero__name" {...fadeUp(0.1)}>
             Hana Oh
           </motion.h1>
+
           <motion.p className="ed-hero__tagline" {...fadeUp(0.2)}>
-            I study how people <em>think with AI</em> — and design for the humans in the loop.
+            I study how people <em>think with AI</em> —<br />
+            and design for the humans in the loop.
           </motion.p>
 
-          <motion.ul className="ed-hero__role-list" {...fadeUp(0.3)}>
+          <motion.ul className="ed-hero__role-list" {...fadeUp(0.32)}>
             {roles.map((r) => (
               <li key={r}>
                 <span className="ed-hero__role-dot" />
@@ -49,7 +51,19 @@ const HeroSection: React.FC = () => {
             ))}
           </motion.ul>
 
-          <motion.div className="ed-hero__contacts" {...fadeUp(0.45)}>
+          <motion.div className="ed-hero__bio" {...fadeUp(0.42)}>
+            <p>
+              My work spans human–AI interaction, NLP, and educational technology.
+              I design AI systems that preserve human agency — tools that augment
+              rather than replace.
+            </p>
+            <p>
+              B.S. Computer Science &amp; Business Administration,
+              Seoul National University.
+            </p>
+          </motion.div>
+
+          <motion.div className="ed-hero__contacts" {...fadeUp(0.52)}>
             {contactLinks.map((l) => (
               <a
                 key={l.label}
@@ -67,47 +81,31 @@ const HeroSection: React.FC = () => {
         {/* ── DIVIDER ── */}
         <div className="ed-hero__col-divider" />
 
-        {/* ── RIGHT ── */}
-        <div className="ed-hero__right">
-          <motion.div
-            className="ed-hero__photo-wrap"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-          >
+        {/* ── RIGHT: full-column photo ── */}
+        <motion.div
+          className="ed-hero__right"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.1, ease: 'easeOut' }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
+          <div className="ed-hero__photo-wrap">
             <img
               src={`${process.env.PUBLIC_URL}/pictures/profile_main.png`}
               alt="Hana Oh"
               className="ed-hero__photo"
-              style={{ opacity: hovered ? 0 : 1, position: 'absolute', inset: 0 }}
+              style={{ opacity: hovered ? 0 : 1 }}
             />
             <img
               src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
               alt="Hana Oh"
               className="ed-hero__photo"
-              style={{ opacity: hovered ? 1 : 0, position: 'absolute', inset: 0 }}
+              style={{ opacity: hovered ? 1 : 0 }}
             />
             <div className="ed-hero__photo-caption">Hana Oh · Seoul, 2024</div>
-          </motion.div>
-
-          <motion.p className="ed-hero__standfirst" {...fadeUp(0.25)}>
-            I study how people <strong>think with AI</strong> — and what happens to human reasoning when intelligent systems take over the cognitive work.
-          </motion.p>
-
-          <motion.div className="ed-hero__body" {...fadeUp(0.38)}>
-            <p>
-              My research sits at the intersection of human–AI interaction, NLP, and educational technology. I design and study AI systems that preserve human agency — systems that augment rather than replace.
-            </p>
-            <p>
-              Recent projects include experiential deepfake simulations for older adults, LLM-based writing scaffolds in K-12 EFL classrooms, and AI-assisted history education in real classroom settings.
-            </p>
-            <p>
-              I recently graduated from Seoul National University with a B.S. in Computer Science and Business Administration.
-            </p>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
       </div>
     </section>
