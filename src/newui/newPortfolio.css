@@ -230,12 +230,12 @@ button {
 
 .ed-hero__tagline {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 1.65;
   color: var(--ink-mid);
-  margin: 0.75rem 0 2rem 0;
-  max-width: 38ch;
+  margin: 1rem 0 2.5rem 0;
+  max-width: 36ch;
 }
 
 .ed-hero__tagline em {
@@ -356,7 +356,7 @@ button {
 
 .ed-hero__standfirst {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 400;
   line-height: 1.75;
   color: var(--ink);
@@ -371,15 +371,15 @@ button {
 
 .ed-hero__body {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.88rem;
-  line-height: 1.8;
+  font-size: 0.95rem;
+  line-height: 1.85;
   color: var(--ink-mid);
   border-top: 1px solid var(--rule-light);
-  padding-top: 1rem;
+  padding-top: 1.25rem;
 }
 
 .ed-hero__body p + p {
-  margin-top: 0.75rem;
+  margin-top: 1rem;
 }
 
 /* ─────────────────────────────────────────
@@ -412,17 +412,18 @@ button {
 }
 
 .ed-news__date {
-  font-size: 0.5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ink-soft);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
 .ed-news__text {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.65;
+  font-size: 0.95rem;
+  line-height: 1.7;
   color: var(--ink);
   margin: 0;
 }
@@ -465,10 +466,11 @@ button {
 }
 
 .ed-pub__year {
-  font-size: 0.55rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
   letter-spacing: 0.1em;
   color: var(--ink-soft);
-  padding-top: 0.25rem;
+  padding-top: 0.3rem;
 }
 
 .ed-pub__center {
@@ -477,10 +479,10 @@ button {
 
 .ed-pub__title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  line-height: 1.45;
-  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+  margin: 0 0 0.6rem 0;
   color: var(--ink);
   transition: color 0.2s;
 }
@@ -509,19 +511,19 @@ button {
 .ed-pub__insight-text {
   font-family: 'Playfair Display', serif;
   font-style: italic;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--navy);
-  line-height: 1.55;
+  line-height: 1.6;
   padding-left: 0.875rem;
   border-left: 2px solid var(--navy);
-  padding-top: 0.1rem;
-  padding-bottom: 0.1rem;
+  padding-top: 0.15rem;
+  padding-bottom: 0.15rem;
   margin: 0;
 }
 
 .ed-pub__authors {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   color: var(--ink-soft);
   line-height: 1.7;
   margin: 0;
@@ -544,7 +546,8 @@ button {
 }
 
 .ed-pub__venue {
-  font-size: 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--navy);
@@ -553,7 +556,8 @@ button {
 
 .ed-pub__status {
   display: inline-block;
-  font-size: 0.5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border: 1px solid var(--rule-light);
@@ -619,17 +623,17 @@ button {
 
 .ed-theme__name {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 700;
   line-height: 1.25;
-  margin: 0 0 0.75rem 0;
-  padding-bottom: 0.75rem;
+  margin: 0 0 0.85rem 0;
+  padding-bottom: 0.85rem;
   border-bottom: 1.5px solid var(--rule);
 }
 
 .ed-theme__desc {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.93rem;
   color: var(--ink-mid);
   line-height: 1.8;
   margin: 0 0 1rem 0;
@@ -693,16 +697,16 @@ button {
 
 .ed-exp__project-title {
   font-family: 'Playfair Display', serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  margin: 0 0 0.3rem 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
 }
 
 .ed-exp__project-desc {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: var(--ink-mid);
-  line-height: 1.75;
+  line-height: 1.8;
   margin: 0 0 0.5rem 0;
 }
 
@@ -818,7 +822,7 @@ button {
 
 .ed-project__title {
   font-family: 'Playfair Display', serif;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   line-height: 1.35;
   margin: 0 0 0.5rem 0;
@@ -827,9 +831,9 @@ button {
 
 .ed-project__desc {
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.83rem;
+  font-size: 0.92rem;
   color: var(--ink-mid);
-  line-height: 1.75;
+  line-height: 1.8;
   margin: 0 0 0.75rem 0;
 }
 
