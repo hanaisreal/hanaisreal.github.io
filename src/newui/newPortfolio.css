@@ -305,51 +305,54 @@ button {
   color: var(--ink);
 }
 
-/* Right — full-column photo */
+/* Right — photo mosaic */
 .ed-hero__right {
+  overflow: hidden;
+  padding: 0;
+}
+
+/* ─── PHOTO MOSAIC ─── */
+.photo-mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 100%;
+  gap: 3px;
+  background: var(--rule-light); /* gap color */
+}
+
+/* Large cell: spans 2 rows */
+.mosaic-cell--span2row {
+  grid-row: span 2;
+}
+
+.mosaic-cell {
   position: relative;
   overflow: hidden;
-  /* no padding: photo goes edge-to-edge */
+  perspective: 900px;
 }
 
-.ed-hero__photo-wrap {
-  position: absolute;
-  inset: 0;
-}
-
-.ed-hero__photo {
+.mosaic-cell__inner {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  filter: grayscale(20%) contrast(1.05);
-  transition: opacity 0.5s ease, filter 0.5s ease;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mosaic-cell.is-flipped .mosaic-cell__inner {
+  transform: rotateY(180deg);
+}
+
+.mosaic-cell__face {
   position: absolute;
   inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
-.ed-hero__right:hover .ed-hero__photo {
-  filter: grayscale(0%) contrast(1.0);
-}
-
-.ed-hero__photo-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(transparent, rgba(24,20,14,0.75));
-  color: var(--paper);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 2rem 1.25rem 0.75rem;
-  opacity: 0;
-  transition: opacity 0.35s;
-}
-
-.ed-hero__right:hover .ed-hero__photo-caption {
-  opacity: 1;
+.mosaic-cell__back {
+  transform: rotateY(180deg);
 }
 
 /* Bio moves to left column */
