@@ -34,11 +34,11 @@ const HeroSection: React.FC = () => {
           </motion.p>
 
           <motion.h1 className="ed-hero__name" {...fadeUp(0.1)}>
-            Hana
+            Hana Oh
           </motion.h1>
-          <motion.div className="ed-hero__name-italic" {...fadeUp(0.2)}>
-            Oh
-          </motion.div>
+          <motion.p className="ed-hero__tagline" {...fadeUp(0.2)}>
+            I study how people <em>think with AI</em> — and design for the humans in the loop.
+          </motion.p>
 
           <motion.ul className="ed-hero__role-list" {...fadeUp(0.3)}>
             {roles.map((r) => (

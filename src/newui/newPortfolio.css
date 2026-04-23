@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* ─────────────────────────────────────────
    DESIGN TOKENS
@@ -38,7 +38,7 @@ body {
   min-height: 100%;
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Space Mono', 'IBM Plex Mono', monospace;
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -98,6 +98,7 @@ button {
 }
 
 .ed-masthead__meta {
+  font-family: 'Space Mono', monospace;
   font-size: 0.55rem;
   letter-spacing: 0.1em;
   color: var(--ink-soft);
@@ -115,6 +116,7 @@ button {
 }
 
 .ed-masthead__nav a {
+  font-family: 'Space Mono', monospace;
   font-size: 0.58rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -155,6 +157,7 @@ button {
 }
 
 .ed-section-num {
+  font-family: 'Space Mono', monospace;
   font-size: 0.5rem;
   letter-spacing: 0.22em;
   color: var(--ink-soft);
@@ -162,6 +165,7 @@ button {
 }
 
 .ed-section-label {
+  font-family: 'Space Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -205,6 +209,7 @@ button {
 }
 
 .ed-hero__kicker {
+  font-family: 'Space Mono', monospace;
   font-size: 0.55rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -223,15 +228,20 @@ button {
   margin: 0;
 }
 
-.ed-hero__name-italic {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(4rem, 8vw, 7.5rem);
-  font-weight: 700;
+.ed-hero__tagline {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--ink-mid);
+  margin: 0.75rem 0 2rem 0;
+  max-width: 38ch;
+}
+
+.ed-hero__tagline em {
   font-style: italic;
-  line-height: 0.92;
-  letter-spacing: -0.02em;
   color: var(--navy);
-  margin-bottom: 2.5rem;
+  font-weight: 500;
 }
 
 .ed-hero__role-list {
@@ -241,6 +251,7 @@ button {
 }
 
 .ed-hero__role-list li {
+  font-family: 'Space Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -274,6 +285,7 @@ button {
 }
 
 .ed-hero__contact-link {
+  font-family: 'Space Mono', monospace;
   font-size: 0.55rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -358,8 +370,9 @@ button {
 }
 
 .ed-hero__body {
-  font-size: 0.72rem;
-  line-height: 1.85;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.8;
   color: var(--ink-mid);
   border-top: 1px solid var(--rule-light);
   padding-top: 1rem;
@@ -407,8 +420,8 @@ button {
 }
 
 .ed-news__text {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.85rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.9rem;
   line-height: 1.65;
   color: var(--ink);
   margin: 0;
@@ -507,10 +520,10 @@ button {
 }
 
 .ed-pub__authors {
-  font-size: 0.62rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
   color: var(--ink-soft);
   line-height: 1.7;
-  letter-spacing: 0.01em;
   margin: 0;
 }
 
@@ -615,7 +628,8 @@ button {
 }
 
 .ed-theme__desc {
-  font-size: 0.7rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.85rem;
   color: var(--ink-mid);
   line-height: 1.8;
   margin: 0 0 1rem 0;
@@ -685,7 +699,8 @@ button {
 }
 
 .ed-exp__project-desc {
-  font-size: 0.62rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
   color: var(--ink-mid);
   line-height: 1.75;
   margin: 0 0 0.5rem 0;
@@ -811,7 +826,8 @@ button {
 }
 
 .ed-project__desc {
-  font-size: 0.65rem;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.83rem;
   color: var(--ink-mid);
   line-height: 1.75;
   margin: 0 0 0.75rem 0;
