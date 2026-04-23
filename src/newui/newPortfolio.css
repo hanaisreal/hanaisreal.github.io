@@ -139,10 +139,11 @@ button {
 }
 
 /* ─────────────────────────────────────────
-   SECTION RULE HEADER — dark bar
+   SECTION RULE HEADER — thick rule + label
 ───────────────────────────────────────── */
 .ed-section-rule {
-  background: var(--ink);
+  border-top: 3px solid var(--rule);
+  background: var(--paper);
 }
 
 .ed-section-rule__inner {
@@ -151,32 +152,32 @@ button {
   padding: 0 var(--pad-x);
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  height: 2.75rem;
+  gap: 1rem;
+  height: 3rem;
 }
 
 .ed-section-num {
   font-family: 'Space Mono', monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.22em;
-  color: rgba(245, 242, 235, 0.35);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
   flex-shrink: 0;
 }
 
 .ed-section-label {
   font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--paper);
+  color: var(--ink);
   flex-shrink: 0;
 }
 
 .ed-section-rule__line {
   flex: 1;
   height: 1px;
-  background: rgba(245, 242, 235, 0.15);
+  background: var(--rule-light);
 }
 
 /* ─────────────────────────────────────────
