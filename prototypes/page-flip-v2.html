@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page Flip — Hana Oh</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper:      #f6f1e8;
+  --paper-back: #e8e0d2;
+  --ink:        #18140f;
+  --ink-mid:    #4a433a;
+  --ink-light:  #8a8070;
+  --rule:       #c8bfae;
+  --accent:     #7a3020;
+  --bg:         #0d0c0a;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bg);
+  overflow: hidden;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: var(--ink);
+}
+
+/* ── Scene ──────────────────────────────────────────────── */
+#scene {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Page wrapper (sizing) ──────────────────────────────── */
+#page-wrap {
+  position: relative;
+  /* fills most of screen while keeping book proportions */
+  width:  min(580px, 88vw);
+  height: min(820px, 88vh);
+  box-shadow:
+    0 4px 60px rgba(0,0,0,0.7),
+    0 2px 12px rgba(0,0,0,0.5);
+}
+
+/* ── Page faces ─────────────────────────────────────────── */
+.page {
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+#page-back  { z-index: 1; }
+#page-front { z-index: 2; will-change: clip-path; }
+
+/* ── Page grain texture ─────────────────────────────────── */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.045'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ── Page content inner ─────────────────────────────────── */
+.page-inner {
+  position: absolute;
+  inset: 0;
+  padding: 44px 42px 40px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0;
+}
+
+/* ── Typography ─────────────────────────────────────────── */
+.folio {
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.folio::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.kicker {
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.headline {
+  font-size: clamp(20px, 4vw, 28px);
+  line-height: 1.18;
+  font-weight: normal;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.dinkus {
+  width: 36px;
+  height: 2px;
+  background: var(--accent);
+  margin-bottom: 18px;
+}
+
+.body-text {
+  font-size: clamp(11px, 1.8vw, 13px);
+  line-height: 1.88;
+  color: var(--ink-mid);
+  columns: 2;
+  column-gap: 22px;
+}
+.body-text.single { columns: 1; }
+
+.body-text p + p { margin-top: 10px; text-indent: 1.1em; }
+.body-text strong { font-style: italic; font-weight: normal; color: var(--ink); }
+
+.pullquote {
+  font-size: clamp(12px, 2vw, 14.5px);
+  line-height: 1.65;
+  font-style: italic;
+  color: var(--ink);
+  border-left: 2.5px solid var(--accent);
+  padding: 6px 0 6px 14px;
+  margin: 14px 0;
+  break-inside: avoid;
+}
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: clamp(10.5px, 1.7vw, 12px);
+  line-height: 1.75;
+  color: var(--ink-mid);
+}
+.item-list li {
+  display: grid;
+  grid-template-columns: 12px 1fr;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(200,191,174,0.45);
+}
+.item-list li::before { content: '—'; color: var(--accent); }
+.item-list strong { font-style: italic; font-weight: normal; color: var(--ink); }
+
+.caption {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-light);
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+  margin-top: 16px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 12px;
+}
+.tag {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-light);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+}
+
+/* ── Canvas overlay ─────────────────────────────────────── */
+#curl-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ── Corner grab hint ───────────────────────────────────── */
+#corner-grab {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 70px;
+  height: 70px;
+  cursor: grab;
+  z-index: 10;
+  /* CSS triangle that peeks up */
+}
+#corner-grab:active { cursor: grabbing; }
+
+/* ── Nav ────────────────────────────────────────────────── */
+#nav {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 1000;
+}
+.nav-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.28);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-family: Georgia, serif;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.nav-btn:hover:not(:disabled) { color: rgba(255,255,255,0.65); }
+.nav-btn:disabled { opacity: 0.12; cursor: default; }
+#page-num {
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.22);
+  text-transform: uppercase;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* ── Drag hint ──────────────────────────────────────────── */
+#drag-hint {
+  position: fixed;
+  bottom: 52px;
+  right: calc(50% - min(580px,88vw)/2 + 4px);
+  font-family: Georgia, serif;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.18);
+  transition: opacity 0.8s;
+}
+</style>
+</head>
+<body>
+
+<div id="scene">
+  <div id="page-wrap">
+    <!-- Layer 1: back page -->
+    <div class="page" id="page-back">
+      <div class="page-inner" id="content-back"></div>
+    </div>
+    <!-- Layer 2: front page (gets clip-path during curl) -->
+    <div class="page" id="page-front">
+      <div class="page-inner" id="content-front"></div>
+      <!-- Corner grab zone -->
+      <div id="corner-grab"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Canvas drawn on top of everything for curl effect -->
+<canvas id="curl-canvas"></canvas>
+
+<!-- Nav -->
+<div id="nav">
+  <button class="nav-btn" id="btn-prev">&#8592;</button>
+  <span id="page-num"></span>
+  <button class="nav-btn" id="btn-next">&#8594;</button>
+</div>
+<div id="drag-hint">← drag corner to turn →</div>
+
+<script>
+// ── Content ──────────────────────────────────────────────
+const pages = [
+  // 0 — Cover
+  `<div class="folio">Hana Oh</div>
+   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0">
+     <div class="kicker">Human–Computer Interaction</div>
+     <h1 class="headline" style="font-size:clamp(28px,6vw,40px);line-height:1.1;margin-bottom:16px;">Hana Oh</h1>
+     <div class="dinkus"></div>
+     <div class="body-text single">
+       <p>PhD Student at Seoul National University, studying how people make sense of and interact with complex computational systems — particularly where AI, design, and everyday practice intersect.</p>
+       <p>This portfolio is a <strong>reading object</strong>: turn the pages by dragging from the bottom-right corner, or use the arrows below.</p>
+     </div>
+     <div class="tags" style="margin-top:20px;">
+       <span class="tag">HCI</span>
+       <span class="tag">AI Systems</span>
+       <span class="tag">Accessibility</span>
+       <span class="tag">UX Research</span>
+       <span class="tag">Interaction Design</span>
+     </div>
+   </div>
+   <div class="caption">Seoul National University · Dept. of Intelligence &amp; Information · 2024</div>`,
+
+  // 1 — About
+  `<div class="folio">1 · About</div>
+   <div class="kicker">Introduction</div>
+   <h2 class="headline">Who I Am</h2>
+   <div class="dinkus"></div>
+   <div class="body-text" style="flex:1;">
+     <p>I am a researcher at the intersection of human–computer interaction, artificial intelligence, and accessibility. My work tries to understand how people make meaning with computational systems — and what goes wrong when those systems assume too much.</p>
+     <div class="pullquote">
+       "Technology should dissolve into the background of human experience — present when needed, invisible when not."
+     </div>
+     <p>Currently pursuing a PhD at <strong>Seoul National University</strong>, I collaborate with researchers across disciplines to study how AI tools reshape everyday practice in work, creativity, and learning.</p>
+     <p>I'm drawn to methods that take people seriously as experts of their own experience: diary studies, co-design sessions, longitudinal fieldwork. The goal is always to understand before proposing.</p>
+     <p>Outside of research, I find myself returning to photography, typography, and problems that resist easy answers.</p>
+   </div>
+   <div class="caption">hana2001@snu.ac.kr</div>`,
+
+  // 2 — Research
+  `<div class="folio">2 · Research</div>
+   <div class="kicker">Chapter One</div>
+   <h2 class="headline">Research Interests</h2>
+   <div class="dinkus"></div>
+   <ul class="item-list" style="flex:1;">
+     <li><span><strong>Explainability &amp; Trust</strong> — How people form, calibrate, and repair trust in AI-generated outputs across high-stakes settings. What does a "good enough" explanation look like in practice?</span></li>
+     <li><span><strong>Accessible Computing</strong> — Designing interfaces that accommodate diverse sensory, motor, and cognitive needs. Access as a quality of design, not an afterthought.</span></li>
+     <li><span><strong>Human–AI Collaboration</strong> — The evolving dynamics between human judgment and machine suggestion in creative and analytical workflows. Who defers to whom, and why?</span></li>
+     <li><span><strong>Sociotechnical Systems</strong> — How organisational structures shape, and are shaped by, the deployment of algorithmic tools. Power, accountability, and friction.</span></li>
+     <li><span><strong>Interaction with Language Models</strong> — The novel conventions people develop when writing, conversing, and reasoning alongside LLMs in real contexts.</span></li>
+   </ul>
+   <div class="caption">HCI Lab, Seoul National University · Ongoing since 2022</div>`,
+
+  // 3 — Publications
+  `<div class="folio">3 · Publications</div>
+   <div class="kicker">Chapter Two</div>
+   <h2 class="headline">Selected Publications</h2>
+   <div class="dinkus"></div>
+   <ul class="item-list" style="flex:1;">
+     <li><span><strong>"When the Model Explains Itself"</strong> — CHI 2024. Mixed-methods study of how clinicians interpret and challenge AI diagnostic rationales in a hospital setting.</span></li>
+     <li><span><strong>"Adaptive Interfaces for Low Vision"</strong> — ASSETS 2023. Designing contrast and layout systems that respond to ambient light and stated user preference without requiring manual configuration.</span></li>
+     <li><span><strong>"Co-Writing with Language Models"</strong> — CSCW 2023. Ethnographic study of professional writers adopting LLM assistance over six months — the unexpected frictions and unexpected gifts.</span></li>
+     <li><span><strong>"Delegating Uncertainty"</strong> — Under review. How people communicate confidence to AI systems, and what happens when that communication breaks down.</span></li>
+   </ul>
+   <div class="tags"><span class="tag">CHI</span><span class="tag">CSCW</span><span class="tag">ASSETS</span><span class="tag">IUI</span></div>
+   <div class="caption" style="margin-top:10px;">* Venue names representative; prototype content.</div>`,
+
+  // 4 — Projects
+  `<div class="folio">4 · Projects</div>
+   <div class="kicker">Chapter Three</div>
+   <h2 class="headline">Notable Projects</h2>
+   <div class="dinkus"></div>
+   <ul class="item-list" style="flex:1;">
+     <li><span><strong>Wordbank</strong> — A personal word-collection app that explores how people curate language across reading contexts. Built to understand what makes a word worth keeping.</span></li>
+     <li><span><strong>Caption Studio</strong> — Prototype tool for generating nuanced image descriptions using multimodal models. Tested with screen-reader users across three iterative rounds.</span></li>
+     <li><span><strong>Focus Companion</strong> — Attention-aware writing environment that surfaces context without breaking flow. Inspired by how researchers annotate while reading.</span></li>
+     <li><span><strong>Research Dashboard</strong> — Internal tool for tracing how research questions evolve during a study. Makes the invisible methodological arc visible to the whole team.</span></li>
+   </ul>
+   <div class="pullquote" style="margin-top:14px;">A prototype is a form of inquiry — an argument made tangible enough to be argued with.</div>
+   <div class="caption">Selected work · 2021–2024</div>`,
+
+  // 5 — Contact
+  `<div class="folio">5 · Contact</div>
+   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0">
+     <div class="kicker">Let's Talk</div>
+     <h2 class="headline">Get in Touch</h2>
+     <div class="dinkus"></div>
+     <div class="body-text single">
+       <p>I am always open to conversations about research collaboration, speaking engagements, or simply exchanging ideas with people working on interesting problems.</p>
+       <p>The most useful conversations I have are with people who think carefully about the gap between what technology does and what it claims to do.</p>
+     </div>
+     <div style="margin-top:24px;font-size:clamp(12px,2.5vw,15px);color:var(--ink);">hana2001@snu.ac.kr</div>
+     <div style="font-size:11px;color:var(--ink-light);margin-top:6px;line-height:1.8;">
+       Seoul National University<br>
+       Department of Intelligence &amp; Information<br>
+       Seoul, Republic of Korea
+     </div>
+     <div style="display:flex;gap:14px;margin-top:20px;font-size:10px;letter-spacing:0.1em;color:var(--ink-light);">
+       <span>Google Scholar</span><span>·</span><span>GitHub</span><span>·</span><span>LinkedIn</span>
+     </div>
+   </div>
+   <div class="caption">© 2024 Hana Oh · Set in Georgia · Page-turn interaction in vanilla CSS &amp; JS</div>`,
+];
+
+// ── DOM ──────────────────────────────────────────────────
+const pageWrap    = document.getElementById('page-wrap');
+const pageFront   = document.getElementById('page-front');
+const pageBack    = document.getElementById('page-back');
+const contentFront = document.getElementById('content-front');
+const contentBack  = document.getElementById('content-back');
+const cornerGrab  = document.getElementById('corner-grab');
+const canvas      = document.getElementById('curl-canvas');
+const ctx         = canvas.getContext('2d');
+const btnPrev     = document.getElementById('btn-prev');
+const btnNext     = document.getElementById('btn-next');
+const pageNum     = document.getElementById('page-num');
+const dragHint    = document.getElementById('drag-hint');
+
+// ── State ────────────────────────────────────────────────
+let currentPage = 0;
+let isDragging  = false;
+let dragX = 0, dragY = 0; // relative to page element
+let pageRect = null;
+
+let flutterT    = 0;
+let flutterGoing = true;
+let hintHidden  = false;
+
+// ── Resize ───────────────────────────────────────────────
+function resize() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+  pageRect = pageWrap.getBoundingClientRect();
+}
+window.addEventListener('resize', resize);
+resize();
+
+// ── Render page content ───────────────────────────────────
+function render() {
+  contentFront.innerHTML = pages[currentPage];
+  const nextIdx = currentPage + 1;
+  contentBack.innerHTML  = nextIdx < pages.length ? pages[nextIdx] : '';
+  pageNum.textContent    = `${currentPage + 1} / ${pages.length}`;
+  btnPrev.disabled       = currentPage === 0;
+  btnNext.disabled       = currentPage >= pages.length - 1;
+}
+
+// ── Fold geometry ─────────────────────────────────────────
+// When the bottom-right corner is dragged to (cx, cy) (relative to page),
+// the fold line is the perpendicular bisector of corner↔(cx,cy).
+function getFold(cx, cy) {
+  const W = pageRect.width, H = pageRect.height;
+  const px = W, py = H; // bottom-right corner
+
+  // Clamp drag point to a reasonable region
+  const ex = Math.max(cx, 4);
+  const ey = Math.max(cy, 4);
+
+  const midX = (px + ex) / 2;
+  const midY = (py + ey) / 2;
+  // Normal to fold line: direction from drag → corner
+  const nx = px - ex;
+  const ny = py - ey;
+  const K = nx * midX + ny * midY;
+
+  // A point is "unfolded" if it's on the same side as (0, 0)
+  const origin = nx * 0 + ny * 0;
+  const isUnfolded = (x, y) =>
+    Math.sign(nx * x + ny * y - K) === Math.sign(origin - K);
+
+  return { nx, ny, K, isUnfolded, midX, midY };
+}
+
+// Intersect fold line with page rectangle edges
+// Returns 0 or 2 intersection points
+function foldEdgeIntersections(fold, W, H) {
+  const { nx, ny, K } = fold;
+  const pts = [];
+
+  // Edge: top (y=0)
+  if (Math.abs(nx) > 0.01) {
+    const x = (K - ny * 0) / nx;
+    if (x >= 0 && x <= W) pts.push({x, y: 0});
+  }
+  // Edge: right (x=W)
+  if (Math.abs(ny) > 0.01) {
+    const y = (K - nx * W) / ny;
+    if (y >= 0 && y <= H) pts.push({x: W, y});
+  }
+  // Edge: bottom (y=H)
+  if (Math.abs(nx) > 0.01) {
+    const x = (K - ny * H) / nx;
+    if (x >= 0 && x <= W) pts.push({x, y: H});
+  }
+  // Edge: left (x=0)
+  if (Math.abs(ny) > 0.01) {
+    const y = (K - nx * 0) / ny;
+    if (y >= 0 && y <= H) pts.push({x: 0, y});
+  }
+
+  // Deduplicate corners
+  const unique = [];
+  for (const p of pts) {
+    if (!unique.some(q => Math.hypot(q.x - p.x, q.y - p.y) < 1)) unique.push(p);
+  }
+  return unique.slice(0, 2);
+}
+
+// Build the unfolded clip polygon for page-front
+// Returns array of {x,y} in element-local coordinates
+function buildUnfoldedPolygon(cx, cy) {
+  const W = pageRect.width, H = pageRect.height;
+  const fold = getFold(cx, cy);
+  const inter = foldEdgeIntersections(fold, W, H);
+  if (inter.length < 2) return null;
+
+  const corners = [{x:0,y:0},{x:W,y:0},{x:W,y:H},{x:0,y:H}];
+
+  // Walk corners + intersection points, keeping the unfolded ones
+  const poly = [];
+  for (let i = 0; i < 4; i++) {
+    const c = corners[i];
+    const next = corners[(i + 1) % 4];
+
+    if (fold.isUnfolded(c.x, c.y)) poly.push(c);
+
+    // Check if fold line intersects this edge
+    for (const p of inter) {
+      // Is p on this edge (between c and next)?
+      const onEdge =
+        Math.min(c.x, next.x) - 0.5 <= p.x && p.x <= Math.max(c.x, next.x) + 0.5 &&
+        Math.min(c.y, next.y) - 0.5 <= p.y && p.y <= Math.max(c.y, next.y) + 0.5;
+      if (onEdge) poly.push(p);
+    }
+  }
+  return poly;
+}
+
+// Build the folded region polygon (what canvas draws)
+function buildFoldedPolygon(cx, cy) {
+  const W = pageRect.width, H = pageRect.height;
+  const fold = getFold(cx, cy);
+  const inter = foldEdgeIntersections(fold, W, H);
+  if (inter.length < 2) return null;
+
+  const corners = [{x:0,y:0},{x:W,y:0},{x:W,y:H},{x:0,y:H}];
+  const poly = [];
+  for (let i = 0; i < 4; i++) {
+    const c = corners[i];
+    const next = corners[(i + 1) % 4];
+    if (!fold.isUnfolded(c.x, c.y)) poly.push(c);
+    for (const p of inter) {
+      const onEdge =
+        Math.min(c.x, next.x) - 0.5 <= p.x && p.x <= Math.max(c.x, next.x) + 0.5 &&
+        Math.min(c.y, next.y) - 0.5 <= p.y && p.y <= Math.max(c.y, next.y) + 0.5;
+      if (onEdge) poly.push(p);
+    }
+  }
+  return poly;
+}
+
+// ── Draw curl on canvas ───────────────────────────────────
+function drawCurl(cx, cy) {
+  if (!pageRect) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const W = pageRect.width, H = pageRect.height;
+  const ox = pageRect.left, oy = pageRect.top; // page origin on screen
+
+  const foldedPoly = buildFoldedPolygon(cx, cy);
+  const unfoldedPoly = buildUnfoldedPolygon(cx, cy);
+  if (!foldedPoly || foldedPoly.length < 3) return;
+
+  const inter = foldEdgeIntersections(getFold(cx, cy), W, H);
+  if (inter.length < 2) return;
+
+  // -- 1. Clip page-front to unfolded region (CSS clip-path) --
+  if (unfoldedPoly && unfoldedPoly.length >= 3) {
+    pageFront.style.clipPath =
+      'polygon(' + unfoldedPoly.map(p => `${p.x}px ${p.y}px`).join(', ') + ')';
+  }
+
+  // -- 2. Draw shadow cast on the revealed back page --
+  ctx.save();
+  // Clip to page area
+  ctx.beginPath();
+  ctx.rect(ox, oy, W, H);
+  ctx.clip();
+
+  // Shadow: radial gradient from the fold line, spreading into the back page
+  const foldMid = {
+    x: (inter[0].x + inter[1].x) / 2 + ox,
+    y: (inter[0].y + inter[1].y) / 2 + oy,
+  };
+  const shadowLen = 50;
+  // Shadow direction: toward unfolded side (opposite of fold normal toward corner)
+  const fold = getFold(cx, cy);
+  const normLen = Math.hypot(fold.nx, fold.ny) || 1;
+  const sDir = { x: -fold.nx / normLen, y: -fold.ny / normLen };
+
+  // Clip to folded region (inverted: back page area)
+  ctx.beginPath();
+  for (const p of unfoldedPoly || []) ctx.lineTo(p.x + ox, p.y + oy);
+  ctx.closePath();
+  const shadowGrad = ctx.createLinearGradient(
+    foldMid.x, foldMid.y,
+    foldMid.x + sDir.x * shadowLen, foldMid.y + sDir.y * shadowLen
+  );
+  shadowGrad.addColorStop(0,    'rgba(0,0,0,0.22)');
+  shadowGrad.addColorStop(0.4,  'rgba(0,0,0,0.08)');
+  shadowGrad.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = shadowGrad;
+  ctx.fill();
+  ctx.restore();
+
+  // -- 3. Draw back-of-paper in the folded region --
+  ctx.save();
+  ctx.beginPath();
+  for (const p of foldedPoly) ctx.lineTo(p.x + ox, p.y + oy);
+  ctx.closePath();
+  ctx.clip();
+
+  // Fold line on screen
+  const f0 = { x: inter[0].x + ox, y: inter[0].y + oy };
+  const f1 = { x: inter[1].x + ox, y: inter[1].y + oy };
+  // The "free" corner position on screen
+  const freePt = { x: cx + ox, y: cy + oy };
+
+  // Gradient from fold edge → free corner (dark at fold, lighter at edge)
+  const backGrad = ctx.createLinearGradient(
+    (f0.x + f1.x) / 2, (f0.y + f1.y) / 2,
+    freePt.x, freePt.y
+  );
+  backGrad.addColorStop(0,    'rgba(180,168,150,0.97)'); // dark at fold
+  backGrad.addColorStop(0.25, 'rgba(200,190,175,0.95)');
+  backGrad.addColorStop(0.7,  'rgba(222,214,200,0.92)');
+  backGrad.addColorStop(1,    'rgba(235,228,215,0.88)'); // lighter at free edge
+  ctx.fillStyle = backGrad;
+  ctx.fillRect(ox, oy, W, H);
+
+  // Curl highlight: thin bright stripe along fold line
+  const highlightGrad = ctx.createLinearGradient(
+    f0.x, f0.y, f1.x, f1.y
+  );
+  // Narrow gradient perpendicular to fold toward folded side
+  const hDir = { x: fold.nx / normLen, y: fold.ny / normLen };
+  const hGrad = ctx.createLinearGradient(
+    (f0.x + f1.x)/2, (f0.y + f1.y)/2,
+    (f0.x + f1.x)/2 + hDir.x * 14,
+    (f0.y + f1.y)/2 + hDir.y * 14
+  );
+  hGrad.addColorStop(0,   'rgba(255,252,245,0.6)');
+  hGrad.addColorStop(0.5, 'rgba(255,250,242,0.2)');
+  hGrad.addColorStop(1,   'rgba(255,248,240,0)');
+  ctx.fillStyle = hGrad;
+  ctx.fillRect(ox, oy, W, H);
+
+  ctx.restore();
+
+  // -- 4. Shadow from folded flap onto the unfolded page --
+  ctx.save();
+  if (unfoldedPoly && unfoldedPoly.length >= 3) {
+    ctx.beginPath();
+    for (const p of unfoldedPoly) ctx.lineTo(p.x + ox, p.y + oy);
+    ctx.closePath();
+    ctx.clip();
+  }
+  const flapShadowGrad = ctx.createLinearGradient(
+    (f0.x + f1.x)/2, (f0.y + f1.y)/2,
+    (f0.x + f1.x)/2 - sDir.x * 40,
+    (f0.y + f1.y)/2 - sDir.y * 40
+  );
+  flapShadowGrad.addColorStop(0,    'rgba(0,0,0,0.18)');
+  flapShadowGrad.addColorStop(0.5,  'rgba(0,0,0,0.05)');
+  flapShadowGrad.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = flapShadowGrad;
+  ctx.fillRect(ox, oy, W, H);
+  ctx.restore();
+}
+
+// ── Clear curl (reset) ────────────────────────────────────
+function clearCurl() {
+  pageFront.style.clipPath = '';
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+// ── Idle flutter animation ────────────────────────────────
+// Draws a tiny corner triangle that breathes up and down
+function drawFlutter(lift) {
+  if (!pageRect || lift <= 0) return;
+  const W = pageRect.width, H = pageRect.height;
+  const ox = pageRect.left, oy = pageRect.top;
+  const size = 50 + lift * 1.5; // triangle base size grows with lift
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+
+  // Clip to page
+  ctx.beginPath();
+  ctx.rect(ox, oy, W, H);
+  ctx.clip();
+
+  // The corner triangle
+  const ax = ox + W,         ay = oy + H;           // bottom-right corner
+  const bx = ox + W - size,  by = oy + H;           // bottom edge
+  const cx2 = ox + W,        cy2 = oy + H - size;   // right edge
+
+  ctx.beginPath();
+  ctx.moveTo(ax, ay);
+  ctx.lineTo(bx, by);
+  ctx.lineTo(cx2, cy2);
+  ctx.closePath();
+
+  // Back of paper
+  const flutterGrad = ctx.createLinearGradient(ax, ay, (bx+cx2)/2, (by+cy2)/2);
+  flutterGrad.addColorStop(0,   'rgba(175,163,145,0.95)');
+  flutterGrad.addColorStop(0.5, 'rgba(205,195,180,0.9)');
+  flutterGrad.addColorStop(1,   'rgba(225,217,204,0.85)');
+  ctx.fillStyle = flutterGrad;
+  ctx.fill();
+
+  // Fold highlight
+  const fhGrad = ctx.createLinearGradient(bx, by, cx2, cy2);
+  fhGrad.addColorStop(0,   'rgba(255,252,245,0.5)');
+  fhGrad.addColorStop(0.5, 'rgba(255,252,245,0.25)');
+  fhGrad.addColorStop(1,   'rgba(255,252,245,0)');
+  ctx.strokeStyle = fhGrad;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(bx, by);
+  ctx.lineTo(cx2, cy2);
+  ctx.stroke();
+
+  // Small shadow under the lifted corner (on the page)
+  ctx.restore();
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(ox, oy, W, H);
+  ctx.clip();
+  // shadow on the unturned page near the fold
+  const shadowA = ctx.createLinearGradient(
+    (bx + cx2)/2, (by + cy2)/2,
+    ax - lift, ay - lift
+  );
+  shadowA.addColorStop(0, 'rgba(0,0,0,0.12)');
+  shadowA.addColorStop(1, 'rgba(0,0,0,0)');
+  // Only shadow on the main page, not the triangle
+  ctx.beginPath();
+  ctx.rect(ox, oy, W, H);
+  ctx.moveTo(ax, ay);
+  ctx.lineTo(bx, by);
+  ctx.lineTo(cx2, cy2);
+  ctx.closePath();
+  ctx.fillStyle = shadowA;
+  ctx.fill('evenodd');
+  ctx.restore();
+}
+
+// ── Flutter loop ──────────────────────────────────────────
+let raf = null;
+let flutterPhase = 0;
+let flutterSpeed = 0.018 + Math.random() * 0.008;
+
+function flutterLoop() {
+  if (isDragging) { raf = requestAnimationFrame(flutterLoop); return; }
+  flutterPhase += flutterSpeed;
+  // Asymmetric: page rests down, occasionally lifts
+  const raw = Math.sin(flutterPhase);
+  const lift = Math.max(0, raw * raw * raw) * 22; // 0–22 px
+  drawFlutter(lift);
+  raf = requestAnimationFrame(flutterLoop);
+}
+
+// ── Mouse / touch drag ────────────────────────────────────
+function pageLocalPos(clientX, clientY) {
+  return {
+    x: clientX - pageRect.left,
+    y: clientY - pageRect.top,
+  };
+}
+
+function onPointerDown(e) {
+  e.preventDefault();
+  pageRect = pageWrap.getBoundingClientRect();
+  const pos = pageLocalPos(e.clientX ?? e.touches[0].clientX, e.clientY ?? e.touches[0].clientY);
+  // Only start drag from bottom-right quadrant
+  if (pos.x < pageRect.width * 0.35 || pos.y < pageRect.height * 0.35) return;
+
+  isDragging = true;
+  dragX = pos.x;
+  dragY = pos.y;
+  cornerGrab.style.cursor = 'grabbing';
+
+  if (!hintHidden) {
+    dragHint.style.opacity = '0';
+    hintHidden = true;
+  }
+}
+
+function onPointerMove(e) {
+  if (!isDragging) return;
+  e.preventDefault();
+  pageRect = pageWrap.getBoundingClientRect();
+  const pos = pageLocalPos(e.clientX ?? e.touches[0].clientX, e.clientY ?? e.touches[0].clientY);
+  dragX = pos.x;
+  dragY = pos.y;
+  drawCurl(dragX, dragY);
+}
+
+function onPointerUp(e) {
+  if (!isDragging) return;
+  isDragging = false;
+  cornerGrab.style.cursor = 'grab';
+
+  const W = pageRect.width, H = pageRect.height;
+  // If dragged past ~40% of page width leftward → complete turn
+  const threshold = W * 0.55;
+  if (dragX < threshold && currentPage < pages.length - 1) {
+    animateComplete();
+  } else {
+    animateSnapBack();
+  }
+}
+
+// ── Snap-back / complete animations ───────────────────────
+function animateComplete() {
+  const W = pageRect.width, H = pageRect.height;
+  const startX = dragX, startY = dragY;
+  const endX = -30, endY = -30; // fly off screen
+  const start = performance.now();
+  const dur = 320;
+
+  function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // easeInOut
+    const cx = startX + (endX - startX) * ease;
+    const cy = startY + (endY - startY) * ease;
+    drawCurl(cx, cy);
+    if (t < 1) {
+      requestAnimationFrame(step);
+    } else {
+      // Turn the page
+      currentPage++;
+      clearCurl();
+      render();
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+function animateSnapBack() {
+  const startX = dragX, startY = dragY;
+  const endX = pageRect.width, endY = pageRect.height;
+  const start = performance.now();
+  const dur = 380;
+
+  function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    // easeOut elastic feel
+    const ease = 1 - Math.pow(1 - t, 3);
+    const cx = startX + (endX - startX) * ease;
+    const cy = startY + (endY - startY) * ease;
+    drawCurl(cx, cy);
+    if (t < 1) {
+      requestAnimationFrame(step);
+    } else {
+      clearCurl();
+    }
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Button navigation (with quick animation) ──────────────
+function quickFlip(direction) {
+  if (direction === 'next' && currentPage >= pages.length - 1) return;
+  if (direction === 'prev' && currentPage <= 0) return;
+
+  if (direction === 'prev') {
+    currentPage--;
+    render();
+    return;
+  }
+
+  // Animate out
+  const W = pageRect.width, H = pageRect.height;
+  const startX = W - 10, startY = H - 10;
+  const endX = -20, endY = -20;
+  const start = performance.now();
+  const dur = 420;
+
+  function step(now) {
+    const t = Math.min((now - start) / dur, 1);
+    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
+    drawCurl(
+      startX + (endX - startX) * ease,
+      startY + (endY - startY) * ease
+    );
+    if (t < 1) requestAnimationFrame(step);
+    else { currentPage++; clearCurl(); render(); }
+  }
+  requestAnimationFrame(step);
+}
+
+btnNext.addEventListener('click', () => { pageRect = pageWrap.getBoundingClientRect(); quickFlip('next'); });
+btnPrev.addEventListener('click', () => { pageRect = pageWrap.getBoundingClientRect(); quickFlip('prev'); });
+
+// ── Keyboard ──────────────────────────────────────────────
+document.addEventListener('keydown', (e) => {
+  pageRect = pageWrap.getBoundingClientRect();
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') quickFlip('next');
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   quickFlip('prev');
+});
+
+// ── Event listeners ───────────────────────────────────────
+cornerGrab.addEventListener('mousedown',  onPointerDown);
+cornerGrab.addEventListener('touchstart', onPointerDown, { passive: false });
+document.addEventListener('mousemove',  onPointerMove);
+document.addEventListener('touchmove',  onPointerMove, { passive: false });
+document.addEventListener('mouseup',   onPointerUp);
+document.addEventListener('touchend',  onPointerUp);
+
+// Also allow dragging from anywhere in the bottom-right quadrant of the page
+pageFront.addEventListener('mousedown', onPointerDown);
+pageFront.addEventListener('touchstart', onPointerDown, { passive: false });
+
+// ── Init ──────────────────────────────────────────────────
+render();
+flutterLoop();
+</script>
+</body>
+</html>
