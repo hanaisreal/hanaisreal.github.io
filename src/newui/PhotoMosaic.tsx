@@ -16,16 +16,6 @@ interface MosaicCell {
   back: CellFace;
 }
 
-// Warm-toned placeholder colors matching the editorial palette
-const placeholders = {
-  amber:      '#c8a97a',
-  terracotta: '#b5705a',
-  sage:       '#7d9080',
-  sand:       '#d4c4a8',
-  blush:      '#c9a090',
-  slate:      '#7a8a98',
-};
-
 const BASE = process.env.PUBLIC_URL;
 
 const cells: MosaicCell[] = [
