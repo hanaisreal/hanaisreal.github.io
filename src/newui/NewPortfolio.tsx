@@ -5,18 +5,26 @@ import NewsSection from './NewsSection';
 import PublicationsSection from './PublicationsSection';
 import ResearchSection from './ResearchSection';
 import ProjectsSection from './ProjectsSection';
-import ContactSection from './ContactSection';
 import './newPortfolio.css';
 
 const NewPortfolio: React.FC = () => (
   <div>
     <Masthead />
-    <HeroSection />
-    <NewsSection />
-    <PublicationsSection />
-    <ResearchSection />
-    <ProjectsSection />
-    <ContactSection />
+    <div className="page">
+      <HeroSection />
+      <hr className="sec-rule" />
+      <NewsSection />
+      <hr className="sec-rule" />
+      <PublicationsSection />
+      <hr className="sec-rule" />
+      <ResearchSection />
+      <hr className="sec-rule" />
+      <ProjectsSection />
+    </div>
+    <footer className="site-footer">
+      <span>Hana Oh</span>
+      <span>© {new Date().getFullYear()}</span>
+    </footer>
   </div>
 );
 

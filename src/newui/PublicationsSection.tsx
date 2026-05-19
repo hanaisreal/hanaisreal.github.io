@@ -1,85 +1,62 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { publications } from '../components/data/publicationsData';
 
-// Highlight "Hana Oh" in author string
-function formatAuthors(authors: string) {
-  const parts = authors.split('Hana Oh');
-  if (parts.length === 1) return <>{authors}</>;
-  return (
-    <>
-      {parts[0]}
-      <span className="ed-pub__authors-me">Hana Oh</span>
-      {parts[1]}
-    </>
-  );
+function formatAuthors(authors: string, coFirst?: string[]) {
+  const names = authors.split(', ');
+  const parts: React.ReactNode[] = [];
+
+  names.forEach((name, i) => {
+    const isMe = name === 'Hana Oh';
+    const isCo = coFirst?.includes(name);
+    const separator = i < names.length - 1 ? ', ' : '';
+
+    parts.push(
+      <span key={i}>
+        <span className={isMe ? 'pub__me' : undefined}>
+          {name}{isCo ? <sup>*</sup> : null}
+        </span>
+        {separator}
+      </span>
+    );
+  });
+
+  return <>{parts}</>;
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.65, delay: i * 0.1, ease: 'easeOut' },
-  }),
-};
+const PublicationsSection: React.FC = () => {
+  const hasCoFirst = publications.some((p) => p.coFirstAuthors);
 
-const PublicationsSection: React.FC = () => (
-  <section id="publications">
-    <div className="ed-section-rule">
-      <div className="ed-section-rule__inner">
-        <span className="ed-section-num">§ 02</span>
-        <span className="ed-section-label">Publications</span>
-        <div className="ed-section-rule__line" />
-      </div>
-    </div>
-
-    <div className="ed-pubs">
-      <div className="ed-pubs__list">
+  return (
+    <section id="publications">
+      <h2 className="sec-heading">Publications</h2>
+      <ul className="pub-list">
         {publications.map((pub, i) => (
-          <motion.article
-            key={i}
-            className="ed-pub"
-            custom={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
-            variants={itemVariants}
-          >
-            <div className="ed-pub__year">{pub.year}</div>
-
-            <div className="ed-pub__center">
-              <h3 className="ed-pub__title">{pub.title}</h3>
-
-              {pub.insight && (
-                <div className="ed-pub__insight">
-                  <div className="ed-pub__insight-inner">
-                    <p className="ed-pub__insight-text">"{pub.insight}"</p>
-                  </div>
-                </div>
-              )}
-
-              <p className="ed-pub__authors">{formatAuthors(pub.authors)}</p>
+          <li key={i} className="pub">
+            <span className="pub__num">[{publications.length - i}]</span>
+            <div className="pub__body">
+              <p className="pub__title">{pub.title}</p>
+              <p className="pub__authors">
+                {formatAuthors(pub.authors, pub.coFirstAuthors)}
+              </p>
+              <div className="pub__meta">
+                <span className="pub__venue">{pub.venue}</span>
+                <span className="pub__year">{pub.year}</span>
+                {pub.bestPaper && (
+                  <span className="pub__best-paper">★ Best Paper</span>
+                )}
+                <span className={`pub__status${pub.status === 'Accepted' ? ' pub__status--accepted' : ''}`}>
+                  {pub.status}
+                </span>
+              </div>
             </div>
-
-            <div className="ed-pub__right">
-              <span className="ed-pub__venue">{pub.venue}</span>
-              <span
-                className={`ed-pub__status${
-                  pub.status === 'Accepted' ? ' ed-pub__status--accepted' : ''
-                }`}
-              >
-                {pub.status}
-              </span>
-              {pub.bestPaper && (
-                <span className="ed-pub__best-paper">★ Best Paper</span>
-              )}
-            </div>
-          </motion.article>
+          </li>
         ))}
-      </div>
-    </div>
-  </section>
-);
+      </ul>
+      {hasCoFirst && (
+        <p className="pub__cofirst-note">* equal contribution</p>
+      )}
+    </section>
+  );
+};
 
 export default PublicationsSection;

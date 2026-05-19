@@ -33,7 +33,7 @@ const Portfolio: React.FC = () => {
         <p className="email">ohhanathefirst at gmail dot com</p>
         
         <div className="social-links">
-          <a href={`${process.env.PUBLIC_URL}/path-to-your-cv.pdf`} target="_blank" rel="noopener noreferrer">
+          <a href={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`} target="_blank" rel="noopener noreferrer">
             <HiDocument className="icon" />
           </a>
           <a href="https://github.com/hanaisreal" target="_blank" rel="noopener noreferrer">

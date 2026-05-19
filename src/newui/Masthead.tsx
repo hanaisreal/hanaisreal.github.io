@@ -5,7 +5,7 @@ const navItems = [
   { label: 'Publications', href: '#publications' },
   { label: 'Research',     href: '#research' },
   { label: 'Projects',     href: '#projects' },
-  { label: 'CV ↓',         href: `${process.env.PUBLIC_URL}/cv.pdf`, isExternal: true },
+  { label: 'CV ↓',         href: `${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`, isExternal: true },
 ];
 
 const Masthead: React.FC = () => {
@@ -21,34 +21,25 @@ const Masthead: React.FC = () => {
   );
 
   return (
-    <header className="ed-masthead">
-      <div className="ed-masthead__inner">
-        <a
-          href="#home"
-          className="ed-masthead__brand"
-          onClick={handleClick('#home')}
-        >
-          Hana Oh
-        </a>
-
-        <span className="ed-masthead__meta">
-          Seoul National University · HCI Researcher
-        </span>
-
-        <nav className="ed-masthead__nav" aria-label="Primary">
-          {navItems.map((item) => (
+    <nav className="site-nav">
+      <div className="site-nav__inner">
+        <span className="site-nav__brand">Hana Oh</span>
+        <div className="site-nav__links">
+          {navItems.map(({ label, href, isExternal }) => (
             <a
-              key={item.href}
-              href={item.href}
-              onClick={handleClick(item.href, item.isExternal)}
-              {...(item.isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
+              key={label}
+              href={href}
+              className="site-nav__link"
+              onClick={handleClick(href, isExternal)}
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
             >
-              {item.label}
+              {label}
             </a>
           ))}
-        </nav>
+        </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

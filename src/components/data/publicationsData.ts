@@ -7,6 +7,7 @@ export interface Publication {
   type: 'conference' | 'journal' | 'workshop';
   bestPaper?: boolean;
   insight?: string;
+  coFirstAuthors?: string[];  // names that share first authorship
 }
 
 export const publications: Publication[] = [
@@ -23,6 +24,7 @@ export const publications: Publication[] = [
     year: "2026",
     title: "When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms",
     authors: "Junho Myung, Hyunseung Lim, Hana Oh, Hyoungwook Jin, Nayeon Kang, So-Yeon Ahn, Hwajung Hong, Alice Oh, Juho Kim",
+    coFirstAuthors: ["Hyunseung Lim", "Hana Oh"],
     venue: "CHI 2026",
     status: "Accepted",
     type: "conference",
