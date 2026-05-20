@@ -7,10 +7,20 @@ export interface Publication {
   type: 'conference' | 'journal' | 'workshop';
   bestPaper?: boolean;
   insight?: string;
-  coFirstAuthors?: string[];  // names that share first authorship
+  coFirstAuthors?: string[];
 }
 
 export const publications: Publication[] = [
+  {
+    year: "2026",
+    title: "ToneCanvas: Visually Painting Character Tone for Narrative Consistency",
+    authors: "JungHwan Kim, Hana Oh, Bongwon Suh",
+    coFirstAuthors: ["JungHwan Kim", "Hana Oh"],
+    venue: "UIST 2026",
+    status: "Under Review",
+    type: "conference",
+    insight: "How can visual interaction help writers keep a character's tone consistent across a narrative?"
+  },
   {
     year: "2026",
     title: "DeepAware: Using Experiential Deepfake Simulations to Enhance Cybersecurity Awareness in Older Adults",
@@ -30,14 +40,5 @@ export const publications: Publication[] = [
     type: "conference",
     bestPaper: true,
     insight: "When the AI scaffold fails mid-lesson, what do students actually do?"
-  },
-  {
-    year: "2025",
-    title: "Supporting Young Historians: Real-World Lessons from AI-Enabled Active Learning in Classrooms",
-    authors: "Hyungwoo Song, Kieun Park, Hana Oh, Hoyeol Yang",
-    venue: "Computers & Education",
-    status: "Under Review",
-    type: "journal",
-    insight: "AI as a thinking partner, not a shortcut, for history education."
   }
 ];

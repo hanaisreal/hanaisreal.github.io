@@ -52,8 +52,8 @@ const AboutSection: React.FC = () => (
         <ResearchInterestsViz />
 
         <p style={{ marginTop: '1.5rem', fontSize: '0.9rem' }}>
-          My research interests are broad, but they all tie to advancing human capabilities through
-          thoughtful AI design that preserves agency and supports critical thinking.
+          My research interests are still taking shape, but they keep circling around how people
+          think, learn, write, and make decisions with AI systems.
         </p>
       </motion.div>
     </div>

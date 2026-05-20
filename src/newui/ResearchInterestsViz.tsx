@@ -23,7 +23,7 @@ const researchInterests: InterestNode[] = [
     color: '#2e5d8a',
     category: 'primary',
     gradient: 'radial-gradient(ellipse 180px 100px at center, rgba(46, 93, 138, 0.15), transparent)',
-    description: 'Exploring how humans and AI systems collaborate, focusing on trust, agency, and seamless interaction patterns.',
+    description: 'Exploring how humans and AI systems collaborate, focusing on trust, reflection, and seamless interaction patterns.',
     connections: ['Conversational AI', 'Perspective-Taking', 'Interface Design']
   },
   {
@@ -46,7 +46,7 @@ const researchInterests: InterestNode[] = [
     category: 'primary',
     gradient: 'radial-gradient(ellipse 140px 85px at center, rgba(122, 110, 100, 0.15), transparent)',
     description: 'Ensuring AI systems are designed with fairness, transparency, and human values at their core.',
-    connections: ['Deepfake Detection', 'Epistemic Agency', 'Social Good']
+    connections: ['Deepfake Detection', 'Interpretive Awareness', 'Social Good']
   },
 
   // Secondary interests (medium)
@@ -58,7 +58,7 @@ const researchInterests: InterestNode[] = [
     color: '#1a3b58',
     category: 'secondary',
     gradient: 'radial-gradient(ellipse 140px 80px at center, rgba(26, 59, 88, 0.12), transparent)',
-    description: 'Designing natural, context-aware dialogue systems that support human goals and preserve conversational agency.'
+    description: 'Designing natural, context-aware dialogue systems that support human goals and reflective conversation.'
   },
   {
     text: 'Social Good',
@@ -103,14 +103,14 @@ const researchInterests: InterestNode[] = [
 
   // Tertiary interests (smaller)
   {
-    text: 'Epistemic Agency',
+    text: 'Interpretive Awareness',
     size: 16,
     x: -60,
     y: 140,
     color: '#7a6e64',
     category: 'tertiary',
     gradient: 'radial-gradient(ellipse 120px 60px at center, rgba(122, 110, 100, 0.1), transparent)',
-    description: 'Preserving human control over knowledge formation and decision-making in AI-assisted environments.'
+    description: 'Making AI interpretations of human experience visible, understandable, and actionable for users.'
   },
   {
     text: 'User Behavior',

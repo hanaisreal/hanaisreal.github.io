@@ -2,6 +2,10 @@ import React from 'react';
 
 const newsItems = [
   {
+    date: 'May 2026',
+    text: <>ToneCanvas is under review at <span className="news-item__venue">UIST 2026</span>.</>,
+  },
+  {
     date: 'Apr 2026',
     text: (
       <>
@@ -11,7 +15,7 @@ const newsItems = [
     ),
   },
   {
-    date: 'Jan 2025',
+    date: 'Jan 2026',
     text: (
       <>
         Two papers accepted to <span className="news-item__venue">CHI 2026</span> —
@@ -20,12 +24,12 @@ const newsItems = [
     ),
   },
   {
-    date: 'Feb 2025',
-    text: <>Graduated from Seoul National University, B.S. Computer Science &amp; Business Administration.</>,
+    date: 'Sep 2025',
+    text: <>Started M.S. in Intelligence and Information at Seoul National University.</>,
   },
   {
-    date: '2024',
-    text: <>Research intern at KIXLAB (KAIST), HCI+Design Lab, and Human Computing Lab at SNU.</>,
+    date: 'Aug 2025',
+    text: <>Graduated from Seoul National University, B.S. Computer Science &amp; Engineering and Business Administration.</>,
   },
 ];
 

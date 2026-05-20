@@ -11,7 +11,7 @@ const HeroSection: React.FC = () => (
       <div>
         <h1 className="profile__name">Hana Oh</h1>
         <p className="profile__affil">
-          HCI Researcher · Seoul National University
+          M.S. Student in Intelligence and Information · Seoul National University
         </p>
         <div className="profile__links">
           <a className="profile__link" href="mailto:hana2001@snu.ac.kr">Email</a>
@@ -45,13 +45,20 @@ const HeroSection: React.FC = () => (
 
     <div className="bio">
       <p>
-        I am an HCI researcher at Seoul National University (B.S. Computer Science &amp; Business Administration).
-        My research focuses on <strong>human–AI interaction</strong>, educational technology, and digital resilience —
-        designing AI systems that augment rather than replace human agency.
+        I am an HCI researcher and M.S. student at Seoul National University, advised by Prof. Bongwon Suh.
+        I work at the intersection of <strong>HCI and AI</strong>, studying how AI systems can support continuity in
+        human experience.
       </p>
       <p>
-        I am interested in how people think and make decisions alongside AI, and how we can build
-        interfaces that preserve human autonomy and critical thinking.
+        I am increasingly interested in the computational methods that enable AI to adapt meaningfully to
+        individual users at scale. My recent work examines how AI can support human expression and awareness in
+        real-world contexts, from AI-mediated narrative writing to experiential simulations that build intuition
+        in everyday users.
+      </p>
+      <p>
+        As a next step, I am exploring how to design AI-mediated interventions that shift how people understand
+        themselves and their context, and how to build interactive systems that make AI&apos;s interpretation of
+        human experience visible and actionable to users.
       </p>
     </div>
   </section>

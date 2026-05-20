@@ -11,7 +11,7 @@ const ResearchSection: React.FC = () => (
             <span className="exp__lab">{exp.lab}</span>
             <span className="exp__period">{exp.overallDuration}</span>
           </div>
-          <p className="exp__sub">{exp.advisor} · {exp.institution}</p>
+          <p className="exp__sub">{exp.role} · {exp.advisor} · {exp.institution}</p>
           {exp.projects.map((proj) => (
             <div key={proj.projectTitle}>
               <p className="exp__proj-title">{proj.projectTitle}</p>
