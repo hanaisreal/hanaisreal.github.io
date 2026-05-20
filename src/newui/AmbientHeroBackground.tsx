@@ -138,44 +138,35 @@ const AmbientHeroBackground: React.FC = () => {
     const tick = () => {
       if (!reduceMotion) {
         nodes.forEach((node, index) => {
-          if (draggedIndex === index) {
+          const isDraggingThis = draggedIndex === index;
+
+          if (isDraggingThis) {
             const dx = pointer.x - node.x;
             const dy = pointer.y - node.y;
-            node.vx += dx * 0.36;
-            node.vy += dy * 0.36;
+            node.vx += dx * 0.24;
+            node.vy += dy * 0.24;
           } else {
-            node.vx += (node.homePx.x - node.x) * 0.014;
-            node.vy += (node.homePx.y - node.y) * 0.014;
+            node.vx += (node.homePx.x - node.x) * 0.018;
+            node.vy += (node.homePx.y - node.y) * 0.018;
           }
 
-          nodes.forEach((other, otherIndex) => {
-            if (index === otherIndex) return;
-            const dx = node.x - other.x;
-            const dy = node.y - other.y;
-            const distanceSq = dx * dx + dy * dy || 1;
-            const minDistance = node.radius + other.radius;
-            if (distanceSq < minDistance * minDistance) {
-              const distance = Math.sqrt(distanceSq);
-              const force = (minDistance - distance) * 0.0019;
-              node.vx += (dx / distance) * force * minDistance;
-              node.vy += (dy / distance) * force * minDistance;
-            }
-          });
-
-          if (pointer.active && draggedIndex !== index) {
-            const dx = node.x - pointer.x;
-            const dy = node.y - pointer.y;
-            const distanceSq = dx * dx + dy * dy || 1;
-            if (distanceSq < 155 * 155) {
-              const distance = Math.sqrt(distanceSq);
-              const force = (155 - distance) * 0.0014;
-              node.vx += (dx / distance) * force * 80;
-              node.vy += (dy / distance) * force * 80;
+          if (draggedIndex !== null) {
+            const draggedNode = nodes[draggedIndex];
+            if (draggedNode && !isDraggingThis) {
+              const dx = node.x - draggedNode.x;
+              const dy = node.y - draggedNode.y;
+              const distanceSq = dx * dx + dy * dy || 1;
+              if (distanceSq < 118 * 118) {
+                const distance = Math.sqrt(distanceSq);
+                const force = (118 - distance) * 0.00045;
+                node.vx += (dx / distance) * force * 42;
+                node.vy += (dy / distance) * force * 42;
+              }
             }
           }
 
-          node.vx *= draggedIndex === index ? 0.48 : 0.88;
-          node.vy *= draggedIndex === index ? 0.48 : 0.88;
+          node.vx *= isDraggingThis ? 0.42 : 0.74;
+          node.vy *= isDraggingThis ? 0.42 : 0.74;
           node.x += node.vx;
           node.y += node.vy;
         });
@@ -184,22 +175,21 @@ const AmbientHeroBackground: React.FC = () => {
           dot.vx += (dot.homePx.x - dot.x) * 0.026;
           dot.vy += (dot.homePx.y - dot.y) * 0.026;
 
-          const repelSource = draggedIndex == null ? pointer : nodes[draggedIndex];
-          const isActive = pointer.active || draggedIndex != null;
-          if (isActive && repelSource) {
+          const repelSource = draggedIndex == null ? null : nodes[draggedIndex];
+          if (repelSource) {
             const dx = dot.x - repelSource.x;
             const dy = dot.y - repelSource.y;
             const distanceSq = dx * dx + dy * dy || 1;
-            if (distanceSq < 145 * 145) {
+            if (distanceSq < 108 * 108) {
               const distance = Math.sqrt(distanceSq);
-              const force = (145 - distance) * 0.0024;
-              dot.vx += (dx / distance) * force * 70;
-              dot.vy += (dy / distance) * force * 70;
+              const force = (108 - distance) * 0.0012;
+              dot.vx += (dx / distance) * force * 34;
+              dot.vy += (dy / distance) * force * 34;
             }
           }
 
-          dot.vx *= 0.84;
-          dot.vy *= 0.84;
+          dot.vx *= 0.72;
+          dot.vy *= 0.72;
           dot.x += dot.vx;
           dot.y += dot.vy;
         });

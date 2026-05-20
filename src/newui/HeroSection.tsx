@@ -16,7 +16,7 @@ const HeroSection: React.FC = () => (
           M.S. Student in Intelligence and Information · Seoul National University
         </p>
         <div className="profile__links">
-          <a className="profile__link" href="mailto:hana2001@snu.ac.kr">Email</a>
+          <a className="profile__link" href="mailto:hana2001@snu.ac.kr">hana2001@snu.ac.kr</a>
           <a
             className="profile__link"
             href={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`}
