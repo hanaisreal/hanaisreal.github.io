@@ -46,10 +46,8 @@ const AmbientHeroBackground: React.FC = () => {
 
   return (
     <div ref={layerRef} className="ambient-hero" aria-hidden="true">
-      <div className="ambient-hero__halo ambient-hero__halo--one" />
-      <div className="ambient-hero__halo ambient-hero__halo--two" />
       <div className="ambient-hero__particles">
-        {Array.from({ length: 9 }).map((_, index) => (
+        {Array.from({ length: 24 }).map((_, index) => (
           <span key={index} className={`ambient-dot ambient-dot--${index + 1}`} />
         ))}
       </div>

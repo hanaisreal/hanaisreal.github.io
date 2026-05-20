@@ -82,86 +82,78 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   inset: -3.8rem -10rem -3.4rem -3rem;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.82;
+  opacity: 0.95;
   transform: translate3d(var(--ambient-x), var(--ambient-y), 0);
   transition: transform 560ms ease-out;
-  -webkit-mask-image: radial-gradient(ellipse at 72% 46%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.68) 34%, rgba(0, 0, 0, 0.2) 58%, transparent 80%);
-  mask-image: radial-gradient(ellipse at 72% 46%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.68) 34%, rgba(0, 0, 0, 0.2) 58%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 72% 46%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.78) 36%, rgba(0, 0, 0, 0.28) 66%, transparent 88%);
+  mask-image: radial-gradient(ellipse at 72% 46%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.78) 36%, rgba(0, 0, 0, 0.28) 66%, transparent 88%);
 }
-.ambient-hero::before {
-  content: '';
+.ambient-hero__particles {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 64% 36%, rgba(165, 180, 252, 0.2), transparent 46%),
-    radial-gradient(ellipse at 87% 62%, rgba(240, 171, 252, 0.16), transparent 48%),
-    radial-gradient(ellipse at 74% 76%, rgba(125, 211, 252, 0.11), transparent 42%);
-}
-.ambient-hero__halo {
-  position: absolute;
-  border-radius: 999px;
-  filter: blur(16px);
-  opacity: 0.18;
-}
-.ambient-hero__halo--one {
-  width: 340px;
-  height: 124px;
-  right: 6rem;
-  top: -0.5rem;
-  background: #a5b4fc;
-}
-.ambient-hero__halo--two {
-  width: 270px;
-  height: 112px;
-  right: -0.5rem;
-  bottom: -0.45rem;
-  background: #f0abfc;
 }
 .ambient-word {
   position: absolute;
   z-index: 1;
-  color: #4b5563;
+  color: #3f3f46;
   font-size: 0.76rem;
   font-weight: 650;
   letter-spacing: 0.045em;
   white-space: nowrap;
-  opacity: 0.17;
+  opacity: 0.16;
   text-transform: lowercase;
+  text-shadow: 0 0 18px rgba(24, 24, 27, 0.08);
   animation: ambient-drift 11s ease-in-out infinite alternate;
 }
 .ambient-word--one { right: 16.2rem; top: 0.45rem; }
 .ambient-word--two { right: 4rem; top: 1.1rem; animation-delay: -4s; }
 .ambient-word--three { right: 9.2rem; bottom: 1.25rem; animation-delay: -8s; }
 .ambient-word--four { right: 0.4rem; bottom: 0.05rem; animation-delay: -11s; }
-.ambient-word--five { right: 20.4rem; top: 4.3rem; opacity: 0.15; animation-delay: -2s; }
-.ambient-word--six { right: 4.9rem; top: 5.7rem; opacity: 0.15; animation-delay: -6s; }
-.ambient-word--seven { right: 14.6rem; bottom: 3.4rem; opacity: 0.14; animation-delay: -13s; }
+.ambient-word--five { right: 20.4rem; top: 4.3rem; opacity: 0.14; animation-delay: -2s; }
+.ambient-word--six { right: 4.9rem; top: 5.7rem; opacity: 0.14; animation-delay: -6s; }
+.ambient-word--seven { right: 14.6rem; bottom: 3.4rem; opacity: 0.13; animation-delay: -13s; }
 .ambient-dot {
   position: absolute;
   z-index: 1;
   width: 3px;
   height: 3px;
   border-radius: 999px;
-  background: #6366f1;
-  opacity: 0.18;
+  background: #71717a;
+  box-shadow: 0 0 10px rgba(63, 63, 70, 0.18);
+  opacity: 0.2;
   animation: ambient-pulse 6.5s ease-in-out infinite alternate;
 }
 .ambient-dot--1 { right: 2rem; top: 0.8rem; }
-.ambient-dot--2 { right: 6.2rem; top: 1.1rem; animation-delay: -1s; }
+.ambient-dot--2 { right: 6.2rem; top: 1.1rem; width: 2px; height: 2px; animation-delay: -1s; }
 .ambient-dot--3 { right: 12rem; top: 2.7rem; animation-delay: -2s; }
-.ambient-dot--4 { right: 3.1rem; top: 4.4rem; animation-delay: -3s; }
+.ambient-dot--4 { right: 3.1rem; top: 4.4rem; width: 2px; height: 2px; animation-delay: -3s; }
 .ambient-dot--5 { right: 9.3rem; top: 5.8rem; animation-delay: -4s; }
-.ambient-dot--6 { right: 15.4rem; top: 6rem; animation-delay: -5s; }
+.ambient-dot--6 { right: 15.4rem; top: 6rem; width: 2px; height: 2px; animation-delay: -5s; }
 .ambient-dot--7 { right: 0.8rem; bottom: 2rem; animation-delay: -6s; }
-.ambient-dot--8 { right: 7.7rem; bottom: 0.55rem; animation-delay: -7s; }
+.ambient-dot--8 { right: 7.7rem; bottom: 0.55rem; width: 2px; height: 2px; animation-delay: -7s; }
 .ambient-dot--9 { right: 13.2rem; bottom: 1.8rem; animation-delay: -8s; }
+.ambient-dot--10 { right: 18.6rem; top: 1.55rem; width: 2px; height: 2px; animation-delay: -9s; }
+.ambient-dot--11 { right: 22.2rem; top: 3.15rem; animation-delay: -10s; }
+.ambient-dot--12 { right: 24.4rem; bottom: 1.15rem; width: 2px; height: 2px; animation-delay: -11s; }
+.ambient-dot--13 { right: 27rem; top: 5.4rem; opacity: 0.14; animation-delay: -12s; }
+.ambient-dot--14 { right: 30.5rem; top: 2.1rem; width: 2px; height: 2px; opacity: 0.13; animation-delay: -13s; }
+.ambient-dot--15 { right: 33.5rem; bottom: 2.7rem; opacity: 0.12; animation-delay: -14s; }
+.ambient-dot--16 { right: 35.7rem; top: 6.6rem; width: 2px; height: 2px; opacity: 0.11; animation-delay: -15s; }
+.ambient-dot--17 { right: 4.7rem; top: 7.2rem; opacity: 0.12; animation-delay: -16s; }
+.ambient-dot--18 { right: 11.4rem; top: 7.6rem; width: 2px; height: 2px; opacity: 0.13; animation-delay: -17s; }
+.ambient-dot--19 { right: 19.8rem; bottom: 4.35rem; opacity: 0.12; animation-delay: -18s; }
+.ambient-dot--20 { right: 28.8rem; bottom: 5rem; width: 2px; height: 2px; opacity: 0.11; animation-delay: -19s; }
+.ambient-dot--21 { right: 1.2rem; top: 6.4rem; width: 2px; height: 2px; opacity: 0.11; animation-delay: -20s; }
+.ambient-dot--22 { right: 37.8rem; top: 4.4rem; opacity: 0.1; animation-delay: -21s; }
+.ambient-dot--23 { right: 25.8rem; top: 0.6rem; width: 2px; height: 2px; opacity: 0.12; animation-delay: -22s; }
+.ambient-dot--24 { right: 16.4rem; bottom: 0.35rem; opacity: 0.13; animation-delay: -23s; }
 @keyframes ambient-drift {
   from { transform: translate3d(-7px, -4px, 0); }
   to { transform: translate3d(8px, 5px, 0); }
 }
 @keyframes ambient-pulse {
-  from { transform: scale(0.82); opacity: 0.08; }
-  to { transform: scale(1.32); opacity: 0.22; }
+  from { transform: translate3d(-2px, 1px, 0) scale(0.82); opacity: 0.06; }
+  to { transform: translate3d(3px, -2px, 0) scale(1.32); opacity: 0.22; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ambient-hero { transform: none !important; transition: none; }
