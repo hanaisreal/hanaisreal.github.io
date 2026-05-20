@@ -30,8 +30,8 @@ const AmbientHeroBackground: React.FC = () => {
         const x = (event.clientX - rect.left) / rect.width - 0.5;
         const y = (event.clientY - rect.top) / rect.height - 0.5;
 
-        layer.style.setProperty('--ambient-x', `${x * 9}px`);
-        layer.style.setProperty('--ambient-y', `${y * 6}px`);
+        layer.style.setProperty('--ambient-x', `${x * 18}px`);
+        layer.style.setProperty('--ambient-y', `${y * 11}px`);
         frame = 0;
       });
     };

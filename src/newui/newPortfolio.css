@@ -69,64 +69,73 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 /* ── HERO AMBIENCE ── */
 .hero-shell {
   position: relative;
-  min-height: 138px;
-  margin: -0.35rem -0.7rem 1.75rem;
-  padding: 0.35rem 0.7rem 0.1rem;
-  overflow: hidden;
+  min-height: 158px;
+  margin: -0.45rem -1.4rem 1.55rem;
+  padding: 0.45rem 1.4rem 0.2rem;
+  overflow: visible;
   isolation: isolate;
 }
 .ambient-hero {
   --ambient-x: 0px;
   --ambient-y: 0px;
   position: absolute;
-  inset: -1.8rem -3.8rem -1.6rem -1.2rem;
+  inset: -3.8rem -10rem -3.4rem -3rem;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.62;
+  opacity: 0.82;
   transform: translate3d(var(--ambient-x), var(--ambient-y), 0);
-  transition: transform 900ms ease-out;
-  -webkit-mask-image: radial-gradient(ellipse at 78% 48%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.72) 34%, rgba(0, 0, 0, 0.22) 62%, transparent 84%);
-  mask-image: radial-gradient(ellipse at 78% 48%, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.72) 34%, rgba(0, 0, 0, 0.22) 62%, transparent 84%);
+  transition: transform 560ms ease-out;
+  -webkit-mask-image: radial-gradient(ellipse at 72% 46%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.68) 34%, rgba(0, 0, 0, 0.2) 58%, transparent 80%);
+  mask-image: radial-gradient(ellipse at 72% 46%, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.68) 34%, rgba(0, 0, 0, 0.2) 58%, transparent 80%);
+}
+.ambient-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 64% 36%, rgba(165, 180, 252, 0.2), transparent 46%),
+    radial-gradient(ellipse at 87% 62%, rgba(240, 171, 252, 0.16), transparent 48%),
+    radial-gradient(ellipse at 74% 76%, rgba(125, 211, 252, 0.11), transparent 42%);
 }
 .ambient-hero__halo {
   position: absolute;
   border-radius: 999px;
-  filter: blur(12px);
-  opacity: 0.13;
+  filter: blur(16px);
+  opacity: 0.18;
 }
 .ambient-hero__halo--one {
-  width: 210px;
-  height: 88px;
-  right: 4rem;
-  top: 0.2rem;
+  width: 340px;
+  height: 124px;
+  right: 6rem;
+  top: -0.5rem;
   background: #a5b4fc;
 }
 .ambient-hero__halo--two {
-  width: 170px;
-  height: 72px;
-  right: 0.8rem;
-  bottom: 0.2rem;
+  width: 270px;
+  height: 112px;
+  right: -0.5rem;
+  bottom: -0.45rem;
   background: #f0abfc;
 }
 .ambient-word {
   position: absolute;
   z-index: 1;
   color: #4b5563;
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   font-weight: 650;
   letter-spacing: 0.045em;
   white-space: nowrap;
-  opacity: 0.12;
+  opacity: 0.17;
   text-transform: lowercase;
-  animation: ambient-drift 18s ease-in-out infinite alternate;
+  animation: ambient-drift 11s ease-in-out infinite alternate;
 }
-.ambient-word--one { right: 9.2rem; top: 0.6rem; }
-.ambient-word--two { right: 1.4rem; top: 1.85rem; animation-delay: -4s; }
-.ambient-word--three { right: 7rem; bottom: 1.25rem; animation-delay: -8s; }
-.ambient-word--four { right: 0.3rem; bottom: 0.15rem; animation-delay: -11s; }
-.ambient-word--five { right: 13.8rem; top: 4.7rem; opacity: 0.10; animation-delay: -2s; }
-.ambient-word--six { right: 4.4rem; top: 5.7rem; opacity: 0.10; animation-delay: -6s; }
-.ambient-word--seven { right: 11.4rem; bottom: 3.25rem; opacity: 0.09; animation-delay: -13s; }
+.ambient-word--one { right: 16.2rem; top: 0.45rem; }
+.ambient-word--two { right: 4rem; top: 1.1rem; animation-delay: -4s; }
+.ambient-word--three { right: 9.2rem; bottom: 1.25rem; animation-delay: -8s; }
+.ambient-word--four { right: 0.4rem; bottom: 0.05rem; animation-delay: -11s; }
+.ambient-word--five { right: 20.4rem; top: 4.3rem; opacity: 0.15; animation-delay: -2s; }
+.ambient-word--six { right: 4.9rem; top: 5.7rem; opacity: 0.15; animation-delay: -6s; }
+.ambient-word--seven { right: 14.6rem; bottom: 3.4rem; opacity: 0.14; animation-delay: -13s; }
 .ambient-dot {
   position: absolute;
   z-index: 1;
@@ -134,8 +143,8 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   height: 3px;
   border-radius: 999px;
   background: #6366f1;
-  opacity: 0.13;
-  animation: ambient-pulse 9s ease-in-out infinite alternate;
+  opacity: 0.18;
+  animation: ambient-pulse 6.5s ease-in-out infinite alternate;
 }
 .ambient-dot--1 { right: 2rem; top: 0.8rem; }
 .ambient-dot--2 { right: 6.2rem; top: 1.1rem; animation-delay: -1s; }
@@ -147,12 +156,12 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .ambient-dot--8 { right: 7.7rem; bottom: 0.55rem; animation-delay: -7s; }
 .ambient-dot--9 { right: 13.2rem; bottom: 1.8rem; animation-delay: -8s; }
 @keyframes ambient-drift {
-  from { transform: translate3d(-2px, -1px, 0); }
-  to { transform: translate3d(3px, 2px, 0); }
+  from { transform: translate3d(-7px, -4px, 0); }
+  to { transform: translate3d(8px, 5px, 0); }
 }
 @keyframes ambient-pulse {
-  from { transform: scale(0.88); opacity: 0.07; }
-  to { transform: scale(1.22); opacity: 0.17; }
+  from { transform: scale(0.82); opacity: 0.08; }
+  to { transform: scale(1.32); opacity: 0.22; }
 }
 @media (prefers-reduced-motion: reduce) {
   .ambient-hero { transform: none !important; transition: none; }
