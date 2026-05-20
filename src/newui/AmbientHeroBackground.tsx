@@ -1,58 +1,302 @@
 import React, { useEffect, useRef } from 'react';
 
-const ambientItems = [
-  { label: 'human experience', className: 'ambient-word ambient-word--one' },
-  { label: 'expression', className: 'ambient-word ambient-word--two' },
-  { label: 'awareness', className: 'ambient-word ambient-word--three' },
-  { label: 'adaptation', className: 'ambient-word ambient-word--four' },
-  { label: 'interaction', className: 'ambient-word ambient-word--five' },
-  { label: 'context', className: 'ambient-word ambient-word--six' },
-  { label: 'interpretation', className: 'ambient-word ambient-word--seven' },
+type KeywordNode = {
+  label: string;
+  homeX: number;
+  homeY: number;
+  size?: 'sm' | 'md';
+};
+
+type DotNode = {
+  homeX: number;
+  homeY: number;
+  size?: 'sm' | 'md';
+  opacity?: number;
+};
+
+const keywordNodes: KeywordNode[] = [
+  { label: 'human experience', homeX: 0.42, homeY: 0.23 },
+  { label: 'expression', homeX: 0.68, homeY: 0.28 },
+  { label: 'awareness', homeX: 0.56, homeY: 0.67 },
+  { label: 'adaptation', homeX: 0.84, homeY: 0.72 },
+  { label: 'interaction', homeX: 0.33, homeY: 0.58, size: 'sm' },
+  { label: 'context', homeX: 0.73, homeY: 0.55, size: 'sm' },
+  { label: 'interpretation', homeX: 0.49, homeY: 0.82, size: 'sm' },
+];
+
+const dotNodes: DotNode[] = [
+  { homeX: 0.78, homeY: 0.18 },
+  { homeX: 0.66, homeY: 0.2, size: 'sm' },
+  { homeX: 0.54, homeY: 0.31 },
+  { homeX: 0.81, homeY: 0.48, size: 'sm' },
+  { homeX: 0.61, homeY: 0.74 },
+  { homeX: 0.44, homeY: 0.76, size: 'sm' },
+  { homeX: 0.88, homeY: 0.6 },
+  { homeX: 0.7, homeY: 0.86, size: 'sm' },
+  { homeX: 0.52, homeY: 0.63 },
+  { homeX: 0.39, homeY: 0.29, size: 'sm' },
+  { homeX: 0.34, homeY: 0.42 },
+  { homeX: 0.29, homeY: 0.77, size: 'sm' },
+  { homeX: 0.23, homeY: 0.59, opacity: 0.13 },
+  { homeX: 0.19, homeY: 0.36, size: 'sm', opacity: 0.12 },
+  { homeX: 0.15, homeY: 0.7, opacity: 0.12 },
+  { homeX: 0.11, homeY: 0.82, size: 'sm', opacity: 0.11 },
+  { homeX: 0.77, homeY: 0.83, opacity: 0.12 },
+  { homeX: 0.55, homeY: 0.9, size: 'sm', opacity: 0.13 },
+  { homeX: 0.36, homeY: 0.14, opacity: 0.12 },
+  { homeX: 0.2, homeY: 0.21, size: 'sm', opacity: 0.1 },
+  { homeX: 0.87, homeY: 0.83, size: 'sm', opacity: 0.11 },
+  { homeX: 0.07, homeY: 0.54, opacity: 0.1 },
+  { homeX: 0.25, homeY: 0.1, size: 'sm', opacity: 0.12 },
+  { homeX: 0.47, homeY: 0.88, opacity: 0.13 },
 ];
 
 const AmbientHeroBackground: React.FC = () => {
   const layerRef = useRef<HTMLDivElement>(null);
+  const wordRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const dotRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const linkRefs = useRef<Array<SVGLineElement | null>>([]);
 
   useEffect(() => {
     const layer = layerRef.current;
     if (!layer) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
+    const bounds = { width: 1, height: 1 };
 
-    let frame = 0;
+    const nodes = keywordNodes.map((node) => ({
+      ...node,
+      homePx: { x: 0, y: 0 },
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      radius: node.size === 'sm' ? 56 : 74,
+    }));
 
-    const handlePointerMove = (event: PointerEvent) => {
-      if (frame) return;
+    const dots = dotNodes.map((dot) => ({
+      ...dot,
+      homePx: { x: 0, y: 0 },
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+    }));
 
-      frame = window.requestAnimationFrame(() => {
-        const rect = layer.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width - 0.5;
-        const y = (event.clientY - rect.top) / rect.height - 0.5;
+    let pointer = { x: 0, y: 0, active: false };
+    let draggedIndex: number | null = null;
+    let animationFrame = 0;
 
-        layer.style.setProperty('--ambient-x', `${x * 18}px`);
-        layer.style.setProperty('--ambient-y', `${y * 11}px`);
-        frame = 0;
+    const syncHomes = () => {
+      const rect = layer.getBoundingClientRect();
+      bounds.width = rect.width || 1;
+      bounds.height = rect.height || 1;
+
+      nodes.forEach((node) => {
+        const homeX = node.homeX * bounds.width;
+        const homeY = node.homeY * bounds.height;
+        node.homePx = { x: homeX, y: homeY };
+        if (!node.x && !node.y) {
+          node.x = homeX;
+          node.y = homeY;
+        }
+      });
+
+      dots.forEach((dot) => {
+        const homeX = dot.homeX * bounds.width;
+        const homeY = dot.homeY * bounds.height;
+        dot.homePx = { x: homeX, y: homeY };
+        if (!dot.x && !dot.y) {
+          dot.x = homeX;
+          dot.y = homeY;
+        }
       });
     };
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    const setPointer = (event: PointerEvent) => {
+      const rect = layer.getBoundingClientRect();
+      pointer = {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+        active: true,
+      };
+    };
+
+    const renderStatic = () => {
+      wordRefs.current.forEach((element, index) => {
+        const node = nodes[index];
+        if (!element || !node) return;
+        element.style.transform = `translate3d(${node.x}px, ${node.y}px, 0) translate(-50%, -50%)`;
+      });
+      dotRefs.current.forEach((element, index) => {
+        const dot = dots[index];
+        if (!element || !dot) return;
+        element.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-50%, -50%)`;
+      });
+    };
+
+    const tick = () => {
+      if (!reduceMotion) {
+        nodes.forEach((node, index) => {
+          if (draggedIndex === index) {
+            const dx = pointer.x - node.x;
+            const dy = pointer.y - node.y;
+            node.vx += dx * 0.36;
+            node.vy += dy * 0.36;
+          } else {
+            node.vx += (node.homePx.x - node.x) * 0.014;
+            node.vy += (node.homePx.y - node.y) * 0.014;
+          }
+
+          nodes.forEach((other, otherIndex) => {
+            if (index === otherIndex) return;
+            const dx = node.x - other.x;
+            const dy = node.y - other.y;
+            const distanceSq = dx * dx + dy * dy || 1;
+            const minDistance = node.radius + other.radius;
+            if (distanceSq < minDistance * minDistance) {
+              const distance = Math.sqrt(distanceSq);
+              const force = (minDistance - distance) * 0.0019;
+              node.vx += (dx / distance) * force * minDistance;
+              node.vy += (dy / distance) * force * minDistance;
+            }
+          });
+
+          if (pointer.active && draggedIndex !== index) {
+            const dx = node.x - pointer.x;
+            const dy = node.y - pointer.y;
+            const distanceSq = dx * dx + dy * dy || 1;
+            if (distanceSq < 155 * 155) {
+              const distance = Math.sqrt(distanceSq);
+              const force = (155 - distance) * 0.0014;
+              node.vx += (dx / distance) * force * 80;
+              node.vy += (dy / distance) * force * 80;
+            }
+          }
+
+          node.vx *= draggedIndex === index ? 0.48 : 0.88;
+          node.vy *= draggedIndex === index ? 0.48 : 0.88;
+          node.x += node.vx;
+          node.y += node.vy;
+        });
+
+        dots.forEach((dot) => {
+          dot.vx += (dot.homePx.x - dot.x) * 0.026;
+          dot.vy += (dot.homePx.y - dot.y) * 0.026;
+
+          const repelSource = draggedIndex == null ? pointer : nodes[draggedIndex];
+          const isActive = pointer.active || draggedIndex != null;
+          if (isActive && repelSource) {
+            const dx = dot.x - repelSource.x;
+            const dy = dot.y - repelSource.y;
+            const distanceSq = dx * dx + dy * dy || 1;
+            if (distanceSq < 145 * 145) {
+              const distance = Math.sqrt(distanceSq);
+              const force = (145 - distance) * 0.0024;
+              dot.vx += (dx / distance) * force * 70;
+              dot.vy += (dy / distance) * force * 70;
+            }
+          }
+
+          dot.vx *= 0.84;
+          dot.vy *= 0.84;
+          dot.x += dot.vx;
+          dot.y += dot.vy;
+        });
+      }
+
+      wordRefs.current.forEach((element, index) => {
+        const node = nodes[index];
+        if (!element || !node) return;
+        element.style.transform = `translate3d(${node.x}px, ${node.y}px, 0) translate(-50%, -50%)`;
+        element.classList.toggle('is-dragged', draggedIndex === index);
+      });
+
+      dotRefs.current.forEach((element, index) => {
+        const dot = dots[index];
+        if (!element || !dot) return;
+        element.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-50%, -50%)`;
+      });
+
+      linkRefs.current.forEach((line, index) => {
+        if (!line) return;
+        const source = nodes[index % nodes.length];
+        const target = nodes[(index + 2) % nodes.length];
+        line.setAttribute('x1', String(source.x));
+        line.setAttribute('y1', String(source.y));
+        line.setAttribute('x2', String(target.x));
+        line.setAttribute('y2', String(target.y));
+        line.style.opacity = draggedIndex === null ? '0' : index < 3 ? '0.1' : '0.04';
+      });
+
+      animationFrame = window.requestAnimationFrame(tick);
+    };
+
+    const handlePointerMove = (event: PointerEvent) => setPointer(event);
+    const handlePointerLeave = () => {
+      pointer.active = false;
+    };
+    const handlePointerUp = () => {
+      draggedIndex = null;
+      layer.classList.remove('is-dragging');
+    };
+
+    syncHomes();
+    renderStatic();
+    animationFrame = window.requestAnimationFrame(tick);
+
+    window.addEventListener('resize', syncHomes);
+    layer.addEventListener('pointermove', handlePointerMove, { passive: true });
+    layer.addEventListener('pointerleave', handlePointerLeave);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    const wordElements = [...wordRefs.current];
+    const cleanups = wordElements.map((element, index) => {
+      if (!element) return () => undefined;
+      const handlePointerDown = (event: PointerEvent) => {
+        event.preventDefault();
+        setPointer(event);
+        draggedIndex = index;
+        layer.classList.add('is-dragging');
+        element.setPointerCapture?.(event.pointerId);
+      };
+      element.addEventListener('pointerdown', handlePointerDown);
+      return () => element.removeEventListener('pointerdown', handlePointerDown);
+    });
 
     return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      if (frame) window.cancelAnimationFrame(frame);
+      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener('resize', syncHomes);
+      layer.removeEventListener('pointermove', handlePointerMove);
+      layer.removeEventListener('pointerleave', handlePointerLeave);
+      window.removeEventListener('pointerup', handlePointerUp);
+      cleanups.forEach((cleanup) => cleanup());
     };
   }, []);
 
   return (
     <div ref={layerRef} className="ambient-hero" aria-hidden="true">
+      <svg className="ambient-hero__links" aria-hidden="true">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <line key={index} ref={(element) => { linkRefs.current[index] = element; }} />
+        ))}
+      </svg>
       <div className="ambient-hero__particles">
-        {Array.from({ length: 24 }).map((_, index) => (
-          <span key={index} className={`ambient-dot ambient-dot--${index + 1}`} />
+        {dotNodes.map((dot, index) => (
+          <span
+            key={index}
+            ref={(element) => { dotRefs.current[index] = element; }}
+            className={`ambient-dot${dot.size === 'sm' ? ' ambient-dot--sm' : ''}`}
+            style={dot.opacity ? { opacity: dot.opacity } : undefined}
+          />
         ))}
       </div>
-      {ambientItems.map((item) => (
-        <span key={item.label} className={item.className}>
+      {keywordNodes.map((item, index) => (
+        <span
+          key={item.label}
+          ref={(element) => { wordRefs.current[index] = element; }}
+          className={`ambient-word${item.size === 'sm' ? ' ambient-word--sm' : ''}`}
+        >
           {item.label}
         </span>
       ))}
