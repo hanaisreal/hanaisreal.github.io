@@ -30,27 +30,33 @@ const PublicationsSection: React.FC = () => {
     <section id="publications">
       <h2 className="sec-heading">Publications</h2>
       <ul className="pub-list">
-        {publications.map((pub, i) => (
-          <li key={i} className="pub">
-            <span className="pub__num">[{publications.length - i}]</span>
-            <div className="pub__body">
-              <p className="pub__title">{pub.title}</p>
-              <p className="pub__authors">
-                {formatAuthors(pub.authors, pub.coFirstAuthors)}
-              </p>
-              <div className="pub__meta">
-                <span className="pub__venue">{pub.venue}</span>
-                <span className="pub__year">{pub.year}</span>
-                {pub.bestPaper && (
-                  <span className="pub__best-paper">★ Best Paper</span>
-                )}
-                <span className={`pub__status${pub.status === 'Accepted' ? ' pub__status--accepted' : ''}`}>
-                  {pub.status}
-                </span>
+        {publications.map((pub, i) => {
+          const venueAlreadyHasYear = pub.venue.includes(pub.year);
+
+          return (
+            <li key={i} className="pub">
+              <span className="pub__num">[{publications.length - i}]</span>
+              <div className="pub__body">
+                <p className="pub__title">{pub.title}</p>
+                <p className="pub__authors">
+                  {formatAuthors(pub.authors, pub.coFirstAuthors)}
+                </p>
+                <div className="pub__meta">
+                  <span className="pub__venue">{pub.venue}</span>
+                  {!venueAlreadyHasYear && <span className="pub__year">{pub.year}</span>}
+                  {pub.bestPaper && (
+                    <span className="pub__best-paper">★ Best Paper</span>
+                  )}
+                  {pub.status === 'Under Review' && (
+                    <span className="pub__status">
+                      {pub.status}
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
       {hasCoFirst && (
         <p className="pub__cofirst-note">* equal contribution</p>

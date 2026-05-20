@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 
 const navItems = [
   { label: 'News',         href: '#news' },
-  { label: 'Publications', href: '#publications' },
+  { label: 'About',        href: '#about' },
   { label: 'Research',     href: '#research' },
+  { label: 'Publications', href: '#publications' },
   { label: 'Projects',     href: '#projects' },
   { label: 'CV ↓',         href: `${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`, isExternal: true },
 ];

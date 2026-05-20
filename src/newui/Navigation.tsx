@@ -8,9 +8,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { label: 'News', href: '#news' },
   { label: 'About', href: '#about' },
-  { label: 'Publications', href: '#publications' },
   { label: 'Research', href: '#research' },
+  { label: 'Publications', href: '#publications' },
   { label: 'Projects', href: '#projects' },
   // { label: 'Reading List', href: '#reading' },
   // { label: 'Blog', href: '/blog', isExternal: true },
