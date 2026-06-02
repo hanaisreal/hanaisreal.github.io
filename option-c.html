@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>Hana Oh — Option C: Split Scroll</title>
+<style>
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 1440px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #1e1e1e;
+  overflow-x: hidden;
+}
+
+/* ─── Browser Chrome ─────────────────────────────────────── */
+
+.bc {
+  width: 1440px;
+  height: 52px;
+  background: #2B2B2B;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  flex-shrink: 0;
+  user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.bc-dots {
+  display: flex;
+  gap: 7px;
+  margin-right: 20px;
+}
+
+.bc-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.bc-r { background: #FF5F57; }
+.bc-y { background: #FEBC2E; }
+.bc-g { background: #28C840; }
+
+.bc-arrows {
+  display: flex;
+  gap: 8px;
+  margin-right: 14px;
+}
+
+.bc-arrow {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bc-url {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 28px;
+  background: #3C3C3C;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #bbb;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
+
+.bc-spacer { width: 120px; }
+
+/* ─── Top Section: Full-bleed collage ───────────────────── */
+
+.top-section {
+  position: relative;
+  width: 1440px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#collage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Floating nav — white text, translucent */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 20;
+}
+
+.nav-name {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.nav-links a:hover { opacity: 1; }
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  z-index: 20;
+  animation: scroll-bob 2.2s ease-in-out infinite;
+  cursor: pointer;
+}
+
+.scroll-indicator span {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+@keyframes scroll-bob {
+  0%, 100% { opacity: 0.5;  transform: translateX(-50%) translateY(0px);  }
+  50%       { opacity: 1;   transform: translateX(-50%) translateY(9px);   }
+}
+
+/* ─── Bottom Section: Cream ─────────────────────────────── */
+
+.bottom-section {
+  position: relative;
+  width: 1440px;
+  height: 100vh;
+  background: #FAF7F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Torn-paper SVG divider — sits above top section */
+.torn-edge {
+  position: absolute;
+  top: -59px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: block;
+}
+
+/* Content block */
+.content {
+  max-width: 600px;
+  width: 100%;
+  padding: 0 24px;
+  padding-top: 20px; /* visual breathing room from torn edge */
+}
+
+.content-name {
+  font-size: 28px;
+  font-weight: 500;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+}
+
+.content-bio {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555;
+  margin-top: 14px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.tag {
+  font-size: 12px;
+  border: 0.5px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 12px;
+  color: #555;
+  background: transparent;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
+
+.now-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #999;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.now-item {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.7;
+}
+
+.accent-line {
+  width: 32px;
+  height: 2px;
+  background: #8B2244;
+  margin-top: 24px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── Browser Chrome ── -->
+<div class="bc">
+  <div class="bc-dots">
+    <span class="bc-dot bc-r"></span>
+    <span class="bc-dot bc-y"></span>
+    <span class="bc-dot bc-g"></span>
+  </div>
+  <div class="bc-arrows">
+    <div class="bc-arrow">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+           stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9,3 4,7 9,11"/>
+      </svg>
+    </div>
+    <div class="bc-arrow" style="opacity:.28">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+           stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="5,3 10,7 5,11"/>
+      </svg>
+    </div>
+  </div>
+  <div class="bc-url">
+    <svg width="10" height="12" viewBox="0 0 10 12" fill="none"
+         stroke="#999" stroke-width="1.2" stroke-linecap="round">
+      <rect x="1" y="5" width="8" height="6.5" rx="1.5" fill="none"/>
+      <path d="M3 5V3.5a2 2 0 0 1 4 0V5"/>
+    </svg>
+    hanaoh.github.io
+  </div>
+  <div class="bc-spacer"></div>
+</div>
+
+<!-- ── Top Section: Collage ── -->
+<div class="top-section">
+
+  <div id="collage"></div>
+
+  <nav class="nav">
+    <span class="nav-name">Hana Oh</span>
+    <ul class="nav-links">
+      <li><a href="#">Research</a></li>
+      <li><a href="#">Writing</a></li>
+      <li><a href="#">Reading</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="scroll-indicator"
+       onclick="document.querySelector('.bottom-section').scrollIntoView({behavior:'smooth'})">
+    <span>scroll</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+
+</div>
+
+<!-- ── Bottom Section: Cream ── -->
+<div class="bottom-section">
+
+  <!--
+    Torn-paper edge in cream (#FAF7F2).
+    The path starts at bottom-left, rises with a jagged/torn top silhouette,
+    then closes at bottom-right — covering the boundary with cream color.
+  -->
+  <svg class="torn-edge" viewBox="0 0 1440 60" preserveAspectRatio="none"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="
+      M0,60
+      L0,36
+      L28,24 L48,40 L72,14 L100,44 L128,18 L155,46 L180,12 L205,38
+      L228,22 L255,50 L282,16 L310,42 L336,20 L362,52 L390,14 L418,40
+      L445,22 L472,50 L498,10 L522,38 L550,24 L578,52 L604,12 L632,40
+      L660,20 L688,48 L715,14 L742,42 L768,26 L795,52 L822,16 L848,44
+      L875,20 L902,48 L928,12 L955,40 L982,22 L1008,50 L1035,14 L1062,42
+      L1088,18 L1115,48 L1142,20 L1168,50 L1195,16 L1222,44 L1248,20 L1275,50
+      L1300,15 L1325,42 L1352,18 L1380,46 L1408,20 L1440,36
+      L1440,60
+      Z
+    " fill="#FAF7F2"/>
+  </svg>
+
+  <div class="content">
+    <div class="content-name">Hana Oh</div>
+    <p class="content-bio">
+      HCI researcher. I study how people stay human while talking to machines.
+      My work sits at the intersection of conversational AI, emotional
+      computing, and the design of everyday digital experiences.
+    </p>
+    <div class="tags">
+      <span class="tag">🌸 DeepAware</span>
+      <span class="tag">🌸 ToneCanvas</span>
+      <span class="tag">🌱 CHI 2027</span>
+    </div>
+    <div class="now-label">Now</div>
+    <div class="now-item">Writing up my CHI 2027 paper on ambient AI.</div>
+    <div class="now-item">Preparing a reading list on speculative interfaces.</div>
+    <div class="accent-line"></div>
+  </div>
+
+</div>
+
+<script>
+const MORNING   = ['#B8D4E8','#D4E8F5','#F5E6B8','#E8D4A0','#F0EDD4'];
+const AFTERNOON = ['#E8B4A0','#F5C4A8','#D4A0C4','#E8A0B8','#F0B8C8'];
+const NIGHT     = ['#1A1A3E','#2D1B4E','#3D2B5E','#1E2D4A'];
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function getCell(cx, W) {
+  const r = cx / W;
+  if (r < 0.33) return { color: pick(MORNING),   night: false };
+  if (r < 0.67) return { color: pick(AFTERNOON), night: false };
+  return                { color: pick(NIGHT),     night: true  };
+}
+
+function addStars(el, w, h) {
+  const n = Math.max(2, Math.min(Math.round((w * h) / 3200), 12));
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('div');
+    const sz = Math.random() < 0.22 ? 2 : 1;
+    s.style.cssText =
+      'position:absolute' +
+      `;width:${sz}px;height:${sz}px` +
+      ';background:#F8F8FF;border-radius:50%' +
+      `;left:${(4 + Math.random() * 92).toFixed(1)}%` +
+      `;top:${(4 + Math.random() * 92).toFixed(1)}%` +
+      `;opacity:${(0.3 + Math.random() * 0.7).toFixed(2)}`;
+    el.appendChild(s);
+  }
+}
+
+function buildCollage(id) {
+  const container = document.getElementById(id);
+  const W = container.clientWidth;
+  const H = container.clientHeight;
+
+  let y = 0;
+  while (y < H) {
+    const rh = 80 + Math.floor(Math.random() * 121);
+    let x = 0;
+    while (x < W) {
+      const rem = W - x;
+      let rw = 80 + Math.floor(Math.random() * 161);
+      if (rw > rem) rw = rem;
+
+      const { color, night } = getCell(x + rw / 2, W);
+
+      const div = document.createElement('div');
+      div.style.cssText =
+        'position:absolute' +
+        `;left:${x}px;top:${y}px` +
+        `;width:${rw}px;height:${rh}px` +
+        `;background:${color}` +
+        ';overflow:hidden';
+
+      if (night) addStars(div, rw, rh);
+      container.appendChild(div);
+      x += rw;
+    }
+    y += rh;
+  }
+}
+
+buildCollage('collage');
+</script>
+
+</body>
+</html>

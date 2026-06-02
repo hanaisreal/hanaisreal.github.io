@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>Hana Oh — Option A: Gallery First</title>
+<style>
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 1440px;
+  height: 100vh;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #1e1e1e;
+}
+
+/* ─── Browser Chrome ─────────────────────────────────────── */
+
+.bc {
+  width: 1440px;
+  height: 52px;
+  background: #2B2B2B;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.bc-dots {
+  display: flex;
+  gap: 7px;
+  margin-right: 20px;
+}
+
+.bc-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.bc-r { background: #FF5F57; }
+.bc-y { background: #FEBC2E; }
+.bc-g { background: #28C840; }
+
+.bc-arrows {
+  display: flex;
+  gap: 8px;
+  margin-right: 14px;
+}
+
+.bc-arrow {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bc-url {
+  flex: 1;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 28px;
+  background: #3C3C3C;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #bbb;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+}
+
+.bc-spacer { width: 120px; }
+
+/* ─── Portfolio Viewport ─────────────────────────────────── */
+
+.site {
+  position: relative;
+  width: 1440px;
+  height: calc(100vh - 52px);
+  overflow: hidden;
+}
+
+/* Full-bleed collage */
+#collage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* Floating nav — translucent dark strip */
+.nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  z-index: 20;
+}
+
+.nav-name {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #fff;
+  font-size: 13px;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.nav-links a:hover { opacity: 1; }
+
+/* Pulsing chevron */
+.chevron {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  z-index: 20;
+  cursor: pointer;
+  animation: chev 2.2s ease-in-out infinite;
+}
+
+@keyframes chev {
+  0%, 100% { opacity: 0.5;  transform: translateX(-50%) translateY(0px); }
+  50%       { opacity: 1;   transform: translateX(-50%) translateY(9px);  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── Browser Chrome ── -->
+<div class="bc">
+  <div class="bc-dots">
+    <span class="bc-dot bc-r"></span>
+    <span class="bc-dot bc-y"></span>
+    <span class="bc-dot bc-g"></span>
+  </div>
+  <div class="bc-arrows">
+    <div class="bc-arrow">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+           stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9,3 4,7 9,11"/>
+      </svg>
+    </div>
+    <div class="bc-arrow" style="opacity:.28">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+           stroke="#666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="5,3 10,7 5,11"/>
+      </svg>
+    </div>
+  </div>
+  <div class="bc-url">
+    <svg width="10" height="12" viewBox="0 0 10 12" fill="none"
+         stroke="#999" stroke-width="1.2" stroke-linecap="round">
+      <rect x="1" y="5" width="8" height="6.5" rx="1.5" fill="none"/>
+      <path d="M3 5V3.5a2 2 0 0 1 4 0V5"/>
+    </svg>
+    hanaoh.github.io
+  </div>
+  <div class="bc-spacer"></div>
+</div>
+
+<!-- ── Portfolio ── -->
+<div class="site">
+
+  <div id="collage"></div>
+
+  <nav class="nav">
+    <span class="nav-name">Hana Oh</span>
+    <ul class="nav-links">
+      <li><a href="#">Research</a></li>
+      <li><a href="#">Writing</a></li>
+      <li><a href="#">Reading</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="chevron" role="img" aria-label="Scroll down">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </div>
+
+</div>
+
+<script>
+const MORNING   = ['#B8D4E8','#D4E8F5','#F5E6B8','#E8D4A0','#F0EDD4'];
+const AFTERNOON = ['#E8B4A0','#F5C4A8','#D4A0C4','#E8A0B8','#F0B8C8'];
+const NIGHT     = ['#1A1A3E','#2D1B4E','#3D2B5E','#1E2D4A'];
+
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function getCell(cx, W) {
+  const r = cx / W;
+  if (r < 0.33) return { color: pick(MORNING),   night: false };
+  if (r < 0.67) return { color: pick(AFTERNOON), night: false };
+  return                { color: pick(NIGHT),     night: true  };
+}
+
+function addStars(el, w, h) {
+  const n = Math.max(2, Math.min(Math.round((w * h) / 3200), 12));
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('div');
+    const sz = Math.random() < 0.22 ? 2 : 1;
+    s.style.cssText =
+      'position:absolute' +
+      `;width:${sz}px;height:${sz}px` +
+      ';background:#F8F8FF;border-radius:50%' +
+      `;left:${(4 + Math.random() * 92).toFixed(1)}%` +
+      `;top:${(4 + Math.random() * 92).toFixed(1)}%` +
+      `;opacity:${(0.3 + Math.random() * 0.7).toFixed(2)}`;
+    el.appendChild(s);
+  }
+}
+
+function buildCollage(id) {
+  const container = document.getElementById(id);
+  const W = container.clientWidth;
+  const H = container.clientHeight;
+
+  let y = 0;
+  while (y < H) {
+    const rh = 80 + Math.floor(Math.random() * 121); /* 80–200 */
+    let x = 0;
+    while (x < W) {
+      const rem = W - x;
+      let rw = 80 + Math.floor(Math.random() * 161); /* 80–240 */
+      if (rw > rem) rw = rem;
+
+      const { color, night } = getCell(x + rw / 2, W);
+
+      const div = document.createElement('div');
+      div.style.cssText =
+        'position:absolute' +
+        `;left:${x}px;top:${y}px` +
+        `;width:${rw}px;height:${rh}px` +
+        `;background:${color}` +
+        ';overflow:hidden';
+
+      if (night) addStars(div, rw, rh);
+      container.appendChild(div);
+      x += rw;
+    }
+    y += rh;
+  }
+}
+
+buildCollage('collage');
+</script>
+
+</body>
+</html>
