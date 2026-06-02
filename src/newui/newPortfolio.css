@@ -3,9 +3,11 @@
   --px:     1.5rem;
   --text:   #111;
   --muted:  #6b7280;
-  --link:   #2563eb;
+  --link:   #8B2244;
   --border: #e5e7eb;
   --award:  #b91c1c;
+  --scarlet: #8B2244;
+  --cream:   #FAF7F2;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -21,7 +23,7 @@ body {
   font-size: 15px;
   line-height: 1.7;
   color: var(--text);
-  background: #fff;
+  background: var(--cream);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -33,7 +35,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .site-nav {
   position: sticky;
   top: 0;
-  background: #fff;
+  background: var(--cream);
   border-bottom: 1px solid var(--border);
   z-index: 100;
 }
@@ -58,6 +60,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   transition: color 0.1s;
 }
 .site-nav__link:hover { color: var(--text); }
+.site-nav__link.is-active { color: var(--scarlet); font-weight: 600; }
 
 /* ── PAGE ── */
 .page {
@@ -210,11 +213,11 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .bio p { margin: 0; }
 .bio p + p { margin-top: 0.5rem; }
 .text-link {
-  color: var(--link);
+  color: var(--scarlet);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-.text-link:hover { color: #1d4ed8; }
+.text-link:hover { color: #6b1832; }
 
 /* ── DIVIDER ── */
 .sec-rule {
@@ -408,6 +411,141 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .proj-list--side .proj { padding: 0.75rem 0; }
 .proj--side .proj__title { font-size: 0.9rem; font-weight: 600; }
 .proj--side .proj__desc { font-size: 0.84rem; color: #4b5563; }
+
+/* ── NOW / READING ── */
+.now-copy {
+  font-size: 0.94rem;
+  color: #222;
+  line-height: 1.72;
+}
+.now-copy p { margin: 0; }
+.now-copy p + p { margin-top: 0.35rem; }
+
+.reading-list {
+  font-size: 0.94rem;
+  color: #222;
+  line-height: 2;
+}
+
+/* ── ESSAYS PAGE ── */
+.essays-intro {
+  font-size: 0.94rem;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 2rem;
+  line-height: 1.72;
+  border-left: 2px solid var(--scarlet);
+  padding-left: 0.85rem;
+}
+
+.essay-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.essay-item {
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.essay-item:last-child { border-bottom: none; }
+
+.essay-tag {
+  display: inline-block;
+  font-size: 0.74rem;
+  color: var(--scarlet);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.essay-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.essay-title a {
+  color: var(--text);
+  text-decoration: none;
+}
+.essay-title a:hover { color: var(--scarlet); }
+
+.essay-opening {
+  font-size: 0.9rem;
+  color: #374151;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── ESSAY POST ── */
+.essay-post__back {
+  display: inline-block;
+  font-size: 0.82rem;
+  color: var(--scarlet);
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+}
+.essay-post__back:hover { text-decoration: underline; }
+
+.essay-post__header {
+  margin-bottom: 2rem;
+}
+
+.essay-post__title {
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0.4rem 0 0.5rem;
+}
+
+.essay-post__subtitle {
+  font-size: 1rem;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+  font-style: italic;
+}
+
+.essay-post__meta {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.essay-post__body {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+.essay-post__para {
+  font-size: 0.96rem;
+  line-height: 1.8;
+  color: #222;
+  margin: 0 0 1.25rem;
+}
+
+.essay-post__heading {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1.75rem 0 0.65rem;
+  letter-spacing: -0.01em;
+}
+
+.essay-post__related {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.essay-post__footer {
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
 
 /* ── FOOTER ── */
 .site-footer {
