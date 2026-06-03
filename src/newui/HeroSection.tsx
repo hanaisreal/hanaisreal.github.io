@@ -11,6 +11,7 @@ const HeroSection: React.FC = () => (
           className="profile__img"
           src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
           alt="Hana Oh"
+          onLoad={e => (e.currentTarget as HTMLImageElement).classList.add('is-loaded')}
         />
         <div className="profile__icons">
           <a className="profile__icon-link" href="mailto:hana2001@snu.ac.kr" title="Email">

@@ -11,18 +11,26 @@ import ProjectPage from './pages/ProjectPage';
 
 const App: React.FC = () => {
   const [bg] = useState<BackgroundItem>(() => pickBackground(new Date().getHours()));
+  const [bgLoaded, setBgLoaded] = useState(false);
+
+  React.useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => setBgLoaded(true);
+    img.src = `/pictures/backgrounds/${bg.file}`;
+  }, [bg.file]);
 
   return (
     <>
       <div
         id="site-bg"
+        className={bgLoaded ? 'is-loaded' : ''}
         style={{ backgroundImage: `url('/pictures/backgrounds/${bg.file}')` }}
       />
       <Routes>
         <Route path="/" element={<NewPortfolio bg={bg} />} />
         <Route path="/research" element={<ResearchPage />} />
-        <Route path="/essays" element={<Blog />} />
-        <Route path="/essays/:slug" element={<BlogPost />} />
+        {/* <Route path="/essays" element={<Blog />} /> */}
+        {/* <Route path="/essays/:slug" element={<BlogPost />} /> */}
         <Route path="/collections" element={<CollectionsPage />} />
         <Route path="/publications/:slug" element={<PublicationPage />} />
         <Route path="/projects/:slug" element={<ProjectPage />} />

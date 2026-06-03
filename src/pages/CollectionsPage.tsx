@@ -15,8 +15,8 @@ const CollectionsPage: React.FC = () => {
       <Masthead />
       <div className="page collections-page">
         <header className="collections-header">
-          <h1 className="collections-title">untranslatable</h1>
-          <p className="collections-subtitle">some feelings only exist in one language.</p>
+          <h1 className="collections-title">untranslatable words</h1>
+          <p className="collections-subtitle">Some feelings are real but nameless until you find out another language named them exactly. This is a collection of words I've been looking for without knowing it.</p>
         </header>
 
         <div className="collections-filters">
