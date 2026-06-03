@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import StickyHeader from '../newui/StickyHeader';
+import Masthead from '../newui/Masthead';
 import '../newui/newPortfolio.css';
 import './ComingSoon.css';
 
 const ComingSoon: React.FC = () => {
   return (
     <div className="coming-soon-page">
-      <StickyHeader />
+      <Masthead />
 
       <main className="coming-soon-main">
         <div className="coming-soon-container">

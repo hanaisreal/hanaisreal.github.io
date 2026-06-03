@@ -1,43 +1,53 @@
-import React, { useCallback } from 'react';
-
-const navItems = [
-  { label: 'News',         href: '#news' },
-  { label: 'About',        href: '#about' },
-  { label: 'Research',     href: '#research' },
-  { label: 'Publications', href: '#publications' },
-  { label: 'Projects',     href: '#projects' },
-  { label: 'CV ↓',         href: `${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`, isExternal: true },
-];
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Masthead: React.FC = () => {
-  const handleClick = useCallback(
-    (href: string, isExternal?: boolean) =>
-      (e: React.MouseEvent<HTMLAnchorElement>) => {
-        if (isExternal) return;
-        e.preventDefault();
-        const id = href.replace('#', '');
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      },
-    []
-  );
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <nav className="site-nav">
+    <nav className={`site-nav${scrolled ? ' is-scrolled' : ''}`}>
       <div className="site-nav__inner">
-        <span className="site-nav__brand">Hana Oh</span>
+        <NavLink to="/" className="site-nav__brand">Hana Oh</NavLink>
         <div className="site-nav__links">
-          {navItems.map(({ label, href, isExternal }) => (
-            <a
-              key={label}
-              href={href}
-              className="site-nav__link"
-              onClick={handleClick(href, isExternal)}
-              target={isExternal ? '_blank' : undefined}
-              rel={isExternal ? 'noopener noreferrer' : undefined}
-            >
-              {label}
-            </a>
-          ))}
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/research"
+            className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}
+          >
+            Research
+          </NavLink>
+          <NavLink
+            to="/essays"
+            className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}
+          >
+            Essays
+          </NavLink>
+          <NavLink
+            to="/collections"
+            className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}
+          >
+            Collections
+          </NavLink>
+          <a
+            href={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`}
+            className="site-nav__link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            CV ↓
+          </a>
         </div>
       </div>
     </nav>

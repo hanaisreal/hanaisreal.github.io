@@ -97,12 +97,6 @@ const Portfolio: React.FC = () => {
               {project.image && (
                 <img src={project.image} alt={project.title} className="project-image" />
               )}
-              {project.video && (
-                <video controls className="project-video">
-                  <source src={project.video} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
 
               <p>
                 {project.description.slice(0, 100)}...{' '}
@@ -125,12 +119,6 @@ const Portfolio: React.FC = () => {
             <h3>{selectedProject.title}</h3>
             {selectedProject.image && (
               <img src={selectedProject.image} alt={selectedProject.title} className="modal-image" />
-            )}
-            {selectedProject.video && (
-              <video controls className="modal-video">
-                <source src={selectedProject.video} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
             )}
             <p>{selectedProject.description}</p>
           </div>

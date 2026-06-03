@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import StickyHeader from '../newui/StickyHeader';
+import Masthead from '../newui/Masthead';
 import '../newui/newPortfolio.css';
 import './Wordbank.css';
 
@@ -118,7 +118,7 @@ const Wordbank: React.FC = () => {
 
   return (
     <div className="wordbank-page">
-      <StickyHeader />
+      <Masthead />
 
       <main className="wordbank-main">
         <div className="wordbank-container">

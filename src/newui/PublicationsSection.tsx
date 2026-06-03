@@ -1,68 +1,38 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { publications } from '../components/data/publicationsData';
 
-function formatAuthors(authors: string, coFirst?: string[]) {
-  const names = authors.split(', ');
-  const parts: React.ReactNode[] = [];
-
-  names.forEach((name, i) => {
-    const isMe = name === 'Hana Oh';
-    const isCo = coFirst?.includes(name);
-    const separator = i < names.length - 1 ? ', ' : '';
-
-    parts.push(
-      <span key={i}>
-        <span className={isMe ? 'pub__me' : undefined}>
-          {name}{isCo ? <sup>*</sup> : null}
-        </span>
-        {separator}
-      </span>
-    );
-  });
-
-  return <>{parts}</>;
-}
-
-const PublicationsSection: React.FC = () => {
-  const hasCoFirst = publications.some((p) => p.coFirstAuthors);
-
-  return (
-    <section id="publications">
-      <h2 className="sec-heading">Publications</h2>
-      <ul className="pub-list">
-        {publications.map((pub, i) => {
-          const venueAlreadyHasYear = pub.venue.includes(pub.year);
-
-          return (
-            <li key={i} className="pub">
-              <span className="pub__num">[{publications.length - i}]</span>
-              <div className="pub__body">
-                <p className="pub__title">{pub.title}</p>
-                <p className="pub__authors">
-                  {formatAuthors(pub.authors, pub.coFirstAuthors)}
-                </p>
-                <div className="pub__meta">
-                  <span className="pub__venue">{pub.venue}</span>
-                  {!venueAlreadyHasYear && <span className="pub__year">{pub.year}</span>}
-                  {pub.bestPaper && (
-                    <span className="pub__best-paper">★ Best Paper</span>
-                  )}
-                  {pub.status === 'Under Review' && (
-                    <span className="pub__status">
-                      {pub.status}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-      {hasCoFirst && (
-        <p className="pub__cofirst-note">* equal contribution</p>
-      )}
-    </section>
-  );
-};
+const PublicationsSection: React.FC = () => (
+  <section id="publications">
+    <h2 className="sec-heading">Publications</h2>
+    <div className="research-cards">
+      {publications.map(pub => (
+        <Link key={pub.slug} to={`/publications/${pub.slug}`} className="research-card">
+          <div
+            className="research-card__img"
+            style={pub.image ? { backgroundImage: `url(${pub.image})` } : undefined}
+          />
+          <div className="research-card__body">
+            <div className="research-card__meta">
+              <span className="essay-tag">{pub.venue}</span>
+              {pub.bestPaper && (
+                <span className="pub__best-paper">★ Best Paper</span>
+              )}
+              {pub.status === 'Under Review' && (
+                <span className="pub__status">{pub.status}</span>
+              )}
+            </div>
+            <p className="research-card__title">{pub.title}</p>
+            <p className="research-card__desc">{pub.tldr}</p>
+            <p className="research-card__authors">{pub.authors}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
+    {publications.some(p => p.coFirstAuthors) && (
+      <p className="pub__cofirst-note">* equal contribution</p>
+    )}
+  </section>
+);
 
 export default PublicationsSection;

@@ -30,6 +30,7 @@
     "build": "NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "sync-bg": "node scripts/sync-backgrounds.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
