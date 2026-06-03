@@ -1,13 +1,13 @@
 import React from 'react';
 import Masthead from '../newui/Masthead';
-import PhotoMosaic from '../newui/PhotoMosaic';
+import PhotoGrid from '../newui/PhotoGrid';
 import '../newui/newPortfolio.css';
 
 const PhotosPage: React.FC = () => (
   <div>
     <Masthead />
     <div className="page">
-      <PhotoMosaic />
+      <PhotoGrid />
     </div>
     <footer className="site-footer">
       <span>Hana Oh</span>

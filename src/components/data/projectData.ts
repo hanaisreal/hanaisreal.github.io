@@ -1,87 +1,87 @@
+const BASE = process.env.PUBLIC_URL;
+
+export interface ProjectLink {
+  label: string;
+  url: string;
+}
+
 export interface Project {
+  slug: string;
   title: string;
+  tldr: string;
   description: string;
+  narrative: string;
+  contributions: string[];
   tags: string[];
-  skills: string[];
-  role: string;
-  image?: string;
   duration?: string;
-  github?: string;
-  video?: string;
-  group?: 'selected' | 'side';
+  image?: string;
+  links?: ProjectLink[];
 }
 
 export const projects: Project[] = [
   {
+    slug: "livrecord",
     title: "Reflective Autobiographical System",
-    description: "Built a voice-first AI pipeline with STT/TTS that scaffolds older adults through autobiographical storytelling.",
-    tags: ["HCI", "Speech Interaction", "Older Adults", "Social Good"],
-    skills: ["React", "TypeScript", "GPT-4 API", "Speech-to-Text", "Text-to-Speech"],
-    role: "Lead developer, focusing on voice interaction and AI pipeline implementation.",
-    video: `${process.env.PUBLIC_URL}/videos/LivRecord.mp4`,
+    tldr: "A voice-first AI system that helps older adults turn spoken memories into a personal narrative.",
+    description: "Voice-first AI pipeline with STT/TTS that scaffolds older adults through autobiographical storytelling.",
+    narrative: `Older adults carry stories that often go untold — not from unwillingness, but from the friction of writing. LivRecord removes that friction. Using voice as the primary input, the system walks users through autobiographical prompts, transcribes their responses, and gradually assembles a narrative they can revisit and share.
+
+The design challenge was making the prompts feel like conversation, not interview. Each question follows naturally from the previous response; the system listens for cues about themes the user wants to return to and surfaces them later. The result feels less like filling in a form and more like talking with someone who remembers everything you said.
+
+Built over four months with a small team, the system won the Grand Prize at the KAIST Social Impact Challenge.`,
+    contributions: [
+      "Voice interaction pipeline using STT/TTS with GPT-4 for adaptive prompt generation",
+      "Prompt design framework that maintains narrative coherence across multiple sessions",
+      "User study with older adults, iterated on prompt phrasing and response pacing",
+    ],
+    tags: ["HCI", "Voice Interaction", "Older Adults"],
     duration: "Feb 2024 – Jun 2024",
-    group: "selected"
+    image: undefined,
+    links: [
+      { label: "Demo", url: `${BASE}/videos/LivRecord.mp4` },
+    ],
   },
   {
+    slug: "upstage-consultation",
     title: "Personalized AI Consultation System",
-    description: "Built and deployed a full-stack RAG application using Solar LLMs for adaptive, personalized user consulting.",
-    tags: ["LLM", "RAG", "Personalization", "Full-Stack"],
-    skills: ["Streamlit", "React", "Solar LLM", "Vector DB", "FastAPI"],
-    role: "Developer, focusing on conversation analysis and AI consultation implementation.",
-    image: `${process.env.PUBLIC_URL}/pictures/upstage2.png`,
+    tldr: "A RAG-based system that grounds AI responses in a user's own documents, making advice feel personal rather than generic.",
+    description: "Full-stack RAG application using Solar LLMs for adaptive, personalized user consulting.",
+    narrative: `Generic AI responses feel generic. This system uses retrieval-augmented generation to ground every response in a specific user's context — drawing from documents they've uploaded — so that advice reflects their actual situation rather than a statistical average.
+
+The core insight was that personalization isn't about tone; it's about relevance. When the model cites a clause from a user's own contract or references a figure from their own report, the response earns a different kind of trust. The interface was designed to make that grounding visible: sources are shown inline, not buried.
+
+Built for the Upstage AI Challenge, the system placed in the Top 10.`,
+    contributions: [
+      "RAG pipeline with Solar LLM and vector database for document-grounded responses",
+      "Source attribution UI that surfaces retrieved passages inline with the response",
+      "Conversation analysis module that adapts question depth based on user engagement",
+    ],
+    tags: ["LLM", "RAG", "Personalization"],
     duration: "Apr 2024 – Jun 2024",
-    group: "selected"
+    image: `${BASE}/pictures/upstage2.png`,
+    links: [],
   },
   {
+    slug: "medsam-viewer",
     title: "Medical Image Segmentation Viewer",
-    description: "Built a custom DICOM viewer integrating MedSAM for semi-automatic 3D CT segmentation; improved segmentation robustness via LoRA fine-tuning and prompt design.",
-    tags: ["Computer Vision", "Medical AI", "Segmentation", "Industry Research"],
-    skills: ["PyQt5", "PyTorch", "MedSAM", "LoRA", "DICOM"],
-    role: "Fine-tuned MedSAM and implemented viewer-side interactions for CT segmentation workflows.",
-    image: `${process.env.PUBLIC_URL}/pictures/infinitt healthcare.png`,
-    github: "https://github.com/sggithi/DICOM-Viewer-MedSAM",
+    tldr: "A custom DICOM viewer that lets radiologists prompt MedSAM with a click and get 3D CT segmentations propagated through slices.",
+    description: "Custom DICOM viewer integrating MedSAM for semi-automatic 3D CT segmentation with LoRA fine-tuning.",
+    narrative: `Radiologists working with 3D CT scans still spend significant time manually marking anatomical structures — a process that is both tedious and prone to inter-annotator variation. This project embedded MedSAM into a custom PyQt5 DICOM viewer so that a single click-prompt propagates a segmentation through an entire scan volume.
+
+The viewer was built around the radiologist's existing workflow: you look at a slice, click the structure you want, and the model fills in the rest. The LoRA fine-tuning phase addressed the gap between MedSAM's training distribution and the specific organ types in the clinic's dataset, improving robustness on the edge cases that mattered most in practice.`,
+    contributions: [
+      "Custom DICOM viewer with integrated MedSAM for click-prompted 3D segmentation",
+      "LoRA fine-tuning on clinical CT dataset to improve robustness on target organ types",
+      "Prompt design for semi-automatic propagation across axial slices",
+    ],
+    tags: ["Computer Vision", "Medical AI", "Segmentation"],
     duration: "Mar 2024 – Jun 2024",
-    group: "selected"
+    image: `${BASE}/pictures/infinitt healthcare.png`,
+    links: [
+      { label: "GitHub", url: "https://github.com/sggithi/DICOM-Viewer-MedSAM" },
+    ],
   },
-  {
-    title: "Sustainable Tourism Data Analysis",
-    description: "Addressed overtourism by connecting underutilized destinations with communities; used tourism data and ML to categorize attractions by travel themes.",
-    tags: ["Data Science", "Machine Learning", "NLP", "Web Scraping"],
-    skills: ["Python", "Web Crawling", "Data Visualization", "Clustering"],
-    role: "Data analysis and web crawling from Naver blogs to extract keywords of tourist spots.",
-    image: `${process.env.PUBLIC_URL}/pictures/소셜빅데이터챌린지.png`,
-    duration: "2024",
-    group: "side"
-  },
-  {
-    title: "Lyrical Evolution Network Analysis",
-    description: "Used semantic network analysis to compare K-pop and Western pop lyrics from 1991–2020, exploring shifts in themes and linguistic patterns.",
-    tags: ["Network Analysis", "NLP", "Data Visualization", "Linguistics"],
-    skills: ["Gephi", "Python", "Text Mining", "Graph Analytics"],
-    role: "Data preprocessing and network visualization to analyze lyrical theme evolution.",
-    image: `${process.env.PUBLIC_URL}/pictures/gephi.png`,
-    duration: "2023",
-    group: "side"
-  },
-  {
-    title: "Task Management Web Application",
-    description: "Developed a responsive task management application with Todo/In-progress/Done workflows and customizable timer notifications.",
-    tags: ["Full-Stack", "Web Development", "UI/UX"],
-    skills: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    role: "Full-stack developer, implementing both frontend and backend functionality.",
-    video: `${process.env.PUBLIC_URL}/videos/NotifyMe.mp4`,
-    github: "https://github.com/hanaisreal/notifyMe",
-    duration: "2024",
-    group: "side"
-  },
-  {
-    title: "CU Store Review Platform",
-    description: "Developed a review platform for CU convenience stores with product reviews, personalized recommendations, and browsing features.",
-    tags: ["Full-Stack", "Recommendation System", "Database"],
-    skills: ["React", "Node.js", "Django", "MySQL", "UI/UX"],
-    role: "Full-stack developer focusing on user authentication and recommendation algorithms.",
-    image: `${process.env.PUBLIC_URL}/pictures/LetmeCU.png`,
-    duration: "2023",
-    group: "side"
-  }
 ];
+
+export const getProjectBySlug = (slug: string): Project | undefined =>
+  projects.find(p => p.slug === slug);

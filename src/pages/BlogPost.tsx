@@ -25,26 +25,49 @@ const EssayPost: React.FC = () => {
       day: 'numeric',
     });
 
+  const inlineHtml = (text: string) =>
+    text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+
   const formatContent = (content: string) =>
     content
       .split('\n\n')
       .map((para, i) => {
         const trimmed = para.trim();
         if (!trimmed) return null;
+
+        if (trimmed.startsWith('## ')) {
+          return <h2 key={i} className="essay-post__heading">{trimmed.slice(3)}</h2>;
+        }
+
         if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
+          return <h3 key={i} className="essay-post__heading">{trimmed.slice(2, -2)}</h3>;
+        }
+
+        const lines = trimmed.split('\n');
+
+        if (lines.every(l => l.startsWith('> '))) {
           return (
-            <h3 key={i} className="essay-post__heading">
-              {trimmed.slice(2, -2)}
-            </h3>
+            <blockquote key={i} className="essay-post__blockquote">
+              {lines.map(l => l.slice(2)).join(' ')}
+            </blockquote>
           );
         }
-        const html = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        if (lines.every(l => l.startsWith('- '))) {
+          return (
+            <ul key={i} className="essay-post__list">
+              {lines.map((l, j) => (
+                <li key={j} dangerouslySetInnerHTML={{ __html: inlineHtml(l.slice(2)) }} />
+              ))}
+            </ul>
+          );
+        }
+
         return (
-          <p
-            key={i}
-            className="essay-post__para"
-            dangerouslySetInnerHTML={{ __html: html }}
-          />
+          <p key={i} className="essay-post__para"
+            dangerouslySetInnerHTML={{ __html: inlineHtml(trimmed) }} />
         );
       })
       .filter(Boolean);
