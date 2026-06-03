@@ -4,8 +4,8 @@ import { pickBackground, BackgroundItem } from './components/data/backgroundsDat
 import NewPortfolio from './newui/NewPortfolio';
 import ResearchPage from './pages/ResearchPage';
 import CollectionsPage from './pages/CollectionsPage';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
+// import Blog from './pages/Blog';
+// import BlogPost from './pages/BlogPost';
 import PublicationPage from './pages/PublicationPage';
 import ProjectPage from './pages/ProjectPage';
 
