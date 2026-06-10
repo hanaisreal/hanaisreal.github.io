@@ -17,8 +17,6 @@ const backgrounds: BackgroundItem[] = [
   { file: 'morning/20230105_180116.jpg', timeOfDay: 'morning', location: '' },
   { file: 'morning/20240808_154609.jpg', timeOfDay: 'morning', location: '' },
   { file: 'morning/20240907_192127.jpg', timeOfDay: 'morning', location: '' },
-  { file: 'morning/IMG_1871.jpg', timeOfDay: 'morning', location: '의성 자두밭, 한국' },
-  { file: 'morning/IMG_2451.jpg', timeOfDay: 'morning', location: '' },
   { file: 'afternoon/20210704_195403.jpg', timeOfDay: 'afternoon', location: '' },
   { file: 'afternoon/20240705_105529.jpg', timeOfDay: 'afternoon', location: '' },
   { file: 'afternoon/20250404_170551.jpg', timeOfDay: 'afternoon', location: '' },
