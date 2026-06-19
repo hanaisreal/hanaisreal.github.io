@@ -1,0 +1,147 @@
+.world-page {
+  position: relative;
+  background: #07080f;
+}
+
+.world-back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1rem;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.world-back:hover { opacity: 1; }
+
+.world-track {
+  position: relative;
+  height: 600vh;
+}
+
+.world-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #07080f;
+}
+
+.world-canvas {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.world-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.world-sticker {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.45));
+}
+
+.world-sticker--framed {
+  background: #fdfbf6;
+  padding: 0.45rem;
+  box-shadow: 0 16px 26px rgba(0, 0, 0, 0.5);
+}
+
+.world-fruit {
+  position: absolute;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--award);
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 5px rgba(232, 201, 122, 0.22);
+  z-index: 8;
+}
+
+.world-caption {
+  position: absolute;
+  top: 50%;
+  max-width: 320px;
+  transform: translateY(-50%);
+  padding: 1.25rem 1.5rem;
+  background: rgba(10, 10, 16, 0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  z-index: 20;
+  pointer-events: none;
+}
+.world-caption--left { left: 4%; }
+.world-caption--right { right: 4%; text-align: right; }
+
+.world-caption__ko {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  color: var(--cream);
+  margin: 0 0 0.5rem;
+  line-height: 1.5;
+}
+
+.world-caption__en {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.world-intro {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: var(--cream);
+  pointer-events: none;
+  z-index: 30;
+}
+
+.world-intro__eyebrow {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.world-intro h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.2rem;
+  margin: 0.4rem 0;
+}
+
+.world-intro p {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .world-caption { max-width: 220px; padding: 1rem; }
+  .world-caption__ko { font-size: 1.05rem; }
+  .world-intro h1 { font-size: 1.5rem; }
+}
