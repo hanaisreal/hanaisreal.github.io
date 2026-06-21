@@ -255,10 +255,55 @@
   margin: 0 0 0.6rem;
 }
 
-/* Not enough margin to hold a column without overlapping the frame */
+/* Same explanation as .collage-intro/.collage-keywords, but as a normal page
+   section below the hero instead of side margins that don't exist on a
+   narrow screen — reached by scrolling down. Hidden on desktop, where the
+   margin version already covers it. */
+.collage-mobile-intro {
+  display: none;
+}
+
+/* Not enough margin to hold a column without overlapping the frame — drop
+   the side panels and let the page scroll instead, so the explanation is
+   still reachable (just below the hero, not beside it). */
 @media (max-width: 1000px) {
   .collage-keywords {
     display: none;
+  }
+
+  .collage-page {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .collage-main {
+    position: relative;
+    inset: auto;
+    height: 100vh;
+  }
+
+  .collage-mobile-intro {
+    display: block;
+    padding: 2.5rem 1.5rem 4rem;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .collage-mobile-intro p {
+    margin: 0 0 1rem;
+  }
+
+  .collage-mobile-intro__words {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.6);
   }
 }
 

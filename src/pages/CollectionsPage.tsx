@@ -104,6 +104,23 @@ const PHOTO_STARS = collections.map((item, i) => ({ item, orbit: PHOTO_ORBITS[i]
 // reach back to its bubble's photoRefs slot.
 const KEYWORD_ENTRIES = collections.map((item, index) => ({ item, index }));
 
+// Shared between the desktop margin and the mobile section below the fold —
+// one copy of the copy, instead of keeping two in sync by hand.
+const INTRO_PARAGRAPHS = [
+  `This is my worldbuilding project — a place to keep the things I love:
+   pictures, words, phrases, books, all gathered in one spot. I went
+   back and forth on how to hold onto them, and this is where I
+   landed. It's not finished. I don't think it ever will be. I'll
+   just keep shifting and adding to it.`,
+  `The photos are pulled from Pinterest and collaged together by me.
+   I have marked the ones I took myself with a camera, and the ones I drew myself with a pen or pencil.`,
+  `To look around: zoom in and click on the photos drifting through
+   the band of stars, or click any of the words in the margins. If
+   this makes you want to build a world of your own, you're welcome
+   to. There's something quietly joyful about building it up, one
+   piece at a time.`,
+];
+
 // ── Sticker layout ──────────────────────────────────────────────────────────
 // depth: px movement per unit tilt. higher = floats more in foreground.
 // z-order: plant-eye(12) → path(13) → flowers+pine(14) → frog+clouds(15)
@@ -297,7 +314,10 @@ const CollectionsPage: React.FC = () => {
     return () => window.removeEventListener('mousemove', handler);
   }, []);
 
-  // Mobile: use device gyroscope
+  // Mobile: use device gyroscope. iOS 13+ never fires 'deviceorientation' at
+  // all until DeviceOrientationEvent.requestPermission() has been granted,
+  // and that call only works from inside a user gesture — so it can't just
+  // be requested on mount, it has to ride along on the visitor's first tap.
   useEffect(() => {
     const handler = (e: DeviceOrientationEvent) => {
       setTilt({
@@ -305,6 +325,27 @@ const CollectionsPage: React.FC = () => {
         y: Math.max(-0.5, Math.min(0.5, ((e.beta ?? 0) - 45) / 30)),
       });
     };
+    const DOE = window.DeviceOrientationEvent as unknown as {
+      requestPermission?: () => Promise<'granted' | 'denied'>;
+    };
+    if (typeof DOE?.requestPermission === 'function') {
+      const requestOnce = () => {
+        DOE.requestPermission!()
+          .then(state => {
+            if (state === 'granted') window.addEventListener('deviceorientation', handler);
+          })
+          .catch(() => {});
+        window.removeEventListener('touchend', requestOnce);
+        window.removeEventListener('click', requestOnce);
+      };
+      window.addEventListener('touchend', requestOnce, { once: true });
+      window.addEventListener('click', requestOnce, { once: true });
+      return () => {
+        window.removeEventListener('touchend', requestOnce);
+        window.removeEventListener('click', requestOnce);
+        window.removeEventListener('deviceorientation', handler);
+      };
+    }
     window.addEventListener('deviceorientation', handler);
     return () => window.removeEventListener('deviceorientation', handler);
   }, []);
@@ -591,24 +632,9 @@ const CollectionsPage: React.FC = () => {
           Clicking one pulses its bubble out in the ring (same index as
           photoRefs) before the card opens, so it reads as "that lit up". */}
       <nav className="collage-keywords collage-keywords--left" aria-label="Word index">
-        <p className="collage-intro">
-          This is my worldbuilding project — a place to keep the things I love:
-          pictures, words, phrases, books, all gathered in one spot. I went
-          back and forth on how to hold onto them, and this is where I
-          landed. It's not finished. I don't think it ever will be. I'll
-          just keep shifting and adding to it.
-        </p>
-        <p className="collage-intro">
-          The photos are pulled from Pinterest and collaged together by me.
-          I have marked the ones I took myself with a camera, and the ones I drew myself with a pen or pencil.
-        </p>
-        <p className="collage-intro">
-          To look around: zoom in and click on the photos drifting through
-          the band of stars, or click any of the words in the margins. If
-          this makes you want to build a world of your own, you're welcome
-          to. There's something quietly joyful about building it up, one
-          piece at a time.
-        </p>
+        {INTRO_PARAGRAPHS.map((text, i) => (
+          <p className="collage-intro" key={i}>{text}</p>
+        ))}
         {KEYWORD_ENTRIES.slice(0, Math.ceil(KEYWORD_ENTRIES.length / 2)).map(({ item, index }, i, arr) => (
           <React.Fragment key={item.original}>
             <button className="collage-keyword" onClick={() => focusThenOpen(item, index)}>
@@ -628,6 +654,25 @@ const CollectionsPage: React.FC = () => {
           </React.Fragment>
         ))}
       </nav>
+
+      {/* Mobile only — the side margins don't exist on a narrow screen, so this
+          repeats the same explanation as a normal page section below the
+          hero, reached by scrolling down instead of off to the side. */}
+      <section className="collage-mobile-intro">
+        {INTRO_PARAGRAPHS.map((text, i) => (
+          <p key={i}>{text}</p>
+        ))}
+        <p className="collage-mobile-intro__words">
+          {KEYWORD_ENTRIES.map(({ item, index }, i, arr) => (
+            <React.Fragment key={item.original}>
+              <button className="collage-keyword" onClick={() => focusThenOpen(item, index)}>
+                {item.original}
+              </button>
+              {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
+            </React.Fragment>
+          ))}
+        </p>
+      </section>
 
       {selected && (
         <div className="collage-modal-backdrop" onClick={closeModal}>
