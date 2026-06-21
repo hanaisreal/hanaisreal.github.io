@@ -1,0 +1,385 @@
+/* ── CollectionsPage: Collage Layout ── */
+
+.collage-page {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.collage-main {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* height: 100vh, width fixed to the image's own aspect ratio — never grows with viewport width */
+.collage-portrait {
+  position: relative;
+  height: 100vh;
+  width: calc(100vh * 1596 / 2683);
+  aspect-ratio: 1596 / 2683;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+/* Background fills the portrait without distortion */
+.collage-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: 1;
+  user-select: none;
+}
+
+/* All stickers */
+.collage-sticker {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Twinkling dust sprinkled along the ring band ── */
+.collage-sparkle {
+  position: absolute;
+  z-index: 4;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.9), 0 0 9px 3px rgba(150, 190, 255, 0.5);
+  pointer-events: none;
+  animation-name: collage-sparkle-twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes collage-sparkle-twinkle {
+  0%, 100% { opacity: 0.1; transform: scale(0.5); }
+  50%      { opacity: 1;   transform: scale(1.4); }
+}
+
+/* ── Photos nested among the stars — revealed as you zoom into the galaxy ── */
+.collage-photo-star {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 0;
+  overflow: hidden;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 1;
+  box-shadow: 0 0 7px 2px rgba(255, 255, 255, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.collage-photo-star img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.65) brightness(1.05);
+  transition: filter 0.25s ease;
+}
+
+.collage-photo-star:hover {
+  transform: scale(1.7);
+  box-shadow: 0 0 16px 4px rgba(255, 255, 255, 0.75);
+  z-index: 9;
+}
+
+.collage-photo-star:hover img {
+  filter: saturate(1) brightness(1.1);
+}
+
+/* Pulsed on click (its own size/position keep animating via inline styles —
+   this just adds the glow) before the card actually opens. */
+.collage-photo-star--focused {
+  box-shadow: 0 0 26px 9px rgba(255, 255, 255, 0.95), 0 0 50px 20px rgba(160, 200, 255, 0.65);
+}
+
+.collage-photo-star--focused img {
+  filter: saturate(1) brightness(1.25);
+}
+
+/* Dims+blurs the whole scene, fading in continuously over the same span as
+   the growth (duration set inline in focusThenOpen so it always matches
+   FOCUS_RAMP_MS + MORPH_MS) — same look as .collage-modal-backdrop, so by
+   the time the real backdrop mounts on top of it there's nothing left to
+   visibly change. */
+.collage-dim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.collage-dim--active {
+  opacity: 1;
+}
+
+/* Clone of the focused bubble's photo — grown from its tiny on-screen rect
+   to land exactly on .collage-modal__photo's real rect (JS-driven
+   left/top/width/height in focusThenOpen, since it animates between two
+   arbitrary rects). Same image, same final spot/size as the real photo, so
+   the handoff to the actual card is invisible — no fade needed to hide it. */
+.collage-morph {
+  position: fixed;
+  z-index: 999;
+  overflow: hidden;
+  border-radius: 0;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 0 30px 6px rgba(255, 255, 255, 0.5);
+  transition: opacity 0.25s ease;
+}
+
+.collage-morph--active {
+  opacity: 1;
+}
+
+.collage-morph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── KO/EN toggle ── */
+.collage-lang-toggle {
+  position: absolute;
+  bottom: 3%;
+  right: 4%;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 0.25rem 0.6rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  letter-spacing: 0.08em;
+  transition: border-color 0.2s, background 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.collage-lang-toggle:hover {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.collage-lang-toggle .active {
+  color: #fff;
+  font-weight: 700;
+}
+
+.collage-lang-toggle .sep {
+  opacity: 0.3;
+}
+
+/* ── Word index in the margins outside the frame — runs like prose, no
+   chips/boxes, words joined by middots ── */
+.collage-keywords {
+  position: absolute;
+  top: 14%;
+  bottom: 14%;
+  overflow-y: auto;
+  z-index: 5;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  line-height: 2.1;
+}
+
+.collage-keywords--left {
+  left: 1.5rem;
+  right: calc(50% + (50vh * 1596 / 2683) + 1rem);
+  text-align: right;
+}
+
+.collage-keywords--right {
+  right: 1.5rem;
+  left: calc(50% + (50vh * 1596 / 2683) + 1rem);
+  text-align: left;
+}
+
+.collage-keyword {
+  display: inline;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.collage-keyword:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.6);
+}
+
+.collage-keyword-sep {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+/* Intro note above the left-side word list — quieter serif so it reads as a
+   note, not a label, and stays visually separate from the running word list
+   below it. */
+.collage-intro {
+  font-family: 'Lora', serif;
+  font-style: normal;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  letter-spacing: normal;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 0.6rem;
+}
+
+/* Not enough margin to hold a column without overlapping the frame */
+@media (max-width: 1000px) {
+  .collage-keywords {
+    display: none;
+  }
+}
+
+/* ── Modal ── */
+/* No background/blur/animation of its own on purpose — .collage-dim already
+   carries the dark+blur look (and is already at full strength by the time
+   this mounts), so this just needs to catch outside-clicks and center the
+   card. Giving it its own backdrop too was the leftover "effect": two dark
+   blurred layers stacking/fading independently read as a glitch right when
+   the card appeared. */
+.collage-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 1000;
+}
+
+.collage-modal {
+  /* No pop-in scale/fade here on purpose — the morph clone (see
+     .collage-morph) already lands exactly on .collage-modal__photo's
+     rect, so animating the card itself would re-introduce the jump
+     this is meant to avoid. The card just appears in place. */
+  background: var(--bg-contrast);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  width: 100%;
+  max-width: 380px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.collage-modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.collage-modal__close:hover {
+  background: var(--border);
+}
+
+.collage-modal__photo {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.collage-modal__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collage-modal__body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.collage-modal__lang {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.collage-modal__original {
+  font-family: 'Lora', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin: 0.3rem 0 0.2rem;
+}
+
+.collage-modal__korean {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+.collage-modal__desc {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.collage-modal__curator {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 1rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.collage-modal__source {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin: 0.35rem 0 0;
+}
+
+.collage-modal__source em {
+  font-style: normal;
+}
+

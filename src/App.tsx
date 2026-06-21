@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { pickBackground, BackgroundItem } from './components/data/backgroundsData';
 import NewPortfolio from './newui/NewPortfolio';
 import ResearchPage from './pages/ResearchPage';
@@ -12,6 +12,8 @@ import ProjectPage from './pages/ProjectPage';
 const App: React.FC = () => {
   const [bg] = useState<BackgroundItem>(() => pickBackground(new Date().getHours()));
   const [bgLoaded, setBgLoaded] = useState(false);
+  const location = useLocation();
+  const isCollections = location.pathname.startsWith('/collections');
 
   React.useEffect(() => {
     const img = new window.Image();
@@ -23,7 +25,7 @@ const App: React.FC = () => {
     <>
       <div
         id="site-bg"
-        className={bgLoaded ? 'is-loaded' : ''}
+        className={`${bgLoaded ? 'is-loaded' : ''} ${isCollections ? 'site-bg--blurred' : ''}`}
         style={{ backgroundImage: `url('/pictures/backgrounds/${bg.file}')` }}
       />
       <Routes>
