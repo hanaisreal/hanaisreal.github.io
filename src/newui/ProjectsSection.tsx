@@ -3,11 +3,19 @@ import { Link } from 'react-router-dom';
 import { projects } from '../components/data/projectData';
 
 const ProjectsSection: React.FC = () => (
-  <section id="projects">
+  <section id="projects" data-analytics-section="research_projects">
     <h2 className="sec-heading">Projects</h2>
     <div className="research-cards">
       {projects.map(project => (
-        <Link key={project.slug} to={`/projects/${project.slug}`} className="research-card">
+        <Link
+          key={project.slug}
+          to={`/projects/${project.slug}`}
+          className="research-card"
+          data-analytics-event="project_open"
+          data-analytics-item-id={project.slug}
+          data-analytics-item-name={project.title}
+          data-analytics-placement="projects_grid"
+        >
           <div
             className="research-card__img"
             style={project.image ? { backgroundImage: `url(${project.image})` } : undefined}

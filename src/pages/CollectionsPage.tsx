@@ -476,7 +476,7 @@ const CollectionsPage: React.FC = () => {
     <div className="collage-page">
       <Masthead />
 
-      <main className="collage-main">
+      <main className="collage-main" data-analytics-section="collections_universe">
         <div
           className="collage-portrait"
           ref={portraitRef}
@@ -558,6 +558,10 @@ const CollectionsPage: React.FC = () => {
                   ref={el => { photoRefs.current[i] = el; }}
                   type="button"
                   className="collage-photo-star"
+                  data-analytics-event="collection_item_open"
+                  data-analytics-item-id={item.original}
+                  data-analytics-item-name={item.korean}
+                  data-analytics-placement="orbit"
                   style={{
                     left: `${left}%`, top: `${top}%`, width: `${w}%`,
                     opacity: depthOpacity(depth),
@@ -606,6 +610,9 @@ const CollectionsPage: React.FC = () => {
             className="collage-lang-toggle"
             onClick={() => setLang(l => l === 'ko' ? 'en' : 'ko')}
             aria-label="Toggle language"
+            data-analytics-event="language_toggle"
+            data-analytics-label="Collections language toggle"
+            data-analytics-placement="collections"
           >
             <span className={lang === 'ko' ? 'active' : ''}>KO</span>
             <span className="sep">/</span>
@@ -637,7 +644,14 @@ const CollectionsPage: React.FC = () => {
         ))}
         {KEYWORD_ENTRIES.slice(0, Math.ceil(KEYWORD_ENTRIES.length / 2)).map(({ item, index }, i, arr) => (
           <React.Fragment key={item.original}>
-            <button className="collage-keyword" onClick={() => focusThenOpen(item, index)}>
+            <button
+              className="collage-keyword"
+              onClick={() => focusThenOpen(item, index)}
+              data-analytics-event="collection_item_open"
+              data-analytics-item-id={item.original}
+              data-analytics-item-name={item.korean}
+              data-analytics-placement="left_keywords"
+            >
               {item.original}
             </button>
             {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
@@ -647,7 +661,14 @@ const CollectionsPage: React.FC = () => {
       <nav className="collage-keywords collage-keywords--right" aria-label="Word index">
         {KEYWORD_ENTRIES.slice(Math.ceil(KEYWORD_ENTRIES.length / 2)).map(({ item, index }, i, arr) => (
           <React.Fragment key={item.original}>
-            <button className="collage-keyword" onClick={() => focusThenOpen(item, index)}>
+            <button
+              className="collage-keyword"
+              onClick={() => focusThenOpen(item, index)}
+              data-analytics-event="collection_item_open"
+              data-analytics-item-id={item.original}
+              data-analytics-item-name={item.korean}
+              data-analytics-placement="right_keywords"
+            >
               {item.original}
             </button>
             {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
@@ -658,14 +679,21 @@ const CollectionsPage: React.FC = () => {
       {/* Mobile only — the side margins don't exist on a narrow screen, so this
           repeats the same explanation as a normal page section below the
           hero, reached by scrolling down instead of off to the side. */}
-      <section className="collage-mobile-intro">
+      <section className="collage-mobile-intro" data-analytics-section="collections_mobile_intro">
         {INTRO_PARAGRAPHS.map((text, i) => (
           <p key={i}>{text}</p>
         ))}
         <p className="collage-mobile-intro__words">
           {KEYWORD_ENTRIES.map(({ item, index }, i, arr) => (
             <React.Fragment key={item.original}>
-              <button className="collage-keyword" onClick={() => focusThenOpen(item, index)}>
+              <button
+                className="collage-keyword"
+                onClick={() => focusThenOpen(item, index)}
+                data-analytics-event="collection_item_open"
+                data-analytics-item-id={item.original}
+                data-analytics-item-name={item.korean}
+                data-analytics-placement="mobile_keywords"
+              >
                 {item.original}
               </button>
               {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
@@ -677,7 +705,15 @@ const CollectionsPage: React.FC = () => {
       {selected && (
         <div className="collage-modal-backdrop" onClick={closeModal}>
           <div className="collage-modal" onClick={e => e.stopPropagation()}>
-            <button className="collage-modal__close" onClick={closeModal}>×</button>
+            <button
+              className="collage-modal__close"
+              onClick={closeModal}
+              data-analytics-event="modal_close"
+              data-analytics-label="Collections modal close"
+              data-analytics-placement="collections_modal"
+            >
+              ×
+            </button>
             {selected.src && (
               <div className="collage-modal__photo">
                 <img src={selected.src} alt={selected.original} />

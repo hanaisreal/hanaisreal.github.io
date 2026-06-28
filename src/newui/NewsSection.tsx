@@ -18,7 +18,7 @@ const newsItems = [
 ];
 
 const NewsSection: React.FC = () => (
-  <section id="news">
+  <section id="news" data-analytics-section="home_news">
     <h2 className="sec-heading">News</h2>
     <ul className="news-list">
       {newsItems.map((item, i) => (

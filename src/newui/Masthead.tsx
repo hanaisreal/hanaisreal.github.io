@@ -34,7 +34,16 @@ const Masthead: React.FC = () => {
   return (
     <nav className={`site-nav${scrolled ? ' is-scrolled' : ''}`} ref={menuRef}>
       <div className="site-nav__inner">
-        <NavLink to="/" className="site-nav__brand" onClick={closeMenu}>Hana Oh</NavLink>
+        <NavLink
+          to="/"
+          className="site-nav__brand"
+          onClick={closeMenu}
+          data-analytics-event="nav_click"
+          data-analytics-label="Brand"
+          data-analytics-placement="header"
+        >
+          Hana Oh
+        </NavLink>
 
         {/* Desktop links */}
         <div className="site-nav__links">
@@ -44,6 +53,9 @@ const Masthead: React.FC = () => {
               to={to}
               end={end}
               className={({ isActive }) => `site-nav__link${isActive ? ' is-active' : ''}`}
+              data-analytics-event="nav_click"
+              data-analytics-label={label}
+              data-analytics-placement="header"
             >
               {label}
             </NavLink>
@@ -54,6 +66,10 @@ const Masthead: React.FC = () => {
             className="site-nav__link"
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="cv_download"
+            data-analytics-label="Header CV"
+            data-analytics-destination={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`}
+            data-analytics-placement="header"
           >
             CV ↓
           </a>
@@ -65,6 +81,9 @@ const Masthead: React.FC = () => {
           onClick={() => setMenuOpen(o => !o)}
           aria-label="Toggle navigation menu"
           aria-expanded={menuOpen}
+          data-analytics-event="menu_toggle"
+          data-analytics-label="Mobile navigation"
+          data-analytics-placement="header"
         >
           <span />
           <span />
@@ -81,6 +100,9 @@ const Masthead: React.FC = () => {
             end={end}
             className={({ isActive }) => `site-nav__mobile-link${isActive ? ' is-active' : ''}`}
             onClick={closeMenu}
+            data-analytics-event="nav_click"
+            data-analytics-label={label}
+            data-analytics-placement="mobile_menu"
           >
             {label}
           </NavLink>
@@ -92,6 +114,10 @@ const Masthead: React.FC = () => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={closeMenu}
+          data-analytics-event="cv_download"
+          data-analytics-label="Mobile menu CV"
+          data-analytics-destination={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`}
+          data-analytics-placement="mobile_menu"
         >
           CV ↓
         </a>

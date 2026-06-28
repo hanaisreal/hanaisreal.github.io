@@ -4,7 +4,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiDocumentText } from 'react-icons/hi';
 
 const HeroSection: React.FC = () => (
-  <section id="home" className="hero-shell">
+  <section id="home" className="hero-shell" data-analytics-section="home_hero">
     <div className="profile">
       <div className="profile__left">
         <img
@@ -14,20 +14,65 @@ const HeroSection: React.FC = () => (
           onLoad={e => (e.currentTarget as HTMLImageElement).classList.add('is-loaded')}
         />
         <div className="profile__icons">
-          <a className="profile__icon-link" href="mailto:hana2001@snu.ac.kr" title="Email">
+          <a
+            className="profile__icon-link"
+            href="mailto:hana2001@snu.ac.kr"
+            title="Email"
+            data-analytics-event="contact_click"
+            data-analytics-label="Email icon"
+            data-analytics-destination="mailto:hana2001@snu.ac.kr"
+            data-analytics-placement="hero"
+          >
             <MdEmail />
           </a>
-          <a className="profile__icon-link" href="https://github.com/hanaisreal" target="_blank" rel="noopener noreferrer" title="GitHub">
+          <a
+            className="profile__icon-link"
+            href="https://github.com/hanaisreal"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="GitHub"
+            data-analytics-event="social_click"
+            data-analytics-label="GitHub icon"
+            data-analytics-destination="https://github.com/hanaisreal"
+            data-analytics-placement="hero"
+          >
             <FaGithub />
           </a>
-          <a className="profile__icon-link" href="https://linkedin.com/in/hana-oh-921945290/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+          <a
+            className="profile__icon-link"
+            href="https://linkedin.com/in/hana-oh-921945290/"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="LinkedIn"
+            data-analytics-event="social_click"
+            data-analytics-label="LinkedIn icon"
+            data-analytics-destination="https://linkedin.com/in/hana-oh-921945290/"
+            data-analytics-placement="hero"
+          >
             <FaLinkedin />
           </a>
-          <a className="profile__icon-link" href={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`} target="_blank" rel="noopener noreferrer" title="CV">
+          <a
+            className="profile__icon-link"
+            href={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="CV"
+            data-analytics-event="cv_download"
+            data-analytics-label="CV icon"
+            data-analytics-destination={`${process.env.PUBLIC_URL}/HanaOh_CV_260519.pdf`}
+            data-analytics-placement="hero"
+          >
             <HiDocumentText />
           </a>
         </div>
-        <a className="profile__email-text" href="mailto:hana2001@snu.ac.kr">
+        <a
+          className="profile__email-text"
+          href="mailto:hana2001@snu.ac.kr"
+          data-analytics-event="contact_click"
+          data-analytics-label="Email text"
+          data-analytics-destination="mailto:hana2001@snu.ac.kr"
+          data-analytics-placement="hero"
+        >
           hana2001@snu.ac.kr
         </a>
       </div>
@@ -41,6 +86,10 @@ const HeroSection: React.FC = () => (
               href="https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="external_link_click"
+              data-analytics-label="Google Scholar"
+              data-analytics-destination="https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
+              data-analytics-placement="hero"
             >
               Prof. Bongwon Suh
             </a>

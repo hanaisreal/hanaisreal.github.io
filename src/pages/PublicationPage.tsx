@@ -37,9 +37,17 @@ const PublicationPage: React.FC = () => {
     <div>
       <Masthead />
       <div className="page">
-        <Link to="/research" className="essay-post__back">← Research</Link>
+        <Link
+          to="/research"
+          className="essay-post__back"
+          data-analytics-event="nav_click"
+          data-analytics-label="Back to research"
+          data-analytics-placement="publication_detail"
+        >
+          ← Research
+        </Link>
 
-        <header className="pub-page__header">
+        <header className="pub-page__header" data-analytics-section="publication_header">
           <div className="pub-page__meta">
             <span className="essay-tag">{pub.venue}</span>
             {pub.bestPaper && <span className="pub__best-paper">★ Best Paper</span>}
@@ -63,6 +71,12 @@ const PublicationPage: React.FC = () => {
                   className="pub-page__ext-link"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics-event="external_link_click"
+                  data-analytics-label={l.label}
+                  data-analytics-destination={l.url}
+                  data-analytics-item-id={pub.slug}
+                  data-analytics-item-name={pub.title}
+                  data-analytics-placement="publication_detail"
                 >
                   {l.label} ↗
                 </a>
@@ -77,14 +91,14 @@ const PublicationPage: React.FC = () => {
           <p className="pub-page__insight">{pub.insight}</p>
         )}
 
-        <div className="pub-page__narrative">
+        <div className="pub-page__narrative" data-analytics-section="publication_narrative">
           {pub.narrative.split('\n\n').map((para, i) => (
             <p key={i}>{para}</p>
           ))}
         </div>
 
         {pub.contributions.length > 0 && (
-          <section className="pub-page__contributions">
+          <section className="pub-page__contributions" data-analytics-section="publication_contributions">
             <h2 className="sec-heading">Contributions</h2>
             <ul className="pub-page__contrib-list">
               {pub.contributions.map((c, i) => (
@@ -95,7 +109,7 @@ const PublicationPage: React.FC = () => {
         )}
 
         {others.length > 0 && (
-          <section className="pub-page__other">
+          <section className="pub-page__other" data-analytics-section="publication_related">
             <h2 className="sec-heading">Other Publications</h2>
             <ul className="pub-list">
               {others.map((p, i) => (
@@ -103,7 +117,14 @@ const PublicationPage: React.FC = () => {
                   <span className="pub__num">[{publications.length - publications.indexOf(p)}]</span>
                   <div className="pub__body">
                     <p className="pub__title">
-                      <Link to={`/publications/${p.slug}`} className="pub-page__title-link">
+                      <Link
+                        to={`/publications/${p.slug}`}
+                        className="pub-page__title-link"
+                        data-analytics-event="publication_open"
+                        data-analytics-item-id={p.slug}
+                        data-analytics-item-name={p.title}
+                        data-analytics-placement="publication_related"
+                      >
                         {p.title}
                       </Link>
                     </p>
@@ -120,7 +141,15 @@ const PublicationPage: React.FC = () => {
         )}
 
         <div className="essay-post__footer">
-          <Link to="/research" className="essay-post__back">← Back to Research</Link>
+          <Link
+            to="/research"
+            className="essay-post__back"
+            data-analytics-event="nav_click"
+            data-analytics-label="Back to research footer"
+            data-analytics-placement="publication_detail_footer"
+          >
+            ← Back to Research
+          </Link>
         </div>
       </div>
       <footer className="site-footer">

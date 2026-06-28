@@ -22,9 +22,17 @@ const ProjectPage: React.FC = () => {
     <div>
       <Masthead />
       <div className="page">
-        <Link to="/research" className="essay-post__back">← Research</Link>
+        <Link
+          to="/research"
+          className="essay-post__back"
+          data-analytics-event="nav_click"
+          data-analytics-label="Back to research"
+          data-analytics-placement="project_detail"
+        >
+          ← Research
+        </Link>
 
-        <header className="pub-page__header">
+        <header className="pub-page__header" data-analytics-section="project_header">
           <div className="pub-page__meta">
             {project.tags.map(t => (
               <span key={t} className="essay-tag">{t}</span>
@@ -46,6 +54,12 @@ const ProjectPage: React.FC = () => {
                   className="pub-page__ext-link"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics-event="external_link_click"
+                  data-analytics-label={l.label}
+                  data-analytics-destination={l.url}
+                  data-analytics-item-id={project.slug}
+                  data-analytics-item-name={project.title}
+                  data-analytics-placement="project_detail"
                 >
                   {l.label} ↗
                 </a>
@@ -64,14 +78,14 @@ const ProjectPage: React.FC = () => {
 
         <hr className="sec-rule" />
 
-        <div className="pub-page__narrative">
+        <div className="pub-page__narrative" data-analytics-section="project_narrative">
           {project.narrative.split('\n\n').map((para, i) => (
             <p key={i}>{para}</p>
           ))}
         </div>
 
         {project.contributions.length > 0 && (
-          <section className="pub-page__contributions">
+          <section className="pub-page__contributions" data-analytics-section="project_contributions">
             <h2 className="sec-heading">What I built</h2>
             <ul className="pub-page__contrib-list">
               {project.contributions.map((c, i) => (
@@ -82,11 +96,19 @@ const ProjectPage: React.FC = () => {
         )}
 
         {others.length > 0 && (
-          <section className="pub-page__other">
+          <section className="pub-page__other" data-analytics-section="project_related">
             <h2 className="sec-heading">Other Projects</h2>
             <div className="research-cards">
               {others.map(p => (
-                <Link key={p.slug} to={`/projects/${p.slug}`} className="research-card">
+                <Link
+                  key={p.slug}
+                  to={`/projects/${p.slug}`}
+                  className="research-card"
+                  data-analytics-event="project_open"
+                  data-analytics-item-id={p.slug}
+                  data-analytics-item-name={p.title}
+                  data-analytics-placement="project_related"
+                >
                   <div
                     className="research-card__img"
                     style={p.image ? { backgroundImage: `url(${p.image})` } : undefined}
@@ -102,7 +124,15 @@ const ProjectPage: React.FC = () => {
         )}
 
         <div className="essay-post__footer">
-          <Link to="/research" className="essay-post__back">← Back to Research</Link>
+          <Link
+            to="/research"
+            className="essay-post__back"
+            data-analytics-event="nav_click"
+            data-analytics-label="Back to research footer"
+            data-analytics-placement="project_detail_footer"
+          >
+            ← Back to Research
+          </Link>
         </div>
       </div>
       <footer className="site-footer">
