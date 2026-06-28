@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Masthead from '../newui/Masthead';
 import { collections, communityActivities, poetryProjects, type CollectionItem } from '../components/data/collectionsData';
 import '../newui/newPortfolio.css';
@@ -110,11 +110,11 @@ function withPhaseOffset(orbit: OrbitLayout, offset: number): OrbitLayout {
 }
 
 const SYSTEM_ORBIT = {
-  cx: 55,
+  cx: 60,
   cy: 27,
-  radiusX: 26,
-  radiusY: 12,
-  rotationDeg: 12,
+  radiusX: 35,
+  radiusY: 15,
+  rotationDeg: 40,
   angularSpeed: (2 * Math.PI) / 210,
 };
 
@@ -226,7 +226,10 @@ function buildClusterSparkles(cluster: ClusterDef, count: number, minRadius: num
 const DEPTH_NEAR_SCALE = 1.4; // size multiplier on the near side
 const DEPTH_FAR_SCALE = 0.5;  // size multiplier on the far side
 const depthScale = (depth: number) => DEPTH_FAR_SCALE + (DEPTH_NEAR_SCALE - DEPTH_FAR_SCALE) * ((depth + 1) / 2);
-const depthOpacity = (depth: number) => 0.5 + 0.5 * ((depth + 1) / 2);
+const regularTwinkle = (time: number, seed: number) => {
+  const wave = (Math.sin(time * 1.7 + seed * 1.9) + 1) / 2;
+  return 0.2 + wave * 0.8;
+};
 // Stays within 2-10 — above the background (z-index 1), below MOON_Z (11) so
 // the moon image can occlude bubbles passing behind it, and below every
 // sticker (z-index 12+, see STICKERS).
@@ -635,20 +638,23 @@ const CollectionsPage: React.FC = () => {
 
   // Each cluster moves as one quiet system: same angular speed within the
   // cluster, different radii and phases so nothing stacks directly.
-  useEffect(() => {
+  useLayoutEffect(() => {
     let frame: number;
     const start = performance.now();
     orbitStart.current = start;
     const tick = (now: number) => {
       const t = (now - start) / 1000;
       orbitTimeRef.current = t;
+      const portraitEl = portraitRef.current;
+      const portraitWidth = portraitEl?.clientWidth ?? 0;
+      const portraitHeight = portraitEl?.clientHeight ?? 0;
       const centers = CLUSTERS.reduce<Record<ClusterId, { cx: number; cy: number }>>((acc, cluster, index) => {
         const center = getClusterCenter(cluster, t);
         acc[cluster.id] = center;
         const clusterEl = clusterRefs.current[index];
         if (clusterEl) {
-          clusterEl.style.left = `${center.cx}%`;
-          clusterEl.style.top = `${center.cy}%`;
+          clusterEl.style.setProperty('--cluster-x', `${(center.cx / 100) * portraitWidth}px`);
+          clusterEl.style.setProperty('--cluster-y', `${(center.cy / 100) * portraitHeight}px`);
         }
         return acc;
       }, {} as Record<ClusterId, { cx: number; cy: number }>);
@@ -660,8 +666,8 @@ const CollectionsPage: React.FC = () => {
         const center = centers[sparkle.clusterId];
         const phi = sparkle.phase0 + cluster.angularSpeed * sparkle.angularScale * t;
         const { cx, cy } = pointAroundCenter(center.cx, center.cy, cluster.rotationDeg, phi, sparkle.radiusX, sparkle.radiusY);
-        el.style.left = `${cx}%`;
-        el.style.top = `${cy}%`;
+        el.style.left = `${(cx / 100) * portraitWidth}px`;
+        el.style.top = `${(cy / 100) * portraitHeight}px`;
       });
 
       PHOTO_STARS.forEach(({ clusterId, orbit }, i) => {
@@ -688,10 +694,14 @@ const CollectionsPage: React.FC = () => {
           orbit.radiusY,
         );
         const scale = depthScale(depth) * extraBoost;
-        const opacity = isFocused ? 1 : depthOpacity(depth);
+        const opacity = isFocused
+          ? 1
+          : depth > 0.38
+            ? 1
+            : regularTwinkle(t, i + orbit.phase0);
         const zIndex = isFocused ? 999 : depthZ(depth);
-        el.style.left = `${cx}%`;
-        el.style.top = `${cy}%`;
+        el.style.setProperty('--star-x', `${(cx / 100) * portraitWidth}px`);
+        el.style.setProperty('--star-y', `${(cy / 100) * portraitHeight}px`);
         el.style.opacity = `${opacity}`;
         el.style.zIndex = `${zIndex}`;
         el.style.setProperty('--star-scale', `${scale}`);
@@ -784,11 +794,6 @@ const CollectionsPage: React.FC = () => {
   const warpFilter = warping
     ? `blur(${Math.sin(progress * Math.PI) * 7}px) brightness(${1 + Math.sin(progress * Math.PI) * 0.35})`
     : 'none';
-  const renderOrbitTime = orbitTimeRef.current;
-  const renderCenters = CLUSTERS.reduce<Record<ClusterId, { cx: number; cy: number }>>((acc, cluster) => {
-    acc[cluster.id] = getClusterCenter(cluster, renderOrbitTime);
-    return acc;
-  }, {} as Record<ClusterId, { cx: number; cy: number }>);
 
   return (
     <div className="collage-page">
@@ -850,15 +855,12 @@ const CollectionsPage: React.FC = () => {
             />
 
             {CLUSTERS.map((cluster, index) => {
-              const center = renderCenters[cluster.id];
               return (
                 <div
                   key={cluster.id}
                   ref={el => { clusterRefs.current[index] = el; }}
                   className={`collage-cluster collage-cluster--${cluster.id}`}
                   style={{
-                    left: `${center.cx}%`,
-                    top: `${center.cy}%`,
                     width: `${cluster.haloSize}%`,
                     height: `${cluster.haloSize * 0.72}%`,
                     ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
@@ -877,17 +879,12 @@ const CollectionsPage: React.FC = () => {
             {/* Twinkling dust now hangs around each cluster instead of one ring */}
             {SPARKLES.map((s, i) => {
               const cluster = CLUSTER_MAP[s.clusterId];
-              const center = renderCenters[s.clusterId];
-              const phi = s.phase0 + cluster.angularSpeed * s.angularScale * renderOrbitTime;
-              const { cx, cy } = pointAroundCenter(center.cx, center.cy, cluster.rotationDeg, phi, s.radiusX, s.radiusY);
               return (
                 <span
                   key={i}
                   ref={el => { sparkleRefs.current[i] = el; }}
                   className="collage-sparkle"
                   style={{
-                    left: `${cx}%`,
-                    top: `${cy}%`,
                     width: `${s.size}px`,
                     height: `${s.size}px`,
                     animationDelay: `${s.delay}s`,
@@ -901,16 +898,6 @@ const CollectionsPage: React.FC = () => {
             {/* Photo-based clusters: words and SHANUM community activity. */}
             {PHOTO_STARS.map(({ item, clusterId, orbit }, i) => {
               const cluster = CLUSTER_MAP[clusterId];
-              const center = renderCenters[clusterId];
-              const { cx, cy, depth } = pointAroundCenter(
-                center.cx,
-                center.cy,
-                cluster.rotationDeg,
-                orbit.phase0 + cluster.angularSpeed * renderOrbitTime,
-                orbit.radiusX,
-                orbit.radiusY,
-              );
-              const scale = depthScale(depth);
               const isPastelCard = item.kind === 'poetry' && !item.src;
               return (
                 <button
@@ -924,10 +911,7 @@ const CollectionsPage: React.FC = () => {
                   data-analytics-placement={`${clusterId}_cluster`}
                   style={{
                     ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
-                    ['--star-scale' as string]: `${scale}`,
-                    left: `${cx}%`, top: `${cy}%`, width: `${orbit.width}%`,
-                    opacity: depthOpacity(depth),
-                    zIndex: depthZ(depth),
+                    width: `${orbit.width}%`,
                   }}
                   onClick={() => focusThenOpen(i)}
                   aria-label={item.original}
