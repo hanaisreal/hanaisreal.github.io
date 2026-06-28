@@ -15,20 +15,6 @@ const IMG_ASPECT = 1596 / 2683;
 const BG_NATIVE_WIDTH = 1596; // background.png's actual pixel width
 const BG_MAX_UPSCALE = 1.4;   // never render it wider than this × native
 
-// The big circle traced by the dust band itself — fit through points sampled
-// along the band's centerline (center 54%, 39%, radius 31, in width-equivalent
-// %). The dark planet sits right on this circle's edge, not at its center.
-// Bubbles don't each spin on their own separate orbit — they all travel
-// together along this one shared circle, evenly spaced, so a bubble sweeps
-// into view (near the planet, where it crosses) and back out as it goes
-// around. Finding one in the zoomed frame is meant to feel like a small
-// stroke of luck, not a guarantee.
-const RING = {
-  cx: 80, cy: 37,   // center of the big circle (not the planet itself)
-  a: 77, b: 13,     // equal axes — a true circle
-  rotationDeg: 43,
-};
-
 const ZOOM_FOCUS = { x: 84, y: 34 }; // dive toward the planet, where the ring passes closest
 // Vertical anchor for the outer frame's growth — keep X centered (needed for
 // guaranteed full-width coverage) but bias Y up toward the star band/spiral,
@@ -36,19 +22,124 @@ const ZOOM_FOCUS = { x: 84, y: 34 }; // dive toward the planet, where the ring p
 // out of view faster, instead of growing evenly in both directions.
 const FRAME_ORIGIN_Y = 18;
 
-const ORBIT_PERIOD = 180; // seconds for one full lap — slow, so sightings stay rare
+type ClusterId = 'words' | 'poetry';
 
-function pointOnRing(phi: number) {
-  const rot = (RING.rotationDeg * Math.PI) / 180;
-  const lx = RING.a * Math.cos(phi);
-  const ly = RING.b * Math.sin(phi);
+interface ClusterDef {
+  id: ClusterId;
+  label: string;
+  note: string;
+  cx: number;
+  cy: number;
+  rotationDeg: number;
+  angularSpeed: number;
+  haloSize: number;
+  tintRgb: [number, number, number];
+}
+
+interface OrbitLayout {
+  phase0: number;
+  radiusX: number;
+  radiusY: number;
+  width: number;
+}
+
+interface OrbitingWord {
+  item: CollectionItem;
+  orbit: OrbitLayout;
+}
+
+interface PoetryFragment {
+  id: string;
+  label: string;
+  phase0: number;
+  radiusX: number;
+  radiusY: number;
+}
+
+interface ClusterSparkle {
+  left: number;
+  top: number;
+  size: number;
+  delay: number;
+  duration: number;
+  clusterId: ClusterId;
+}
+
+const WORD_CLUSTER: ClusterDef = {
+  id: 'words',
+  label: 'Collected Words',
+  note: 'living collection',
+  cx: 74,
+  cy: 31,
+  rotationDeg: -18,
+  angularSpeed: (2 * Math.PI) / 156,
+  haloSize: 34,
+  tintRgb: [211, 180, 103],
+};
+
+const POETRY_CLUSTER: ClusterDef = {
+  id: 'poetry',
+  label: 'Poetry Archive',
+  note: 'July 2020 · archived',
+  cx: 33,
+  cy: 22,
+  rotationDeg: 18,
+  angularSpeed: (2 * Math.PI) / 192,
+  haloSize: 24,
+  tintRgb: [169, 100, 124],
+};
+
+const CLUSTER_MAP: Record<ClusterId, ClusterDef> = {
+  words: WORD_CLUSTER,
+  poetry: POETRY_CLUSTER,
+};
+
+const CLUSTERS = Object.values(CLUSTER_MAP);
+
+function pointOnOrbit(cluster: ClusterDef, phi: number, radiusX: number, radiusY: number) {
+  const rot = (cluster.rotationDeg * Math.PI) / 180;
+  const lx = radiusX * Math.cos(phi);
+  const ly = radiusY * Math.sin(phi);
   const rx = lx * Math.cos(rot) - ly * Math.sin(rot);
   const ry = lx * Math.sin(rot) + ly * Math.cos(rot);
   // depth: -1 = far side of the tilt (recedes, as if behind the planet),
   // +1 = near side (toward the viewer). This is what actually reads as 3D —
   // the ellipse shape alone (a flat 2D oval) doesn't sell perspective on its own.
   const depth = Math.sin(phi);
-  return { cx: RING.cx + rx, cy: RING.cy + ry * IMG_ASPECT, depth };
+  return { cx: cluster.cx + rx, cy: cluster.cy + ry * IMG_ASPECT, depth };
+}
+
+function buildWordOrbits(count: number): OrbitLayout[] {
+  const radii = [8.6, 11.8, 15, 18.2];
+  return Array.from({ length: count }, (_, index) => {
+    const bandIndex = index % radii.length;
+    const slot = Math.floor(index / radii.length);
+    const itemsInBand = Math.ceil((count - bandIndex) / radii.length);
+    const radiusX = radii[bandIndex]! + (slot % 2 === 0 ? 0 : 0.45);
+    return {
+      phase0: (slot / itemsInBand) * Math.PI * 2 + bandIndex * 0.42,
+      radiusX,
+      radiusY: radiusX * 0.9,
+      width: 1.95 + bandIndex * 0.12 + (slot % 2) * 0.08,
+    };
+  });
+}
+
+function buildClusterSparkles(cluster: ClusterDef, count: number, minRadius: number, maxRadius: number): ClusterSparkle[] {
+  return Array.from({ length: count }, () => {
+    const phi = Math.random() * Math.PI * 2;
+    const radiusX = minRadius + Math.random() * (maxRadius - minRadius);
+    const radiusY = radiusX * (0.75 + Math.random() * 0.25);
+    const { cx, cy } = pointOnOrbit(cluster, phi, radiusX, radiusY);
+    return {
+      left: cx,
+      top: cy,
+      size: 1.8 + Math.random() * 2.4,
+      delay: Math.random() * 5,
+      duration: 1.6 + Math.random() * 2.4,
+      clusterId: cluster.id,
+    };
+  });
 }
 
 const DEPTH_NEAR_SCALE = 1.4; // size multiplier on the near side
@@ -70,37 +161,22 @@ const MOON = { cx: 86, cy: 35, width: 20 };
 const MOON_Z = 11;
 const MOON_ASPECT = 390 / 434; // moon.png's own height/width
 
-// Scattered in a loose band around RING (0.55x-1.45x its radius, not exactly
-// on it) so the dust the bubbles ride through visibly glitters. Each twinkles
-// on its own random timing so they don't all pulse in sync.
-const SPARKLE_COUNT = 40;
-const SPARKLES = Array.from({ length: SPARKLE_COUNT }, () => {
-  const phi = Math.random() * Math.PI * 2;
-  const radiusFactor = 0.55 + Math.random() * 0.9;
-  const rot = (RING.rotationDeg * Math.PI) / 180;
-  const a = RING.a * radiusFactor;
-  const b = RING.b * radiusFactor;
-  const lx = a * Math.cos(phi);
-  const ly = b * Math.sin(phi);
-  const rx = lx * Math.cos(rot) - ly * Math.sin(rot);
-  const ry = lx * Math.sin(rot) + ly * Math.cos(rot);
-  return {
-    left: RING.cx + rx,
-    top: RING.cy + ry * IMG_ASPECT,
-    size: 2 + Math.random() * 2.5,
-    delay: Math.random() * 5,
-    duration: 1.6 + Math.random() * 2.6,
-  };
-});
+const SPARKLES = [
+  ...buildClusterSparkles(WORD_CLUSTER, 28, 7, 24),
+  ...buildClusterSparkles(POETRY_CLUSTER, 12, 5.5, 15.5),
+];
 
-const PHOTO_ORBITS = collections.map((_, i) => ({
-  phase0: (i / collections.length) * Math.PI * 2,
-  width: 2 + (i % 5) * 0.1, // slight size variety, dust-small
-}));
+const WORD_ORBITS = buildWordOrbits(collections.length);
+const WORD_STARS: OrbitingWord[] = collections.map((item, index) => ({ item, orbit: WORD_ORBITS[index]! }));
 
-const PHOTO_STARS = collections.map((item, i) => ({ item, orbit: PHOTO_ORBITS[i] }));
+const POETRY_FRAGMENTS: PoetryFragment[] = [
+  { id: 'poetry-july-2020', label: 'July 2020', phase0: 0.32, radiusX: 8.2, radiusY: 6.8 },
+  { id: 'poetry-two-poems', label: 'two translated poems', phase0: 2.18, radiusX: 11.4, radiusY: 9.1 },
+  { id: 'poetry-drafts', label: 'archived drafts', phase0: 4.04, radiusX: 9.6, radiusY: 7.8 },
+  { id: 'poetry-notes', label: 'margin notes', phase0: 5.46, radiusX: 13.1, radiusY: 10.4 },
+];
 
-// Same order/index as PHOTO_STARS — the index is what lets a keyword chip
+// Same order/index as WORD_STARS — the index is what lets a keyword chip
 // reach back to its bubble's photoRefs slot.
 const KEYWORD_ENTRIES = collections.map((item, index) => ({ item, index }));
 
@@ -108,14 +184,16 @@ const KEYWORD_ENTRIES = collections.map((item, index) => ({ item, index }));
 // one copy of the copy, instead of keeping two in sync by hand.
 const INTRO_PARAGRAPHS = [
   `This is my worldbuilding project — a place to keep the things I love:
-   pictures, words, phrases, books, all gathered in one spot. I went
+   pictures, words, phrases, books, and old translation traces, all
+   gathered in one spot. I went
    back and forth on how to hold onto them, and this is where I
    landed. It's not finished. I don't think it ever will be. I'll
    just keep shifting and adding to it.`,
   `The photos are pulled from Pinterest and collaged together by me.
    I have marked the ones I took myself with a camera, and the ones I drew myself with a pen or pencil.`,
-  `To look around: zoom in and click on the photos drifting through
-   the band of stars, or click any of the words in the margins. If
+  `To look around: zoom in and follow the small clusters drifting
+   around their own centers, or click any of the words in the
+   margins. If
    this makes you want to build a world of your own, you're welcome
    to. There's something quietly joyful about building it up, one
    piece at a time.`,
@@ -188,6 +266,7 @@ const CollectionsPage: React.FC = () => {
   const lastTouchDist = useRef(0);
   const scrollAccum = useRef(0);
   const photoRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const poetryRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const focusedIndex = useRef<number | null>(null);
   const focusStart = useRef<number | null>(null);
   const focusPhiFrom = useRef(0);
@@ -209,7 +288,7 @@ const CollectionsPage: React.FC = () => {
   // exact rect, before the real modal appears underneath in that same spot.
   const focusThenOpen = (item: CollectionItem, index: number) => {
     const phaseNow = (performance.now() - orbitStart.current) / 1000;
-    const currentPhi = PHOTO_ORBITS[index].phase0 + (2 * Math.PI / ORBIT_PERIOD) * phaseNow;
+    const currentPhi = WORD_ORBITS[index]!.phase0 + WORD_CLUSTER.angularSpeed * phaseNow;
     let diff = (Math.PI / 2 - currentPhi) % (2 * Math.PI);
     if (diff > Math.PI) diff -= 2 * Math.PI;
     if (diff < -Math.PI) diff += 2 * Math.PI;
@@ -350,31 +429,29 @@ const CollectionsPage: React.FC = () => {
     return () => window.removeEventListener('deviceorientation', handler);
   }, []);
 
-  // Carry all bubbles together around RING, evenly spaced, instead of each
-  // spinning independently
+  // Each cluster moves as one quiet system: same angular speed within the
+  // cluster, different radii and phases so nothing stacks directly.
   useEffect(() => {
     let frame: number;
     const start = performance.now();
     orbitStart.current = start;
     const tick = (now: number) => {
       const t = (now - start) / 1000;
-      PHOTO_ORBITS.forEach(({ phase0, width }, i) => {
+      WORD_ORBITS.forEach(({ phase0, radiusX, radiusY, width }, i) => {
         const el = photoRefs.current[i];
         if (!el) return;
-        let phi = phase0 + (2 * Math.PI / ORBIT_PERIOD) * t;
+        let phi = phase0 + WORD_CLUSTER.angularSpeed * t;
         const isFocused = focusedIndex.current === i && focusStart.current !== null;
         let extraBoost = 1;
         if (isFocused) {
-          // Keep riding the ring instead of teleporting to frame-center — just
-          // rotate (the short way, whichever direction that is) to phi = π/2,
-          // the near/front point, where depth's already maxed — and ease in
-          // extra size on top of that as it arrives.
+          // Keep riding the orbit instead of teleporting to frame-center —
+          // rotate to the front-most point and ease in extra size on top.
           const ft = Math.min(1, (now - focusStart.current!) / FOCUS_RAMP_MS);
           const eased = ft * ft * (3 - 2 * ft);
           phi = focusPhiFrom.current + (focusPhiTo.current - focusPhiFrom.current) * eased;
           extraBoost = 1 + eased * (FOCUS_SCALE - 1);
         }
-        const { cx, cy, depth } = pointOnRing(phi);
+        const { cx, cy, depth } = pointOnOrbit(WORD_CLUSTER, phi, radiusX, radiusY);
         const w = width * depthScale(depth) * extraBoost;
         const opacity = isFocused ? 1 : depthOpacity(depth);
         const zIndex = isFocused ? 999 : depthZ(depth);
@@ -384,6 +461,21 @@ const CollectionsPage: React.FC = () => {
         el.style.opacity = `${opacity}`;
         el.style.zIndex = `${zIndex}`;
       });
+
+      POETRY_FRAGMENTS.forEach(({ phase0, radiusX, radiusY }, i) => {
+        const el = poetryRefs.current[i];
+        if (!el) return;
+        const phi = phase0 + POETRY_CLUSTER.angularSpeed * t;
+        const { cx, cy, depth } = pointOnOrbit(POETRY_CLUSTER, phi, radiusX, radiusY);
+        const scale = 0.78 + ((depth + 1) / 2) * 0.34;
+        const opacity = 0.28 + ((depth + 1) / 2) * 0.46;
+        el.style.left = `${cx}%`;
+        el.style.top = `${cy}%`;
+        el.style.opacity = `${opacity}`;
+        el.style.zIndex = `${4 + Math.round((depth + 1) * 2)}`;
+        el.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      });
+
       frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
@@ -529,7 +621,28 @@ const CollectionsPage: React.FC = () => {
               }}
             />
 
-            {/* Twinkling dust scattered along the ring band */}
+            {CLUSTERS.map(cluster => (
+              <div
+                key={cluster.id}
+                className={`collage-cluster collage-cluster--${cluster.id}`}
+                style={{
+                  left: `${cluster.cx}%`,
+                  top: `${cluster.cy}%`,
+                  width: `${cluster.haloSize}%`,
+                  height: `${cluster.haloSize * 0.72}%`,
+                  ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
+                }}
+              >
+                <span className="collage-cluster__halo" />
+                <span className="collage-cluster__anchor" />
+                <span className="collage-cluster__label">
+                  <strong>{cluster.label}</strong>
+                  <span>{cluster.note}</span>
+                </span>
+              </div>
+            ))}
+
+            {/* Twinkling dust now hangs around each cluster instead of one ring */}
             {SPARKLES.map((s, i) => (
               <span
                 key={i}
@@ -541,14 +654,14 @@ const CollectionsPage: React.FC = () => {
                   height: `${s.size}px`,
                   animationDelay: `${s.delay}s`,
                   animationDuration: `${s.duration}s`,
+                  ['--cluster-rgb' as string]: CLUSTER_MAP[s.clusterId].tintRgb.join(', '),
                 }}
               />
             ))}
 
-            {/* Photos riding the ring around the dark planet — revealed as you zoom toward ZOOM_FOCUS.
-                Scale/opacity/z-index from depth fake the 3D tilt: far side recedes, near side pops forward. */}
-            {PHOTO_STARS.map(({ item, orbit }, i) => {
-              const { cx, cy, depth } = pointOnRing(orbit.phase0);
+            {/* Word photos orbit together as one loose cluster near the moon. */}
+            {WORD_STARS.map(({ item, orbit }, i) => {
+              const { cx, cy, depth } = pointOnOrbit(WORD_CLUSTER, orbit.phase0, orbit.radiusX, orbit.radiusY);
               const w = orbit.width * depthScale(depth);
               const left = cx - w / 2;
               const top = cy - (w * IMG_ASPECT) / 2;
@@ -561,8 +674,9 @@ const CollectionsPage: React.FC = () => {
                   data-analytics-event="collection_item_open"
                   data-analytics-item-id={item.original}
                   data-analytics-item-name={item.korean}
-                  data-analytics-placement="orbit"
+                  data-analytics-placement="words_cluster"
                   style={{
+                    ['--cluster-rgb' as string]: WORD_CLUSTER.tintRgb.join(', '),
                     left: `${left}%`, top: `${top}%`, width: `${w}%`,
                     opacity: depthOpacity(depth),
                     zIndex: depthZ(depth),
@@ -572,6 +686,27 @@ const CollectionsPage: React.FC = () => {
                 >
                   {item.src && <img src={item.src} alt="" draggable={false} />}
                 </button>
+              );
+            })}
+
+            {POETRY_FRAGMENTS.map((fragment, i) => {
+              const { cx, cy, depth } = pointOnOrbit(POETRY_CLUSTER, fragment.phase0, fragment.radiusX, fragment.radiusY);
+              return (
+                <span
+                  key={fragment.id}
+                  ref={el => { poetryRefs.current[i] = el; }}
+                  className="collage-text-star"
+                  style={{
+                    ['--cluster-rgb' as string]: POETRY_CLUSTER.tintRgb.join(', '),
+                    left: `${cx}%`,
+                    top: `${cy}%`,
+                    opacity: 0.28 + ((depth + 1) / 2) * 0.46,
+                    zIndex: 4 + Math.round((depth + 1) * 2),
+                    transform: `translate(-50%, -50%) scale(${0.78 + ((depth + 1) / 2) * 0.34})`,
+                  }}
+                >
+                  {fragment.label}
+                </span>
               );
             })}
 

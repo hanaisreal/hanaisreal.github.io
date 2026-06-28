@@ -46,13 +46,85 @@
   user-select: none;
 }
 
-/* ── Twinkling dust sprinkled along the ring band ── */
+/* ── Faint cluster halos and anchors ── */
+.collage-cluster {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.collage-cluster__halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle,
+      rgba(var(--cluster-rgb), 0.2) 0%,
+      rgba(var(--cluster-rgb), 0.11) 34%,
+      rgba(var(--cluster-rgb), 0.04) 58%,
+      transparent 78%);
+  filter: blur(14px);
+}
+
+.collage-cluster__anchor {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 0 12px 3px rgba(var(--cluster-rgb), 0.45),
+    0 0 24px 8px rgba(var(--cluster-rgb), 0.18);
+}
+
+.collage-cluster__label {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+  color: rgba(255, 255, 255, 0.72);
+  white-space: nowrap;
+  mix-blend-mode: screen;
+}
+
+.collage-cluster__label strong,
+.collage-cluster__label span {
+  font-family: 'Space Mono', monospace;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.collage-cluster__label strong {
+  font-size: 0.5rem;
+}
+
+.collage-cluster__label span {
+  font-size: 0.42rem;
+  color: rgba(255, 255, 255, 0.46);
+}
+
+/* ── Twinkling dust sprinkled around each cluster ── */
 .collage-sparkle {
   position: absolute;
   z-index: 4;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.9), 0 0 9px 3px rgba(150, 190, 255, 0.5);
+  box-shadow:
+    0 0 4px 1px rgba(255, 255, 255, 0.9),
+    0 0 10px 3px rgba(var(--cluster-rgb, 170, 170, 170), 0.42);
   pointer-events: none;
   animation-name: collage-sparkle-twinkle;
   animation-timing-function: ease-in-out;
@@ -64,7 +136,7 @@
   50%      { opacity: 1;   transform: scale(1.4); }
 }
 
-/* ── Photos nested among the stars — revealed as you zoom into the galaxy ── */
+/* ── Photos nested among the word cluster ── */
 .collage-photo-star {
   position: absolute;
   aspect-ratio: 1;
@@ -75,7 +147,9 @@
   background: none;
   cursor: pointer;
   z-index: 1;
-  box-shadow: 0 0 7px 2px rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 0 7px 2px rgba(255, 255, 255, 0.3),
+    0 0 14px 4px rgba(var(--cluster-rgb, 255, 255, 255), 0.18);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -90,7 +164,9 @@
 
 .collage-photo-star:hover {
   transform: scale(1.7);
-  box-shadow: 0 0 16px 4px rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 0 16px 4px rgba(255, 255, 255, 0.7),
+    0 0 26px 10px rgba(var(--cluster-rgb, 255, 255, 255), 0.35);
   z-index: 9;
 }
 
@@ -101,11 +177,30 @@
 /* Pulsed on click (its own size/position keep animating via inline styles —
    this just adds the glow) before the card actually opens. */
 .collage-photo-star--focused {
-  box-shadow: 0 0 26px 9px rgba(255, 255, 255, 0.95), 0 0 50px 20px rgba(160, 200, 255, 0.65);
+  box-shadow:
+    0 0 26px 9px rgba(255, 255, 255, 0.9),
+    0 0 50px 20px rgba(var(--cluster-rgb, 255, 255, 255), 0.45);
 }
 
 .collage-photo-star--focused img {
   filter: saturate(1) brightness(1.25);
+}
+
+.collage-text-star {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow:
+    0 0 10px rgba(var(--cluster-rgb, 255, 255, 255), 0.35),
+    0 0 20px rgba(var(--cluster-rgb, 255, 255, 255), 0.16);
+  mix-blend-mode: screen;
 }
 
 /* Dims+blurs the whole scene, fading in continuously over the same span as
@@ -305,6 +400,19 @@
     line-height: 2;
     color: rgba(255, 255, 255, 0.6);
   }
+
+  .collage-cluster__label {
+    left: 0.7rem;
+  }
+
+  .collage-cluster__label strong {
+    font-size: 0.45rem;
+  }
+
+  .collage-cluster__label span,
+  .collage-text-star {
+    font-size: 0.38rem;
+  }
 }
 
 /* ── Modal ── */
@@ -427,4 +535,3 @@
 .collage-modal__source em {
   font-style: normal;
 }
-
