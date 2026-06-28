@@ -28,8 +28,7 @@ interface ClusterDef {
   id: ClusterId;
   label: string;
   note: string;
-  cx: number;
-  cy: number;
+  systemPhase0: number;
   rotationDeg: number;
   angularSpeed: number;
   haloSize: number;
@@ -57,20 +56,30 @@ interface PoetryFragment {
 }
 
 interface ClusterSparkle {
-  left: number;
-  top: number;
+  phase0: number;
+  radiusX: number;
+  radiusY: number;
+  angularScale: number;
   size: number;
   delay: number;
   duration: number;
   clusterId: ClusterId;
 }
 
+const SYSTEM_ORBIT = {
+  cx: 55,
+  cy: 27,
+  radiusX: 26,
+  radiusY: 12,
+  rotationDeg: 12,
+  angularSpeed: (2 * Math.PI) / 210,
+};
+
 const WORD_CLUSTER: ClusterDef = {
   id: 'words',
   label: 'Collected Words',
   note: 'living collection',
-  cx: 74,
-  cy: 31,
+  systemPhase0: 0.52,
   rotationDeg: -18,
   angularSpeed: (2 * Math.PI) / 156,
   haloSize: 34,
@@ -80,9 +89,8 @@ const WORD_CLUSTER: ClusterDef = {
 const POETRY_CLUSTER: ClusterDef = {
   id: 'poetry',
   label: 'Poetry Archive',
-  note: 'July 2020 · archived',
-  cx: 33,
-  cy: 22,
+  note: 'Daemari · archived',
+  systemPhase0: 3.67,
   rotationDeg: 18,
   angularSpeed: (2 * Math.PI) / 192,
   haloSize: 24,
@@ -96,8 +104,8 @@ const CLUSTER_MAP: Record<ClusterId, ClusterDef> = {
 
 const CLUSTERS = Object.values(CLUSTER_MAP);
 
-function pointOnOrbit(cluster: ClusterDef, phi: number, radiusX: number, radiusY: number) {
-  const rot = (cluster.rotationDeg * Math.PI) / 180;
+function pointAroundCenter(centerX: number, centerY: number, rotationDeg: number, phi: number, radiusX: number, radiusY: number) {
+  const rot = (rotationDeg * Math.PI) / 180;
   const lx = radiusX * Math.cos(phi);
   const ly = radiusY * Math.sin(phi);
   const rx = lx * Math.cos(rot) - ly * Math.sin(rot);
@@ -106,7 +114,24 @@ function pointOnOrbit(cluster: ClusterDef, phi: number, radiusX: number, radiusY
   // +1 = near side (toward the viewer). This is what actually reads as 3D —
   // the ellipse shape alone (a flat 2D oval) doesn't sell perspective on its own.
   const depth = Math.sin(phi);
-  return { cx: cluster.cx + rx, cy: cluster.cy + ry * IMG_ASPECT, depth };
+  return { cx: centerX + rx, cy: centerY + ry * IMG_ASPECT, depth };
+}
+
+function pointOnSystemOrbit(phi: number) {
+  return pointAroundCenter(
+    SYSTEM_ORBIT.cx,
+    SYSTEM_ORBIT.cy,
+    SYSTEM_ORBIT.rotationDeg,
+    phi,
+    SYSTEM_ORBIT.radiusX,
+    SYSTEM_ORBIT.radiusY,
+  );
+}
+
+function getClusterCenter(cluster: ClusterDef, t = 0) {
+  const phi = cluster.systemPhase0 + SYSTEM_ORBIT.angularSpeed * t;
+  const { cx, cy } = pointOnSystemOrbit(phi);
+  return { cx, cy };
 }
 
 function buildWordOrbits(count: number): OrbitLayout[] {
@@ -127,13 +152,14 @@ function buildWordOrbits(count: number): OrbitLayout[] {
 
 function buildClusterSparkles(cluster: ClusterDef, count: number, minRadius: number, maxRadius: number): ClusterSparkle[] {
   return Array.from({ length: count }, () => {
-    const phi = Math.random() * Math.PI * 2;
+    const phase0 = Math.random() * Math.PI * 2;
     const radiusX = minRadius + Math.random() * (maxRadius - minRadius);
     const radiusY = radiusX * (0.75 + Math.random() * 0.25);
-    const { cx, cy } = pointOnOrbit(cluster, phi, radiusX, radiusY);
     return {
-      left: cx,
-      top: cy,
+      phase0,
+      radiusX,
+      radiusY,
+      angularScale: 0.12 + Math.random() * 0.16,
       size: 1.8 + Math.random() * 2.4,
       delay: Math.random() * 5,
       duration: 1.6 + Math.random() * 2.4,
@@ -170,10 +196,11 @@ const WORD_ORBITS = buildWordOrbits(collections.length);
 const WORD_STARS: OrbitingWord[] = collections.map((item, index) => ({ item, orbit: WORD_ORBITS[index]! }));
 
 const POETRY_FRAGMENTS: PoetryFragment[] = [
-  { id: 'poetry-july-2020', label: 'July 2020', phase0: 0.32, radiusX: 8.2, radiusY: 6.8 },
-  { id: 'poetry-two-poems', label: 'two translated poems', phase0: 2.18, radiusX: 11.4, radiusY: 9.1 },
-  { id: 'poetry-drafts', label: 'archived drafts', phase0: 4.04, radiusX: 9.6, radiusY: 7.8 },
-  { id: 'poetry-notes', label: 'margin notes', phase0: 5.46, radiusX: 13.1, radiusY: 10.4 },
+  { id: 'poetry-author', label: 'Jeong Choon-geun', phase0: 0.32, radiusX: 8.2, radiusY: 6.8 },
+  { id: 'poetry-daemari', label: 'Daemari', phase0: 1.58, radiusX: 12.2, radiusY: 9.5 },
+  { id: 'poetry-title', label: 'the village of landmine flower', phase0: 2.84, radiusX: 14.2, radiusY: 11.2 },
+  { id: 'poetry-cheorwon', label: 'a real village in Cheorwon', phase0: 4.06, radiusX: 10.4, radiusY: 8.1 },
+  { id: 'poetry-two-poems', label: 'two poems translated in July 2020', phase0: 5.18, radiusX: 12.8, radiusY: 9.8 },
 ];
 
 // Same order/index as WORD_STARS — the index is what lets a keyword chip
@@ -189,10 +216,12 @@ const INTRO_PARAGRAPHS = [
    back and forth on how to hold onto them, and this is where I
    landed. It's not finished. I don't think it ever will be. I'll
    just keep shifting and adding to it.`,
+  `One quieter cluster keeps a small archive from July 2020: two poems I translated from Jeong Choon-geun's
+   Daemari, The Village of Landmine Flower, a poetry collection that returns to Daemari, a real village in Cheorwon
+   marked by division and landmines.`,
   `The photos are pulled from Pinterest and collaged together by me.
    I have marked the ones I took myself with a camera, and the ones I drew myself with a pen or pencil.`,
-  `To look around: zoom in and follow the small clusters drifting
-   around their own centers, or click any of the words in the
+  `To look around: zoom in and follow the small clusters as they trace a wider orbit together, or click any of the words in the
    margins. If
    this makes you want to build a world of your own, you're welcome
    to. There's something quietly joyful about building it up, one
@@ -256,6 +285,7 @@ const CollectionsPage: React.FC = () => {
   const [selected, setSelected] = useState<CollectionItem | null>(null);
   const [lang, setLang] = useState<Lang>('ko');
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [showDesktopHint, setShowDesktopHint] = useState(false);
   // 0 = resting in the small frame, 1 = fully sucked into the universe.
   // Only ever sits at 0 or 1 — once a warp launches it always runs to
   // completion, regardless of further scrolling, so it can't get stuck
@@ -265,6 +295,8 @@ const CollectionsPage: React.FC = () => {
   const portraitRef = useRef<HTMLDivElement>(null);
   const lastTouchDist = useRef(0);
   const scrollAccum = useRef(0);
+  const clusterRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const sparkleRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const photoRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const poetryRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const focusedIndex = useRef<number | null>(null);
@@ -275,6 +307,15 @@ const CollectionsPage: React.FC = () => {
   const morphRef = useRef<HTMLDivElement>(null);
   const morphImgRef = useRef<HTMLImageElement>(null);
   const dimRef = useRef<HTMLDivElement>(null);
+  const desktopHintTimeoutRef = useRef<number | null>(null);
+
+  const dismissDesktopHint = () => {
+    if (desktopHintTimeoutRef.current !== null) {
+      window.clearTimeout(desktopHintTimeoutRef.current);
+      desktopHintTimeoutRef.current = null;
+    }
+    setShowDesktopHint(false);
+  };
 
   // Pulses the bubble at `index` by continuing its actual orbit — rotating
   // (the short way, forward or back) to phi = π/2, the ring's near/front
@@ -287,6 +328,7 @@ const CollectionsPage: React.FC = () => {
   // the nested warp/lean transforms for us) and grown to the card-photo's
   // exact rect, before the real modal appears underneath in that same spot.
   const focusThenOpen = (item: CollectionItem, index: number) => {
+    dismissDesktopHint();
     const phaseNow = (performance.now() - orbitStart.current) / 1000;
     const currentPhi = WORD_ORBITS[index]!.phase0 + WORD_CLUSTER.angularSpeed * phaseNow;
     let diff = (Math.PI / 2 - currentPhi) % (2 * Math.PI);
@@ -380,6 +422,22 @@ const CollectionsPage: React.FC = () => {
 
   // Desktop: track mouse anywhere on the page, relative to portrait center
   useEffect(() => {
+    if (window.innerWidth <= 1000) return;
+    setShowDesktopHint(true);
+    desktopHintTimeoutRef.current = window.setTimeout(() => {
+      desktopHintTimeoutRef.current = null;
+      setShowDesktopHint(false);
+    }, 4800);
+
+    return () => {
+      if (desktopHintTimeoutRef.current !== null) {
+        window.clearTimeout(desktopHintTimeoutRef.current);
+        desktopHintTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     const handler = (e: MouseEvent) => {
       const rect = portraitRef.current?.getBoundingClientRect();
       if (!rect) return;
@@ -437,6 +495,28 @@ const CollectionsPage: React.FC = () => {
     orbitStart.current = start;
     const tick = (now: number) => {
       const t = (now - start) / 1000;
+      const centers = CLUSTERS.reduce<Record<ClusterId, { cx: number; cy: number }>>((acc, cluster, index) => {
+        const center = getClusterCenter(cluster, t);
+        acc[cluster.id] = center;
+        const clusterEl = clusterRefs.current[index];
+        if (clusterEl) {
+          clusterEl.style.left = `${center.cx}%`;
+          clusterEl.style.top = `${center.cy}%`;
+        }
+        return acc;
+      }, {} as Record<ClusterId, { cx: number; cy: number }>);
+
+      SPARKLES.forEach((sparkle, index) => {
+        const el = sparkleRefs.current[index];
+        if (!el) return;
+        const cluster = CLUSTER_MAP[sparkle.clusterId];
+        const center = centers[sparkle.clusterId];
+        const phi = sparkle.phase0 + cluster.angularSpeed * sparkle.angularScale * t;
+        const { cx, cy } = pointAroundCenter(center.cx, center.cy, cluster.rotationDeg, phi, sparkle.radiusX, sparkle.radiusY);
+        el.style.left = `${cx}%`;
+        el.style.top = `${cy}%`;
+      });
+
       WORD_ORBITS.forEach(({ phase0, radiusX, radiusY, width }, i) => {
         const el = photoRefs.current[i];
         if (!el) return;
@@ -451,7 +531,14 @@ const CollectionsPage: React.FC = () => {
           phi = focusPhiFrom.current + (focusPhiTo.current - focusPhiFrom.current) * eased;
           extraBoost = 1 + eased * (FOCUS_SCALE - 1);
         }
-        const { cx, cy, depth } = pointOnOrbit(WORD_CLUSTER, phi, radiusX, radiusY);
+        const { cx, cy, depth } = pointAroundCenter(
+          centers.words.cx,
+          centers.words.cy,
+          WORD_CLUSTER.rotationDeg,
+          phi,
+          radiusX,
+          radiusY,
+        );
         const w = width * depthScale(depth) * extraBoost;
         const opacity = isFocused ? 1 : depthOpacity(depth);
         const zIndex = isFocused ? 999 : depthZ(depth);
@@ -466,7 +553,14 @@ const CollectionsPage: React.FC = () => {
         const el = poetryRefs.current[i];
         if (!el) return;
         const phi = phase0 + POETRY_CLUSTER.angularSpeed * t;
-        const { cx, cy, depth } = pointOnOrbit(POETRY_CLUSTER, phi, radiusX, radiusY);
+        const { cx, cy, depth } = pointAroundCenter(
+          centers.poetry.cx,
+          centers.poetry.cy,
+          POETRY_CLUSTER.rotationDeg,
+          phi,
+          radiusX,
+          radiusY,
+        );
         const scale = 0.78 + ((depth + 1) / 2) * 0.34;
         const opacity = 0.28 + ((depth + 1) / 2) * 0.46;
         el.style.left = `${cx}%`;
@@ -488,6 +582,7 @@ const CollectionsPage: React.FC = () => {
     const el = portraitRef.current;
     if (!el) return;
     const handler = (e: WheelEvent) => {
+      dismissDesktopHint();
       e.preventDefault();
       if (warping) return;
       if (warpProgress >= 1) {
@@ -506,6 +601,7 @@ const CollectionsPage: React.FC = () => {
 
   // Pinch to zoom (mobile) — same launch-then-commit behavior as the wheel
   const handleTouchMove = (e: React.TouchEvent) => {
+    dismissDesktopHint();
     if (e.touches.length !== 2 || warping) return;
     const dist = Math.hypot(
       e.touches[0].clientX - e.touches[1].clientX,
@@ -534,6 +630,7 @@ const CollectionsPage: React.FC = () => {
 
   // Double-click / double-tap to warp back out, once you're fully in
   const handleDoubleClick = () => {
+    dismissDesktopHint();
     if (!warping && warpProgress > 0.5) startWarp(-1);
   };
 
@@ -621,47 +718,75 @@ const CollectionsPage: React.FC = () => {
               }}
             />
 
-            {CLUSTERS.map(cluster => (
-              <div
-                key={cluster.id}
-                className={`collage-cluster collage-cluster--${cluster.id}`}
-                style={{
-                  left: `${cluster.cx}%`,
-                  top: `${cluster.cy}%`,
-                  width: `${cluster.haloSize}%`,
-                  height: `${cluster.haloSize * 0.72}%`,
-                  ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
-                }}
-              >
-                <span className="collage-cluster__halo" />
-                <span className="collage-cluster__anchor" />
-                <span className="collage-cluster__label">
-                  <strong>{cluster.label}</strong>
-                  <span>{cluster.note}</span>
-                </span>
+            {showDesktopHint && (
+              <div className="collage-scroll-hint" aria-hidden="true">
+                <div className="collage-scroll-hint__burst">
+                  <span className="collage-scroll-hint__arrows">↑ ↑ ↑</span>
+                  <strong>SCROLL!</strong>
+                </div>
+                <p>up to drift inward</p>
               </div>
-            ))}
+            )}
+
+            {CLUSTERS.map((cluster, index) => {
+              const center = getClusterCenter(cluster);
+              return (
+                <div
+                  key={cluster.id}
+                  ref={el => { clusterRefs.current[index] = el; }}
+                  className={`collage-cluster collage-cluster--${cluster.id}`}
+                  style={{
+                    left: `${center.cx}%`,
+                    top: `${center.cy}%`,
+                    width: `${cluster.haloSize}%`,
+                    height: `${cluster.haloSize * 0.72}%`,
+                    ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
+                  }}
+                >
+                  <span className="collage-cluster__halo" />
+                  <span className="collage-cluster__anchor" />
+                  <span className="collage-cluster__label">
+                    <strong>{cluster.label}</strong>
+                    <span>{cluster.note}</span>
+                  </span>
+                </div>
+              );
+            })}
 
             {/* Twinkling dust now hangs around each cluster instead of one ring */}
-            {SPARKLES.map((s, i) => (
-              <span
-                key={i}
-                className="collage-sparkle"
-                style={{
-                  left: `${s.left}%`,
-                  top: `${s.top}%`,
-                  width: `${s.size}px`,
-                  height: `${s.size}px`,
-                  animationDelay: `${s.delay}s`,
-                  animationDuration: `${s.duration}s`,
-                  ['--cluster-rgb' as string]: CLUSTER_MAP[s.clusterId].tintRgb.join(', '),
-                }}
-              />
-            ))}
+            {SPARKLES.map((s, i) => {
+              const cluster = CLUSTER_MAP[s.clusterId];
+              const center = getClusterCenter(cluster);
+              const { cx, cy } = pointAroundCenter(center.cx, center.cy, cluster.rotationDeg, s.phase0, s.radiusX, s.radiusY);
+              return (
+                <span
+                  key={i}
+                  ref={el => { sparkleRefs.current[i] = el; }}
+                  className="collage-sparkle"
+                  style={{
+                    left: `${cx}%`,
+                    top: `${cy}%`,
+                    width: `${s.size}px`,
+                    height: `${s.size}px`,
+                    animationDelay: `${s.delay}s`,
+                    animationDuration: `${s.duration}s`,
+                    ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
+                  }}
+                />
+              );
+            })}
 
             {/* Word photos orbit together as one loose cluster near the moon. */}
             {WORD_STARS.map(({ item, orbit }, i) => {
-              const { cx, cy, depth } = pointOnOrbit(WORD_CLUSTER, orbit.phase0, orbit.radiusX, orbit.radiusY);
+              const center = getClusterCenter(WORD_CLUSTER);
+              const { cx, cy, depth } = pointAroundCenter(
+                center.cx,
+                center.cy,
+                WORD_CLUSTER.rotationDeg,
+                orbit.phase0,
+                orbit.radiusX,
+                orbit.radiusY,
+              );
               const w = orbit.width * depthScale(depth);
               const left = cx - w / 2;
               const top = cy - (w * IMG_ASPECT) / 2;
@@ -690,7 +815,15 @@ const CollectionsPage: React.FC = () => {
             })}
 
             {POETRY_FRAGMENTS.map((fragment, i) => {
-              const { cx, cy, depth } = pointOnOrbit(POETRY_CLUSTER, fragment.phase0, fragment.radiusX, fragment.radiusY);
+              const center = getClusterCenter(POETRY_CLUSTER);
+              const { cx, cy, depth } = pointAroundCenter(
+                center.cx,
+                center.cy,
+                POETRY_CLUSTER.rotationDeg,
+                fragment.phase0,
+                fragment.radiusX,
+                fragment.radiusY,
+              );
               return (
                 <span
                   key={fragment.id}

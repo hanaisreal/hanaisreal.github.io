@@ -203,6 +203,123 @@
   mix-blend-mode: screen;
 }
 
+.collage-scroll-hint {
+  position: absolute;
+  left: 15%;
+  bottom: 11%;
+  z-index: 24;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  pointer-events: none;
+  transform: rotate(-8deg);
+  animation: collage-scroll-hint-fade 4.8s ease forwards;
+}
+
+.collage-scroll-hint__burst {
+  position: relative;
+  min-width: 10rem;
+  padding: 1.05rem 1.35rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.14rem;
+  background:
+    radial-gradient(circle at 50% 48%,
+      rgba(255, 251, 232, 0.98) 0%,
+      rgba(255, 239, 189, 0.96) 52%,
+      rgba(244, 205, 121, 0.94) 100%);
+  clip-path: polygon(
+    50% 0%, 59% 15%, 74% 4%, 76% 21%, 95% 16%, 85% 34%, 100% 47%,
+    83% 56%, 93% 74%, 74% 70%, 71% 100%, 50% 83%, 30% 100%, 26% 72%,
+    7% 76%, 16% 57%, 0% 47%, 16% 35%, 5% 16%, 25% 21%, 27% 4%, 41% 16%
+  );
+  box-shadow:
+    0 0 0 2px rgba(43, 24, 10, 0.92),
+    0 16px 34px rgba(0, 0, 0, 0.28),
+    0 0 24px rgba(255, 225, 138, 0.3);
+  animation: collage-scroll-hint-bob 1.15s ease-in-out infinite alternate;
+}
+
+.collage-scroll-hint__burst::before,
+.collage-scroll-hint__burst::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 4.4rem;
+  border-top: 2px dashed rgba(255, 239, 189, 0.66);
+}
+
+.collage-scroll-hint__burst::before {
+  right: calc(100% + 0.8rem);
+  transform: rotate(-8deg);
+}
+
+.collage-scroll-hint__burst::after {
+  left: calc(100% + 0.8rem);
+  transform: rotate(8deg);
+}
+
+.collage-scroll-hint__arrows {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: rgba(52, 26, 11, 0.8);
+}
+
+.collage-scroll-hint strong {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #26140d;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.72);
+}
+
+.collage-scroll-hint p {
+  margin: 0;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(9, 7, 10, 0.6);
+  color: rgba(255, 247, 232, 0.9);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes collage-scroll-hint-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) rotate(-14deg) scale(0.72);
+  }
+  12% {
+    opacity: 1;
+    transform: translateY(0) rotate(-8deg) scale(1);
+  }
+  72% {
+    opacity: 1;
+    transform: translateY(-2px) rotate(-8deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-16px) rotate(-4deg) scale(0.92);
+  }
+}
+
+@keyframes collage-scroll-hint-bob {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
 /* Dims+blurs the whole scene, fading in continuously over the same span as
    the growth (duration set inline in focusThenOpen so it always matches
    FOCUS_RAMP_MS + MORPH_MS) — same look as .collage-modal-backdrop, so by
@@ -412,6 +529,17 @@
   .collage-cluster__label span,
   .collage-text-star {
     font-size: 0.38rem;
+  }
+
+  .collage-scroll-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collage-scroll-hint,
+  .collage-scroll-hint__burst {
+    animation: none;
   }
 }
 
