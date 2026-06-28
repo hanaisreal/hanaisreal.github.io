@@ -1,13 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Masthead from '../newui/Masthead';
-import { collections, type CollectionItem } from '../components/data/collectionsData';
+import { collections, communityActivities, poetryProjects, type CollectionItem } from '../components/data/collectionsData';
 import '../newui/newPortfolio.css';
 import './CollectionsPage.css';
 
 const BASE = process.env.PUBLIC_URL;
 type Lang = 'ko' | 'en';
 
-const S = (file: string) => `${BASE}/pictures/worldbuilding/${file}`;
+const WORLD_IMAGE_MAP: Record<string, string> = {
+  'background.png': 'background.webp',
+  'moon.png': 'moon.webp',
+  'path.png': 'path.webp',
+  'flowers.png': 'flowers.webp',
+  'pine.png': 'pine.webp',
+  'plant-eye.png': 'plant-eye.webp',
+};
+
+const S = (file: string) => `${BASE}/pictures/worldbuilding/${WORLD_IMAGE_MAP[file] ?? file}`;
 
 // background.png's aspect ratio — needed whenever we convert between left/top
 // (% of width vs. % of height) so circles and ellipses read as true shapes.
@@ -22,7 +31,7 @@ const ZOOM_FOCUS = { x: 84, y: 34 }; // dive toward the planet, where the ring p
 // out of view faster, instead of growing evenly in both directions.
 const FRAME_ORIGIN_Y = 18;
 
-type ClusterId = 'words' | 'poetry';
+type ClusterId = 'words' | 'poetry' | 'community';
 
 interface ClusterDef {
   id: ClusterId;
@@ -42,17 +51,10 @@ interface OrbitLayout {
   width: number;
 }
 
-interface OrbitingWord {
+interface PhotoStar {
   item: CollectionItem;
+  clusterId: ClusterId;
   orbit: OrbitLayout;
-}
-
-interface PoetryFragment {
-  id: string;
-  label: string;
-  phase0: number;
-  radiusX: number;
-  radiusY: number;
 }
 
 interface ClusterSparkle {
@@ -64,6 +66,47 @@ interface ClusterSparkle {
   delay: number;
   duration: number;
   clusterId: ClusterId;
+}
+
+interface IntroParagraph {
+  content: React.ReactNode;
+  tone?: 'default' | 'cta';
+}
+
+interface KeywordEntry {
+  label: string;
+  starIndex: number;
+  analyticsId: string;
+  analyticsName: string;
+}
+
+interface RandomUniverseLayout {
+  wordStars: PhotoStar[];
+  poetryStars: PhotoStar[];
+  communityStars: PhotoStar[];
+  photoStars: PhotoStar[];
+  keywordEntries: KeywordEntry[];
+}
+
+function getItemImages(item: CollectionItem): string[] {
+  if (item.gallery?.length) return item.gallery;
+  return item.src ? [item.src] : [];
+}
+
+function shuffleArray<T>(items: T[]): T[] {
+  const next = [...items];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [next[index], next[randomIndex]] = [next[randomIndex]!, next[index]!];
+  }
+  return next;
+}
+
+function withPhaseOffset(orbit: OrbitLayout, offset: number): OrbitLayout {
+  return {
+    ...orbit,
+    phase0: orbit.phase0 + offset,
+  };
 }
 
 const SYSTEM_ORBIT = {
@@ -97,9 +140,21 @@ const POETRY_CLUSTER: ClusterDef = {
   tintRgb: [169, 100, 124],
 };
 
+const COMMUNITY_CLUSTER: ClusterDef = {
+  id: 'community',
+  label: 'Community Care',
+  note: 'SHANUM · multicultural service',
+  systemPhase0: 1.88,
+  rotationDeg: -8,
+  angularSpeed: (2 * Math.PI) / 174,
+  haloSize: 27,
+  tintRgb: [98, 161, 152],
+};
+
 const CLUSTER_MAP: Record<ClusterId, ClusterDef> = {
   words: WORD_CLUSTER,
   poetry: POETRY_CLUSTER,
+  community: COMMUNITY_CLUSTER,
 };
 
 const CLUSTERS = Object.values(CLUSTER_MAP);
@@ -188,44 +243,106 @@ const MOON_Z = 11;
 const MOON_ASPECT = 390 / 434; // moon.png's own height/width
 
 const SPARKLES = [
-  ...buildClusterSparkles(WORD_CLUSTER, 28, 7, 24),
-  ...buildClusterSparkles(POETRY_CLUSTER, 12, 5.5, 15.5),
+  ...buildClusterSparkles(WORD_CLUSTER, 22, 7, 24),
+  ...buildClusterSparkles(POETRY_CLUSTER, 7, 6.5, 15.5),
+  ...buildClusterSparkles(COMMUNITY_CLUSTER, 8, 6.5, 16.5),
 ];
 
 const WORD_ORBITS = buildWordOrbits(collections.length);
-const WORD_STARS: OrbitingWord[] = collections.map((item, index) => ({ item, orbit: WORD_ORBITS[index]! }));
-
-const POETRY_FRAGMENTS: PoetryFragment[] = [
-  { id: 'poetry-author', label: 'Jeong Choon-geun', phase0: 0.32, radiusX: 8.2, radiusY: 6.8 },
-  { id: 'poetry-daemari', label: 'Daemari', phase0: 1.58, radiusX: 12.2, radiusY: 9.5 },
-  { id: 'poetry-title', label: 'the village of landmine flower', phase0: 2.84, radiusX: 14.2, radiusY: 11.2 },
-  { id: 'poetry-cheorwon', label: 'a real village in Cheorwon', phase0: 4.06, radiusX: 10.4, radiusY: 8.1 },
-  { id: 'poetry-two-poems', label: 'two poems translated in July 2020', phase0: 5.18, radiusX: 12.8, radiusY: 9.8 },
+const POETRY_ORBITS: OrbitLayout[] = [
+  { phase0: 2.14, radiusX: 8.4, radiusY: 6.9, width: 6.2 },
 ];
 
-// Same order/index as WORD_STARS — the index is what lets a keyword chip
-// reach back to its bubble's photoRefs slot.
-const KEYWORD_ENTRIES = collections.map((item, index) => ({ item, index }));
+const COMMUNITY_ORBITS: OrbitLayout[] = [
+  { phase0: 0.72, radiusX: 8.2, radiusY: 7.1, width: 4.25 },
+];
+
+function createRandomUniverseLayout(): RandomUniverseLayout {
+  const randomizedCollections = shuffleArray(collections);
+  const wordStars = randomizedCollections.map((item, index) => {
+    const baseOrbit = WORD_ORBITS[index]!;
+    return {
+      item,
+      clusterId: 'words' as const,
+      orbit: withPhaseOffset(baseOrbit, Math.random() * Math.PI * 2),
+    };
+  });
+
+  const poetryStars = poetryProjects.map((item, index) => ({
+    item,
+    clusterId: 'poetry' as const,
+    orbit: withPhaseOffset(POETRY_ORBITS[index]!, Math.random() * Math.PI * 2),
+  }));
+
+  const communityStars = communityActivities.map((item, index) => ({
+    item,
+    clusterId: 'community' as const,
+    orbit: withPhaseOffset(COMMUNITY_ORBITS[index]!, Math.random() * Math.PI * 2),
+  }));
+
+  const photoStars = [...wordStars, ...poetryStars, ...communityStars];
+  const starIndexByOriginal = new Map(
+    photoStars.map((star, index) => [star.item.original, index]),
+  );
+
+  const keywordEntries = shuffleArray([
+    ...collections.map(item => ({
+      label: item.original,
+      starIndex: starIndexByOriginal.get(item.original)!,
+      analyticsId: item.original,
+      analyticsName: item.korean,
+    })),
+    {
+      label: 'Daemari',
+      starIndex: starIndexByOriginal.get(poetryProjects[0]?.original ?? 'Daemari') ?? 0,
+      analyticsId: poetryProjects[0]?.original ?? 'Daemari',
+      analyticsName: poetryProjects[0]?.korean ?? 'Daemari',
+    },
+    {
+      label: 'SHANUM',
+      starIndex: starIndexByOriginal.get(communityActivities[0]?.original ?? 'SHANUM') ?? 0,
+      analyticsId: communityActivities[0]?.original ?? 'SHANUM',
+      analyticsName: communityActivities[0]?.korean ?? 'SHANUM',
+    },
+  ]);
+
+  return {
+    wordStars,
+    poetryStars,
+    communityStars,
+    photoStars,
+    keywordEntries,
+  };
+}
+
+const RANDOM_UNIVERSE = createRandomUniverseLayout();
+const PHOTO_STARS = RANDOM_UNIVERSE.photoStars;
+const KEYWORD_ENTRIES = RANDOM_UNIVERSE.keywordEntries;
 
 // Shared between the desktop margin and the mobile section below the fold —
 // one copy of the copy, instead of keeping two in sync by hand.
-const INTRO_PARAGRAPHS = [
-  `This is my worldbuilding project — a place to keep the things I love:
-   pictures, words, phrases, books, and old translation traces, all
-   gathered in one spot. I went
-   back and forth on how to hold onto them, and this is where I
-   landed. It's not finished. I don't think it ever will be. I'll
-   just keep shifting and adding to it.`,
-  `One quieter cluster keeps a small archive from July 2020: two poems I translated from Jeong Choon-geun's
-   Daemari, The Village of Landmine Flower, a poetry collection that returns to Daemari, a real village in Cheorwon
-   marked by division and landmines.`,
-  `The photos are pulled from Pinterest and collaged together by me.
-   I have marked the ones I took myself with a camera, and the ones I drew myself with a pen or pencil.`,
-  `To look around: zoom in and follow the small clusters as they trace a wider orbit together, or click any of the words in the
-   margins. If
-   this makes you want to build a world of your own, you're welcome
-   to. There's something quietly joyful about building it up, one
-   piece at a time.`,
+const INTRO_PARAGRAPHS: IntroParagraph[] = [
+  {
+    content: `This is my worldbuilding project — one place for the words, images, books, and traces I wanted to keep close.`,
+  },
+  {
+    content: `Daemari is a small poetry translation archive from July 2020, built around two poems from Jeong Choon-geun's Daemari, The Village of Landmine Flower.`,
+  },
+  {
+    content: `SHANUM is a community-care thread: local volunteering, multicultural connection, and a campus-and-Gwanaksan plogging day.`,
+  },
+  {
+    content: `The photos are pulled from Pinterest and collaged together by me, alongside a few of my own photos and drawings.`,
+  },
+  {
+    content: (
+      <>
+        <span className="collage-intro__spark">Scroll</span> or{' '}
+        <span className="collage-intro__spark">zoom</span> inward to follow the drifting clusters. Click any word in the margins if you want one star to open.
+      </>
+    ),
+    tone: 'cta',
+  },
 ];
 
 // ── Sticker layout ──────────────────────────────────────────────────────────
@@ -283,9 +400,9 @@ const FOCUS_SCALE = 2.6;
 
 const CollectionsPage: React.FC = () => {
   const [selected, setSelected] = useState<CollectionItem | null>(null);
-  const [lang, setLang] = useState<Lang>('ko');
+  const [lang, setLang] = useState<Lang>('en');
+  const [selectedGalleryIndex, setSelectedGalleryIndex] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [showDesktopHint, setShowDesktopHint] = useState(false);
   // 0 = resting in the small frame, 1 = fully sucked into the universe.
   // Only ever sits at 0 or 1 — once a warp launches it always runs to
   // completion, regardless of further scrolling, so it can't get stuck
@@ -298,24 +415,16 @@ const CollectionsPage: React.FC = () => {
   const clusterRefs = useRef<Array<HTMLDivElement | null>>([]);
   const sparkleRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const photoRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const poetryRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const focusedIndex = useRef<number | null>(null);
   const focusStart = useRef<number | null>(null);
   const focusPhiFrom = useRef(0);
   const focusPhiTo = useRef(0);
   const orbitStart = useRef(0);
+  const orbitTimeRef = useRef(0);
   const morphRef = useRef<HTMLDivElement>(null);
   const morphImgRef = useRef<HTMLImageElement>(null);
   const dimRef = useRef<HTMLDivElement>(null);
-  const desktopHintTimeoutRef = useRef<number | null>(null);
-
-  const dismissDesktopHint = () => {
-    if (desktopHintTimeoutRef.current !== null) {
-      window.clearTimeout(desktopHintTimeoutRef.current);
-      desktopHintTimeoutRef.current = null;
-    }
-    setShowDesktopHint(false);
-  };
+  const galleryTouchStartX = useRef<number | null>(null);
 
   // Pulses the bubble at `index` by continuing its actual orbit — rotating
   // (the short way, forward or back) to phi = π/2, the ring's near/front
@@ -327,19 +436,21 @@ const CollectionsPage: React.FC = () => {
   // bubble lands at the front it's cloned (getBoundingClientRect handles all
   // the nested warp/lean transforms for us) and grown to the card-photo's
   // exact rect, before the real modal appears underneath in that same spot.
-  const focusThenOpen = (item: CollectionItem, index: number) => {
-    dismissDesktopHint();
+  const focusThenOpen = (photoIndex: number) => {
+    const star = PHOTO_STARS[photoIndex]!;
+    const starImages = getItemImages(star.item);
+    const cluster = CLUSTER_MAP[star.clusterId];
     const phaseNow = (performance.now() - orbitStart.current) / 1000;
-    const currentPhi = WORD_ORBITS[index]!.phase0 + WORD_CLUSTER.angularSpeed * phaseNow;
+    const currentPhi = star.orbit.phase0 + cluster.angularSpeed * phaseNow;
     let diff = (Math.PI / 2 - currentPhi) % (2 * Math.PI);
     if (diff > Math.PI) diff -= 2 * Math.PI;
     if (diff < -Math.PI) diff += 2 * Math.PI;
     focusPhiFrom.current = currentPhi;
     focusPhiTo.current = currentPhi + diff;
 
-    focusedIndex.current = index;
+    focusedIndex.current = photoIndex;
     focusStart.current = performance.now();
-    const bubbleEl = photoRefs.current[index];
+    const bubbleEl = photoRefs.current[photoIndex];
     bubbleEl?.classList.add('collage-photo-star--focused');
 
     const dimEl = dimRef.current;
@@ -351,9 +462,9 @@ const CollectionsPage: React.FC = () => {
     window.setTimeout(() => {
       const morphEl = morphRef.current;
       const imgEl = morphImgRef.current;
-      if (bubbleEl && morphEl && imgEl && item.src) {
+      if (bubbleEl && morphEl && imgEl && starImages[0]) {
         const rect = bubbleEl.getBoundingClientRect();
-        imgEl.src = item.src;
+        imgEl.src = starImages[0];
         morphEl.style.transition = 'none';
         morphEl.style.left = `${rect.left}px`;
         morphEl.style.top = `${rect.top}px`;
@@ -386,7 +497,8 @@ const CollectionsPage: React.FC = () => {
       // clears in closeModal, below.
       focusedIndex.current = null;
       focusStart.current = null;
-      setSelected(item);
+      setSelectedGalleryIndex(0);
+      setSelected(star.item);
     }, FOCUS_RAMP_MS + MORPH_MS);
   };
 
@@ -397,7 +509,57 @@ const CollectionsPage: React.FC = () => {
       dimRef.current.style.transition = 'opacity 0.25s ease';
       dimRef.current.classList.remove('collage-dim--active');
     }
+    setSelectedGalleryIndex(0);
     setSelected(null);
+  };
+
+  const selectedImages = selected ? getItemImages(selected) : [];
+  const activeImage = selectedImages[selectedGalleryIndex] ?? selectedImages[0];
+  const selectedMeta = selected
+    ? (lang === 'en' && selected.metaEn
+        ? selected.metaEn
+        : selected.meta ?? (selected.kind === 'word' ? selected.korean : ''))
+    : '';
+  const selectedGlance = selected
+    ? (lang === 'en' && selected.glanceEn
+        ? selected.glanceEn
+        : selected.glance ?? '')
+    : '';
+  const selectedTextBlocks = selected
+    ? [
+        lang === 'en' && selected.descriptionEn ? selected.descriptionEn : selected.description,
+        lang === 'en' ? selected.curatorNoteEn : selected.curatorNote,
+      ].filter((block): block is string => Boolean(block))
+    : [];
+
+  const showPreviousImage = () => {
+    if (selectedImages.length < 2) return;
+    setSelectedGalleryIndex(index => (index - 1 + selectedImages.length) % selectedImages.length);
+  };
+
+  const showNextImage = () => {
+    if (selectedImages.length < 2) return;
+    setSelectedGalleryIndex(index => (index + 1) % selectedImages.length);
+  };
+
+  const handleGalleryTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    galleryTouchStartX.current = e.touches[0]?.clientX ?? null;
+  };
+
+  const handleGalleryTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (galleryTouchStartX.current === null || selectedImages.length < 2) {
+      galleryTouchStartX.current = null;
+      return;
+    }
+    const touchX = e.changedTouches[0]?.clientX;
+    if (touchX === undefined) {
+      galleryTouchStartX.current = null;
+      return;
+    }
+    const deltaX = touchX - galleryTouchStartX.current;
+    if (deltaX <= -40) showNextImage();
+    if (deltaX >= 40) showPreviousImage();
+    galleryTouchStartX.current = null;
   };
 
   // Launches the one-shot warp animation and runs it to completion on its own
@@ -421,22 +583,6 @@ const CollectionsPage: React.FC = () => {
   };
 
   // Desktop: track mouse anywhere on the page, relative to portrait center
-  useEffect(() => {
-    if (window.innerWidth <= 1000) return;
-    setShowDesktopHint(true);
-    desktopHintTimeoutRef.current = window.setTimeout(() => {
-      desktopHintTimeoutRef.current = null;
-      setShowDesktopHint(false);
-    }, 4800);
-
-    return () => {
-      if (desktopHintTimeoutRef.current !== null) {
-        window.clearTimeout(desktopHintTimeoutRef.current);
-        desktopHintTimeoutRef.current = null;
-      }
-    };
-  }, []);
-
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       const rect = portraitRef.current?.getBoundingClientRect();
@@ -495,6 +641,7 @@ const CollectionsPage: React.FC = () => {
     orbitStart.current = start;
     const tick = (now: number) => {
       const t = (now - start) / 1000;
+      orbitTimeRef.current = t;
       const centers = CLUSTERS.reduce<Record<ClusterId, { cx: number; cy: number }>>((acc, cluster, index) => {
         const center = getClusterCenter(cluster, t);
         acc[cluster.id] = center;
@@ -517,10 +664,11 @@ const CollectionsPage: React.FC = () => {
         el.style.top = `${cy}%`;
       });
 
-      WORD_ORBITS.forEach(({ phase0, radiusX, radiusY, width }, i) => {
+      PHOTO_STARS.forEach(({ clusterId, orbit }, i) => {
         const el = photoRefs.current[i];
         if (!el) return;
-        let phi = phase0 + WORD_CLUSTER.angularSpeed * t;
+        const cluster = CLUSTER_MAP[clusterId];
+        let phi = orbit.phase0 + cluster.angularSpeed * t;
         const isFocused = focusedIndex.current === i && focusStart.current !== null;
         let extraBoost = 1;
         if (isFocused) {
@@ -532,42 +680,21 @@ const CollectionsPage: React.FC = () => {
           extraBoost = 1 + eased * (FOCUS_SCALE - 1);
         }
         const { cx, cy, depth } = pointAroundCenter(
-          centers.words.cx,
-          centers.words.cy,
-          WORD_CLUSTER.rotationDeg,
+          centers[clusterId].cx,
+          centers[clusterId].cy,
+          cluster.rotationDeg,
           phi,
-          radiusX,
-          radiusY,
+          orbit.radiusX,
+          orbit.radiusY,
         );
-        const w = width * depthScale(depth) * extraBoost;
+        const scale = depthScale(depth) * extraBoost;
         const opacity = isFocused ? 1 : depthOpacity(depth);
         const zIndex = isFocused ? 999 : depthZ(depth);
-        el.style.left = `${cx - w / 2}%`;
-        el.style.top = `${cy - (w * IMG_ASPECT) / 2}%`;
-        el.style.width = `${w}%`;
-        el.style.opacity = `${opacity}`;
-        el.style.zIndex = `${zIndex}`;
-      });
-
-      POETRY_FRAGMENTS.forEach(({ phase0, radiusX, radiusY }, i) => {
-        const el = poetryRefs.current[i];
-        if (!el) return;
-        const phi = phase0 + POETRY_CLUSTER.angularSpeed * t;
-        const { cx, cy, depth } = pointAroundCenter(
-          centers.poetry.cx,
-          centers.poetry.cy,
-          POETRY_CLUSTER.rotationDeg,
-          phi,
-          radiusX,
-          radiusY,
-        );
-        const scale = 0.78 + ((depth + 1) / 2) * 0.34;
-        const opacity = 0.28 + ((depth + 1) / 2) * 0.46;
         el.style.left = `${cx}%`;
         el.style.top = `${cy}%`;
         el.style.opacity = `${opacity}`;
-        el.style.zIndex = `${4 + Math.round((depth + 1) * 2)}`;
-        el.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        el.style.zIndex = `${zIndex}`;
+        el.style.setProperty('--star-scale', `${scale}`);
       });
 
       frame = requestAnimationFrame(tick);
@@ -582,7 +709,6 @@ const CollectionsPage: React.FC = () => {
     const el = portraitRef.current;
     if (!el) return;
     const handler = (e: WheelEvent) => {
-      dismissDesktopHint();
       e.preventDefault();
       if (warping) return;
       if (warpProgress >= 1) {
@@ -601,7 +727,6 @@ const CollectionsPage: React.FC = () => {
 
   // Pinch to zoom (mobile) — same launch-then-commit behavior as the wheel
   const handleTouchMove = (e: React.TouchEvent) => {
-    dismissDesktopHint();
     if (e.touches.length !== 2 || warping) return;
     const dist = Math.hypot(
       e.touches[0].clientX - e.touches[1].clientX,
@@ -630,7 +755,6 @@ const CollectionsPage: React.FC = () => {
 
   // Double-click / double-tap to warp back out, once you're fully in
   const handleDoubleClick = () => {
-    dismissDesktopHint();
     if (!warping && warpProgress > 0.5) startWarp(-1);
   };
 
@@ -660,6 +784,11 @@ const CollectionsPage: React.FC = () => {
   const warpFilter = warping
     ? `blur(${Math.sin(progress * Math.PI) * 7}px) brightness(${1 + Math.sin(progress * Math.PI) * 0.35})`
     : 'none';
+  const renderOrbitTime = orbitTimeRef.current;
+  const renderCenters = CLUSTERS.reduce<Record<ClusterId, { cx: number; cy: number }>>((acc, cluster) => {
+    acc[cluster.id] = getClusterCenter(cluster, renderOrbitTime);
+    return acc;
+  }, {} as Record<ClusterId, { cx: number; cy: number }>);
 
   return (
     <div className="collage-page">
@@ -697,6 +826,7 @@ const CollectionsPage: React.FC = () => {
               alt=""
               className="collage-bg"
               draggable={false}
+              decoding="async"
               style={{
                 transform: `scale(1.06) translate(${tilt.x * -4}px, ${tilt.y * -4}px)`,
                 transition: 'transform 0.12s ease-out',
@@ -709,6 +839,7 @@ const CollectionsPage: React.FC = () => {
               src={S('moon.png')}
               alt=""
               draggable={false}
+              decoding="async"
               style={{
                 position: 'absolute',
                 left: `${MOON.cx - MOON.width / 2}%`,
@@ -718,18 +849,8 @@ const CollectionsPage: React.FC = () => {
               }}
             />
 
-            {showDesktopHint && (
-              <div className="collage-scroll-hint" aria-hidden="true">
-                <div className="collage-scroll-hint__burst">
-                  <span className="collage-scroll-hint__arrows">↑ ↑ ↑</span>
-                  <strong>SCROLL!</strong>
-                </div>
-                <p>up to drift inward</p>
-              </div>
-            )}
-
             {CLUSTERS.map((cluster, index) => {
-              const center = getClusterCenter(cluster);
+              const center = renderCenters[cluster.id];
               return (
                 <div
                   key={cluster.id}
@@ -756,8 +877,9 @@ const CollectionsPage: React.FC = () => {
             {/* Twinkling dust now hangs around each cluster instead of one ring */}
             {SPARKLES.map((s, i) => {
               const cluster = CLUSTER_MAP[s.clusterId];
-              const center = getClusterCenter(cluster);
-              const { cx, cy } = pointAroundCenter(center.cx, center.cy, cluster.rotationDeg, s.phase0, s.radiusX, s.radiusY);
+              const center = renderCenters[s.clusterId];
+              const phi = s.phase0 + cluster.angularSpeed * s.angularScale * renderOrbitTime;
+              const { cx, cy } = pointAroundCenter(center.cx, center.cy, cluster.rotationDeg, phi, s.radiusX, s.radiusY);
               return (
                 <span
                   key={i}
@@ -776,70 +898,49 @@ const CollectionsPage: React.FC = () => {
               );
             })}
 
-            {/* Word photos orbit together as one loose cluster near the moon. */}
-            {WORD_STARS.map(({ item, orbit }, i) => {
-              const center = getClusterCenter(WORD_CLUSTER);
+            {/* Photo-based clusters: words and SHANUM community activity. */}
+            {PHOTO_STARS.map(({ item, clusterId, orbit }, i) => {
+              const cluster = CLUSTER_MAP[clusterId];
+              const center = renderCenters[clusterId];
               const { cx, cy, depth } = pointAroundCenter(
                 center.cx,
                 center.cy,
-                WORD_CLUSTER.rotationDeg,
-                orbit.phase0,
+                cluster.rotationDeg,
+                orbit.phase0 + cluster.angularSpeed * renderOrbitTime,
                 orbit.radiusX,
                 orbit.radiusY,
               );
-              const w = orbit.width * depthScale(depth);
-              const left = cx - w / 2;
-              const top = cy - (w * IMG_ASPECT) / 2;
+              const scale = depthScale(depth);
+              const isPastelCard = item.kind === 'poetry' && !item.src;
               return (
                 <button
                   key={item.original}
                   ref={el => { photoRefs.current[i] = el; }}
                   type="button"
-                  className="collage-photo-star"
+                  className={`collage-photo-star${isPastelCard ? ' collage-photo-star--card' : ''}`}
                   data-analytics-event="collection_item_open"
                   data-analytics-item-id={item.original}
                   data-analytics-item-name={item.korean}
-                  data-analytics-placement="words_cluster"
+                  data-analytics-placement={`${clusterId}_cluster`}
                   style={{
-                    ['--cluster-rgb' as string]: WORD_CLUSTER.tintRgb.join(', '),
-                    left: `${left}%`, top: `${top}%`, width: `${w}%`,
+                    ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
+                    ['--star-scale' as string]: `${scale}`,
+                    left: `${cx}%`, top: `${cy}%`, width: `${orbit.width}%`,
                     opacity: depthOpacity(depth),
                     zIndex: depthZ(depth),
                   }}
-                  onClick={() => focusThenOpen(item, i)}
+                  onClick={() => focusThenOpen(i)}
                   aria-label={item.original}
                 >
-                  {item.src && <img src={item.src} alt="" draggable={false} />}
+                  {item.src ? (
+                    <img src={item.src} alt="" draggable={false} loading="lazy" decoding="async" />
+                  ) : (
+                    <span className="collage-photo-star__card" aria-hidden="true">
+                      <strong>Daemari</strong>
+                      <span>translation archive</span>
+                    </span>
+                  )}
                 </button>
-              );
-            })}
-
-            {POETRY_FRAGMENTS.map((fragment, i) => {
-              const center = getClusterCenter(POETRY_CLUSTER);
-              const { cx, cy, depth } = pointAroundCenter(
-                center.cx,
-                center.cy,
-                POETRY_CLUSTER.rotationDeg,
-                fragment.phase0,
-                fragment.radiusX,
-                fragment.radiusY,
-              );
-              return (
-                <span
-                  key={fragment.id}
-                  ref={el => { poetryRefs.current[i] = el; }}
-                  className="collage-text-star"
-                  style={{
-                    ['--cluster-rgb' as string]: POETRY_CLUSTER.tintRgb.join(', '),
-                    left: `${cx}%`,
-                    top: `${cy}%`,
-                    opacity: 0.28 + ((depth + 1) / 2) * 0.46,
-                    zIndex: 4 + Math.round((depth + 1) * 2),
-                    transform: `translate(-50%, -50%) scale(${0.78 + ((depth + 1) / 2) * 0.34})`,
-                  }}
-                >
-                  {fragment.label}
-                </span>
               );
             })}
 
@@ -862,6 +963,7 @@ const CollectionsPage: React.FC = () => {
                   alt=""
                   draggable={false}
                   className="collage-sticker"
+                  decoding="async"
                   style={{
                     ...style,
                     transform: `translate(${tilt.x * depth}px, ${tilt.y * depth}px) translate(${flyX}vw, ${flyY}vh) scale(${flyScale})`,
@@ -899,45 +1001,31 @@ const CollectionsPage: React.FC = () => {
           since that (and its inner layer) carry their own transforms, which
           would hijack position:fixed's containing block otherwise. */}
       <div ref={morphRef} className="collage-morph">
-        <img ref={morphImgRef} alt="" draggable={false} />
+        <img ref={morphImgRef} alt="" draggable={false} decoding="async" />
       </div>
 
       {/* Keyword index in the margins outside the frame — run together like
           running prose, words joined by middots, no chip/box around them.
           Clicking one pulses its bubble out in the ring (same index as
           photoRefs) before the card opens, so it reads as "that lit up". */}
-      <nav className="collage-keywords collage-keywords--left" aria-label="Word index">
-        {INTRO_PARAGRAPHS.map((text, i) => (
-          <p className="collage-intro" key={i}>{text}</p>
+      <aside className="collage-keywords collage-keywords--left collage-keywords--intro" aria-label="Worldbuilding note">
+        {INTRO_PARAGRAPHS.map(({ content, tone }, i) => (
+          <p className={`collage-intro${tone === 'cta' ? ' collage-intro--cta' : ''}`} key={i}>{content}</p>
         ))}
-        {KEYWORD_ENTRIES.slice(0, Math.ceil(KEYWORD_ENTRIES.length / 2)).map(({ item, index }, i, arr) => (
-          <React.Fragment key={item.original}>
-            <button
-              className="collage-keyword"
-              onClick={() => focusThenOpen(item, index)}
-              data-analytics-event="collection_item_open"
-              data-analytics-item-id={item.original}
-              data-analytics-item-name={item.korean}
-              data-analytics-placement="left_keywords"
-            >
-              {item.original}
-            </button>
-            {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
-          </React.Fragment>
-        ))}
-      </nav>
+      </aside>
       <nav className="collage-keywords collage-keywords--right" aria-label="Word index">
-        {KEYWORD_ENTRIES.slice(Math.ceil(KEYWORD_ENTRIES.length / 2)).map(({ item, index }, i, arr) => (
-          <React.Fragment key={item.original}>
+        <p className="collage-keywords__title">Collections</p>
+        {KEYWORD_ENTRIES.map(({ label, starIndex, analyticsId, analyticsName }, i, arr) => (
+          <React.Fragment key={`${label}-${starIndex}`}>
             <button
               className="collage-keyword"
-              onClick={() => focusThenOpen(item, index)}
+              onClick={() => focusThenOpen(starIndex)}
               data-analytics-event="collection_item_open"
-              data-analytics-item-id={item.original}
-              data-analytics-item-name={item.korean}
+              data-analytics-item-id={analyticsId}
+              data-analytics-item-name={analyticsName}
               data-analytics-placement="right_keywords"
             >
-              {item.original}
+              {label}
             </button>
             {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
           </React.Fragment>
@@ -948,21 +1036,21 @@ const CollectionsPage: React.FC = () => {
           repeats the same explanation as a normal page section below the
           hero, reached by scrolling down instead of off to the side. */}
       <section className="collage-mobile-intro" data-analytics-section="collections_mobile_intro">
-        {INTRO_PARAGRAPHS.map((text, i) => (
-          <p key={i}>{text}</p>
+        {INTRO_PARAGRAPHS.map(({ content, tone }, i) => (
+          <p className={tone === 'cta' ? 'collage-mobile-intro__cta' : undefined} key={i}>{content}</p>
         ))}
         <p className="collage-mobile-intro__words">
-          {KEYWORD_ENTRIES.map(({ item, index }, i, arr) => (
-            <React.Fragment key={item.original}>
+          {KEYWORD_ENTRIES.map(({ label, starIndex, analyticsId, analyticsName }, i, arr) => (
+            <React.Fragment key={`${label}-${starIndex}`}>
               <button
                 className="collage-keyword"
-                onClick={() => focusThenOpen(item, index)}
+                onClick={() => focusThenOpen(starIndex)}
                 data-analytics-event="collection_item_open"
-                data-analytics-item-id={item.original}
-                data-analytics-item-name={item.korean}
+                data-analytics-item-id={analyticsId}
+                data-analytics-item-name={analyticsName}
                 data-analytics-placement="mobile_keywords"
               >
-                {item.original}
+                {label}
               </button>
               {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
             </React.Fragment>
@@ -972,7 +1060,7 @@ const CollectionsPage: React.FC = () => {
 
       {selected && (
         <div className="collage-modal-backdrop" onClick={closeModal}>
-          <div className="collage-modal" onClick={e => e.stopPropagation()}>
+          <div className={`collage-modal${activeImage ? '' : ' collage-modal--text-only'}`} onClick={e => e.stopPropagation()}>
             <button
               className="collage-modal__close"
               onClick={closeModal}
@@ -982,24 +1070,46 @@ const CollectionsPage: React.FC = () => {
             >
               ×
             </button>
-            {selected.src && (
-              <div className="collage-modal__photo">
-                <img src={selected.src} alt={selected.original} />
+            {activeImage && (
+              <div
+                className={`collage-modal__photo${selectedImages.length > 1 ? ' collage-modal__photo--gallery' : ''}`}
+                onTouchStart={handleGalleryTouchStart}
+                onTouchEnd={handleGalleryTouchEnd}
+              >
+                <img src={activeImage} alt={selected.original} decoding="async" />
+                {selectedImages.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      className="collage-modal__nav collage-modal__nav--prev"
+                      onClick={showPreviousImage}
+                      aria-label="Show previous photo"
+                    >
+                      ‹
+                    </button>
+                    <button
+                      type="button"
+                      className="collage-modal__nav collage-modal__nav--next"
+                      onClick={showNextImage}
+                      aria-label="Show next photo"
+                    >
+                      ›
+                    </button>
+                  </>
+                )}
               </div>
             )}
             <div className="collage-modal__body">
-              <span className="collage-modal__lang">{selected.language}</span>
               <h2 className="collage-modal__original">{selected.original}</h2>
-              <p className="collage-modal__korean">{selected.korean}</p>
-              <p className="collage-modal__desc">
-                {lang === 'en' && selected.descriptionEn ? selected.descriptionEn : selected.description}
-              </p>
-              <p className="collage-modal__curator">
-                Found this word in the book — <span lang="ko">당신의 마음에 이름을 붙인다면</span>.
-              </p>
-              <p className="collage-modal__source">
-                📖 by <em>Mariya Ivashkina, trans. Ji-eun Kim</em>
-              </p>
+              {selectedMeta && <p className="collage-modal__meta">{selectedMeta}</p>}
+              {selectedGlance && <p className="collage-modal__glance">{selectedGlance}</p>}
+              <div className="collage-modal__text">
+                {selectedTextBlocks.map((block, index) => (
+                  <p key={`${selected.original}-text-${index}`} className="collage-modal__desc">
+                    {block}
+                  </p>
+                ))}
+              </div>
             </div>
           </div>
         </div>

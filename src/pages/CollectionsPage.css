@@ -139,6 +139,8 @@
 /* ── Photos nested among the word cluster ── */
 .collage-photo-star {
   position: absolute;
+  left: 0;
+  top: 0;
   aspect-ratio: 1;
   border-radius: 0;
   overflow: hidden;
@@ -147,10 +149,14 @@
   background: none;
   cursor: pointer;
   z-index: 1;
+  transform: translate3d(-50%, -50%, 0) scale(var(--star-scale, 1));
+  transform-origin: center center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
   box-shadow:
     0 0 7px 2px rgba(255, 255, 255, 0.3),
     0 0 14px 4px rgba(var(--cluster-rgb, 255, 255, 255), 0.18);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .collage-photo-star img {
@@ -162,8 +168,48 @@
   transition: filter 0.25s ease;
 }
 
+.collage-photo-star--card {
+  aspect-ratio: 0.78;
+  background: linear-gradient(160deg, rgba(246, 217, 205, 0.95), rgba(220, 204, 237, 0.94));
+  box-shadow:
+    0 0 10px 2px rgba(255, 255, 255, 0.24),
+    0 0 18px 4px rgba(var(--cluster-rgb, 255, 255, 255), 0.18);
+}
+
+.collage-photo-star__card {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0.55rem 0.45rem 0.5rem;
+  box-sizing: border-box;
+  color: rgba(52, 37, 49, 0.92);
+  text-align: left;
+}
+
+.collage-photo-star__card strong,
+.collage-photo-star__card span {
+  display: block;
+  line-height: 1.1;
+}
+
+.collage-photo-star__card strong {
+  font-family: 'Lora', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.collage-photo-star__card span {
+  margin-top: 0.16rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.36rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
 .collage-photo-star:hover {
-  transform: scale(1.7);
   box-shadow:
     0 0 16px 4px rgba(255, 255, 255, 0.7),
     0 0 26px 10px rgba(var(--cluster-rgb, 255, 255, 255), 0.35);
@@ -186,10 +232,18 @@
   filter: saturate(1) brightness(1.25);
 }
 
+.collage-photo-star--focused .collage-photo-star__card {
+  color: rgba(31, 18, 27, 0.96);
+}
+
 .collage-text-star {
   position: absolute;
   left: 0;
   top: 0;
+  transform: translate3d(-50%, -50%, 0) scale(var(--text-scale, 1));
+  transform-origin: center center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
   color: rgba(255, 255, 255, 0.64);
   font-family: 'Space Mono', monospace;
   font-size: 0.5rem;
@@ -201,123 +255,6 @@
     0 0 10px rgba(var(--cluster-rgb, 255, 255, 255), 0.35),
     0 0 20px rgba(var(--cluster-rgb, 255, 255, 255), 0.16);
   mix-blend-mode: screen;
-}
-
-.collage-scroll-hint {
-  position: absolute;
-  left: 15%;
-  bottom: 11%;
-  z-index: 24;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.55rem;
-  pointer-events: none;
-  transform: rotate(-8deg);
-  animation: collage-scroll-hint-fade 4.8s ease forwards;
-}
-
-.collage-scroll-hint__burst {
-  position: relative;
-  min-width: 10rem;
-  padding: 1.05rem 1.35rem 0.95rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.14rem;
-  background:
-    radial-gradient(circle at 50% 48%,
-      rgba(255, 251, 232, 0.98) 0%,
-      rgba(255, 239, 189, 0.96) 52%,
-      rgba(244, 205, 121, 0.94) 100%);
-  clip-path: polygon(
-    50% 0%, 59% 15%, 74% 4%, 76% 21%, 95% 16%, 85% 34%, 100% 47%,
-    83% 56%, 93% 74%, 74% 70%, 71% 100%, 50% 83%, 30% 100%, 26% 72%,
-    7% 76%, 16% 57%, 0% 47%, 16% 35%, 5% 16%, 25% 21%, 27% 4%, 41% 16%
-  );
-  box-shadow:
-    0 0 0 2px rgba(43, 24, 10, 0.92),
-    0 16px 34px rgba(0, 0, 0, 0.28),
-    0 0 24px rgba(255, 225, 138, 0.3);
-  animation: collage-scroll-hint-bob 1.15s ease-in-out infinite alternate;
-}
-
-.collage-scroll-hint__burst::before,
-.collage-scroll-hint__burst::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 4.4rem;
-  border-top: 2px dashed rgba(255, 239, 189, 0.66);
-}
-
-.collage-scroll-hint__burst::before {
-  right: calc(100% + 0.8rem);
-  transform: rotate(-8deg);
-}
-
-.collage-scroll-hint__burst::after {
-  left: calc(100% + 0.8rem);
-  transform: rotate(8deg);
-}
-
-.collage-scroll-hint__arrows {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.32em;
-  color: rgba(52, 26, 11, 0.8);
-}
-
-.collage-scroll-hint strong {
-  font-family: 'Space Mono', monospace;
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  color: #26140d;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.72);
-}
-
-.collage-scroll-hint p {
-  margin: 0;
-  padding: 0.28rem 0.72rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(9, 7, 10, 0.6);
-  color: rgba(255, 247, 232, 0.9);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.56rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
-}
-
-@keyframes collage-scroll-hint-fade {
-  0% {
-    opacity: 0;
-    transform: translateY(24px) rotate(-14deg) scale(0.72);
-  }
-  12% {
-    opacity: 1;
-    transform: translateY(0) rotate(-8deg) scale(1);
-  }
-  72% {
-    opacity: 1;
-    transform: translateY(-2px) rotate(-8deg) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-16px) rotate(-4deg) scale(0.92);
-  }
-}
-
-@keyframes collage-scroll-hint-bob {
-  0% {
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    transform: translateY(-5px) scale(1.02);
-  }
 }
 
 /* Dims+blurs the whole scene, fading in continuously over the same span as
@@ -416,6 +353,10 @@
   line-height: 2.1;
 }
 
+.collage-keywords--intro {
+  overflow: visible;
+}
+
 .collage-keywords--left {
   left: 1.5rem;
   right: calc(50% + (50vh * 1596 / 2683) + 1rem);
@@ -453,6 +394,15 @@
   color: rgba(255, 255, 255, 0.28);
 }
 
+.collage-keywords__title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 247, 222, 0.74);
+  margin: 0 0 0.55rem;
+}
+
 /* Intro note above the left-side word list — quieter serif so it reads as a
    note, not a label, and stays visually separate from the running word list
    below it. */
@@ -465,6 +415,39 @@
   text-transform: none;
   color: rgba(255, 255, 255, 0.6);
   margin: 0 0 0.6rem;
+}
+
+.collage-intro--cta {
+  color: rgba(255, 248, 222, 0.98);
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.collage-intro__spark {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.9em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 233, 169, 0.98);
+  text-shadow:
+    0 0 10px rgba(255, 226, 143, 0.28),
+    0 0 18px rgba(255, 244, 214, 0.22);
+  animation: collage-intro-spark 1.9s ease-in-out infinite alternate;
+}
+
+@keyframes collage-intro-spark {
+  0% {
+    text-shadow:
+      0 0 8px rgba(255, 226, 143, 0.18),
+      0 0 14px rgba(255, 244, 214, 0.16);
+  }
+  100% {
+    text-shadow:
+      0 0 16px rgba(255, 226, 143, 0.34),
+      0 0 26px rgba(255, 244, 214, 0.26);
+  }
 }
 
 /* Same explanation as .collage-intro/.collage-keywords, but as a normal page
@@ -518,6 +501,11 @@
     color: rgba(255, 255, 255, 0.6);
   }
 
+  .collage-mobile-intro__cta {
+    color: rgba(255, 247, 228, 0.98);
+    font-weight: 600;
+  }
+
   .collage-cluster__label {
     left: 0.7rem;
   }
@@ -530,15 +518,10 @@
   .collage-text-star {
     font-size: 0.38rem;
   }
-
-  .collage-scroll-hint {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .collage-scroll-hint,
-  .collage-scroll-hint__burst {
+  .collage-intro__spark {
     animation: none;
   }
 }
@@ -574,6 +557,34 @@
   overflow-y: auto;
   position: relative;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(202, 177, 126, 0.58) rgba(29, 22, 19, 0.08);
+}
+
+.collage-modal--text-only {
+  max-width: 430px;
+}
+
+.collage-modal--text-only .collage-modal__body {
+  padding-top: 2rem;
+}
+
+.collage-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.collage-modal::-webkit-scrollbar-track {
+  background: rgba(29, 22, 19, 0.08);
+}
+
+.collage-modal::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(221, 197, 148, 0.68), rgba(177, 138, 89, 0.6));
+  border-radius: 999px;
+  border: 2px solid rgba(15, 11, 9, 0);
+}
+
+.collage-modal::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(236, 212, 165, 0.78), rgba(190, 151, 102, 0.72));
 }
 
 .collage-modal__close {
@@ -596,10 +607,12 @@
 }
 
 .collage-modal__photo {
+  position: relative;
   width: 100%;
   aspect-ratio: 4/3;
   overflow: hidden;
   border-radius: 0;
+  background: linear-gradient(180deg, rgba(239, 235, 224, 0.9), rgba(228, 221, 209, 0.9));
 }
 
 .collage-modal__photo img {
@@ -608,58 +621,85 @@
   object-fit: cover;
 }
 
-.collage-modal__body {
-  padding: 1.25rem 1.5rem 1.5rem;
+.collage-modal__photo--gallery img {
+  object-fit: contain;
 }
 
-.collage-modal__lang {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent);
+.collage-modal__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 999px;
+  background: rgba(17, 14, 12, 0.58);
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.collage-modal__nav:hover {
+  background: rgba(17, 14, 12, 0.78);
+}
+
+.collage-modal__nav--prev {
+  left: 0.7rem;
+}
+
+.collage-modal__nav--next {
+  right: 0.7rem;
+}
+
+.collage-modal__body {
+  padding: 1.35rem 1.5rem 1.5rem;
+  display: grid;
+  gap: 0.55rem;
+  text-align: left;
 }
 
 .collage-modal__original {
   font-family: 'Lora', serif;
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.72rem;
+  line-height: 1.18;
+  font-weight: 600;
   color: var(--text-strong);
-  margin: 0.3rem 0 0.2rem;
-}
-
-.collage-modal__korean {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin: 0 0 1rem;
-}
-
-.collage-modal__desc {
-  font-family: 'Lora', serif;
-  font-size: 0.95rem;
-  color: var(--text);
-  line-height: 1.65;
   margin: 0;
 }
 
-.collage-modal__curator {
+.collage-modal__meta,
+.collage-modal__glance,
+.collage-modal__desc {
   font-family: 'Lora', serif;
-  font-style: italic;
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin: 1rem 0 0;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
+  margin: 0;
+  color: var(--text);
 }
 
-.collage-modal__source {
-  font-family: 'Space Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-  margin: 0.35rem 0 0;
+.collage-modal__meta {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(226, 217, 201, 0.76);
 }
 
-.collage-modal__source em {
-  font-style: normal;
+.collage-modal__glance {
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: rgba(244, 236, 218, 0.92);
+}
+
+.collage-modal__text {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 0.15rem;
+}
+
+.collage-modal__desc {
+  font-size: 0.98rem;
+  line-height: 1.72;
 }

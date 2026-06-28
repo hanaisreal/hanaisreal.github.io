@@ -1,16 +1,50 @@
 const BASE = process.env.PUBLIC_URL;
 
 export interface CollectionItem {
+  kind?: 'word' | 'activity' | 'poetry';
   korean: string;
   original: string;
   language: string;
   description: string;
   descriptionEn?: string;
   src?: string;
+  gallery?: string[];
+  meta?: string;
+  metaEn?: string;
+  glance?: string;
+  glanceEn?: string;
+  curatorNote?: string;
+  curatorNoteEn?: string;
+  source?: string;
+  sourceEn?: string;
 }
+
+export const poetryProjects: CollectionItem[] = [
+  {
+    kind: 'poetry',
+    korean: "대마리 시 번역",
+    original: "Daemari Translation Archive",
+    language: "poetry",
+    meta: "2020.07 · 정춘근 · 대마리, 지뢰꽃마을",
+    metaEn: "July 2020 · Jeong Choon-geun · Daemari, The Village of Landmine Flower",
+    description:
+      "2020년 7월, 정춘근 시집 『대마리, 지뢰꽃마을』 속 두 편의 시를 번역하며 남긴 작은 번역 아카이브.",
+    descriptionEn:
+      "A small translation archive built around two poems I translated in July 2020 from Jeong Choon-geun's Daemari, The Village of Landmine Flower.",
+    glance: "시 번역, 장소, 기억에 대한 개인 아카이브.",
+    glanceEn: "A small archive of poetry translation, place, and memory.",
+    curatorNote:
+      "번역을 통해 장소의 공기와 정서를 얼마나 옮길 수 있는지 궁금해서 시작했던 작업이다. 대마리는 철원의 실제 마을이고, 시집은 분단과 지뢰의 긴장이 남아 있는 풍경을 계속 돌아본다.",
+    curatorNoteEn:
+      "I started this to see how much translation could hold onto a place's atmosphere as well as its meaning. Daemari is a real village in Cheorwon, and the collection keeps returning to its landscape, division, and the quiet tension of landmine-marked borders.",
+    source: "정춘근, 『대마리, 지뢰꽃마을』",
+    sourceEn: "Jeong Choon-geun, Daemari, The Village of Landmine Flower",
+  },
+];
 
 export const collections: CollectionItem[] = [
   {
+    kind: 'word',
     korean: "러지셩베이",
     original: "乐极生悲",
     language: "chinese",
@@ -19,6 +53,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/lejieshengbei.jpg`,
   },
   {
+    kind: 'word',
     korean: "헤젤리흐",
     original: "gezellig",
     language: "dutch",
@@ -28,6 +63,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/gezellig.jpg`,
   },
   {
+    kind: 'word',
     korean: "아윗바이언",
     original: "uitwaaien",
     language: "dutch",
@@ -36,6 +72,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/uitwaaien.jpg`,
   },
   {
+    kind: 'word',
     korean: "프릴루풋슬리브",
     original: "friluftsliv",
     language: "norwegian",
@@ -45,6 +82,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/friluftsliv.jpg`,
   },
   {
+    kind: 'word',
     korean: "피엘반트",
     original: "fjellvant",
     language: "norwegian",
@@ -53,6 +91,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/fjellvant.jpg`,
   },
   {
+    kind: 'word',
     korean: "패이스코스",
     original: "peiskos",
     language: "norwegian",
@@ -61,6 +100,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/peiskos.jpg`,
   },
   {
+    kind: 'word',
     korean: "에테르포클록스카프",
     original: "etterpåklokskap",
     language: "norwegian",
@@ -69,6 +109,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/etterpaaklokskap.jpg`,
   },
   {
+    kind: 'word',
     korean: "르트루바유",
     original: "retrouvailles",
     language: "french",
@@ -78,6 +119,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/retrouvailles.jpg`,
   },
   {
+    kind: 'word',
     korean: "이키가이",
     original: "生き甲斐",
     language: "japanese",
@@ -86,6 +128,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/ikigai.jpg`,
   },
   {
+    kind: 'word',
     korean: "고모레비",
     original: "木漏れ日",
     language: "japanese",
@@ -94,6 +137,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/komorebi.jpg`,
   },
   {
+    kind: 'word',
     korean: "아운",
     original: "阿吽",
     language: "japanese",
@@ -102,6 +146,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/aun.jpg`,
   },
   {
+    kind: 'word',
     korean: "고이노요칸",
     original: "恋の予感",
     language: "japanese",
@@ -110,6 +155,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/koinoyokan.jpg`,
   },
   {
+    kind: 'word',
     korean: "비비르 알 디아",
     original: "vivir al día",
     language: "spanish",
@@ -119,6 +165,7 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/vivir-al-dia.jpg`,
   },
   {
+    kind: 'word',
     korean: "소브레메사",
     original: "sobremesa",
     language: "spanish",
@@ -128,12 +175,41 @@ export const collections: CollectionItem[] = [
     src: `${BASE}/pictures/collections/sobremesa.jpg`,
   },
   {
+    kind: 'word',
     korean: "바실란도",
     original: "vacilando",
     language: "spanish",
     description: "목적지에 다다르는 것보다 목적지로 가는 과정이 더 중요한 여정.",
     descriptionEn: "A journey where the process of getting there matters more than arriving at the destination.",
     src: `${BASE}/pictures/collections/vacilando.jpg`,
+  },
+];
+
+export const communityActivities: CollectionItem[] = [
+  {
+    kind: 'activity',
+    korean: "캠퍼스 & 관악산 플로깅",
+    original: "Campus & Gwanaksan Plogging",
+    language: "community",
+    meta: "2026.05.19 · Seoul National University & Gwanaksan",
+    metaEn: "May 19, 2026 · Seoul National University & Gwanaksan",
+    description:
+      "서울대학교와 관악산 일대에서 쓰레기를 수거하며, 지역 사회와 함께 환경 지속가능성을 실천한 플로깅 활동.",
+    descriptionEn:
+      "Collected litter around Seoul National University and Gwanaksan while promoting environmental sustainability through community volunteering.",
+    glance: "지역 돌봄, 지속가능성, 다문화 커뮤니티 활동.",
+    glanceEn: "A local thread of care, sustainability, and multicultural community work.",
+    src: `${BASE}/pictures/community/shanum-plogging-forest.webp`,
+    gallery: [
+      `${BASE}/pictures/community/shanum-plogging-forest.webp`,
+      `${BASE}/pictures/community/shanum-plogging-gate.webp`,
+    ],
+    curatorNote:
+      "서울대학교 사회적 책임 다문화 봉사 동아리 샤눔에서 진행한 활동이다. 지역 안에서 지속가능성과 돌봄을 함께 실천하는 방식에 더 가깝다.",
+    curatorNoteEn:
+      "This was organized through SHANUM, the multicultural volunteer society for social responsibility at Seoul National University. For me, it sits within a broader thread of local care, shared responsibility, and multicultural community work.",
+    source: "서울대학교 샤눔 다문화 봉사 활동",
+    sourceEn: "Volunteer at SHANUM Multicultural Society for Social Responsibility at Seoul National University",
   },
 ];
 
