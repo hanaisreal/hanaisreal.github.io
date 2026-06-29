@@ -171,12 +171,30 @@
   transition: filter 0.25s ease;
 }
 
+.collage-photo-star__badge {
+  position: absolute;
+  left: 0.4rem;
+  bottom: 0.4rem;
+  padding: 0.16rem 0.34rem;
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.58);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.34rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
 .collage-photo-star--card {
-  aspect-ratio: 0.78;
-  background: linear-gradient(160deg, rgba(246, 217, 205, 0.95), rgba(220, 204, 237, 0.94));
+  aspect-ratio: 1.56;
+  border-radius: 0;
+  background: linear-gradient(160deg, var(--card-bg-start, rgba(246, 217, 205, 0.95)), var(--card-bg-end, rgba(220, 204, 237, 0.94)));
   box-shadow:
-    0 0 10px 2px rgba(255, 255, 255, 0.24),
-    0 0 18px 4px rgba(var(--cluster-rgb, 255, 255, 255), 0.18);
+    0 0 8px 1px rgba(255, 255, 255, 0.18),
+    0 0 16px 3px rgba(var(--card-glow-rgb, 255, 255, 255), 0.22);
 }
 
 .collage-photo-star__card {
@@ -186,9 +204,9 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  padding: 0.55rem 0.45rem 0.5rem;
+  padding: 0.34rem 0.32rem 0.28rem;
   box-sizing: border-box;
-  color: rgba(52, 37, 49, 0.92);
+  color: var(--card-text, rgba(52, 37, 49, 0.92));
   text-align: left;
 }
 
@@ -200,16 +218,16 @@
 
 .collage-photo-star__card strong {
   font-family: 'Lora', serif;
-  font-size: 0.78rem;
+  font-size: 0.58rem;
   font-weight: 700;
 }
 
 .collage-photo-star__card span {
-  margin-top: 0.16rem;
+  margin-top: 0.12rem;
   font-family: 'Space Mono', monospace;
-  font-size: 0.36rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.28rem;
+  letter-spacing: 0.03em;
+  text-transform: none;
 }
 
 .collage-photo-star:hover {
@@ -696,6 +714,14 @@
   color: rgba(244, 236, 218, 0.92);
 }
 
+.collage-modal__source-label {
+  font-family: 'Lora', serif;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: rgba(226, 217, 201, 0.72);
+  margin: 0.1rem 0 0;
+}
+
 .collage-modal__text {
   display: grid;
   gap: 0.9rem;
@@ -705,4 +731,21 @@
 .collage-modal__desc {
   font-size: 0.98rem;
   line-height: 1.72;
+}
+
+.collage-modal__source {
+  margin: 0.1rem 0 0;
+}
+
+.collage-modal__source a {
+  font-family: 'Lora', serif;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: rgba(244, 236, 218, 0.92);
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+
+.collage-modal__source a:hover {
+  color: rgba(255, 246, 227, 1);
 }

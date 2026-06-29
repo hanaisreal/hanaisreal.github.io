@@ -96,11 +96,6 @@ const HeroSection: React.FC = () => (
             . I work at the intersection of <strong>HCI and AI</strong>, studying how AI systems
             can support continuity in human experience.
           </p>
-          <p>
-            I am increasingly interested in the{' '}
-            <strong>computational methods</strong> that enable AI to adapt meaningfully to
-            individual users at scale.
-          </p>
         </div>
 
         <div className="ongoing-copy" style={{ marginTop: '1.1rem' }}>

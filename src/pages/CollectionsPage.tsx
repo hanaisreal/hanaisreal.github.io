@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Masthead from '../newui/Masthead';
-import { collections, communityActivities, poetryProjects, type CollectionItem } from '../components/data/collectionsData';
+import {
+  collections,
+  communityActivities,
+  poetryProjects,
+  referenceProjects,
+  type CollectionItem,
+} from '../components/data/collectionsData';
 import '../newui/newPortfolio.css';
 import './CollectionsPage.css';
 
@@ -31,7 +37,7 @@ const ZOOM_FOCUS = { x: 84, y: 34 }; // dive toward the planet, where the ring p
 // out of view faster, instead of growing evenly in both directions.
 const FRAME_ORIGIN_Y = 18;
 
-type ClusterId = 'words' | 'poetry' | 'community';
+type ClusterId = 'words' | 'poetry' | 'community' | 'references';
 
 interface ClusterDef {
   id: ClusterId;
@@ -84,13 +90,25 @@ interface RandomUniverseLayout {
   wordStars: PhotoStar[];
   poetryStars: PhotoStar[];
   communityStars: PhotoStar[];
+  referenceStars: PhotoStar[];
   photoStars: PhotoStar[];
   keywordEntries: KeywordEntry[];
+}
+
+interface CardPalette {
+  start: string;
+  end: string;
+  text: string;
+  glowRgb: string;
 }
 
 function getItemImages(item: CollectionItem): string[] {
   if (item.gallery?.length) return item.gallery;
   return item.src ? [item.src] : [];
+}
+
+function getKeywordLabel(item: CollectionItem): string {
+  return item.keywordLabel ?? item.original;
 }
 
 function shuffleArray<T>(items: T[]): T[] {
@@ -107,6 +125,62 @@ function withPhaseOffset(orbit: OrbitLayout, offset: number): OrbitLayout {
     ...orbit,
     phase0: orbit.phase0 + offset,
   };
+}
+
+function buildReferenceOrbits(count: number): OrbitLayout[] {
+  const radii = [7.4, 10.2];
+  return Array.from({ length: count }, (_, index) => {
+    const bandIndex = index % radii.length;
+    const slot = Math.floor(index / radii.length);
+    const itemsInBand = Math.ceil((count - bandIndex) / radii.length);
+    const radiusX = radii[bandIndex]! + (slot % 2) * 0.35;
+    return {
+      phase0: (slot / itemsInBand) * Math.PI * 2 + bandIndex * 0.92,
+      radiusX,
+      radiusY: radiusX * 0.84,
+      width: 4.15 + bandIndex * 0.45,
+    };
+  });
+}
+
+function getCardPalette(item: CollectionItem): CardPalette {
+  switch (item.original) {
+    case 'Daemari Translation Archive':
+      return {
+        start: 'rgba(255, 162, 108, 0.96)',
+        end: 'rgba(232, 89, 93, 0.94)',
+        text: 'rgba(48, 12, 15, 0.96)',
+        glowRgb: '255, 128, 86',
+      };
+    case 'Douglas Engelbart':
+      return {
+        start: 'rgba(130, 226, 162, 0.96)',
+        end: 'rgba(56, 163, 110, 0.94)',
+        text: 'rgba(11, 54, 31, 0.96)',
+        glowRgb: '106, 214, 144',
+      };
+    case 'Alan Kay':
+      return {
+        start: 'rgba(116, 191, 255, 0.96)',
+        end: 'rgba(58, 107, 255, 0.94)',
+        text: 'rgba(12, 31, 78, 0.96)',
+        glowRgb: '88, 154, 255',
+      };
+    case 'Bret Victor':
+      return {
+        start: 'rgba(255, 194, 97, 0.97)',
+        end: 'rgba(255, 120, 69, 0.94)',
+        text: 'rgba(71, 26, 8, 0.96)',
+        glowRgb: '255, 155, 82',
+      };
+    default:
+      return {
+        start: 'rgba(246, 217, 205, 0.95)',
+        end: 'rgba(220, 204, 237, 0.94)',
+        text: 'rgba(52, 37, 49, 0.92)',
+        glowRgb: '223, 181, 227',
+      };
+  }
 }
 
 const SYSTEM_ORBIT = {
@@ -151,10 +225,22 @@ const COMMUNITY_CLUSTER: ClusterDef = {
   tintRgb: [98, 161, 152],
 };
 
+const REFERENCES_CLUSTER: ClusterDef = {
+  id: 'references',
+  label: 'Saved References',
+  note: 'works I return to',
+  systemPhase0: 5.08,
+  rotationDeg: 12,
+  angularSpeed: (2 * Math.PI) / 186,
+  haloSize: 22,
+  tintRgb: [162, 183, 214],
+};
+
 const CLUSTER_MAP: Record<ClusterId, ClusterDef> = {
   words: WORD_CLUSTER,
   poetry: POETRY_CLUSTER,
   community: COMMUNITY_CLUSTER,
+  references: REFERENCES_CLUSTER,
 };
 
 const CLUSTERS = Object.values(CLUSTER_MAP);
@@ -249,16 +335,19 @@ const SPARKLES = [
   ...buildClusterSparkles(WORD_CLUSTER, 22, 7, 24),
   ...buildClusterSparkles(POETRY_CLUSTER, 7, 6.5, 15.5),
   ...buildClusterSparkles(COMMUNITY_CLUSTER, 8, 6.5, 16.5),
+  ...buildClusterSparkles(REFERENCES_CLUSTER, 6, 5.8, 13.8),
 ];
 
 const WORD_ORBITS = buildWordOrbits(collections.length);
 const POETRY_ORBITS: OrbitLayout[] = [
-  { phase0: 2.14, radiusX: 8.4, radiusY: 6.9, width: 6.2 },
+  { phase0: 2.14, radiusX: 8.4, radiusY: 6.9, width: 4.85 },
 ];
 
 const COMMUNITY_ORBITS: OrbitLayout[] = [
   { phase0: 0.72, radiusX: 8.2, radiusY: 7.1, width: 4.25 },
 ];
+
+const REFERENCE_ORBITS = buildReferenceOrbits(referenceProjects.length);
 
 function createRandomUniverseLayout(): RandomUniverseLayout {
   const randomizedCollections = shuffleArray(collections);
@@ -283,7 +372,13 @@ function createRandomUniverseLayout(): RandomUniverseLayout {
     orbit: withPhaseOffset(COMMUNITY_ORBITS[index]!, Math.random() * Math.PI * 2),
   }));
 
-  const photoStars = [...wordStars, ...poetryStars, ...communityStars];
+  const referenceStars = referenceProjects.map((item, index) => ({
+    item,
+    clusterId: 'references' as const,
+    orbit: withPhaseOffset(REFERENCE_ORBITS[index]!, Math.random() * Math.PI * 2),
+  }));
+
+  const photoStars = [...wordStars, ...poetryStars, ...communityStars, ...referenceStars];
   const starIndexByOriginal = new Map(
     photoStars.map((star, index) => [star.item.original, index]),
   );
@@ -307,12 +402,19 @@ function createRandomUniverseLayout(): RandomUniverseLayout {
       analyticsId: communityActivities[0]?.original ?? 'SHANUM',
       analyticsName: communityActivities[0]?.korean ?? 'SHANUM',
     },
+    ...referenceProjects.map(item => ({
+      label: getKeywordLabel(item),
+      starIndex: starIndexByOriginal.get(item.original)!,
+      analyticsId: item.original,
+      analyticsName: item.korean,
+    })),
   ]);
 
   return {
     wordStars,
     poetryStars,
     communityStars,
+    referenceStars,
     photoStars,
     keywordEntries,
   };
@@ -326,22 +428,15 @@ const KEYWORD_ENTRIES = RANDOM_UNIVERSE.keywordEntries;
 // one copy of the copy, instead of keeping two in sync by hand.
 const INTRO_PARAGRAPHS: IntroParagraph[] = [
   {
-    content: `This is my worldbuilding project — one place for the words, images, books, and traces I wanted to keep close.`,
+    content: `This world building page keeps the words, projects, and references I return to.`,
   },
   {
-    content: `Daemari is a small poetry translation archive from July 2020, built around two poems from Jeong Choon-geun's Daemari, The Village of Landmine Flower.`,
-  },
-  {
-    content: `SHANUM is a community-care thread: local volunteering, multicultural connection, and a campus-and-Gwanaksan plogging day.`,
-  },
-  {
-    content: `The photos are pulled from Pinterest and collaged together by me, alongside a few of my own photos and drawings.`,
+    content: `For now, the main threads are Daemari, SHANUM, and a few saved references that continue to shape how I look at things.`,
   },
   {
     content: (
       <>
-        <span className="collage-intro__spark">Scroll</span> or{' '}
-        <span className="collage-intro__spark">zoom</span> inward to follow the drifting clusters. Click any word in the margins if you want one star to open.
+        <span className="collage-intro__spark">Zoom</span> inward or click a word on the right to open one star at a time.
       </>
     ),
     tone: 'cta',
@@ -518,6 +613,11 @@ const CollectionsPage: React.FC = () => {
 
   const selectedImages = selected ? getItemImages(selected) : [];
   const activeImage = selectedImages[selectedGalleryIndex] ?? selectedImages[0];
+  const selectedSource = selected
+    ? (lang === 'en' && selected.sourceEn
+        ? selected.sourceEn
+        : selected.source ?? '')
+    : '';
   const selectedMeta = selected
     ? (lang === 'en' && selected.metaEn
         ? selected.metaEn
@@ -534,6 +634,22 @@ const CollectionsPage: React.FC = () => {
         lang === 'en' ? selected.curatorNoteEn : selected.curatorNote,
       ].filter((block): block is string => Boolean(block))
     : [];
+  const selectedHref = selected?.href ?? '';
+
+  const getCardTitle = (item: CollectionItem) => {
+    if (item.kind === 'poetry') return 'Daemari';
+    if (item.kind === 'reference') return getKeywordLabel(item);
+    return item.original;
+  };
+
+  const getCardSubtitle = (item: CollectionItem) => {
+    if (lang === 'en' && item.cardLabelEn) return item.cardLabelEn;
+    if (lang === 'ko' && item.cardLabel) return item.cardLabel;
+    if (item.kind === 'poetry') return 'translation archive';
+    if (item.kind === 'reference') return 'saved reference';
+    if (item.kind === 'activity') return 'community thread';
+    return item.language;
+  };
 
   const showPreviousImage = () => {
     if (selectedImages.length < 2) return;
@@ -895,10 +1011,11 @@ const CollectionsPage: React.FC = () => {
               );
             })}
 
-            {/* Photo-based clusters: words and SHANUM community activity. */}
+            {/* Floating stars across the saved word/project/reference clusters. */}
             {PHOTO_STARS.map(({ item, clusterId, orbit }, i) => {
               const cluster = CLUSTER_MAP[clusterId];
-              const isPastelCard = item.kind === 'poetry' && !item.src;
+              const isPastelCard = !item.src;
+              const cardPalette = isPastelCard ? getCardPalette(item) : null;
               return (
                 <button
                   key={item.original}
@@ -912,16 +1029,31 @@ const CollectionsPage: React.FC = () => {
                   style={{
                     ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
                     width: `${orbit.width}%`,
+                    ...(cardPalette
+                      ? {
+                          ['--card-bg-start' as string]: cardPalette.start,
+                          ['--card-bg-end' as string]: cardPalette.end,
+                          ['--card-text' as string]: cardPalette.text,
+                          ['--card-glow-rgb' as string]: cardPalette.glowRgb,
+                        }
+                      : {}),
                   }}
                   onClick={() => focusThenOpen(i)}
                   aria-label={item.original}
                 >
                   {item.src ? (
-                    <img src={item.src} alt="" draggable={false} loading="lazy" decoding="async" />
+                    <>
+                      <img src={item.src} alt="" draggable={false} loading="lazy" decoding="async" />
+                      {item.kind === 'reference' && (
+                        <span className="collage-photo-star__badge" aria-hidden="true">
+                          Ori Ease · screenshot
+                        </span>
+                      )}
+                    </>
                   ) : (
                     <span className="collage-photo-star__card" aria-hidden="true">
-                      <strong>Daemari</strong>
-                      <span>translation archive</span>
+                      <strong>{getCardTitle(item)}</strong>
+                      <span>{getCardSubtitle(item)}</span>
                     </span>
                   )}
                 </button>
@@ -998,7 +1130,7 @@ const CollectionsPage: React.FC = () => {
         ))}
       </aside>
       <nav className="collage-keywords collage-keywords--right" aria-label="Word index">
-        <p className="collage-keywords__title">Collections</p>
+        <p className="collage-keywords__title">World Building</p>
         {KEYWORD_ENTRIES.map(({ label, starIndex, analyticsId, analyticsName }, i, arr) => (
           <React.Fragment key={`${label}-${starIndex}`}>
             <button
@@ -1087,6 +1219,7 @@ const CollectionsPage: React.FC = () => {
               <h2 className="collage-modal__original">{selected.original}</h2>
               {selectedMeta && <p className="collage-modal__meta">{selectedMeta}</p>}
               {selectedGlance && <p className="collage-modal__glance">{selectedGlance}</p>}
+              {selectedSource && <p className="collage-modal__source-label">{selectedSource}</p>}
               <div className="collage-modal__text">
                 {selectedTextBlocks.map((block, index) => (
                   <p key={`${selected.original}-text-${index}`} className="collage-modal__desc">
@@ -1094,6 +1227,13 @@ const CollectionsPage: React.FC = () => {
                   </p>
                 ))}
               </div>
+              {selectedHref && (
+                <p className="collage-modal__source">
+                  <a href={selectedHref} target="_blank" rel="noopener noreferrer">
+                    {selected.kind === 'reference' ? 'Open source' : 'Visit link'}
+                  </a>
+                </p>
+              )}
             </div>
           </div>
         </div>
