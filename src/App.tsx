@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { pickBackground, BackgroundItem } from './components/data/backgroundsData';
 import AnalyticsTracker from './AnalyticsTracker';
+import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
 import ResearchPage from './pages/ResearchPage';
 import CollectionsPage from './pages/CollectionsPage';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   return (
     <>
       <AnalyticsTracker />
+      <SeoHead />
       <div
         id="site-bg"
         className={`${bgLoaded ? 'is-loaded' : ''} ${isCollections ? 'site-bg--blurred' : ''}`}

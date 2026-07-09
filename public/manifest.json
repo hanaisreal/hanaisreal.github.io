@@ -1,6 +1,6 @@
 {
   "short_name": "Hana Oh",
-  "name": "portfolio website",
+  "name": "Hana Oh | HCI and AI Research",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +21,6 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Portfolio of Hana Oh, an HCI and AI researcher at Seoul National University."
 }

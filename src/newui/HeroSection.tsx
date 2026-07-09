@@ -78,6 +78,12 @@ const HeroSection: React.FC = () => (
       </div>
 
       <div className="profile__right">
+        <p className="profile__eyebrow">Human-Computer Interaction · AI Research</p>
+        <h1 className="profile__name">Hana Oh</h1>
+        <p className="profile__affil">
+          M.S. Student at Seoul National University working on human-AI interaction,
+          educational AI, and interactive systems
+        </p>
         <div className="bio">
           <p>
             I am an HCI researcher and M.S. student at Seoul National University, advised by{' '}
