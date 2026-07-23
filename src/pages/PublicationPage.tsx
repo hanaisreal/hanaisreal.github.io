@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
-import { getPublicationBySlug, publications } from '../components/data/publicationsData';
+import {
+  getPublicationBySlug,
+  getPublicationStatusLine,
+  publications,
+  type PublicationStoryBlock,
+} from '../components/data/publicationsData';
 import '../newui/newPortfolio.css';
 
 function formatAuthors(authors: string, coFirst?: string[]) {
@@ -17,6 +22,52 @@ function formatAuthors(authors: string, coFirst?: string[]) {
       </span>
     );
   });
+}
+
+function renderStoryBlock(block: PublicationStoryBlock, index: number) {
+  if (block.type === 'paragraph') {
+    return <p key={index}>{block.text}</p>;
+  }
+
+  if (block.type === 'figure') {
+    return (
+      <figure
+        key={index}
+        className={`pub-page__figure${block.figure.variant === 'narrow' ? ' pub-page__figure--narrow' : ''}`}
+      >
+        <img
+          src={block.figure.src}
+          alt={block.figure.alt}
+          className="pub-page__story-img"
+          loading="lazy"
+        />
+        {block.figure.caption && (
+          <figcaption className="pub-page__figcaption">{block.figure.caption}</figcaption>
+        )}
+      </figure>
+    );
+  }
+
+  return (
+    <div key={index} className="pub-page__figure-row">
+      {block.figures.map((figure, figureIndex) => (
+        <figure
+          key={`${index}-${figureIndex}`}
+          className={`pub-page__figure${figure.variant === 'narrow' ? ' pub-page__figure--narrow' : ''}`}
+        >
+          <img
+            src={figure.src}
+            alt={figure.alt}
+            className="pub-page__story-img"
+            loading="lazy"
+          />
+          {figure.caption && (
+            <figcaption className="pub-page__figcaption">{figure.caption}</figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  );
 }
 
 const PublicationPage: React.FC = () => {
@@ -48,14 +99,11 @@ const PublicationPage: React.FC = () => {
         </Link>
 
         <header className="pub-page__header" data-analytics-section="publication_header">
-          <div className="pub-page__meta">
-            <span className="essay-tag">{pub.venue}</span>
-            {pub.bestPaper && <span className="pub__best-paper">★ Best Paper</span>}
-            {pub.status === 'Under Review' && (
-              <span className="pub__status">{pub.status}</span>
-            )}
-          </div>
           <h1 className="pub-page__title">{pub.title}</h1>
+          <p className="pub-page__status-line">
+            {getPublicationStatusLine(pub)}
+            {pub.bestPaper ? ' · Best Paper' : ''}
+          </p>
           <p className="pub-page__authors">
             {formatAuthors(pub.authors, pub.coFirstAuthors)}
           </p>
@@ -88,16 +136,25 @@ const PublicationPage: React.FC = () => {
         <hr className="sec-rule" />
 
         {pub.insight && (
-          <p className="pub-page__insight">{pub.insight}</p>
+          <div className="pub-page__question-block">
+            <p className="pub-page__question-label">Research Question</p>
+            <p className="pub-page__question">{pub.insight}</p>
+          </div>
         )}
 
-        <div className="pub-page__narrative" data-analytics-section="publication_narrative">
-          {pub.narrative.split('\n\n').map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
-        </div>
+        {pub.storyBlocks ? (
+          <div className="pub-page__story" data-analytics-section="publication_narrative">
+            {pub.storyBlocks.map((block, index) => renderStoryBlock(block, index))}
+          </div>
+        ) : (
+          <div className="pub-page__narrative" data-analytics-section="publication_narrative">
+            {pub.narrative.split('\n\n').map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
+        )}
 
-        {pub.contributions.length > 0 && (
+        {!pub.storyBlocks && pub.contributions.length > 0 && (
           <section className="pub-page__contributions" data-analytics-section="publication_contributions">
             <h2 className="sec-heading">Contributions</h2>
             <ul className="pub-page__contrib-list">

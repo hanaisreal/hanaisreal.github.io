@@ -29,7 +29,10 @@ const App: React.FC = () => {
       <SeoHead />
       <div
         id="site-bg"
-        className={`${bgLoaded ? 'is-loaded' : ''} ${isCollections ? 'site-bg--blurred' : ''}`}
+        className={[
+          bgLoaded ? 'is-loaded' : '',
+          isCollections ? 'site-bg--blurred' : '',
+        ].join(' ').trim()}
         style={{ backgroundImage: `url('/pictures/backgrounds/${bg.file}')` }}
       />
       <Routes>
