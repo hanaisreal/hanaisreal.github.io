@@ -2,10 +2,6 @@ import React from 'react';
 
 const newsItems = [
   {
-    date: 'May 2026',
-    text: <>Submitted one paper to <span className="news-item__venue">UIST 2026</span>.</>,
-  },
-  {
     date: 'Jan 2026',
     text: (
       <>

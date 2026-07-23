@@ -3,6 +3,7 @@ const BASE = process.env.PUBLIC_URL;
 export interface PublicationLink {
   label: string;
   url: string;
+  download?: string;
 }
 
 export interface PublicationFigure {
@@ -153,6 +154,67 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
       "Longitudinal classroom deployment study of LLM writing support across real K-12 EFL lessons",
       "Taxonomy of student responses to AI scaffold failure",
       "Analysis of how reliance patterns differ from what surface-level engagement metrics suggest",
+    ],
+    links: [
+      {
+        label: "Read Paper",
+        url: `${BASE}/papers/when-scaffolding-breaks.pdf`,
+      },
+      {
+        label: "Download PDF",
+        url: `${BASE}/papers/when-scaffolding-breaks.pdf`,
+        download: "when-scaffolding-breaks.pdf",
+      },
+      {
+        label: "DOI",
+        url: "https://doi.org/10.1145/3772318.3791517",
+      },
+    ],
+    image: `${BASE}/pictures/publications/when-scaffolding-breaks/writeaid-system.png`,
+    storyBlocks: [
+      {
+        type: 'paragraph',
+        text: `LLM writing tools are often evaluated as if every learner has unlimited time and can work independently. Real classrooms are different: a teacher is supporting many students at once, proficiency levels vary widely, and every writing activity must fit within a short lesson. We studied what AI scaffolding looks like under those constraints by deploying WriteAid with 157 eighth-grade students in a South Korean middle school over six weeks.`,
+      },
+      {
+        type: 'figure',
+        figure: {
+          src: `${BASE}/pictures/publications/when-scaffolding-breaks/writeaid-system.png`,
+          alt: 'The WriteAid classroom interface, divided into learning objectives, an essay-writing area, and an AI support area with task-specific tabs.',
+          caption: 'WriteAid shows lesson objectives (A), the student essay workspace (B), and task-specific AI writing support (C) in one classroom interface.',
+          variant: 'full',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `WriteAid was co-designed with a middle school English teacher. Instead of presenting students with one open-ended chatbot, the interface separates support into familiar, task-specific tabs: a sample essay, collaborative sentence construction, vocabulary and grammar explanations, and grammar checking. This structure lowered the barrier for students with little prior experience using conversational AI while keeping their writing and the lesson requirements visible.`,
+      },
+      {
+        type: 'figure',
+        figure: {
+          src: `${BASE}/pictures/publications/when-scaffolding-breaks/scaffolding-strategies.png`,
+          alt: 'A stacked bar chart comparing the proportions of scaffolding strategies used for grammar revision, sentence construction, and vocabulary or grammar questions.',
+          caption: 'The mix of scaffolding strategies varied by task. Instructing and questioning were common across features, while sentence construction used more feedback and grammar explanations relied more heavily on explaining.',
+          variant: 'full',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `Across the deployment, students exchanged 14,863 messages with the system. Sentence construction accounted for most use, but engagement differed by proficiency. High-performing students tended to resolve questions in fewer turns and moved into grammar revision earlier. Middle- and lower-performing students made more iterative revision requests and were more likely to follow the system's step-by-step guidance without independently evaluating it.`,
+      },
+      {
+        type: 'figure',
+        figure: {
+          src: `${BASE}/pictures/publications/when-scaffolding-breaks/student-interaction-patterns.png`,
+          alt: 'Example WriteAid conversations from high-, middle-, and low-performing students showing different responses to AI writing support.',
+          caption: 'Examples from classroom interaction logs show how proficiency shaped the dialogue: efficient clarification, uncritical acceptance of feedback, and frustration with step-by-step support.',
+          variant: 'full',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `The same scaffold could therefore function as a learning aid for one student and a source of dependency or frustration for another. WriteAid helped more students complete their assignments, but it also made some struggles less visible to the teacher and changed how attention was distributed in the room. These findings point toward adaptive scaffolding that considers proficiency, monitors over-reliance, and keeps teachers aware of when students need human support.`,
+      },
     ],
   },
 ];

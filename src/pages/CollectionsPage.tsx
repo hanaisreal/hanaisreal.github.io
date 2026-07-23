@@ -422,21 +422,13 @@ function createRandomUniverseLayout(): RandomUniverseLayout {
 
 const RANDOM_UNIVERSE = createRandomUniverseLayout();
 const PHOTO_STARS = RANDOM_UNIVERSE.photoStars;
-const KEYWORD_ENTRIES = RANDOM_UNIVERSE.keywordEntries;
 
-// Shared between the desktop margin and the mobile section below the fold —
-// one copy of the copy, instead of keeping two in sync by hand.
+// One concise cue shared by the desktop margin and mobile layout.
 const INTRO_PARAGRAPHS: IntroParagraph[] = [
-  {
-    content: `This world building page keeps the words, projects, and references I return to.`,
-  },
-  {
-    content: `For now, the main threads are Daemari, SHANUM, and a few saved references that continue to shape how I look at things.`,
-  },
   {
     content: (
       <>
-        <span className="collage-intro__spark">Zoom</span> inward or click a word on the right to open one star at a time.
+        <span className="collage-intro__spark">Scroll</span> to zoom in. Click a star to explore.
       </>
     ),
     tone: 'cta',
@@ -894,7 +886,7 @@ const CollectionsPage: React.FC = () => {
   // edges instead, with the page's own blurred backdrop showing through there.
   const frameScale = (() => {
     if (typeof window === 'undefined') return 1;
-    const portraitWidthPx = window.innerHeight * IMG_ASPECT;
+    const portraitWidthPx = portraitRef.current?.offsetWidth ?? window.innerHeight * IMG_ASPECT;
     const innerMaxScale = 1.3; // inner lean's max, at progress 1 (1 + 0.3 * progress)
     const bgBaseScale = 1.06; // baked into .collage-bg's own transform
     const maxUpscaleFrameScale =
@@ -905,6 +897,9 @@ const CollectionsPage: React.FC = () => {
     );
     return 1 + (Math.max(1, maxFrameScale) - 1) * progress;
   })();
+  // The frame belongs only to the resting gallery view. Fade it immediately
+  // during the first part of the zoom so the universe can return edge-to-edge.
+  const frameVisibility = Math.max(0, 1 - progress * 6);
   // Peaks mid-warp and resolves clean at both ends — the "space-time"
   // distortion cue while everything is rushing past.
   const warpFilter = warping
@@ -925,7 +920,11 @@ const CollectionsPage: React.FC = () => {
           style={{
             transform: `scale(${frameScale})`,
             transformOrigin: `50% ${FRAME_ORIGIN_Y}%`,
-            transition: warping ? 'none' : 'transform 0.08s ease-out',
+            boxShadow: `
+              0 0 0 7px rgba(250, 247, 242, ${0.92 * frameVisibility}),
+              0 20px 48px rgba(13, 8, 6, ${0.32 * frameVisibility})
+            `,
+            transition: warping ? 'none' : 'transform 0.08s ease-out, box-shadow 0.08s linear',
           }}
         >
           {/* Inner layer — just a slight lean toward ZOOM_FOCUS. The dramatic "fill the
@@ -982,12 +981,16 @@ const CollectionsPage: React.FC = () => {
                     ['--cluster-rgb' as string]: cluster.tintRgb.join(', '),
                   }}
                 >
-                  <span className="collage-cluster__halo" />
-                  <span className="collage-cluster__anchor" />
-                  <span className="collage-cluster__label">
-                    <strong>{cluster.label}</strong>
-                    <span>{cluster.note}</span>
-                  </span>
+                  {cluster.id !== 'words' && (
+                    <>
+                      <span className="collage-cluster__halo" />
+                      <span className="collage-cluster__anchor" />
+                      <span className="collage-cluster__label">
+                        <strong>{cluster.label}</strong>
+                        <span>{cluster.note}</span>
+                      </span>
+                    </>
+                  )}
                 </div>
               );
             })}
@@ -1120,58 +1123,17 @@ const CollectionsPage: React.FC = () => {
         <img ref={morphImgRef} alt="" draggable={false} decoding="async" />
       </div>
 
-      {/* Keyword index in the margins outside the frame — run together like
-          running prose, words joined by middots, no chip/box around them.
-          Clicking one pulses its bubble out in the ring (same index as
-          photoRefs) before the card opens, so it reads as "that lit up". */}
-      <aside className="collage-keywords collage-keywords--left collage-keywords--intro" aria-label="Worldbuilding note">
+      <aside className="collage-keywords collage-keywords--left collage-keywords--intro" aria-label="Exploration instructions">
         {INTRO_PARAGRAPHS.map(({ content, tone }, i) => (
           <p className={`collage-intro${tone === 'cta' ? ' collage-intro--cta' : ''}`} key={i}>{content}</p>
         ))}
       </aside>
-      <nav className="collage-keywords collage-keywords--right" aria-label="Word index">
-        <p className="collage-keywords__title">World Building</p>
-        {KEYWORD_ENTRIES.map(({ label, starIndex, analyticsId, analyticsName }, i, arr) => (
-          <React.Fragment key={`${label}-${starIndex}`}>
-            <button
-              className="collage-keyword"
-              onClick={() => focusThenOpen(starIndex)}
-              data-analytics-event="collection_item_open"
-              data-analytics-item-id={analyticsId}
-              data-analytics-item-name={analyticsName}
-              data-analytics-placement="right_keywords"
-            >
-              {label}
-            </button>
-            {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
-          </React.Fragment>
-        ))}
-      </nav>
 
-      {/* Mobile only — the side margins don't exist on a narrow screen, so this
-          repeats the same explanation as a normal page section below the
-          hero, reached by scrolling down instead of off to the side. */}
+      {/* Mobile only — repeat the single exploration cue below the artwork. */}
       <section className="collage-mobile-intro" data-analytics-section="collections_mobile_intro">
         {INTRO_PARAGRAPHS.map(({ content, tone }, i) => (
           <p className={tone === 'cta' ? 'collage-mobile-intro__cta' : undefined} key={i}>{content}</p>
         ))}
-        <p className="collage-mobile-intro__words">
-          {KEYWORD_ENTRIES.map(({ label, starIndex, analyticsId, analyticsName }, i, arr) => (
-            <React.Fragment key={`${label}-${starIndex}`}>
-              <button
-                className="collage-keyword"
-                onClick={() => focusThenOpen(starIndex)}
-                data-analytics-event="collection_item_open"
-                data-analytics-item-id={analyticsId}
-                data-analytics-item-name={analyticsName}
-                data-analytics-placement="mobile_keywords"
-              >
-                {label}
-              </button>
-              {i < arr.length - 1 && <span className="collage-keyword-sep"> · </span>}
-            </React.Fragment>
-          ))}
-        </p>
       </section>
 
       {selected && (

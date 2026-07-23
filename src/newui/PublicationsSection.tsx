@@ -102,10 +102,7 @@ const PublicationsSection: React.FC<PublicationsSectionProps> = ({ onOpen }) => 
                     <img
                       src={image.src}
                       alt={image.alt}
-                      className={[
-                        'publication-note__image',
-                        pub.slug === 'deepaware' ? 'publication-note__image--contain' : '',
-                      ].join(' ').trim()}
+                      className="publication-note__image"
                       loading="lazy"
                     />
                   </figure>

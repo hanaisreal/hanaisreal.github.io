@@ -5,6 +5,25 @@ export interface ProjectLink {
   url: string;
 }
 
+export interface ProjectFigure {
+  src: string;
+  alt: string;
+  caption?: string;
+  variant?: 'full' | 'narrow';
+}
+
+export interface ProjectVideo {
+  src: string;
+  poster?: string;
+  caption?: string;
+}
+
+export type ProjectStoryBlock =
+  | { type: 'paragraph'; text: string }
+  | { type: 'figure'; figure: ProjectFigure }
+  | { type: 'figure-row'; figures: ProjectFigure[] }
+  | { type: 'video'; video: ProjectVideo };
+
 export interface Project {
   slug: string;
   title: string;
@@ -16,9 +35,69 @@ export interface Project {
   duration?: string;
   image?: string;
   links?: ProjectLink[];
+  storyBlocks?: ProjectStoryBlock[];
 }
 
 export const projects: Project[] = [
+  {
+    slug: "paranmanjang",
+    title: "Paranmanjang: Bookmark-Grounded Writing Recommender",
+    tldr: "A bookmark-grounded writing tool that vectorized saved links and surfaced relevant summaries while I was drafting.",
+    description: "Writing companion that turned bookmarked links into a retrievable knowledge base for contextual recommendations.",
+    narrative: `Before personal AI writing tools made this pattern familiar, I worked on Paranmanjang, a writing companion that treated bookmarked links as a living reference library instead of a pile of tabs. The goal was simple: when I was writing, the system should bring back the most relevant things I had already saved instead of making me search for them again.
+
+When a link was saved, the backend crawled the page body, generated a short summary, stored metadata in MySQL, and pushed embeddings into Pinecone. During writing, the system extracted keywords from the current text, embedded that context, and retrieved related bookmarks so the editor could recommend useful material beside the draft.
+
+What interested me most was workflow fit. Retrieval only helps if it arrives at the right moment, with just enough context to nudge the writer forward without interrupting the act of writing itself. Paranmanjang explored that balance through a bookmark browser, a recommendation sidebar, and a Google Docs-connected writing flow.`,
+    contributions: [
+      "Built the writing editor flow and recommendation surfaces that placed retrieved bookmark summaries beside the active draft",
+      "Developed bookmark browsing interfaces that turned saved links into readable cards with summaries and source metadata",
+      "Integrated the frontend with bookmark ingestion and recommendation endpoints across the FastAPI, Pinecone, and MySQL pipeline",
+    ],
+    tags: ["Side Project", "RAG", "Writing Tools"],
+    duration: "2023",
+    image: `${BASE}/pictures/projects/paranmanjang/paranmanjang-backlogic.png`,
+    links: [
+      { label: "GitHub", url: "https://github.com/Paranmanjang/Frontend" },
+    ],
+    storyBlocks: [
+      {
+        type: 'paragraph',
+        text: `Paranmanjang was a 2023 writing-side project built around a question that still matters to me: how can saved references become useful at the exact moment someone is writing? Instead of treating bookmarks as an archive to revisit later, the system reframed them as a personal knowledge base that could actively support drafting.`,
+      },
+      {
+        type: 'figure',
+        figure: {
+          src: `${BASE}/pictures/projects/paranmanjang/paranmanjang-backlogic.png`,
+          alt: 'Diagram of the bookmark ingestion and recommendation logic behind Paranmanjang.',
+          caption: 'A saved link was crawled, summarized, embedded, and stored so the writing interface could retrieve related bookmarks from the user\'s own library.',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `The backend pipeline took a bookmarked URL, extracted the article body, summarized it, and stored both the structured bookmark data and its vector representation. When the user wrote inside the editor, the system derived keywords from the current draft, embedded that live context, and returned the most relevant saved links as recommendations. The result felt closer to a personal research assistant than a generic autocomplete tool.`,
+      },
+      {
+        type: 'figure-row',
+        figures: [
+          {
+            src: `${BASE}/pictures/projects/paranmanjang/paranmanjang-back.png`,
+            alt: 'Overall backend architecture diagram for Paranmanjang.',
+            caption: 'The service architecture connected FastAPI, MySQL, and Pinecone on Naver Cloud infrastructure.',
+          },
+          {
+            src: `${BASE}/pictures/projects/paranmanjang/paranmanjang-cicd.png`,
+            alt: 'CI/CD deployment architecture diagram for Paranmanjang.',
+            caption: 'A GitHub Actions pipeline built and shipped container images to Naver Cloud for deployment.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        text: `Looking back, what feels most prescient about the project is that it anticipated a now-common RAG pattern: ground assistance in a user's own collected material rather than generating from nowhere. What I cared about then, and still care about now, was making retrieval feel genuinely situated inside a person's workflow.`,
+      },
+    ],
+  },
   {
     slug: "livrecord",
     title: "Reflective Autobiographical System",
@@ -36,9 +115,31 @@ Built over four months with a small team, the system won the Grand Prize at the 
     ],
     tags: ["HCI", "Voice Interaction", "Older Adults"],
     duration: "Feb 2024 – Jun 2024",
-    image: undefined,
+    image: `${BASE}/pictures/SPARCS.png`,
     links: [
       { label: "Demo", url: `${BASE}/videos/LivRecord.mp4` },
+    ],
+    storyBlocks: [
+      {
+        type: 'paragraph',
+        text: `Older adults carry stories that often go untold, not from unwillingness, but from the friction of writing. LivRecord removes that friction by making voice the primary input: users respond to autobiographical prompts out loud, the system transcribes those memories, and a narrative gradually takes shape that they can revisit and share.`,
+      },
+      {
+        type: 'video',
+        video: {
+          src: `${BASE}/videos/LivRecord.mp4`,
+          poster: `${BASE}/pictures/SPARCS.png`,
+          caption: 'Demo of the Reflective Autobiographical System, showing how spoken memories are scaffolded into a reflective narrative flow.',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `The core design challenge was making the prompts feel like conversation rather than interview. Each question follows naturally from the previous response, and the system listens for themes the user may want to return to later. The interaction is meant to feel less like filling in a form and more like talking with someone who remembers everything you said.`,
+      },
+      {
+        type: 'paragraph',
+        text: `Built over four months with a small team, the system won the Grand Prize at the KAIST Social Impact Challenge. What mattered most in the project was not just speech recognition or synthesis, but the pacing of reflection itself: how to help someone stay in their own memory long enough for a story to emerge.`,
+      },
     ],
   },
   {

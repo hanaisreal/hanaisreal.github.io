@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Masthead from '../newui/Masthead';
 import {
   getPublicationBySlug,
@@ -8,6 +9,9 @@ import {
   type PublicationStoryBlock,
 } from '../components/data/publicationsData';
 import '../newui/newPortfolio.css';
+
+const RETURN_HOLD_MS = 700;
+const RETURN_TRANSITION_MS = 620;
 
 function formatAuthors(authors: string, coFirst?: string[]) {
   return authors.split(', ').map((name, i, arr) => {
@@ -73,9 +77,50 @@ function renderStoryBlock(block: PublicationStoryBlock, index: number) {
 const PublicationPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
   const pub = getPublicationBySlug(slug || '');
+  const returnSentinelRef = React.useRef<HTMLDivElement | null>(null);
+  const [returning, setReturning] = React.useState(false);
 
-  React.useEffect(() => { window.scrollTo(0, 0); }, [slug]);
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+    setReturning(false);
+  }, [slug]);
+
+  React.useEffect(() => {
+    const sentinel = returnSentinelRef.current;
+    if (!sentinel) return;
+
+    let holdTimer: number | undefined;
+    let navigateTimer: number | undefined;
+    let hasStarted = false;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (hasStarted) return;
+
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.95) {
+        holdTimer = window.setTimeout(() => {
+          hasStarted = true;
+          setReturning(true);
+          navigateTimer = window.setTimeout(
+            () => navigate('/research'),
+            reduceMotion ? 0 : RETURN_TRANSITION_MS
+          );
+        }, RETURN_HOLD_MS);
+      } else if (holdTimer) {
+        window.clearTimeout(holdTimer);
+        holdTimer = undefined;
+      }
+    }, { threshold: [0.95, 1] });
+
+    observer.observe(sentinel);
+
+    return () => {
+      observer.disconnect();
+      if (holdTimer) window.clearTimeout(holdTimer);
+      if (navigateTimer) window.clearTimeout(navigateTimer);
+    };
+  }, [navigate, reduceMotion, slug]);
 
   if (!pub) {
     navigate('/research');
@@ -87,7 +132,7 @@ const PublicationPage: React.FC = () => {
   return (
     <div>
       <Masthead />
-      <div className="page">
+      <div className="page page--publication">
         <Link
           to="/research"
           className="essay-post__back"
@@ -117,8 +162,9 @@ const PublicationPage: React.FC = () => {
                   key={l.label}
                   href={l.url}
                   className="pub-page__ext-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={l.download ? undefined : '_blank'}
+                  rel={l.download ? undefined : 'noopener noreferrer'}
+                  download={l.download}
                   data-analytics-event="external_link_click"
                   data-analytics-label={l.label}
                   data-analytics-destination={l.url}
@@ -126,7 +172,7 @@ const PublicationPage: React.FC = () => {
                   data-analytics-item-name={pub.title}
                   data-analytics-placement="publication_detail"
                 >
-                  {l.label} ↗
+                  {l.label}{l.download ? ' ↓' : ' ↗'}
                 </a>
               ))}
             </div>
@@ -134,13 +180,6 @@ const PublicationPage: React.FC = () => {
         </header>
 
         <hr className="sec-rule" />
-
-        {pub.insight && (
-          <div className="pub-page__question-block">
-            <p className="pub-page__question-label">Research Question</p>
-            <p className="pub-page__question">{pub.insight}</p>
-          </div>
-        )}
 
         {pub.storyBlocks ? (
           <div className="pub-page__story" data-analytics-section="publication_narrative">
@@ -208,7 +247,37 @@ const PublicationPage: React.FC = () => {
             ← Back to Research
           </Link>
         </div>
+
+        <div
+          ref={returnSentinelRef}
+          className="pub-page__return-sentinel"
+          aria-live="polite"
+        >
+          <span>End of paper</span>
+          <strong>{returning ? 'Returning to Research…' : 'Back to Research'}</strong>
+        </div>
       </div>
+      <AnimatePresence>
+        {returning && (
+          <motion.div
+            className="publication-return-transition"
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.div
+              className="publication-return-transition__label"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <span>Returning to</span>
+              <strong>Research</strong>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <footer className="site-footer">
         <span>Hana Oh</span>
         <span>© {new Date().getFullYear()}</span>
