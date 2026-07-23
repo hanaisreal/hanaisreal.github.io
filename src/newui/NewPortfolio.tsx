@@ -22,9 +22,9 @@ const NewPortfolio: React.FC<Props> = ({ bg }) => {
   const [splashDone, setSplashDone] = useState(splashAlreadyShown);
   const [surface, setSurface] = useState<HomeSurface>(() => {
     try {
-      return window.localStorage.getItem(HOME_SURFACE_KEY) === 'paper' ? 'paper' : 'photo';
+      return window.localStorage.getItem(HOME_SURFACE_KEY) === 'photo' ? 'photo' : 'paper';
     } catch {
-      return 'photo';
+      return 'paper';
     }
   });
 
