@@ -8,8 +8,8 @@ const HeroSection: React.FC = () => (
     <div className="profile">
       <div className="profile__left">
         <img
-          className="profile__img"
-          src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`}
+          className="profile__img profile__img--beach"
+          src={`${process.env.PUBLIC_URL}/pictures/profile-beach.jpg`}
           alt="Hana Oh"
           onLoad={e => (e.currentTarget as HTMLImageElement).classList.add('is-loaded')}
         />
@@ -65,25 +65,13 @@ const HeroSection: React.FC = () => (
             <HiDocumentText />
           </a>
         </div>
-        <a
-          className="profile__email-text"
-          href="mailto:hana2001@snu.ac.kr"
-          data-analytics-event="contact_click"
-          data-analytics-label="Email text"
-          data-analytics-destination="mailto:hana2001@snu.ac.kr"
-          data-analytics-placement="hero"
-        >
-          hana2001@snu.ac.kr
-        </a>
+        <span className="profile__email-text">
+          hana2001 [at] snu [dot] ac [dot] kr
+        </span>
       </div>
 
       <div className="profile__right">
-        <p className="profile__eyebrow">Human-Computer Interaction · AI Research</p>
         <h1 className="profile__name">Hana Oh</h1>
-        <p className="profile__affil">
-          M.S. Student at Seoul National University working on human-AI interaction,
-          educational AI, and interactive systems
-        </p>
         <div className="bio">
           <p>
             I am an HCI researcher and M.S. student at Seoul National University, advised by{' '}

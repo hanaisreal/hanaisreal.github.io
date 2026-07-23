@@ -1,6 +1,8 @@
 /* ── CollectionsPage: Collage Layout ── */
 
 .collage-page {
+  --collage-header-height: 2.75rem;
+  --collage-panel-gap: 2rem;
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -8,22 +10,28 @@
 
 .collage-main {
   position: absolute;
-  inset: 0;
+  inset:
+    calc(var(--collage-header-height) + var(--collage-panel-gap))
+    0
+    var(--collage-panel-gap);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
 }
 
-/* height: 100vh, width fixed to the image's own aspect ratio — never grows with viewport width */
+/* The universe sits below the masthead as a warm, paper-framed portrait. */
 .collage-portrait {
   position: relative;
-  height: 100vh;
-  width: calc(100vh * 1596 / 2683);
+  height: 100%;
+  max-height: calc((100vw - 2rem) * 2683 / 1596);
+  width: auto;
   aspect-ratio: 1596 / 2683;
   overflow: hidden;
   border-radius: 0;
-  box-shadow: none;
+  box-shadow:
+    0 0 0 7px rgba(250, 247, 242, 0.92),
+    0 20px 48px rgba(13, 8, 6, 0.32);
   flex-shrink: 0;
 }
 
@@ -496,7 +504,8 @@
   .collage-main {
     position: relative;
     inset: auto;
-    height: 100vh;
+    height: calc(100svh - var(--collage-header-height) - 2.5rem);
+    margin: 1.25rem 0;
   }
 
   .collage-mobile-intro {
