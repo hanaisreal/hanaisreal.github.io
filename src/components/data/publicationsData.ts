@@ -45,8 +45,8 @@ export const publications: Publication[] = [
     title: "ToneCanvas: Visually Painting Character Tone for Narrative Consistency",
     authors: "JungHwan Kim, Hana Oh, Bongwon Suh",
     coFirstAuthors: ["JungHwan Kim", "Hana Oh"],
-    venue: "UIST 2026",
-    status: "Under Review",
+    venue: "UIST 2026 Poster",
+    status: "Accepted",
     type: "conference",
     insight: "How can visual interaction help writers keep a character's tone consistent across a narrative?",
     tldr: "A visual interface that lets writers paint tone attributes onto characters, helping them catch stylistic drift before it becomes a structural problem.",
@@ -59,6 +59,39 @@ The interaction model is deliberately spatial. Writers paint tone onto character
       "A visual metaphor for character tone that makes stylistic drift visible during drafting",
       "An interaction design that separates intention-setting from text editing",
       "Formative study with fiction writers on how tone inconsistency is currently noticed and repaired",
+    ],
+    image: `${BASE}/pictures/publications/tonecanvas/tonecanvas-teaser.png`,
+    storyBlocks: [
+      {
+        type: 'paragraph',
+        text: `Characters don't stay consistent. A villain who's menacing in chapter two sounds apologetic in chapter seven — not because the writer intended it, but because sustaining tone across thousands of words is genuinely hard. Writers hold a lot in their heads, and subtle shifts accumulate.`,
+      },
+      {
+        type: 'figure',
+        figure: {
+          src: `${BASE}/pictures/publications/tonecanvas/tonecanvas-teaser.png`,
+          alt: 'ToneCanvas poster showing the canvas, tone palette, character layer, and interaction tools for rewriting narrative text.',
+          caption: 'ToneCanvas lets writers paint, inspect, and revise character tone directly in a narrative canvas.',
+          variant: 'full',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `ToneCanvas approaches this as a visibility problem. Tone is something writers feel but rarely see. We built an interface where writers can assign tone attributes — assertiveness, warmth, formality, and emotional register — to individual characters and then watch how those attributes manifest across the draft in real time. Sections where a character's language drifts from their defined tone surface as visual anomalies, not as abstract warnings.`,
+      },
+      {
+        type: 'figure',
+        figure: {
+          src: `${BASE}/pictures/publications/tonecanvas/tonecanvas-backend.png`,
+          alt: 'ToneCanvas system workflow from narrative text preprocessing through canvas and character layers, interaction tools, prompt composition, and writer review.',
+          caption: 'ToneCanvas processes narrative text into canvas and character layers, then supports iterative tone-guided rewriting with writer review.',
+          variant: 'full',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: `The interaction model is deliberately spatial. Writers paint tone onto characters the way a director gives notes to an actor: not by editing the text directly, but by shaping the intention behind it. The goal is to give writers a handle on something they already sense but can't easily act on.`,
+      },
     ],
   },
   {
@@ -83,6 +116,12 @@ This work sits at the intersection of cybersecurity education and the ethics of 
       "Experiential simulation system for deepfake awareness, personalizable to individual participants",
       "Mixed-methods evaluation comparing experiential vs. informational cybersecurity training",
       "Design guidelines for protective simulation with vulnerable populations",
+    ],
+    links: [
+      {
+        label: "DOI",
+        url: "https://doi.org/10.1145/3772318.3791492",
+      },
     ],
     image: `${BASE}/pictures/publications/deepaware/deepaware-flow.png`,
     storyBlocks: [
