@@ -18,6 +18,33 @@ export interface ResearchExperience {
 
 export const researchExperiences: ResearchExperience[] = [
   {
+    lab: "Human-Centered Computing Lab (HCCLab)",
+    advisor: "Prof. Bongwon Suh",
+    institution: "Seoul National University",
+    overallDuration: "Sep 2025 – Present",
+    role: "Graduate Research Assistant",
+    projects: [
+      {
+        projectTitle: "ToneCanvas: Visually Painting Character Tone",
+        description: "Built a visual interface that lets writers paint tone attributes onto characters and see stylistic drift surface in the draft; formative study with fiction writers. UIST 2026 poster.",
+        duration: "Sep 2025 – Present",
+        keyTechnologies: ["Creativity support tools", "Visualization", "LLM"]
+      },
+      {
+        projectTitle: "Shared Agendas from Separate AI Conversations",
+        description: "Designing a team interface that turns members' separate AI conversations into a shared agenda of issues and options, leaving decisions to people. Ongoing.",
+        duration: "2026 – Present",
+        keyTechnologies: ["Collaborative sensemaking", "Human-AI collaboration"]
+      },
+      {
+        projectTitle: "LLM Privacy-Leakage Benchmark",
+        description: "Designing evaluation metrics that separate memorization from hallucination. Ongoing.",
+        duration: "2026 – Present",
+        keyTechnologies: ["LLM evaluation", "Privacy"]
+      }
+    ]
+  },
+  {
     lab: "Research Collaboration with Prof. Hajin Lim",
     advisor: "Prof. Hajin Lim",
     institution: "Seoul National University",
@@ -26,7 +53,7 @@ export const researchExperiences: ResearchExperience[] = [
     projects: [
       {
         projectTitle: "DeepAware: Experiential Deepfake Simulations for Older Adults",
-        description: "Led end-to-end design and mixed-methods evaluation of an experiential deepfake-simulation system that builds cybersecurity intuition in older adults through personalized scam scenarios. Paper accepted to CHI 2026.",
+        description: "Led DeepAware: built a web platform that embeds learners' own face and voice into deepfake scam simulations, grounded in interviews with five digital educators of older adults; evaluated with 21 older adults. CHI 2026.",
         duration: "Mar 2025 – Present",
         keyTechnologies: ["Mixed-methods evaluation", "System design", "Cybersecurity education"]
       }
@@ -37,11 +64,11 @@ export const researchExperiences: ResearchExperience[] = [
     advisor: "Prof. Juho Kim",
     institution: "KAIST",
     overallDuration: "Jan 2025 – Sep 2025",
-    role: "Undergraduate Research Intern",
+    role: "Research Intern",
     projects: [
       {
         projectTitle: "When Scaffolding Breaks: Student Interaction with LLM Writing Support",
-        description: "Co-led qualitative analysis of 14,000+ K-12 EFL student–AI dialogues from real classrooms to surface scaffolding failure modes in LLM-based writing support; co-developed the study's coding framework. Paper accepted to CHI 2026 with Best Paper Award.",
+        description: "Six-week classroom deployment of LLM writing support with 157 eighth-grade students; analyzed 14,863 student–AI messages through qualitative coding and log analysis, showing how reliance patterns diverged by proficiency, and co-wrote the paper. CHI 2026, Best Paper Award.",
         duration: "Jan 2025 – Sep 2025",
         keyTechnologies: ["Large-scale log analysis", "Qualitative coding", "Educational AI"]
       }
@@ -56,7 +83,7 @@ export const researchExperiences: ResearchExperience[] = [
     projects: [
       {
         projectTitle: "Personalized Academic Counseling with Polyglot-Ko",
-        description: "Fine-tuned Polyglot-Ko with LoRA into a personalized academic counseling agent tailored to Korean high-school students.",
+        description: "Fine-tuned Polyglot-Ko (LoRA) into a prototype academic-counseling agent for Korean high-school students.",
         duration: "Dec 2023 – Feb 2024",
         keyTechnologies: ["PyTorch", "HuggingFace", "LoRA", "Prompt engineering"]
       }

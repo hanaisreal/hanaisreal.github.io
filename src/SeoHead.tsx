@@ -101,7 +101,7 @@ function getSeoConfig(pathname: string): SeoConfig {
     return {
       title: 'Hana Oh | HCI and AI Researcher at Seoul National University',
       description:
-        'Portfolio of Hana Oh, an HCI and AI researcher and M.S. student at Seoul National University, with work in human-AI interaction, educational AI, cybersecurity awareness, and interactive systems.',
+        'Portfolio of Hana Oh, an HCI researcher and M.S. student at Seoul National University working on personal AI agents, collaborative AI systems, and how people rely on AI support.',
       canonicalPath: '/',
       type: 'website',
       structuredData: [
@@ -143,7 +143,7 @@ function getSeoConfig(pathname: string): SeoConfig {
     return {
       title: 'Research | Hana Oh',
       description:
-        'Publications and research projects by Hana Oh in HCI, human-AI interaction, educational AI, cybersecurity awareness, and interactive AI systems.',
+        'Publications and research projects by Hana Oh on personal AI agents, collaborative AI systems, scaffolding and reliance on AI, and creativity support tools.',
       canonicalPath: '/research',
       type: 'website',
       structuredData: [
@@ -153,7 +153,7 @@ function getSeoConfig(pathname: string): SeoConfig {
           name: 'Research',
           url: absoluteUrl('/research'),
           description:
-            'Publications and research projects by Hana Oh in HCI, human-AI interaction, educational AI, cybersecurity awareness, and interactive AI systems.',
+            'Publications and research projects by Hana Oh on personal AI agents, collaborative AI systems, scaffolding and reliance on AI, and creativity support tools.',
           isPartOf: absoluteUrl('/'),
         },
         buildBreadcrumb([

@@ -5,19 +5,18 @@ const OngoingResearchSection: React.FC = () => (
     <h2 className="sec-heading">Ongoing Research</h2>
     <div className="ongoing-copy">
       <p>
-        My recent work examines how AI can support <strong>human expression</strong> and <strong>awareness</strong> in
-        real-world contexts, from AI-mediated narrative writing to experiential simulations that build intuition in
-        everyday users.
+        My work has been deployed where it is hardest to get right: an LLM writing scaffold used by 157 students over six
+        weeks of real classes, and a deepfake-scam simulation built around older adults&apos; own faces and voices.
       </p>
-      <p>As a next step, I am exploring:</p>
+      <p>Right now I am working on:</p>
       <ul className="ongoing-list">
         <li>
-          how to design <strong>AI-mediated interventions</strong> that shift how people understand themselves and their
-          context, and
+          <strong>Personal AI agents</strong> &mdash; long-term memory, personalization, and how scaffolding shapes what
+          people hand over to an assistant.
         </li>
         <li>
-          how to build <strong>interactive systems</strong> that make AI&apos;s interpretation of human experience visible and
-          actionable to users.
+          <strong>Collaborative AI systems</strong> &mdash; collaborative sensemaking, co-creation, and creativity support,
+          and carrying these into AR/VR and embodied interfaces.
         </li>
       </ul>
     </div>
