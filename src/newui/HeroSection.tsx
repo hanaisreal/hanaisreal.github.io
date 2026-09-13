@@ -74,7 +74,8 @@ const HeroSection: React.FC = () => (
         <h1 className="profile__name">Hana Oh</h1>
         <div className="bio">
           <p>
-            I am an HCI researcher and M.S. student at Seoul National University, advised by{' '}
+            Hi, I&apos;m Hana. I am an M.S. student in Intelligence and Information at Seoul National
+            University, advised by{' '}
             <a
               className="text-link"
               href="https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
@@ -85,33 +86,22 @@ const HeroSection: React.FC = () => (
               data-analytics-destination="https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
               data-analytics-placement="hero"
             >
-              Prof. Bongwon Suh
+              Bongwon Suh
             </a>
-            . I build the interface and memory layer that lets people work with AI over time:{' '}
-            <strong>personal AI agents</strong> that remember, and{' '}
-            <strong>collaborative AI systems</strong> that turn a group&apos;s separate AI
-            conversations into shared understanding.
+            . My research is at the intersection of human-computer interaction (HCI) and artificial
+            intelligence. My current work builds <strong>personal AI agents</strong> with long-term memory
+            and <strong>collaborative AI systems</strong> that turn a group&apos;s separate AI conversations
+            into shared understanding, and examines how scaffolding from AI shapes what people can
+            still do on their own. I enjoy building systems and deploying them with real users,
+            including classrooms, older adults, and writers, and I am beginning to extend this work
+            into AR/VR and embodied interaction.
           </p>
-        </div>
-
-        <div className="ongoing-copy" style={{ marginTop: '1.1rem' }}>
           <p>
-            I have deployed two of these systems with real users: an LLM writing scaffold used by
-            157 students over six weeks of classes, and a deepfake-scam simulation that 21 older
-            adults experienced with their own face and voice. Both taught me to look past whether
-            support works in the moment and ask what people keep after it is gone.
+            Prior to my master&apos;s, I graduated from Seoul National University with a B.S. in Computer
+            Science and Engineering and a double major in Business Administration, where I had the
+            chance to work with Juho Kim, Hajin Lim, and Bongwon Suh.
           </p>
-          <p>Current focus:</p>
-          <ul className="ongoing-list">
-            <li>
-              <strong>Memory for personal agents:</strong> long-term memory, personalization, and
-              scaffolding that supports thinking instead of replacing it.
-            </li>
-            <li>
-              <strong>Interfaces for collaborative AI:</strong> collaborative sensemaking, co-creation,
-              and creativity support, extended into AR/VR and embodied interaction.
-            </li>
-          </ul>
+          <p>My research is supported by the BK21 FOUR Program.</p>
         </div>
       </div>
     </div>
