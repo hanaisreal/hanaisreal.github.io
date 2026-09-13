@@ -23,25 +23,9 @@ const AboutSection: React.FC = () => (
         what I want to keep learning from.
       </p>
       <p>
-        Right now it includes a small Daemari translation archive, SHANUM community work, and references I am learning
-        from, including{' '}
-        <a className="text-link" href="https://www.dougengelbart.org/" target="_blank" rel="noopener noreferrer">
-          Douglas Engelbart
-        </a>
-        ,{' '}
-        <a
-          className="text-link"
-          href="https://augmentingcognition.com/assets/Kay1977.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Alan Kay
-        </a>
-        , and{' '}
-        <a className="text-link" href="https://worrydream.com/" target="_blank" rel="noopener noreferrer">
-          Bret Victor
-        </a>
-        , alongside my interest in <strong>speculative thought</strong> and speculative ways of thinking.
+        Right now it includes a small Daemari translation archive, SHANUM community work, and references
+        I keep returning to, alongside my interest in <strong>speculative thought</strong> and speculative ways of
+        thinking.
       </p>
       <p>
         I also like playing <span className="bio__tennis">tennis</span> and{' '}
