@@ -4,6 +4,7 @@ import { MdEmail } from 'react-icons/md';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiDocumentText } from 'react-icons/hi';
 import SiteHeader, { SiteFooter } from './SiteHeader';
+import HomeBackdrop from './HomeBackdrop';
 import './clean.css';
 
 const NEWS = [
@@ -28,10 +29,12 @@ const NEWS = [
 
 const HomePage: React.FC = () => (
   <div>
+    <HomeBackdrop />
     <SiteHeader />
     <div className="c-sheet">
     <main className="c-main">
       <section className="c-profile" data-analytics-section="home_hero">
+        <img className="c-profile__photo" src={`${process.env.PUBLIC_URL}/pictures/profile-beach.jpg`} alt="Hana Oh" />
         <div>
           <h1 className="c-profile__name">Hana Oh</h1>
           <p className="c-profile__line">M.S. Student, Intelligence and Information (2025–Present)</p>
@@ -52,7 +55,6 @@ const HomePage: React.FC = () => (
             </a>
           </div>
         </div>
-        <img className="c-profile__photo" src={`${process.env.PUBLIC_URL}/pictures/profile-beach.jpg`} alt="Hana Oh" />
       </section>
 
       <section className="c-section" data-analytics-section="home_currently">
