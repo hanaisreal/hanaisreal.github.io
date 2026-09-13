@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import Masthead from '../newui/Masthead';
+import SiteHeader, { SiteFooter } from '../cleanui/SiteHeader';
 import {
   getPublicationBySlug,
   getPublicationStatusLine,
@@ -89,7 +89,7 @@ const PublicationPage: React.FC = () => {
 
   return (
     <div>
-      <Masthead />
+      <SiteHeader />
       <div className="page page--publication">
         <Link
           to="/research"
@@ -207,10 +207,7 @@ const PublicationPage: React.FC = () => {
         </div>
 
       </div>
-      <footer className="site-footer">
-        <span>Hana Oh</span>
-        <span>© {new Date().getFullYear()}</span>
-      </footer>
+      <SiteFooter />
     </div>
   );
 };
