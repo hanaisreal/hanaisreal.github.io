@@ -41,7 +41,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: "paranmanjang",
-    title: "Paranmanjang: Bookmark-Grounded Writing Recommender",
+    title: "Bookmark-Grounded Writing Recommender (Paranmanjang)",
     tldr: "A bookmark-grounded writing tool that vectorized saved links and surfaced relevant summaries while I was drafting.",
     description: "Writing companion that turned bookmarked links into a retrievable knowledge base for contextual recommendations.",
     narrative: `Before personal AI writing tools made this pattern familiar, I worked on Paranmanjang, a writing companion that treated bookmarked links as a living reference library instead of a pile of tabs. The goal was simple: when I was writing, the system should bring back the most relevant things I had already saved instead of making me search for them again.
@@ -100,7 +100,7 @@ What interested me most was workflow fit. Retrieval only helps if it arrives at 
   },
   {
     slug: "livrecord",
-    title: "Reflective Autobiographical System",
+    title: "Voice-Based Autobiographical Storytelling System (LivRecord)",
     tldr: "A voice-first AI system that helps older adults turn spoken memories into a personal narrative.",
     description: "Voice-first AI pipeline with STT/TTS that scaffolds older adults through autobiographical storytelling.",
     narrative: `Older adults carry stories that often go untold — not from unwillingness, but from the friction of writing. LivRecord removes that friction. Using voice as the primary input, the system walks users through autobiographical prompts, transcribes their responses, and gradually assembles a narrative they can revisit and share.
@@ -129,7 +129,7 @@ Built over four months with a small team, the system won the Grand Prize at the 
         video: {
           src: `${BASE}/videos/LivRecord.mp4`,
           poster: `${BASE}/pictures/SPARCS.png`,
-          caption: 'Demo of the Reflective Autobiographical System, showing how spoken memories are scaffolded into a reflective narrative flow.',
+          caption: 'Demo of LivRecord, showing how spoken memories are scaffolded into a reflective narrative flow.',
         },
       },
       {
@@ -144,7 +144,7 @@ Built over four months with a small team, the system won the Grand Prize at the 
   },
   {
     slug: "upstage-consultation",
-    title: "Personalized AI Consultation System",
+    title: "Document-Grounded AI Consultation System",
     tldr: "A RAG-based system that grounds AI responses in a user's own documents, making advice feel personal rather than generic.",
     description: "Full-stack RAG application using Solar LLMs for adaptive, personalized user consulting.",
     narrative: `Generic AI responses feel generic. This system uses retrieval-augmented generation to ground every response in a specific user's context — drawing from documents they've uploaded — so that advice reflects their actual situation rather than a statistical average.
@@ -164,7 +164,7 @@ Built for the Upstage AI Challenge, the system placed in the Top 10.`,
   },
   {
     slug: "medsam-viewer",
-    title: "Medical Image Segmentation Viewer",
+    title: "Interactive 3D CT Segmentation Tool for Radiologists (MedSAM)",
     tldr: "A custom DICOM viewer that lets radiologists prompt MedSAM with a click and get 3D CT segmentations propagated through slices.",
     description: "Custom DICOM viewer integrating MedSAM for semi-automatic 3D CT segmentation with LoRA fine-tuning.",
     narrative: `Radiologists working with 3D CT scans still spend significant time manually marking anatomical structures — a process that is both tedious and prone to inter-annotator variation. This project embedded MedSAM into a custom PyQt5 DICOM viewer so that a single click-prompt propagates a segmentation through an entire scan volume.
