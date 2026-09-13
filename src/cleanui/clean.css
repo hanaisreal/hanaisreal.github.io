@@ -20,56 +20,17 @@ html body:not(.is-collections) {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── home backdrop: pastel blobs that follow the cursor ── */
+/* ── home backdrop: pastel particles that follow the cursor ── */
 .c-backdrop {
-  --mx: 0.5;
-  --my: 0.4;
   position: fixed;
   inset: 0;
   z-index: -1;
-  overflow: hidden;
   pointer-events: none;
-  background: #f5f4f0;
-}
-.c-blob {
-  position: absolute;
-  width: 46vmax;
-  height: 46vmax;
-  border-radius: 50%;
-  filter: blur(70px);
-  opacity: 0.75;
-  will-change: transform;
-  animation: c-drift 26s ease-in-out infinite alternate;
-}
-.c-blob--1 {
-  background: #f8dfe4;
-  left: -10vmax; top: -12vmax;
-  transform: translate(calc(var(--mx) * 12vmax), calc(var(--my) * 10vmax));
-}
-.c-blob--2 {
-  background: #dfe9fb;
-  right: -14vmax; top: -6vmax;
-  transform: translate(calc(var(--mx) * -10vmax), calc(var(--my) * 8vmax));
-  animation-delay: -8s;
-}
-.c-blob--3 {
-  background: #e2f3e8;
-  left: 10vmax; bottom: -18vmax;
-  transform: translate(calc(var(--mx) * 8vmax), calc(var(--my) * -10vmax));
-  animation-delay: -14s;
-}
-.c-blob--4 {
-  background: #fbf0d6;
-  right: 0; bottom: -14vmax;
-  transform: translate(calc(var(--mx) * -8vmax), calc(var(--my) * -6vmax));
-  animation-delay: -20s;
-}
-@keyframes c-drift {
-  from { margin-left: 0; margin-top: 0; }
-  to { margin-left: 4vmax; margin-top: -3vmax; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .c-blob { animation: none; }
+  background:
+    radial-gradient(60vmax 50vmax at 10% 0%, #fbe9ee 0%, rgba(251, 233, 238, 0) 60%),
+    radial-gradient(55vmax 45vmax at 95% 10%, #e6eefc 0%, rgba(230, 238, 252, 0) 60%),
+    radial-gradient(50vmax 45vmax at 20% 100%, #e8f6ee 0%, rgba(232, 246, 238, 0) 60%),
+    #f5f4f0;
 }
 
 /* ── header ── */
