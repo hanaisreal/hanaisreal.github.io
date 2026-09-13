@@ -2,6 +2,14 @@ import React from 'react';
 
 const newsItems = [
   {
+    date: 'Sep 2026',
+    text: (
+      <>
+        <strong>ToneCanvas</strong> accepted as a poster at <span className="news-item__venue">UIST 2026</span> (Detroit).
+      </>
+    ),
+  },
+  {
     date: 'Jan 2026',
     text: (
       <>
