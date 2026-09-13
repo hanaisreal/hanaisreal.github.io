@@ -69,9 +69,8 @@ const ResearchPage: React.FC = () => {
         <header className="page-intro">
           <h1 className="page-intro__title">Research</h1>
           <p className="page-intro__desc">
-            Publications and projects on personal AI agents, collaborative AI systems, and how
-            people come to rely on AI support &mdash; deployed in classrooms, with older adults,
-            and with writers.
+            Publications and projects on personal AI agents and collaborative AI systems,
+            deployed in classrooms, with older adults, and with writers.
           </p>
         </header>
         <PublicationsSection onOpen={handleOpen} />

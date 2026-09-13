@@ -87,28 +87,30 @@ const HeroSection: React.FC = () => (
             >
               Prof. Bongwon Suh
             </a>
-            . I build <strong>personal AI agents</strong> that remember, and{' '}
+            . I build the interface and memory layer that lets people work with AI over time:{' '}
+            <strong>personal AI agents</strong> that remember, and{' '}
             <strong>collaborative AI systems</strong> that turn a group&apos;s separate AI
-            conversations into shared understanding &mdash; and I study how people come to rely on them.
+            conversations into shared understanding.
           </p>
         </div>
 
         <div className="ongoing-copy" style={{ marginTop: '1.1rem' }}>
           <p>
-            My work has been deployed where it is hardest to get right: an LLM writing scaffold used
-            by 157 students over six weeks of real classes, and a deepfake-scam simulation built
-            around older adults&apos; own faces and voices. Both taught me the same thing: support
-            that looks like it works is not the same as support that helps.
+            My systems have been deployed where design is hardest to get right: an LLM writing
+            scaffold used by 157 students across six weeks of real classes, and a deepfake-scam
+            simulation built around older adults&apos; own faces and voices. In both, what mattered
+            was not whether the support worked in the moment, but what people could do once it
+            was gone.
           </p>
-          <p>Right now I am working on:</p>
+          <p>Current focus:</p>
           <ul className="ongoing-list">
             <li>
-              <strong>Personal AI agents</strong> &mdash; long-term memory, personalization, and how
-              scaffolding shapes what people hand over to an assistant.
+              <strong>Memory for personal agents:</strong> long-term memory, personalization, and
+              scaffolding that supports thinking instead of replacing it.
             </li>
             <li>
-              <strong>Collaborative AI systems</strong> &mdash; collaborative sensemaking, co-creation,
-              and creativity support, and carrying these into AR/VR and embodied interfaces.
+              <strong>Interfaces for collaborative AI:</strong> collaborative sensemaking, co-creation,
+              and creativity support, extended into AR/VR and embodied interaction.
             </li>
           </ul>
         </div>
