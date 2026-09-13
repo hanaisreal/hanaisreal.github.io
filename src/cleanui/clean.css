@@ -267,6 +267,65 @@ html body {
   color: var(--c-muted);
 }
 
+/* ── research: note cards on white ── */
+.c-main--research { --text: var(--c-text); --muted: var(--c-muted); }
+.c-main--research .sec-heading {
+  font-family: var(--c-font);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--c-text);
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 0;
+}
+.c-main--research .projects-section { margin-top: 3rem; }
+.c-main--research .publication-note,
+.c-main--research .project-note {
+  border: 1px solid var(--c-line);
+  background: #fff;
+  box-shadow: none;
+  color: var(--c-text);
+}
+.c-main--research .publication-note:hover,
+.c-main--research .project-note:hover {
+  background: #fff;
+  border-color: #cfd2d7;
+  box-shadow: 0 10px 24px rgba(17, 17, 17, 0.06);
+}
+.c-main--research .publication-note__title,
+.c-main--research .project-note__title { color: var(--c-text); }
+.c-main--research .publication-note__authors,
+.c-main--research .project-note__meta { color: var(--c-muted); }
+.c-main--research .publication-note__summary,
+.c-main--research .project-note__summary { color: var(--c-text); }
+.c-main--research .publication-note__image,
+.c-main--research .project-note__image {
+  border: 1px solid var(--c-line);
+  background: #f7f7f8;
+}
+.c-main--research .pub__me { color: var(--c-text); font-weight: 600; text-decoration: none; border-bottom: 0; }
+.c-main--research .pub__cofirst-note { color: var(--c-muted); font-size: 0.8rem; }
+/* ribbon: neutral ink instead of mauve */
+.c-main--research .publication-note__ribbon::before,
+.c-main--research .project-note__ribbon::before,
+.c-main--research .publication-note__ribbon::after,
+.c-main--research .project-note__ribbon::after {
+  background: #2b2b2b;
+  box-shadow: none;
+}
+.c-main--research .publication-note__ribbon-text,
+.c-main--research .project-note__ribbon-text {
+  background: #171717;
+  color: #fff;
+  box-shadow: 0 18px 5px -16px rgba(0, 0, 0, 0.35);
+}
+.c-main--research .publication-note__ribbon-text::before,
+.c-main--research .project-note__ribbon-text::before,
+.c-main--research .publication-note__ribbon-text::after,
+.c-main--research .project-note__ribbon-text::after { display: none; }
+
 /* ── detail pages: neutralise the old paper theme ── */
 body .page--publication,
 body .page--project {
