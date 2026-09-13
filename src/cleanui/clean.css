@@ -10,10 +10,10 @@
   --c-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
-html, html body {
-  background: #ffffff !important;
+html, html body:not(.is-collections) {
+  background: #f3f2ee !important;
 }
-html body {
+html body:not(.is-collections) {
   font-family: var(--c-font);
   font-size: 15px;
   line-height: 1.65;
@@ -66,17 +66,23 @@ html body {
   border-bottom-color: var(--c-text);
 }
 
-/* ── page shell ── */
+/* ── page shell: a white sheet on a paper ground ── */
+.c-sheet {
+  max-width: calc(var(--c-col) + 5rem);
+  margin: 1.6rem auto 3rem;
+  background: #ffffff;
+  border: 1px solid #e3e1db;
+  box-shadow: 0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 32px rgba(20, 20, 20, 0.05);
+}
 .c-main {
   max-width: var(--c-col);
   margin: 0 auto;
-  padding: 3.2rem 1.5rem 5rem;
+  padding: 3.2rem 2.5rem 4rem;
 }
 .c-footer {
   max-width: var(--c-col);
   margin: 0 auto;
-  padding: 2rem 1.5rem 2.5rem;
-  border-top: 1px solid var(--c-line);
+  padding: 0 1.5rem 2.5rem;
   display: flex;
   justify-content: space-between;
   font-size: 0.8rem;
@@ -336,16 +342,16 @@ body .page--project {
   --award: var(--c-text);
   --scarlet: var(--c-link);
   font-family: var(--c-font);
-  background: transparent;
+  background: #ffffff;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  border: 0;
-  box-shadow: none;
-  margin: 0 auto;
-  padding: 2.4rem 1.5rem 4rem;
-  max-width: 760px;
+  border: 1px solid #e3e1db;
+  box-shadow: 0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 32px rgba(20, 20, 20, 0.05);
+  margin: 1.6rem auto 3rem;
+  padding: 2.4rem 2.5rem 4rem;
+  max-width: 820px;
 }
-body .page--project { max-width: var(--c-col); }
+body .page--project { max-width: calc(var(--c-col) + 5rem); }
 body .page--publication .sec-heading,
 body .page--project .sec-heading {
   font-family: var(--c-font);
@@ -371,6 +377,9 @@ body .proj-card__media { background: #f7f7f8; }
 body .site-footer { display: none; }
 
 @media (max-width: 720px) {
+  .c-sheet { margin: 0.8rem 0.6rem 2rem; }
+  .c-main { padding: 2.2rem 1.25rem 3rem; }
+  body .page--publication, body .page--project { margin: 0.8rem 0.6rem 2rem; padding: 1.8rem 1.25rem 3rem; }
   .c-header { flex-direction: column; gap: 0.6rem; }
   .c-nav { gap: 1rem; }
   .c-profile { grid-template-columns: 1fr; }

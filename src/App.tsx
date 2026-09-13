@@ -19,6 +19,11 @@ const App: React.FC = () => {
   const isCollections = location.pathname.startsWith('/collections');
 
   React.useEffect(() => {
+    document.body.classList.toggle('is-collections', isCollections);
+    return () => document.body.classList.remove('is-collections');
+  }, [isCollections]);
+
+  React.useEffect(() => {
     const img = new window.Image();
     img.onload = () => setBgLoaded(true);
     img.src = `/pictures/backgrounds/${bg.file}`;

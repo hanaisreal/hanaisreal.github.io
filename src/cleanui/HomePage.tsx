@@ -29,6 +29,7 @@ const NEWS = [
 const HomePage: React.FC = () => (
   <div>
     <SiteHeader />
+    <div className="c-sheet">
     <main className="c-main">
       <section className="c-profile" data-analytics-section="home_hero">
         <div>
@@ -105,6 +106,7 @@ const HomePage: React.FC = () => (
         </p>
       </section>
     </main>
+    </div>
     <SiteFooter />
   </div>
 );

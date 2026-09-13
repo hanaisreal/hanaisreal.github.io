@@ -8,10 +8,12 @@ import './clean.css';
 const ResearchPage: React.FC = () => (
   <div>
     <SiteHeader />
+    <div className="c-sheet">
     <main className="c-main c-main--research">
       <PublicationsSection />
       <ProjectsSection />
     </main>
+    </div>
     <SiteFooter />
   </div>
 );
