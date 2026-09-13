@@ -5,8 +5,8 @@ const OngoingResearchSection: React.FC = () => (
     <h2 className="sec-heading">Ongoing Research</h2>
     <div className="ongoing-copy">
       <p>
-        My work has been deployed where it is hardest to get right: an LLM writing scaffold used by 157 students over six
-        weeks of real classes, and a deepfake-scam simulation built around older adults&apos; own faces and voices.
+        I have deployed two of these systems with real users: an LLM writing scaffold used by 157 students over six weeks
+        of classes, and a deepfake-scam simulation that 21 older adults experienced with their own face and voice.
       </p>
       <p>Current focus:</p>
       <ul className="ongoing-list">

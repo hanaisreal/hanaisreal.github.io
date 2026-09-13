@@ -96,11 +96,10 @@ const HeroSection: React.FC = () => (
 
         <div className="ongoing-copy" style={{ marginTop: '1.1rem' }}>
           <p>
-            My systems have been deployed where design is hardest to get right: an LLM writing
-            scaffold used by 157 students across six weeks of real classes, and a deepfake-scam
-            simulation built around older adults&apos; own faces and voices. In both, what mattered
-            was not whether the support worked in the moment, but what people could do once it
-            was gone.
+            I have deployed two of these systems with real users: an LLM writing scaffold used by
+            157 students over six weeks of classes, and a deepfake-scam simulation that 21 older
+            adults experienced with their own face and voice. Both taught me to look past whether
+            support works in the moment and ask what people keep after it is gone.
           </p>
           <p>Current focus:</p>
           <ul className="ongoing-list">
