@@ -15,9 +15,9 @@ html, html body:not(.is-collections) {
 }
 html body:not(.is-collections) {
   font-family: var(--c-font);
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--c-text);
+  font-size: 16px;
+  line-height: 1.75;
+  color: #111111;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -113,7 +113,7 @@ html body:not(.is-collections) {
 }
 .c-profile__line {
   margin: 0 0 0.3rem;
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--c-text);
 }
 .c-profile__line--muted { color: var(--c-muted); }
@@ -139,6 +139,7 @@ html body:not(.is-collections) {
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: 50% 42%;
   display: block;
   justify-self: end;
 }
@@ -148,14 +149,15 @@ html body:not(.is-collections) {
   margin-top: 3rem;
 }
 .c-section__title {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   margin: 0 0 0.9rem;
 }
 .c-section p {
-  max-width: 68ch;
-  margin: 0 0 0.9rem;
+  max-width: 62ch;
+  margin: 0 0 1.05rem;
+  font-size: 1rem;
 }
 .c-section p:last-child { margin-bottom: 0; }
 
@@ -289,15 +291,17 @@ html body:not(.is-collections) {
 .c-main--research .projects-section { margin-top: 3rem; }
 .c-main--research .publication-note,
 .c-main--research .project-note {
-  border: 1px solid var(--c-line);
-  background: #fff;
+  border: 1px solid #e6e4df;
+  border-radius: 4px;
+  background: #f8f7f4;
   box-shadow: none;
   color: var(--c-text);
+  padding: 1.1rem 1rem 1rem;
 }
 .c-main--research .publication-note:hover,
 .c-main--research .project-note:hover {
-  background: #fff;
-  border-color: #cfd2d7;
+  background: #fbfaf8;
+  border-color: #d6d3cc;
   box-shadow: 0 10px 24px rgba(17, 17, 17, 0.06);
 }
 .c-main--research .publication-note__title,
@@ -313,24 +317,17 @@ html body:not(.is-collections) {
 }
 .c-main--research .pub__me { color: var(--c-text); font-weight: 600; text-decoration: none; border-bottom: 0; }
 .c-main--research .pub__cofirst-note { color: var(--c-muted); font-size: 0.8rem; }
-/* ribbon: neutral ink instead of mauve */
-.c-main--research .publication-note__ribbon::before,
-.c-main--research .project-note__ribbon::before,
-.c-main--research .publication-note__ribbon::after,
-.c-main--research .project-note__ribbon::after {
-  background: #2b2b2b;
-  box-shadow: none;
+.c-main--research .publication-note__ribbon,
+.c-main--research .project-note__ribbon { display: none; }
+.c-main--research .note__label {
+  margin: 0 0 0.55rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-muted);
+  text-align: center;
 }
-.c-main--research .publication-note__ribbon-text,
-.c-main--research .project-note__ribbon-text {
-  background: #171717;
-  color: #fff;
-  box-shadow: 0 18px 5px -16px rgba(0, 0, 0, 0.35);
-}
-.c-main--research .publication-note__ribbon-text::before,
-.c-main--research .project-note__ribbon-text::before,
-.c-main--research .publication-note__ribbon-text::after,
-.c-main--research .project-note__ribbon-text::after { display: none; }
 
 /* ── detail pages: neutralise the old paper theme ── */
 body .page--publication,

@@ -90,10 +90,8 @@ const PublicationsSection: React.FC<PublicationsSectionProps> = ({ onOpen }) => 
               data-analytics-item-name={pub.title}
               data-analytics-placement="publications_list"
             >
-              <div className="publication-note__ribbon" aria-label={getRibbonLabel(pub)}>
-                <span className="publication-note__ribbon-text">{getRibbonLabel(pub)}</span>
-              </div>
               <div className="publication-note__body">
+                <p className="note__label">{getRibbonLabel(pub)}</p>
                 <h3 className="publication-note__title">{pub.title}</h3>
                 <p className="publication-note__authors">{renderCardAuthors(pub)}</p>
                 <p className="publication-note__summary">{getSummary(pub)}</p>

@@ -43,10 +43,8 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpen }) => {
             data-analytics-item-name={project.title}
             data-analytics-placement="projects_list"
           >
-            <div className="project-note__ribbon" aria-label={getProjectRibbonLabel(project)}>
-              <span className="project-note__ribbon-text">{getProjectRibbonLabel(project)}</span>
-            </div>
             <div className="project-note__body">
+              <p className="note__label">{getProjectRibbonLabel(project)}</p>
               <h3 className="project-note__title">{project.title}</h3>
               <p className="project-note__meta">{project.tags.join(' · ')}</p>
               <p className="project-note__summary">{project.tldr}</p>

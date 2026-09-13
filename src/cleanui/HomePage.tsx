@@ -52,7 +52,7 @@ const HomePage: React.FC = () => (
             </a>
           </div>
         </div>
-        <img className="c-profile__photo" src={`${process.env.PUBLIC_URL}/pictures/profile.jpeg`} alt="Hana Oh" />
+        <img className="c-profile__photo" src={`${process.env.PUBLIC_URL}/pictures/profile-beach.jpg`} alt="Hana Oh" />
       </section>
 
       <section className="c-section" data-analytics-section="home_currently">
