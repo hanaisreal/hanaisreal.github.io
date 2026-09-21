@@ -2462,3 +2462,65 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   .proj-story .pub-page__figure,
   .proj-story .pub-page__figure-row { width: 100%; margin-left: 0; transform: none; }
 }
+
+/* ── READABILITY ──
+   Kept last so it wins over the earlier surface and breakpoint rules. */
+.site-nav__link {
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 0 14px rgba(0, 0, 0, 0.45);
+}
+.site-nav__link:hover { color: #fff; }
+.site-nav__link.is-active {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+.site-nav__hamburger span { background: rgba(255, 255, 255, 0.92); }
+
+/* Paper sheets: near-black ink, and a solid muted tone instead of translucent brown. */
+.page--home--paper,
+.page--publication {
+  --text: #1c1410;
+  --muted: #574638;
+  --link: #7a2e10;
+  --scarlet: #7a2e10;
+}
+
+/* Photo surface: a dark sheet behind the white text instead of text straight on the photo. */
+.page--home--photo {
+  --muted: rgba(255, 255, 255, 0.82);
+  background: rgba(16, 11, 8, 0.66);
+  backdrop-filter: blur(16px) saturate(1.05);
+  -webkit-backdrop-filter: blur(16px) saturate(1.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  text-shadow: none;
+}
+
+.page--home .bio,
+.page--home .news-item,
+.interest-list {
+  font-size: clamp(1.1rem, 1.02rem + 0.25vw, 1.18rem);
+  line-height: 1.62;
+}
+.page--home .bio p + p { margin-top: 0.85rem; }
+.page--home .news-item__date { font-size: 0.92rem; }
+.page--home .sec-heading {
+  font-size: 0.98rem;
+  color: var(--text);
+  letter-spacing: 0.1em;
+}
+.pub-brief__item { font-size: 1.08rem; }
+
+.profile__affil,
+.page--home .profile__affil {
+  margin: 0 0 1.1rem;
+  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.page--home .profile__email-text {
+  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 0.84rem;
+}
