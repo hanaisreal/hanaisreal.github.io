@@ -90,21 +90,33 @@ const HeroSection: React.FC = () => (
               data-analytics-placement="hero"
             >
               Bongwon Suh
-            </a>{' '}
-            and Hajin Lim. My research lies at the intersection of human-computer interaction, social
+            </a>
+            . My research lies at the intersection of human-computer interaction, social
             science, and LLMs.
           </p>
           <p>
             While human experience is inherently unique, AI outputs are often uniform and impersonal.
             I am interested in contributing to the evolution of AI from a generalized tool into a{' '}
-            <strong>truly collaborative, personalized agent</strong>: one that elicits intent accurately,
-            remembers it faithfully, and renders it dynamically into interfaces that keep the user in
-            meaningful control.
+            <strong>truly collaborative, personalized agent</strong>: one that elicits intent accurately
+            and remembers it faithfully.
           </p>
           <p>
             Prior to my master&apos;s, I graduated from Seoul National University with a B.S. in Computer
-            Science and Engineering and a double major in Business Administration, where I also had
-            the chance to work with Juho Kim.
+            Science and Engineering and a double major in Business Administration, where I had the
+            chance to work with Juho Kim and{' '}
+            <a
+              className="text-link"
+              href="https://www.hajinlim.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="external_link_click"
+              data-analytics-label="Hajin Lim"
+              data-analytics-destination="https://www.hajinlim.com/"
+              data-analytics-placement="hero"
+            >
+              Hajin Lim
+            </a>
+            .
           </p>
           <p>My research is supported by the BK21 FOUR Program.</p>
         </div>

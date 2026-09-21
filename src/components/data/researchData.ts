@@ -31,12 +31,6 @@ export const researchExperiences: ResearchExperience[] = [
         keyTechnologies: ["Creativity support tools", "Visualization", "LLM"]
       },
       {
-        projectTitle: "Shared Agendas from Separate AI Conversations",
-        description: "Designing a team interface that turns members' separate AI conversations into a shared agenda of issues and options, leaving decisions to people. Ongoing.",
-        duration: "2026 – Present",
-        keyTechnologies: ["Collaborative sensemaking", "Human-AI collaboration"]
-      },
-      {
         projectTitle: "LLM Privacy-Leakage Benchmark",
         description: "Designing evaluation metrics that separate memorization from hallucination. Ongoing.",
         duration: "2026 – Present",

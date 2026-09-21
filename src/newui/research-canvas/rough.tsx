@@ -12,12 +12,10 @@ export const TONES: Record<CanvasTone, { stroke: string; fill: string; ink: stri
   neutral: { stroke: '#8f8f8f', fill: '#f6f6f4', ink: '#555555' },
   p1: { stroke: '#1e88e5', fill: '#ffffff', ink: '#0d47a1' },
   p2: { stroke: '#388e3c', fill: '#ffffff', ink: '#1b5e20' },
-  p3: { stroke: '#ef6c00', fill: '#ffffff', ink: '#bf4a00' },
   novice: { stroke: '#0288d1', fill: '#e1f5fe', ink: '#01579b' },
   expert: { stroke: '#7b1fa2', fill: '#f3e5f5', ink: '#4a148c' },
   paper: { stroke: '#d81b60', fill: '#fff0f5', ink: '#880e4f' },
   memory: { stroke: '#388e3c', fill: '#e8f5e9', ink: '#1b5e20' },
-  ui: { stroke: '#ef6c00', fill: '#fff3e0', ink: '#bf4a00' },
   'frame-novice': { stroke: '#dd8fe0', fill: '#fdf3fd', ink: '#6a1b6a' },
   'frame-expert': { stroke: '#4dccc3', fill: '#effcfb', ink: '#00695c' },
 };

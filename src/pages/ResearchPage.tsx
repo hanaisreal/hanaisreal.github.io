@@ -71,9 +71,8 @@ const ResearchPage: React.FC = () => {
         <header className="page-intro">
           <h1 className="page-intro__title">Research</h1>
           <p className="page-intro__desc">
-            Building truly personalized agents that elicit intent accurately, remember it faithfully,
-            and render it dynamically into interfaces that balance adaptability with user
-            accountability.
+            Toward truly personalized agents that elicit intent accurately and remember it
+            faithfully.
           </p>
         </header>
         <ResearchMap />

@@ -1,7 +1,7 @@
 // researchCanvasData.ts
 //
 // The research map on /research. The macro flow runs top to bottom:
-// START → Phase 1 → Phase 2 → Phase 3 → LOOP. Hovering (or focusing) a phase
+// START → Phase 1 → Phase 2 → LOOP. Hovering (or focusing) a phase
 // opens its detail to the right.
 //
 // A phase's detail is one or more tracks; each track is a list of rows, and
@@ -9,14 +9,14 @@
 // every box in the next row. Paper boxes point at publications by slug so
 // titles, venues, and links live in publicationsData only.
 
-export type PhaseId = 'p1' | 'p2' | 'p3';
+export type PhaseId = 'p1' | 'p2';
 
 export type BoxKind = 'state' | 'strategy' | 'paper';
 
 // Colour families, echoing the hand-drawn sketches.
 export type CanvasTone =
-  | 'neutral' | 'p1' | 'p2' | 'p3'
-  | 'novice' | 'expert' | 'paper' | 'memory' | 'ui'
+  | 'neutral' | 'p1' | 'p2'
+  | 'novice' | 'expert' | 'paper' | 'memory'
   | 'frame-novice' | 'frame-expert';
 
 export interface MapBox {
@@ -55,7 +55,7 @@ export const researchPhases: ResearchPhase[] = [
     id: 'p1',
     number: '01',
     label: 'Phase 1',
-    title: 'Intent Across Expertise',
+    title: 'Understanding Intent Across Expertise',
     subtitle: 'Structural execution vs. co-exploration',
     summary:
       'Deciphering intent varies across a spectrum of user expertise. Experts often hold a clear mental model of the final output, so a top-down interaction works well. Novices adopt an exploratory approach and, without a strong reference point, can be prone to premature convergence.',
@@ -87,7 +87,7 @@ export const researchPhases: ResearchPhase[] = [
     id: 'p2',
     number: '02',
     label: 'Phase 2',
-    title: 'Structuring Context',
+    title: 'Long-Term Memory for Personalized Agents',
     subtitle: 'Proactive questions & verbatim memory',
     summary:
       'User intent accumulates over days, weeks, and months. While an agent should ask proactive questions to elicit goals, its memory should record raw facts without judging their importance prematurely, leaving higher-level insights for when more context emerges.',
@@ -99,25 +99,6 @@ export const researchPhases: ResearchPhase[] = [
           [{ id: 'p2-recall', kind: 'paper', tone: 'paper', pending: true, eyebrow: 'In preparation', badge: 'Coming soon', title: 'Verbatim phrasing as recall cues', body: 'Details will be updated soon.' }],
           [{ id: 'p2-episodic', kind: 'strategy', tone: 'memory', eyebrow: 'Episodic memory', title: 'Raw logs of interaction' }],
           [{ id: 'p2-meta', kind: 'strategy', tone: 'memory', eyebrow: 'User profile', title: 'A third-person metacognitive view', body: 'Extending to skills.md & LLM wikis' }],
-        ],
-      },
-    ],
-  },
-  {
-    id: 'p3',
-    number: '03',
-    label: 'Phase 3',
-    title: 'Just-in-Time Interfaces',
-    subtitle: 'Adaptive UI & user accountability',
-    summary:
-      'Static interfaces cannot serve diverse human needs. Just-in-time interfaces dynamically construct UI components based on the user’s immediate context, letting tools adapt to humans while keeping the user in meaningful control of their decisions.',
-    tracks: [
-      {
-        id: 'p3-main',
-        rows: [
-          [{ id: 'p3-render', kind: 'state', tone: 'ui', eyebrow: 'Just-in-time UI', title: 'Built from the immediate context' }],
-          [{ id: 'p3-agendas', kind: 'paper', tone: 'paper', eyebrow: 'Ongoing project', badge: 'Ongoing', title: 'Shared Agendas from Separate AI Conversations', body: 'Turns a team’s separate AI chats into shared issues and options.' }],
-          [{ id: 'p3-execute', kind: 'strategy', tone: 'ui', eyebrow: 'User accountability', title: 'Meaningful control of decisions' }],
         ],
       },
     ],
