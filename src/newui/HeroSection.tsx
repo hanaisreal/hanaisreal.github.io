@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { MdEmail } from 'react-icons/md';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiDocumentText } from 'react-icons/hi';
@@ -103,7 +104,7 @@ const HeroSection: React.FC = () => (
           <p>
             Prior to my master&apos;s, I graduated from Seoul National University with a B.S. in Computer
             Science and Engineering and a double major in Business Administration. As an undergraduate,
-            I worked with Prof.{' '}
+            a class project in Prof.{' '}
             <a
               className="text-link"
               href="https://www.hajinlim.com/"
@@ -116,7 +117,17 @@ const HeroSection: React.FC = () => (
             >
               Hajin Lim
             </a>
-            {' '}(DeepAware) and with Prof.{' '}
+            &apos;s course grew into a{' '}
+            <Link
+              className="text-link"
+              to="/publications/deepaware"
+              data-analytics-event="publication_click"
+              data-analytics-label="DeepAware"
+              data-analytics-placement="hero"
+            >
+              CHI &apos;26 paper on deepfake awareness among older adults
+            </Link>
+            . I also worked with Prof.{' '}
             <a
               className="text-link"
               href="https://juhokim.com/"
@@ -129,7 +140,7 @@ const HeroSection: React.FC = () => (
             >
               Juho Kim
             </a>
-            {' '}at KAIST (summer internship).
+            {' '}at KAIST during a summer internship.
           </p>
           <p>My research is supported by the BK21 FOUR Program.</p>
         </div>
