@@ -72,6 +72,9 @@ const HeroSection: React.FC = () => (
 
       <div className="profile__right">
         <h1 className="profile__name">Hana Oh</h1>
+        <p className="profile__affil">
+          M.S. Student, Intelligence and Information · Seoul National University
+        </p>
         <div className="bio">
           <p>
             Hi, I&apos;m Hana. I am an M.S. student in Intelligence and Information at Seoul National

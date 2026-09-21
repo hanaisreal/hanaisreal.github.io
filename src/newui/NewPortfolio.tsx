@@ -3,6 +3,8 @@ import Masthead from './Masthead';
 import HeroSection from './HeroSection';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
+import ResearchOverviewSection from './ResearchOverviewSection';
+import SelectedPublicationsSection from './SelectedPublicationsSection';
 import SplashScreen from './SplashScreen';
 import { BackgroundItem } from '../components/data/backgroundsData';
 import './newPortfolio.css';
@@ -72,6 +74,8 @@ const NewPortfolio: React.FC<Props> = ({ bg }) => {
         <hr className="sec-rule" />
         <div className="intro-flow">
           <NewsSection />
+          <ResearchOverviewSection />
+          <SelectedPublicationsSection />
           <AboutSection />
         </div>
       </div>

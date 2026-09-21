@@ -4,7 +4,9 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Masthead from '../newui/Masthead';
 import PublicationsSection from '../newui/PublicationsSection';
 import ProjectsSection from '../newui/ProjectsSection';
+import ResearchMap from '../newui/research-canvas/ResearchMap';
 import '../newui/newPortfolio.css';
+import '../newui/research-canvas/researchMap.css';
 
 type OpeningState = {
   path: string;
@@ -65,18 +67,20 @@ const ResearchPage: React.FC = () => {
   return (
     <div>
       <Masthead />
-      <div className="page page--research">
+      <main className="page page--publication page--research-sheet">
         <header className="page-intro">
           <h1 className="page-intro__title">Research</h1>
           <p className="page-intro__desc">
-            Publications and projects on personal AI agents and collaborative AI systems,
-            deployed in classrooms, with older adults, and with writers.
+            How AI agents can adapt to a person&apos;s expertise, remember what they meant, and
+            reshape the workspace around them, while leaving the decisions to people.
           </p>
         </header>
+        <ResearchMap />
+        <hr className="sec-rule" />
         <PublicationsSection onOpen={handleOpen} />
         <hr className="sec-rule" />
         <ProjectsSection onOpen={handleOpen} />
-      </div>
+      </main>
       <AnimatePresence>
         {opening && (
           <motion.div
