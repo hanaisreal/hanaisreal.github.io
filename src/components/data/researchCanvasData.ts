@@ -55,30 +55,30 @@ export const researchPhases: ResearchPhase[] = [
     id: 'p1',
     number: '01',
     label: 'Phase 1',
-    title: 'Expertise & Domain Spectrum',
-    subtitle: 'Novice exploration vs. expert execution',
+    title: 'Intent Across Expertise',
+    subtitle: 'Structural execution vs. co-exploration',
     summary:
-      'The same AI support lands differently depending on how much a person already knows. Novices risk converging too early and need an agent that explores with them; experts arrive with a clear structure and need an agent that takes delegation without churning the interface.',
+      'Deciphering intent varies across a spectrum of user expertise. Experts often hold a clear mental model of the final output, so a top-down interaction works well. Novices adopt an exploratory approach and, without a strong reference point, can be prone to premature convergence.',
     tracks: [
       {
         id: 'p1-a',
         frame: { tone: 'frame-novice', eyebrow: 'Track A', title: 'Novice exploration' },
         rows: [
-          [{ id: 'p1-a-state', kind: 'state', tone: 'novice', eyebrow: 'Novice mindset', title: 'No baseline reference', body: 'Risk of premature convergence' }],
+          [{ id: 'p1-a-state', kind: 'state', tone: 'novice', eyebrow: 'Novice', title: 'Exploratory approach', body: 'Prone to premature convergence' }],
           [
             { id: 'p1-a-scaffold', kind: 'paper', tone: 'paper', pubSlug: 'when-scaffolding-breaks', eyebrow: 'CHI ’26', badge: 'Best Paper', title: 'When Scaffolding Breaks', body: 'K-12 AI writing scaffolding' },
-            { id: 'p1-a-deepaware', kind: 'paper', tone: 'paper', pubSlug: 'deepaware', eyebrow: 'CHI ’26', title: 'DeepAware', body: 'Deepfake simulations with older adults' },
+            { id: 'p1-a-deepaware', kind: 'paper', tone: 'paper', pubSlug: 'deepaware', eyebrow: 'CHI ’26', title: 'DeepAware', body: 'Deepfake awareness among older adults' },
           ],
-          [{ id: 'p1-a-strategy', kind: 'strategy', tone: 'novice', eyebrow: 'Agent strategy', title: 'Co-exploration', body: 'Active scaffolding & reflective prompts' }],
+          [{ id: 'p1-a-strategy', kind: 'strategy', tone: 'novice', eyebrow: 'Agent strategy', title: 'Fostering co-exploration' }],
         ],
       },
       {
         id: 'p1-b',
         frame: { tone: 'frame-expert', eyebrow: 'Track B', title: 'Expert delegation' },
         rows: [
-          [{ id: 'p1-b-state', kind: 'state', tone: 'expert', eyebrow: 'Expert mindset', title: 'Clear structural vision', body: 'High-efficiency focus' }],
-          [{ id: 'p1-b-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Reusable style assets' }],
-          [{ id: 'p1-b-strategy', kind: 'strategy', tone: 'expert', eyebrow: 'Agent strategy', title: 'Top-down delegation', body: 'Predictable, low UI churn' }],
+          [{ id: 'p1-b-state', kind: 'state', tone: 'expert', eyebrow: 'Expert', title: 'Clear mental model of the output' }],
+          [{ id: 'p1-b-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Stylistic tone as reusable assets' }],
+          [{ id: 'p1-b-strategy', kind: 'strategy', tone: 'expert', eyebrow: 'Agent strategy', title: 'Top-down delegation', body: 'User communicates the structure' }],
         ],
       },
     ],
@@ -87,18 +87,18 @@ export const researchPhases: ResearchPhase[] = [
     id: 'p2',
     number: '02',
     label: 'Phase 2',
-    title: 'Persistent Intent Engine',
-    subtitle: 'Active probing & verbatim memory',
+    title: 'Structuring Context',
+    subtitle: 'Proactive questions & verbatim memory',
     summary:
-      'An agent that works with someone over time has to remember what they actually said. It asks proactive questions at task boundaries, keeps the user’s own phrasing instead of lossy summaries, and refines a metacognitive layer on top.',
+      'User intent accumulates over days, weeks, and months. While an agent should ask proactive questions to elicit goals, its memory should record raw facts without judging their importance prematurely, leaving higher-level insights for when more context emerges.',
     tracks: [
       {
         id: 'p2-main',
         rows: [
-          [{ id: 'p2-elicit', kind: 'state', tone: 'memory', eyebrow: 'Active intent elicitation', title: 'Proactive questions at task boundaries' }],
-          [{ id: 'p2-recall', kind: 'paper', tone: 'paper', pending: true, eyebrow: 'In preparation', badge: 'Coming soon', title: 'Long-conversation verbatim recall', body: 'Details will be updated soon.' }],
-          [{ id: 'p2-episodic', kind: 'strategy', tone: 'memory', eyebrow: 'Raw episodic memory', title: 'Verbatim cues, no lossy summaries' }],
-          [{ id: 'p2-meta', kind: 'strategy', tone: 'memory', eyebrow: 'Metacognitive layer', title: 'User profiles, skills.md & LLM wikis' }],
+          [{ id: 'p2-elicit', kind: 'state', tone: 'memory', eyebrow: 'Active elicitation', title: 'Ask proactive questions', body: 'One level above, for a comprehensive view' }],
+          [{ id: 'p2-recall', kind: 'paper', tone: 'paper', pending: true, eyebrow: 'In preparation', badge: 'Coming soon', title: 'Verbatim phrasing as recall cues', body: 'Details will be updated soon.' }],
+          [{ id: 'p2-episodic', kind: 'strategy', tone: 'memory', eyebrow: 'Episodic memory', title: 'Raw logs of interaction' }],
+          [{ id: 'p2-meta', kind: 'strategy', tone: 'memory', eyebrow: 'User profile', title: 'A third-person metacognitive view', body: 'Extending to skills.md & LLM wikis' }],
         ],
       },
     ],
@@ -107,17 +107,17 @@ export const researchPhases: ResearchPhase[] = [
     id: 'p3',
     number: '03',
     label: 'Phase 3',
-    title: 'Adaptive Interface & Control',
-    subtitle: 'Malleable UI & user accountability',
+    title: 'Just-in-Time Interfaces',
+    subtitle: 'Adaptive UI & user accountability',
     summary:
-      'Interfaces can be assembled on the fly around what the agent has learned, but the final choice stays with the person: the system organizes, people decide.',
+      'Static interfaces cannot serve diverse human needs. Just-in-time interfaces dynamically construct UI components based on the user’s immediate context, letting tools adapt to humans while keeping the user in meaningful control of their decisions.',
     tracks: [
       {
         id: 'p3-main',
         rows: [
-          [{ id: 'p3-render', kind: 'state', tone: 'ui', eyebrow: 'Dynamic UI rendering', title: 'Malleable components built on the fly' }],
+          [{ id: 'p3-render', kind: 'state', tone: 'ui', eyebrow: 'Just-in-time UI', title: 'Built from the immediate context' }],
           [{ id: 'p3-agendas', kind: 'paper', tone: 'paper', eyebrow: 'Ongoing project', badge: 'Ongoing', title: 'Shared Agendas from Separate AI Conversations', body: 'Turns a team’s separate AI chats into shared issues and options.' }],
-          [{ id: 'p3-execute', kind: 'strategy', tone: 'ui', eyebrow: 'Human action execution', title: 'The user keeps the final choice' }],
+          [{ id: 'p3-execute', kind: 'strategy', tone: 'ui', eyebrow: 'User accountability', title: 'Meaningful control of decisions' }],
         ],
       },
     ],

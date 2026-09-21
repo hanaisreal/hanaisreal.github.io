@@ -90,19 +90,21 @@ const HeroSection: React.FC = () => (
               data-analytics-placement="hero"
             >
               Bongwon Suh
-            </a>
-            . My research is at the intersection of human-computer interaction (HCI) and artificial
-            intelligence. My current work builds <strong>personal AI agents</strong> with long-term memory
-            and <strong>collaborative AI systems</strong> that turn a group&apos;s separate AI conversations
-            into shared understanding, and examines how scaffolding from AI shapes what people can
-            still do on their own. I enjoy building systems and deploying them with real users,
-            including classrooms, older adults, and writers, and I am beginning to extend this work
-            into AR/VR and embodied interaction.
+            </a>{' '}
+            and Hajin Lim. My research lies at the intersection of human-computer interaction, social
+            science, and LLMs.
+          </p>
+          <p>
+            While human experience is inherently unique, AI outputs are often uniform and impersonal.
+            I am interested in contributing to the evolution of AI from a generalized tool into a{' '}
+            <strong>truly collaborative, personalized agent</strong>: one that elicits intent accurately,
+            remembers it faithfully, and renders it dynamically into interfaces that keep the user in
+            meaningful control.
           </p>
           <p>
             Prior to my master&apos;s, I graduated from Seoul National University with a B.S. in Computer
-            Science and Engineering and a double major in Business Administration, where I had the
-            chance to work with Juho Kim, Hajin Lim, and Bongwon Suh.
+            Science and Engineering and a double major in Business Administration, where I also had
+            the chance to work with Juho Kim.
           </p>
           <p>My research is supported by the BK21 FOUR Program.</p>
         </div>

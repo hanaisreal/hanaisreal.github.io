@@ -71,8 +71,9 @@ const ResearchPage: React.FC = () => {
         <header className="page-intro">
           <h1 className="page-intro__title">Research</h1>
           <p className="page-intro__desc">
-            How AI agents can adapt to a person&apos;s expertise, remember what they meant, and
-            reshape the workspace around them, while leaving the decisions to people.
+            Building truly personalized agents that elicit intent accurately, remember it faithfully,
+            and render it dynamically into interfaces that balance adaptability with user
+            accountability.
           </p>
         </header>
         <ResearchMap />
