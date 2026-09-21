@@ -78,7 +78,7 @@ const HeroSection: React.FC = () => (
         <div className="bio">
           <p>
             Hi, I&apos;m Hana. I am an M.S. student in Intelligence and Information at Seoul National
-            University, advised by{' '}
+            University, advised by Prof.{' '}
             <a
               className="text-link"
               href="https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
@@ -102,8 +102,8 @@ const HeroSection: React.FC = () => (
           </p>
           <p>
             Prior to my master&apos;s, I graduated from Seoul National University with a B.S. in Computer
-            Science and Engineering and a double major in Business Administration, where I had the
-            chance to work with Juho Kim and{' '}
+            Science and Engineering and a double major in Business Administration. As an undergraduate,
+            I worked with Prof.{' '}
             <a
               className="text-link"
               href="https://www.hajinlim.com/"
@@ -116,7 +116,20 @@ const HeroSection: React.FC = () => (
             >
               Hajin Lim
             </a>
-            .
+            {' '}(DeepAware) and with Prof.{' '}
+            <a
+              className="text-link"
+              href="https://juhokim.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="external_link_click"
+              data-analytics-label="Juho Kim"
+              data-analytics-destination="https://juhokim.com/"
+              data-analytics-placement="hero"
+            >
+              Juho Kim
+            </a>
+            {' '}at KAIST (summer internship).
           </p>
           <p>My research is supported by the BK21 FOUR Program.</p>
         </div>
