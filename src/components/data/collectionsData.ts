@@ -8,7 +8,7 @@ export interface CollectionItem {
   keywordLabel?: string;
   cardLabel?: string;
   cardLabelEn?: string;
-  description: string;
+  description?: string;
   descriptionEn?: string;
   src?: string;
   gallery?: string[];
@@ -226,22 +226,7 @@ export const referenceProjects: CollectionItem[] = [
     original: "Douglas Engelbart",
     language: "reference",
     keywordLabel: "Engelbart",
-    cardLabelEn: "augmenting intellect",
     meta: "1962 · Augmenting Human Intellect",
-    metaEn: "1962 · Augmenting Human Intellect",
-    description:
-      "컴퓨터를 단순한 자동화 기계가 아니라 인간의 지적 능력과 협업 능력을 확장하는 도구로 보았던 관점으로 자주 돌아가게 된다.",
-    descriptionEn:
-      "I keep returning to Engelbart's idea that computers should augment human intellect and collective problem-solving rather than simply automate tasks.",
-    glance: "\"augmenting human intellect\"라는 말이 내가 도구를 보는 기준이 된다.",
-    glanceEn:
-      "\"Augmenting human intellect\" is one of the phrases I keep using to judge what a tool is really helping people do.",
-    curatorNote:
-      "내게 남는 것은 발명품 자체보다도, 컴퓨팅이 사람을 더 잘 생각하게 하고 더 잘 함께 일하게 해야 한다는 전제다. 그래서 어떤 시스템을 볼 때도 결과를 대신 만들어 주는지를 넘어서, 이해와 협업의 능력을 실제로 키워 주는지를 보게 된다.",
-    curatorNoteEn:
-      "What stays with me is not only the artifacts he built, but the premise behind them: computing should increase human capability. It keeps pushing me to ask whether a system helps people see more clearly, coordinate better, and build understanding over time.",
-    source: "Douglas Engelbart, Augmenting Human Intellect: A Conceptual Framework",
-    sourceEn: "Douglas Engelbart, Augmenting Human Intellect: A Conceptual Framework",
     href: "https://www.dougengelbart.org/pubs/papers/scanned/Doug_Engelbart-AugmentingHumanIntellect.pdf",
   },
   {
@@ -250,22 +235,7 @@ export const referenceProjects: CollectionItem[] = [
     original: "Alan Kay",
     language: "reference",
     keywordLabel: "Alan Kay",
-    cardLabelEn: "dynamic media",
     meta: "1977 · Personal Dynamic Media",
-    metaEn: "1977 · Personal Dynamic Media",
-    description:
-      "컴퓨터를 정보를 전달하는 채널이 아니라, 사람이 생각하고 배우고 실험할 수 있는 'personal dynamic media'로 본 관점이 오래 남는다.",
-    descriptionEn:
-      "I keep returning to Alan Kay's view of the computer as personal dynamic media: a medium for thought, learning, and experimentation rather than mere delivery.",
-    glance: "\"personal dynamic media\"와 생각을 바깥으로 구체화하는 인터페이스에 대한 관점.",
-    glanceEn:
-      "\"Personal dynamic media\" and the idea that external media can materialize thought keep shaping how I imagine interfaces.",
-    curatorNote:
-      "내게 영향을 주는 것은 컴퓨터를 단순히 정보를 보여 주는 창이 아니라, 사람이 사고를 바깥으로 펼치고 다시 다루게 하는 매체로 본 점이다. 그래서 인터페이스를 설계할 때도 소비보다 탐색, 학습, 실험의 공간으로 보게 된다.",
-    curatorNoteEn:
-      "What influences me most is the shift in perspective: the computer is not just a channel for content, but a medium people can think in. That keeps pulling me toward interfaces that support exploration, learning, and reshaping ideas instead of passive consumption.",
-    source: "Alan Kay and Adele Goldberg, Personal Dynamic Media",
-    sourceEn: "Alan Kay and Adele Goldberg, Personal Dynamic Media",
     href: "https://augmentingcognition.com/assets/Kay1977.pdf",
   },
   {
@@ -274,22 +244,7 @@ export const referenceProjects: CollectionItem[] = [
     original: "Bret Victor",
     language: "reference",
     keywordLabel: "Bret Victor",
-    cardLabelEn: "thinking tools",
     meta: "2013 · Media for Thinking the Unthinkable",
-    metaEn: "2013 · Media for Thinking the Unthinkable",
-    description:
-      "표현 방식 자체가 사고를 바꾼다는 점, 그리고 'media are our thinking tools'라는 관점 때문에 계속 돌아보게 되는 작업이다.",
-    descriptionEn:
-      "I keep returning to Bret Victor's claim that media are our thinking tools, and that better representations can change what we are able to understand.",
-    glance: "\"media are our thinking tools\"라는 문장이 표현과 이해의 관계를 계속 다시 보게 만든다.",
-    glanceEn:
-      "\"Media are our thinking tools\" keeps me focused on how representation shapes understanding.",
-    curatorNote:
-      "내게 남는 것은 도구를 더 예쁘게 만드는 문제가 아니라, 무엇을 어떻게 보이게 하느냐가 곧 사고의 범위를 바꾼다는 점이다. 그래서 나는 즉각적인 피드백, 여러 표현 방식의 연결, 사용자가 자기 해석을 눈앞에서 다룰 수 있는 시스템에 끌린다.",
-    curatorNoteEn:
-      "What stays with me is the idea that better tools are not only smoother tools; they are better ways of seeing. It keeps me drawn to immediate feedback, linked representations, and systems that let people manipulate their own interpretations in front of them.",
-    source: "Bret Victor, Media for Thinking the Unthinkable",
-    sourceEn: "Bret Victor, Media for Thinking the Unthinkable",
     href: "https://worrydream.com/",
   },
   {
@@ -298,21 +253,8 @@ export const referenceProjects: CollectionItem[] = [
     original: "Feel at Home",
     language: "reference",
     keywordLabel: "Feel at Home",
-    meta: "2025 · Ori Ease · 인터랙티브 설치",
-    metaEn: "2025 · Ori Ease · interactive installation",
+    meta: "2025 · Ori Ease",
     src: `${BASE}/pictures/references/feel-at-home-ori-ease-screenshot.jpg`,
-    description:
-      "Ori Ease의 작업으로, 냉장고라는 일상적 사물을 통해 서로 다른 삶과 집, 이야기를 들여다보게 하는 인터랙티브 설치.",
-    descriptionEn:
-      "A project by Ori Ease that lets the viewer peek into different lives, homes, and stories through an everyday object: a fridge.",
-    glance: "집, 이야기, 일상적 사물을 통해 사람을 바라보는 방식에 대한 레퍼런스.",
-    glanceEn: "Screenshot from Ori Ease's project page, saved here as a reference rather than my own work.",
-    curatorNote:
-      "내 작업이 아니라, 내가 좋아하고 자주 돌아보는 레퍼런스다. 어떤 집에는 편안함을 느끼고 어떤 집에는 낯섦을 느끼게 만드는 방식이 오래 남는다.",
-    curatorNoteEn:
-      "This is not my project. This image is a screenshot from Ori Ease's Feel at Home project page, and I keep it here because I return to the way it reveals different homes and stories through a fridge, and to the question of when a place feels welcoming or unfamiliar.",
-    source: "Ori Ease · Feel at Home 스크린샷",
-    sourceEn: "Screenshot from Ori Ease · Feel at Home",
     href: "https://oriease.com/feel-at-home",
   },
 ];

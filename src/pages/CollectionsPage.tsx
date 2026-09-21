@@ -317,8 +317,7 @@ const regularTwinkle = (time: number, seed: number) => {
   return 0.2 + wave * 0.8;
 };
 // Stays within 2-10 — above the background (z-index 1), below MOON_Z (11) so
-// the moon image can occlude bubbles passing behind it, and below every
-// sticker (z-index 12+, see STICKERS).
+// the moon image can occlude bubbles passing behind it.
 const depthZ = (depth: number) => 2 + Math.round((depth + 1) * 4);
 
 // The moon image sits exactly over the dark circle drawn in background.png
@@ -428,55 +427,16 @@ const INTRO_PARAGRAPHS: IntroParagraph[] = [
   {
     content: (
       <>
-        <span className="collage-intro__spark">Scroll</span> to zoom in. Click a star to explore.
+        Click a star to explore.
       </>
     ),
     tone: 'cta',
   },
 ];
 
-// ── Sticker layout ──────────────────────────────────────────────────────────
-// depth: px movement per unit tilt. higher = floats more in foreground.
-// z-order: plant-eye(12) → path(13) → flowers+pine(14) → frog+clouds(15)
-//          → cloud-large(16) → butterfly+frog-pixel+crane(17)
-// Shifted up (+10) so the orbiting photo bubbles (z-index ~2-11, see depthZ)
-// always sit behind every sticker — just in front of the background, never on
-// top of clouds/pine/etc.
-// ────────────────────────────────────────────────────────────────────────────
-interface Sticker {
-  src: string;
-  style: React.CSSProperties;
-  depth: number;
-  // Which way this thing flies past the camera during the warp — outward,
-  // toward whichever edge it already sits near. Passing through means moving
-  // out of frame, not fading; this is the direction it moves out in.
-  flyDir: { x: number; y: number };
-}
-
-const STICKERS: Sticker[] = [
-  // ground — most anchored, barely moves
-  { src: 'plant-eye.png',    style: { left: '-4%',   bottom: '14%', width: '32%', zIndex: 12 }, depth: 3,  flyDir: { x: -1,   y: 1   } },
-  { src: 'path.png',         style: { left:  '4%',   bottom: '-4%', width: '92%', zIndex: 13 }, depth: 2,  flyDir: { x: 0,    y: 1   } },
-  // foreground — slightly lifted off ground
-  { src: 'flowers.png',      style: { left: '-4%',   bottom:  '0%', width: '67%', zIndex: 14 }, depth: 7,  flyDir: { x: -1,   y: 1   } },
-  { src: 'pine.png',         style: { right: '-20%', bottom: '-1%', width: '68%', zIndex: 14 }, depth: 8,  flyDir: { x: 1,    y: 1   } },
-  // mid — on path / lower atmosphere
-  { src: 'frog-real.png',    style: { left:  '60%',  bottom:  '7%', width: '22%', zIndex: 15 }, depth: 12, flyDir: { x: 1,    y: 1   } },
-  { src: 'cloud-large.png',  style: { left:   '5%',  top:    '44%', width: '58%', zIndex: 16 }, depth: 15, flyDir: { x: -0.4, y: -1  } },
-  { src: 'cloud-medium.png', style: { right: '19%',  top:    '40%', width: '35%', zIndex: 15 }, depth: 18, flyDir: { x: 0.6,  y: -1  } },
-  { src: 'cloud-small.png',  style: { right: '10%',  top:    '48%', width: '26%', zIndex: 15 }, depth: 20, flyDir: { x: 0.9,  y: -0.8} },
-  // sky — lightest, floats the most
-  { src: 'frog-pixel.png',   style: { left:  '15%',  top:    '41%', width: '13%', zIndex: 17 }, depth: 26, flyDir: { x: -0.6, y: -1  } },
-  { src: 'butterfly.png',    style: { left:  '25%',  top:    '34%', width: '12%', zIndex: 17 }, depth: 32, flyDir: { x: -0.3, y: -1.2} },
-  // { src: 'crane.png',     style: { right: '60%',  top:    '55%', width: '12%', zIndex: 17 }, depth: 28, flyDir: { x: 0.5, y: -1 } },
-];
 
 // ────────────────────────────────────────────────────────────────────────────
 
-const WARP_DURATION = 1100; // ms — a committed jump, not a drag-it-out fade
-const WARP_TRIGGER = 100;   // accumulated wheel/pinch input needed to launch it
-const easeIn = (t: number) => t * t * t;
-const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
 // Clicking a word — whether its bubble out in the ring or its keyword chip in
 // the margin — should read as "that circle lit up and grew into the card",
@@ -493,15 +453,9 @@ const CollectionsPage: React.FC = () => {
   const [lang, setLang] = useState<Lang>('en');
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  // 0 = resting in the small frame, 1 = fully sucked into the universe.
-  // Only ever sits at 0 or 1 — once a warp launches it always runs to
-  // completion, regardless of further scrolling, so it can't get stuck
-  // half-transitioned.
-  const [warpProgress, setWarpProgress] = useState(0);
-  const [warping, setWarping] = useState(false);
+  // Re-render on resize so the full-screen scale tracks the viewport.
+  const [, setViewportTick] = useState(0);
   const portraitRef = useRef<HTMLDivElement>(null);
-  const lastTouchDist = useRef(0);
-  const scrollAccum = useRef(0);
   const clusterRefs = useRef<Array<HTMLDivElement | null>>([]);
   const sparkleRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const photoRefs = useRef<Array<HTMLButtonElement | null>>([]);
@@ -673,25 +627,6 @@ const CollectionsPage: React.FC = () => {
     galleryTouchStartX.current = null;
   };
 
-  // Launches the one-shot warp animation and runs it to completion on its own
-  // timer — not tied to the wheel/touch input that triggered it.
-  const startWarp = (direction: 1 | -1) => {
-    setWarping(true);
-    const startVal = direction === 1 ? 0 : 1;
-    const ease = direction === 1 ? easeIn : easeOut;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / WARP_DURATION);
-      setWarpProgress(direction === 1 ? ease(t) : startVal - ease(t));
-      if (t < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        setWarpProgress(direction === 1 ? 1 : 0);
-        setWarping(false);
-      }
-    };
-    requestAnimationFrame(tick);
-  };
 
   // Desktop: track mouse anywhere on the page, relative to portrait center
   useEffect(() => {
@@ -821,62 +756,16 @@ const CollectionsPage: React.FC = () => {
     return () => cancelAnimationFrame(frame);
   }, []);
 
-  // Scroll enough in one direction and it launches the warp — doesn't matter
-  // if you stop scrolling right after, the animation already committed.
   useEffect(() => {
-    const el = portraitRef.current;
-    if (!el) return;
-    const handler = (e: WheelEvent) => {
-      e.preventDefault();
-      if (warping) return;
-      if (warpProgress >= 1) {
-        if (e.deltaY <= 0) { scrollAccum.current = 0; return; }
-        scrollAccum.current += e.deltaY;
-        if (scrollAccum.current > WARP_TRIGGER) { scrollAccum.current = 0; startWarp(-1); }
-        return;
-      }
-      if (e.deltaY >= 0) { scrollAccum.current = 0; return; }
-      scrollAccum.current += -e.deltaY;
-      if (scrollAccum.current > WARP_TRIGGER) { scrollAccum.current = 0; startWarp(1); }
-    };
-    el.addEventListener('wheel', handler, { passive: false });
-    return () => el.removeEventListener('wheel', handler);
-  }, [warping, warpProgress]);
+    const onResize = () => setViewportTick((t) => t + 1);
+    onResize(); // portraitRef is measured after the first paint
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
-  // Pinch to zoom (mobile) — same launch-then-commit behavior as the wheel
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length !== 2 || warping) return;
-    const dist = Math.hypot(
-      e.touches[0].clientX - e.touches[1].clientX,
-      e.touches[0].clientY - e.touches[1].clientY,
-    );
-    if (lastTouchDist.current > 0) {
-      const delta = dist - lastTouchDist.current;
-      if (warpProgress >= 1) {
-        if (delta < 0) {
-          scrollAccum.current += -delta;
-          if (scrollAccum.current > WARP_TRIGGER) { scrollAccum.current = 0; startWarp(-1); }
-        } else {
-          scrollAccum.current = 0;
-        }
-      } else if (delta > 0) {
-        scrollAccum.current += delta;
-        if (scrollAccum.current > WARP_TRIGGER) { scrollAccum.current = 0; startWarp(1); }
-      } else {
-        scrollAccum.current = 0;
-      }
-    }
-    lastTouchDist.current = dist;
-  };
-
-  const handleTouchEnd = () => { lastTouchDist.current = 0; };
-
-  // Double-click / double-tap to warp back out, once you're fully in
-  const handleDoubleClick = () => {
-    if (!warping && warpProgress > 0.5) startWarp(-1);
-  };
-
-  const progress = warpProgress;
+  // The page opens already inside the universe, edge to edge — no framed
+  // gallery view first. `progress` is the old warp amount, pinned at 1.
+  const progress = 1;
   // How far the small portrait needs to grow (via transform, so it's cheap)
   // before it covers the whole viewport — "bursting out of the frame" into
   // open space, past the trees and clouds, instead of just zooming inside it.
@@ -897,14 +786,6 @@ const CollectionsPage: React.FC = () => {
     );
     return 1 + (Math.max(1, maxFrameScale) - 1) * progress;
   })();
-  // The frame belongs only to the resting gallery view. Fade it immediately
-  // during the first part of the zoom so the universe can return edge-to-edge.
-  const frameVisibility = Math.max(0, 1 - progress * 6);
-  // Peaks mid-warp and resolves clean at both ends — the "space-time"
-  // distortion cue while everything is rushing past.
-  const warpFilter = warping
-    ? `blur(${Math.sin(progress * Math.PI) * 7}px) brightness(${1 + Math.sin(progress * Math.PI) * 0.35})`
-    : 'none';
 
   return (
     <div className="collage-page">
@@ -914,17 +795,10 @@ const CollectionsPage: React.FC = () => {
         <div
           className="collage-portrait"
           ref={portraitRef}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          onDoubleClick={handleDoubleClick}
           style={{
             transform: `scale(${frameScale})`,
             transformOrigin: `50% ${FRAME_ORIGIN_Y}%`,
-            boxShadow: `
-              0 0 0 7px rgba(250, 247, 242, ${0.92 * frameVisibility}),
-              0 20px 48px rgba(13, 8, 6, ${0.32 * frameVisibility})
-            `,
-            transition: warping ? 'none' : 'transform 0.08s ease-out, box-shadow 0.08s linear',
+            boxShadow: 'none',
           }}
         >
           {/* Inner layer — just a slight lean toward ZOOM_FOCUS. The dramatic "fill the
@@ -937,8 +811,6 @@ const CollectionsPage: React.FC = () => {
               inset: 0,
               transform: `scale(${1 + 0.3 * progress})`,
               transformOrigin: `${ZOOM_FOCUS.x}% ${ZOOM_FOCUS.y}%`,
-              filter: warpFilter,
-              transition: warping ? 'none' : 'transform 0.08s ease-out',
             }}
           >
             <img
@@ -1063,35 +935,6 @@ const CollectionsPage: React.FC = () => {
               );
             })}
 
-            {STICKERS.map(({ src, style, depth, flyDir }) => {
-              // Foreground stuff (high depth — clouds, butterfly) blows up huge and flies
-              // outward toward whichever edge it's already near — passing right through
-              // the frame and out the side, fully opaque the whole way, rather than fading
-              // out in place. Grounded stuff (path, plant-eye) barely moves.
-              // vw/vh, not %, and placed outside the scale() in the transform chain — a
-              // %-based translate is relative to the element's OWN (unscaled) size, so as
-              // flyScale grows that fixed offset becomes proportionally tiny and the thing
-              // never actually clears the screen, it just balloons in place forever.
-              const flyScale = 1 + progress * (depth / 4);
-              const flyX = flyDir.x * progress * 140;
-              const flyY = flyDir.y * progress * 140;
-              return (
-                <img
-                  key={src}
-                  src={S(src)}
-                  alt=""
-                  draggable={false}
-                  className="collage-sticker"
-                  decoding="async"
-                  style={{
-                    ...style,
-                    transform: `translate(${tilt.x * depth}px, ${tilt.y * depth}px) translate(${flyX}vw, ${flyY}vh) scale(${flyScale})`,
-                    filter: `drop-shadow(${-tilt.x * 6}px ${-tilt.y * 6}px 10px rgba(0,0,0,0.45))`,
-                    transition: warping ? 'none' : 'transform 0.12s ease-out, filter 0.12s ease-out',
-                  }}
-                />
-              );
-            })}
           </div>
 
           {/* UI overlays — stay fixed, don't zoom */}
@@ -1192,7 +1035,7 @@ const CollectionsPage: React.FC = () => {
               {selectedHref && (
                 <p className="collage-modal__source">
                   <a href={selectedHref} target="_blank" rel="noopener noreferrer">
-                    {selected.kind === 'reference' ? 'Open source' : 'Visit link'}
+                    {selected.kind === 'reference' ? 'Link ↗' : 'Visit link'}
                   </a>
                 </p>
               )}
