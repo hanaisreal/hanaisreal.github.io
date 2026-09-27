@@ -50,11 +50,13 @@ export const publications: Publication[] = [
     type: "conference",
     insight: "How can visual interaction help writers keep a character's tone consistent across a narrative?",
     tldr: "A visual interface that lets writers paint tone attributes onto characters, helping them catch stylistic drift before it becomes a structural problem.",
-    narrative: `Characters don't stay consistent. A villain who's menacing in chapter two sounds apologetic in chapter seven — not because the writer intended it, but because sustaining tone across thousands of words is genuinely hard. Writers hold a lot in their heads, and subtle shifts accumulate.
+    narrative: `Maintaining character tone consistency across long-form narrative text poses a recurring challenge in creative writing. As drafts expand across chapters, subtle linguistic drift occurs silently, causing character voices to diverge from their intended profiles without the writer noticing.
 
-ToneCanvas approaches this as a visibility problem. Tone is something writers feel but rarely see. We built an interface where you can assign tone attributes — assertiveness, warmth, formality, emotional register — to individual characters and then watch how those attributes manifest across the draft in real time. Sections where a character's language drifts from their defined tone surface as visual anomalies, not as abstract warnings.
+In this project, we framed narrative tone management as a visual analytics and spatial interaction problem rather than a standard text editing task. We developed ToneCanvas, an interactive system that decouples narrative prose into structured canvas and character layers, turning abstract stylistic attributes into explicit visual parameters.
 
-The interaction model is deliberately spatial. Writers paint tone onto characters the way a director gives notes to an actor: not by editing the text directly, but by shaping the intention behind it. The goal was to give writers a handle on something they already sense but can't easily act on.`,
+Writers define multidimensional tone baselines for individual characters, specifying dimensions such as assertiveness, warmth, formality, and emotional register. The system analyzes the text against these profiles, surfacing tonal mismatches directly within the draft as visual anomalies rather than generic system warnings.
+
+The core interaction model relies on a spatial metaphor: writers manipulate visual tone controls to shape intent, which the underlying system uses to construct structured prompts for context-aware generative rewriting. This human-in-the-loop workflow keeps the writer in full control of the narrative direction while reducing the cognitive load of tracking character voices across complex, multi-chapter texts.`,
     contributions: [
       "A visual metaphor for character tone that makes stylistic drift visible during drafting",
       "An interaction design that separates intention-setting from text editing",
@@ -64,7 +66,7 @@ The interaction model is deliberately spatial. Writers paint tone onto character
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `Characters don't stay consistent. A villain who's menacing in chapter two sounds apologetic in chapter seven — not because the writer intended it, but because sustaining tone across thousands of words is genuinely hard. Writers hold a lot in their heads, and subtle shifts accumulate.`,
+        text: `Maintaining character tone consistency across long-form narrative text poses a recurring challenge in creative writing. As drafts expand across chapters, subtle linguistic drift occurs silently, causing character voices to diverge from their intended profiles without the writer noticing.`,
       },
       {
         type: 'figure',
@@ -77,7 +79,7 @@ The interaction model is deliberately spatial. Writers paint tone onto character
       },
       {
         type: 'paragraph',
-        text: `ToneCanvas approaches this as a visibility problem. Tone is something writers feel but rarely see. We built an interface where writers can assign tone attributes — assertiveness, warmth, formality, and emotional register — to individual characters and then watch how those attributes manifest across the draft in real time. Sections where a character's language drifts from their defined tone surface as visual anomalies, not as abstract warnings.`,
+        text: `In this project, we framed narrative tone management as a visual analytics and spatial interaction problem rather than a standard text editing task. We developed ToneCanvas, an interactive system that decouples narrative prose into structured canvas and character layers, turning abstract stylistic attributes into explicit visual parameters.`,
       },
       {
         type: 'figure',
@@ -90,7 +92,11 @@ The interaction model is deliberately spatial. Writers paint tone onto character
       },
       {
         type: 'paragraph',
-        text: `The interaction model is deliberately spatial. Writers paint tone onto characters the way a director gives notes to an actor: not by editing the text directly, but by shaping the intention behind it. The goal is to give writers a handle on something they already sense but can't easily act on.`,
+        text: `Writers define multidimensional tone baselines for individual characters, specifying dimensions such as assertiveness, warmth, formality, and emotional register. The system analyzes the text against these profiles, surfacing tonal mismatches directly within the draft as visual anomalies rather than generic system warnings.`,
+      },
+      {
+        type: 'paragraph',
+        text: `The core interaction model relies on a spatial metaphor: writers manipulate visual tone controls to shape intent, which the underlying system uses to construct structured prompts for context-aware generative rewriting. This human-in-the-loop workflow keeps the writer in full control of the narrative direction while reducing the cognitive load of tracking character voices across complex, multi-chapter texts.`,
       },
     ],
   },
