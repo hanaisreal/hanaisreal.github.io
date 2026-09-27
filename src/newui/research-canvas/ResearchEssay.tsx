@@ -15,7 +15,6 @@ import { Arrow, Box, Connector, Sketch, Track, useSize } from './sketchKit';
 
 const NARROW_QUERY = '(max-width: 860px)';
 const GAP = 56;
-const FLOW_W = 250; // matches the first .rmap column
 const LOOP_GAP = 56;     // matches .rloop column gap
 const LOOP_ROW_GAP = 44; // matches .rloop row gap
 
@@ -82,9 +81,9 @@ const SectionDetail: React.FC<{ section: EssaySection }> = ({ section }) => {
 
 const ResearchEssay: React.FC = () => {
   const narrow = useIsNarrow();
-  // Nothing is open until a section is hovered; the flow then sits centred.
-  const [active, setActive] = React.useState<string | null>(null);
-  const [mapRef, { w: mapW }] = useSize<HTMLDivElement>();
+  // The vision section is open by default on wide screens; the last hovered
+  // section stays open after the pointer leaves.
+  const [active, setActive] = React.useState<string | null>(narrow ? null : essaySections[0].id);
   const flowRef = React.useRef<HTMLDivElement>(null);
   const blockRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
   const panelRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
@@ -161,13 +160,7 @@ const ResearchEssay: React.FC = () => {
   };
 
   const flow = (
-    <div
-      className="rflow"
-      ref={flowRef}
-      style={!narrow && !active && mapW > 0
-        ? { transform: `translateX(${(mapW - FLOW_W) / 2}px)` }
-        : undefined}
-    >
+    <div className="rflow" ref={flowRef}>
       {essaySections.map((section, i) => (
         <React.Fragment key={section.id}>
           {i > 0 && <Connector from={1} to={1} id={`into-${section.id}`} height={26} />}
@@ -205,7 +198,7 @@ const ResearchEssay: React.FC = () => {
 
   return (
     <>
-      <div className={`rmap${active ? '' : ' is-idle'}`} ref={mapRef} onMouseLeave={() => setActive(null)}>
+      <div className="rmap">
         {flow}
         <div className="rpanels" style={{ height: detailHeight }}>
           {essaySections.map((section) => {

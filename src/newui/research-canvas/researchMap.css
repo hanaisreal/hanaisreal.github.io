@@ -20,13 +20,7 @@
   color: var(--text);
 }
 .rmap--narrow { display: block; }
-.rflow {
-  position: relative;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-/* While idle the flow is shifted over the (empty) panel column; let it take the pointer. */
-.rmap.is-idle .rflow { z-index: 1; }
-.rmap.is-idle .rpanels { pointer-events: none; }
+.rflow { position: relative; }
 
 .sketch.sketch--phase {
   gap: 0;
@@ -260,5 +254,5 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .rflow, .rpanel, .rpanel.is-active { transition: none; }
+  .rpanel, .rpanel.is-active { transition: none; }
 }
