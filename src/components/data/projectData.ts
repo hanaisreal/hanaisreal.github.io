@@ -124,11 +124,11 @@ What interested me most was workflow fit. Retrieval only helps if it arrives at 
     title: "Voice-Based Autobiographical Storytelling System (LivRecord)",
     tldr: "A voice-first AI system that helps older adults turn spoken memories into a personal narrative.",
     description: "Voice-first AI pipeline with STT/TTS that scaffolds older adults through autobiographical storytelling.",
-    narrative: `Older adults carry stories that often go untold — not from unwillingness, but from the friction of writing. LivRecord removes that friction. Using voice as the primary input, the system walks users through autobiographical prompts, transcribes their responses, and gradually assembles a narrative they can revisit and share.
+    narrative: `I have always been moved by the fact that older adults carry incredible stories that so often remain untold, not because they don't want to share them, but simply because the friction of writing gets in the way. That realization was what made starting LivRecord so deeply inspiring for me. We wanted to eliminate that barrier completely by making voice the primary spark: users simply respond to autobiographical prompts out loud, while our system transcribes and weaves those spoken memories into a meaningful narrative they can revisit and share.
 
-The design challenge was making the prompts feel like conversation, not interview. Each question follows naturally from the previous response; the system listens for cues about themes the user wants to return to and surfaces them later. The result feels less like filling in a form and more like talking with someone who remembers everything you said.
+Looking at the demo now, what thrilled me most during the build was tackling our core design challenge: making the prompts feel like a warm, natural conversation rather than an interrogation. We designed each question to flow organically from the user's previous answer, with the system actively listening for subtle themes to return to later. I really wanted the interaction to feel less like filling out a cold form and more like sitting down with a thoughtful companion who remembers every detail you have shared.
 
-Built over four months with a small team, the system won the Grand Prize at the KAIST Social Impact Challenge.`,
+Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Reflecting on the experience now, what stays with me most isn't just the award or the technical mechanics of speech recognition. It was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
     contributions: [
       "Voice interaction pipeline using STT/TTS with GPT-4 for adaptive prompt generation",
       "Prompt design framework that maintains narrative coherence across multiple sessions",
@@ -143,7 +143,7 @@ Built over four months with a small team, the system won the Grand Prize at the 
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `Older adults carry stories that often go untold, not from unwillingness, but from the friction of writing. LivRecord removes that friction by making voice the primary input: users respond to autobiographical prompts out loud, the system transcribes those memories, and a narrative gradually takes shape that they can revisit and share.`,
+        text: `I have always been moved by the fact that older adults carry incredible stories that so often remain untold, not because they don't want to share them, but simply because the friction of writing gets in the way. That realization was what made starting LivRecord so deeply inspiring for me. We wanted to eliminate that barrier completely by making voice the primary spark: users simply respond to autobiographical prompts out loud, while our system transcribes and weaves those spoken memories into a meaningful narrative they can revisit and share.`,
       },
       {
         type: 'video',
@@ -155,11 +155,11 @@ Built over four months with a small team, the system won the Grand Prize at the 
       },
       {
         type: 'paragraph',
-        text: `The core design challenge was making the prompts feel like conversation rather than interview. Each question follows naturally from the previous response, and the system listens for themes the user may want to return to later. The interaction is meant to feel less like filling in a form and more like talking with someone who remembers everything you said.`,
+        text: `Looking at the demo now, what thrilled me most during the build was tackling our core design challenge: making the prompts feel like a warm, natural conversation rather than an interrogation. We designed each question to flow organically from the user's previous answer, with the system actively listening for subtle themes to return to later. I really wanted the interaction to feel less like filling out a cold form and more like sitting down with a thoughtful companion who remembers every detail you have shared.`,
       },
       {
         type: 'paragraph',
-        text: `Built over four months with a small team, the system won the Grand Prize at the KAIST Social Impact Challenge. What mattered most in the project was not just speech recognition or synthesis, but the pacing of reflection itself: how to help someone stay in their own memory long enough for a story to emerge.`,
+        text: `Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Reflecting on the experience now, what stays with me most isn't just the award or the technical mechanics of speech recognition. It was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
       },
     ],
   },
