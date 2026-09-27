@@ -49,7 +49,7 @@ interface RectProps {
   h: number;
   tone: CanvasTone;
   seed: number;
-  variant?: 'node' | 'frame' | 'dashed';
+  variant?: 'node' | 'frame' | 'dashed' | 'pencil'; // pencil: loose outline, no hatching
   strokeWidth?: number;
 }
 

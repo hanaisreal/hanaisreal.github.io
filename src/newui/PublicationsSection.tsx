@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { publications } from '../components/data/publicationsData';
+import { HandDrawnBorder } from './research-canvas/sketchKit';
 
 interface PublicationsSectionProps {
   onOpen?: (path: string, rect: DOMRect) => void;
@@ -90,6 +91,7 @@ const PublicationsSection: React.FC<PublicationsSectionProps> = ({ onOpen }) => 
               data-analytics-item-name={pub.title}
               data-analytics-placement="publications_list"
             >
+              <HandDrawnBorder id={`pub-${pub.slug}`} />
               <div className="publication-note__body">
                 <h3 className="publication-note__title">{pub.title}</h3>
                 <p className="publication-note__label">{getVenueLabel(pub)}</p>

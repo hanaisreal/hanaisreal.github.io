@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { projects } from '../components/data/projectData';
+import { HandDrawnBorder } from './research-canvas/sketchKit';
 
 interface ProjectsSectionProps {
   onOpen?: (path: string, rect: DOMRect) => void;
 }
 
 function getProjectLabel(project: typeof projects[number]) {
-  if (project.duration) return project.duration;
-  return project.tags.slice(0, 2).join(' · ');
+  return project.duration ?? '';
 }
 
 const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpen }) => {
@@ -43,10 +43,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpen }) => {
             data-analytics-item-name={project.title}
             data-analytics-placement="projects_list"
           >
+            <HandDrawnBorder id={`proj-${project.slug}`} />
             <div className="project-note__body">
               <h3 className="project-note__title">{project.title}</h3>
               <p className="project-note__label">{getProjectLabel(project)}</p>
-              <p className="project-note__meta">{project.tags.join(' · ')}</p>
               <p className="project-note__summary">{project.tldr}</p>
               {project.image && (
                 <figure className="project-note__figure">

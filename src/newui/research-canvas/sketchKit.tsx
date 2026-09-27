@@ -154,3 +154,16 @@ export const Track: React.FC<{ track: MapTrack }> = ({ track }) => (
     ))}
   </div>
 );
+
+// A pencil outline that fills its positioned parent, for cards that keep
+// their own layout (publication and project cards).
+export const HandDrawnBorder: React.FC<{ id: string }> = ({ id }) => {
+  const [ref, size] = useSize<HTMLSpanElement>();
+  return (
+    <span ref={ref} className="hand-border" aria-hidden="true">
+      {size.w > 0 && (
+        <RoughRect w={size.w} h={size.h} tone="neutral" seed={seedOf(id)} variant="pencil" strokeWidth={1.3} />
+      )}
+    </span>
+  );
+};

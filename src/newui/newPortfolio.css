@@ -2239,3 +2239,30 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   font-size: 0.84rem;
 }
+
+/* Research cards: pencil outline instead of a box border (see HandDrawnBorder). */
+.publication-note,
+.project-note {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.publication-note:hover,
+.project-note:hover {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  transform: none;
+}
+.hand-border {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hand-border > .rough {
+  position: absolute;
+  overflow: visible;
+}
+.publication-note:hover .hand-border path,
+.project-note:hover .hand-border path { stroke: #262626; }

@@ -113,12 +113,12 @@ const ProjectPage: React.FC = () => {
 
         <header className="proj-hero" data-analytics-section="project_header">
           <h1 className="proj-hero__title">{project.title}</h1>
-          {/* Timeline, focus, and links on one line so the story starts sooner. */}
+          {/* Timeline and links on one line so the story starts sooner. */}
           <p className="proj-hero__meta">
-            {[project.duration, ...project.tags].filter(Boolean).join(' · ')}
+            {project.duration}
             {project.links?.map((l) => (
               <React.Fragment key={l.label}>
-                {' · '}
+                {project.duration ? ' · ' : ''}
                 <a
                   href={l.url}
                   className="proj-hero__link"
@@ -195,7 +195,7 @@ const ProjectPage: React.FC = () => {
                     <span className="proj-card__body">
                       <span className="proj-card__title">{p.title}</span>
                       <span className="proj-card__tldr">{p.tldr}</span>
-                      <span className="proj-card__meta">{[p.duration, p.tags[0]].filter(Boolean).join(' · ')}</span>
+                      <span className="proj-card__meta">{p.duration}</span>
                     </span>
                   </Link>
                 </li>
