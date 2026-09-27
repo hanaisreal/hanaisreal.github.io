@@ -8,7 +8,7 @@ const SelectedPublicationsSection: React.FC = () => {
 
   return (
     <section id="publications" data-analytics-section="home_publications">
-      <h2 className="sec-heading">Selected Publications</h2>
+      <h2 className="sec-heading">Publications</h2>
       <ul className="pub-brief">
         {publications.map((pub) => {
           const paper = pub.links?.find((l) => !l.download && /paper|pdf/i.test(l.label));
