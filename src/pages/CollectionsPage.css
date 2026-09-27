@@ -9,18 +9,16 @@
 }
 
 .collage-main {
+  /* The portrait runs the full height of the window; the nav floats on top. */
   position: absolute;
-  inset:
-    calc(var(--collage-header-height) + var(--collage-panel-gap))
-    0
-    var(--collage-panel-gap);
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
 }
 
-/* The universe sits below the masthead as a warm, paper-framed portrait. */
+/* The universe is a tall portrait filling the window height, no paper frame. */
 .collage-portrait {
   position: relative;
   height: 100%;
@@ -29,9 +27,7 @@
   aspect-ratio: 1596 / 2683;
   overflow: hidden;
   border-radius: 0;
-  box-shadow:
-    0 0 0 7px rgba(250, 247, 242, 0.92),
-    0 20px 48px rgba(13, 8, 6, 0.32);
+  box-shadow: 0 0 48px rgba(13, 8, 6, 0.35);
   flex-shrink: 0;
 }
 

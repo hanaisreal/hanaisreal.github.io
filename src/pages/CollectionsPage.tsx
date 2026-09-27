@@ -27,15 +27,8 @@ const S = (file: string) => `${BASE}/pictures/worldbuilding/${WORLD_IMAGE_MAP[fi
 // background.png's aspect ratio — needed whenever we convert between left/top
 // (% of width vs. % of height) so circles and ellipses read as true shapes.
 const IMG_ASPECT = 1596 / 2683;
-const BG_NATIVE_WIDTH = 1596; // background.png's actual pixel width
-const BG_MAX_UPSCALE = 1.4;   // never render it wider than this × native
 
 const ZOOM_FOCUS = { x: 84, y: 34 }; // dive toward the planet, where the ring passes closest
-// Vertical anchor for the outer frame's growth — keep X centered (needed for
-// guaranteed full-width coverage) but bias Y up toward the star band/spiral,
-// so growing the frame holds steady on the sky and pushes the path/ground
-// out of view faster, instead of growing evenly in both directions.
-const FRAME_ORIGIN_Y = 18;
 
 type ClusterId = 'words' | 'poetry' | 'community' | 'references';
 
@@ -317,7 +310,8 @@ const regularTwinkle = (time: number, seed: number) => {
   return 0.2 + wave * 0.8;
 };
 // Stays within 2-10 — above the background (z-index 1), below MOON_Z (11) so
-// the moon image can occlude bubbles passing behind it.
+// the moon image can occlude bubbles passing behind it, and below every
+// sticker (z-index 12+, see STICKERS).
 const depthZ = (depth: number) => 2 + Math.round((depth + 1) * 4);
 
 // The moon image sits exactly over the dark circle drawn in background.png
@@ -434,6 +428,41 @@ const INTRO_PARAGRAPHS: IntroParagraph[] = [
   },
 ];
 
+// ── Sticker layout ──────────────────────────────────────────────────────────
+// depth: px movement per unit tilt. higher = floats more in foreground.
+// z-order: plant-eye(12) → path(13) → flowers+pine(14) → frog+clouds(15)
+//          → cloud-large(16) → butterfly+frog-pixel+crane(17)
+// Shifted up (+10) so the orbiting photo bubbles (z-index ~2-11, see depthZ)
+// always sit behind every sticker — just in front of the background, never on
+// top of clouds/pine/etc.
+// ────────────────────────────────────────────────────────────────────────────
+interface Sticker {
+  src: string;
+  style: React.CSSProperties;
+  depth: number;
+  // Which way this thing flies past the camera during the warp — outward,
+  // toward whichever edge it already sits near. Passing through means moving
+  // out of frame, not fading; this is the direction it moves out in.
+  flyDir: { x: number; y: number };
+}
+
+const STICKERS: Sticker[] = [
+  // ground — most anchored, barely moves
+  { src: 'plant-eye.png',    style: { left: '-4%',   bottom: '14%', width: '32%', zIndex: 12 }, depth: 3,  flyDir: { x: -1,   y: 1   } },
+  { src: 'path.png',         style: { left:  '4%',   bottom: '-4%', width: '92%', zIndex: 13 }, depth: 2,  flyDir: { x: 0,    y: 1   } },
+  // foreground — slightly lifted off ground
+  { src: 'flowers.png',      style: { left: '-4%',   bottom:  '0%', width: '67%', zIndex: 14 }, depth: 7,  flyDir: { x: -1,   y: 1   } },
+  { src: 'pine.png',         style: { right: '-20%', bottom: '-1%', width: '68%', zIndex: 14 }, depth: 8,  flyDir: { x: 1,    y: 1   } },
+  // mid — on path / lower atmosphere
+  { src: 'frog-real.png',    style: { left:  '60%',  bottom:  '7%', width: '22%', zIndex: 15 }, depth: 12, flyDir: { x: 1,    y: 1   } },
+  { src: 'cloud-large.png',  style: { left:   '5%',  top:    '44%', width: '58%', zIndex: 16 }, depth: 15, flyDir: { x: -0.4, y: -1  } },
+  { src: 'cloud-medium.png', style: { right: '19%',  top:    '40%', width: '35%', zIndex: 15 }, depth: 18, flyDir: { x: 0.6,  y: -1  } },
+  { src: 'cloud-small.png',  style: { right: '10%',  top:    '48%', width: '26%', zIndex: 15 }, depth: 20, flyDir: { x: 0.9,  y: -0.8} },
+  // sky — lightest, floats the most
+  { src: 'frog-pixel.png',   style: { left:  '15%',  top:    '41%', width: '13%', zIndex: 17 }, depth: 26, flyDir: { x: -0.6, y: -1  } },
+  { src: 'butterfly.png',    style: { left:  '25%',  top:    '34%', width: '12%', zIndex: 17 }, depth: 32, flyDir: { x: -0.3, y: -1.2} },
+  // { src: 'crane.png',     style: { right: '60%',  top:    '55%', width: '12%', zIndex: 17 }, depth: 28, flyDir: { x: 0.5, y: -1 } },
+];
 
 // ────────────────────────────────────────────────────────────────────────────
 
@@ -453,8 +482,6 @@ const CollectionsPage: React.FC = () => {
   const [lang, setLang] = useState<Lang>('en');
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  // Re-render on resize so the full-screen scale tracks the viewport.
-  const [, setViewportTick] = useState(0);
   const portraitRef = useRef<HTMLDivElement>(null);
   const clusterRefs = useRef<Array<HTMLDivElement | null>>([]);
   const sparkleRefs = useRef<Array<HTMLSpanElement | null>>([]);
@@ -756,36 +783,8 @@ const CollectionsPage: React.FC = () => {
     return () => cancelAnimationFrame(frame);
   }, []);
 
-  useEffect(() => {
-    const onResize = () => setViewportTick((t) => t + 1);
-    onResize(); // portraitRef is measured after the first paint
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
-
-  // The page opens already inside the universe, edge to edge — no framed
-  // gallery view first. `progress` is the old warp amount, pinned at 1.
-  const progress = 1;
-  // How far the small portrait needs to grow (via transform, so it's cheap)
-  // before it covers the whole viewport — "bursting out of the frame" into
-  // open space, past the trees and clouds, instead of just zooming inside it.
-  // Capped at BG_MAX_UPSCALE × background.png's native width (1596px) — on a
-  // big screen, covering every last pixel of the viewport isn't worth turning
-  // the star field into a soft blur. Past the cap it just stops short of the
-  // edges instead, with the page's own blurred backdrop showing through there.
-  const frameScale = (() => {
-    if (typeof window === 'undefined') return 1;
-    const portraitWidthPx = portraitRef.current?.offsetWidth ?? window.innerHeight * IMG_ASPECT;
-    const innerMaxScale = 1.3; // inner lean's max, at progress 1 (1 + 0.3 * progress)
-    const bgBaseScale = 1.06; // baked into .collage-bg's own transform
-    const maxUpscaleFrameScale =
-      (BG_NATIVE_WIDTH * BG_MAX_UPSCALE) / (portraitWidthPx * innerMaxScale * bgBaseScale);
-    const maxFrameScale = Math.min(
-      Math.max(1, (window.innerWidth / portraitWidthPx) * 1.05),
-      maxUpscaleFrameScale,
-    );
-    return 1 + (Math.max(1, maxFrameScale) - 1) * progress;
-  })();
+  // The portrait always rests in place: no zoom into the universe.
+  const progress = 0;
 
   return (
     <div className="collage-page">
@@ -795,11 +794,6 @@ const CollectionsPage: React.FC = () => {
         <div
           className="collage-portrait"
           ref={portraitRef}
-          style={{
-            transform: `scale(${frameScale})`,
-            transformOrigin: `50% ${FRAME_ORIGIN_Y}%`,
-            boxShadow: 'none',
-          }}
         >
           {/* Inner layer — just a slight lean toward ZOOM_FOCUS. The dramatic "fill the
               screen" effect is the outer frame growth below, not this — stacking two big
@@ -935,6 +929,35 @@ const CollectionsPage: React.FC = () => {
               );
             })}
 
+            {STICKERS.map(({ src, style, depth, flyDir }) => {
+              // Foreground stuff (high depth — clouds, butterfly) blows up huge and flies
+              // outward toward whichever edge it's already near — passing right through
+              // the frame and out the side, fully opaque the whole way, rather than fading
+              // out in place. Grounded stuff (path, plant-eye) barely moves.
+              // vw/vh, not %, and placed outside the scale() in the transform chain — a
+              // %-based translate is relative to the element's OWN (unscaled) size, so as
+              // flyScale grows that fixed offset becomes proportionally tiny and the thing
+              // never actually clears the screen, it just balloons in place forever.
+              const flyScale = 1 + progress * (depth / 4);
+              const flyX = flyDir.x * progress * 140;
+              const flyY = flyDir.y * progress * 140;
+              return (
+                <img
+                  key={src}
+                  src={S(src)}
+                  alt=""
+                  draggable={false}
+                  className="collage-sticker"
+                  decoding="async"
+                  style={{
+                    ...style,
+                    transform: `translate(${tilt.x * depth}px, ${tilt.y * depth}px) translate(${flyX}vw, ${flyY}vh) scale(${flyScale})`,
+                    filter: `drop-shadow(${-tilt.x * 6}px ${-tilt.y * 6}px 10px rgba(0,0,0,0.45))`,
+                    transition: 'transform 0.12s ease-out, filter 0.12s ease-out',
+                  }}
+                />
+              );
+            })}
           </div>
 
           {/* UI overlays — stay fixed, don't zoom */}
