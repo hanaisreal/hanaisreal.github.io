@@ -9,8 +9,8 @@ const HeroSection: React.FC = () => (
     <div className="profile">
       <div className="profile__left">
         <img
-          className="profile__img profile__img--beach"
-          src={`${process.env.PUBLIC_URL}/pictures/profile-beach.jpg`}
+          className="profile__img"
+          src={`${process.env.PUBLIC_URL}/pictures/profile-portrait.jpg`}
           alt="Hana Oh"
           onLoad={e => (e.currentTarget as HTMLImageElement).classList.add('is-loaded')}
         />

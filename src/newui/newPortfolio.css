@@ -559,9 +559,6 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .profile__img.is-loaded {
   opacity: 1;
 }
-.profile__img--beach {
-  object-position: center 70%;
-}
 .profile__icons {
   display: flex;
   gap: 0.7rem;
