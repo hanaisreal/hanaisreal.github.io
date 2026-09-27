@@ -1,5 +1,5 @@
 import React from 'react';
-import { Point, useSize } from './sketchKit';
+import { Arrow, Point, useSize } from './sketchKit';
 import { roughEllipse, roughPolygon, roughPolyline, seedOf } from './rough';
 
 // The functional ↔ personal spectrum from the hand-drawn sketch. A diagonal
@@ -29,9 +29,9 @@ const NOTES: Record<'a' | 'b' | 'default', Note> = {
     body: 'Augmenting complex, judgment-driven tasks rooted in individual domain expertise.',
   },
   default: {
-    eyebrow: 'Examples',
-    title: 'Where today’s tools sit',
-    body: 'From rule-based automation on the left to personal agents on the right.',
+    eyebrow: 'My direction',
+    title: 'Toward the personal end',
+    body: 'Agents that adapt to each person’s intent and expertise, not one model for everyone.',
   },
 };
 
@@ -86,7 +86,7 @@ const SpectrumGraph: React.FC = () => {
   const rectW = x1 - x0;
   const y0 = 40;
   const y1 = y0 + clamp(rectW * 0.3, 110, 160);
-  const height = y1 + 62;
+  const height = y1 + 66;
   const xAt = (t: number) => x0 + t * rectW;
 
   const frame = React.useMemo(() => ({
@@ -141,6 +141,12 @@ const SpectrumGraph: React.FC = () => {
             <text className="spectrum__label spectrum__label--sm" x={x1 + 60} y={y1 + 30} textAnchor="end">personal &amp;</text>
             <text className="spectrum__label spectrum__label--sm" x={x1 + 60} y={y1 + 50} textAnchor="end">expert workflows</text>
 
+            {/* Where my research is heading: toward B */}
+            <g className="spectrum__direction">
+              <Arrow points={[[xAt(0.3), y1 + 22], [xAt(0.74), y1 + 22]]} seed="direction" />
+            </g>
+            <text className="spectrum__label" x={xAt(0.52)} y={y1 + 50} textAnchor="middle">my direction</text>
+
             {/* Hover targets for the two triangles */}
             <polygon
               points={triangleA.map((p) => p.join(',')).join(' ')}
@@ -181,7 +187,6 @@ const SpectrumGraph: React.FC = () => {
         <span className="spectrum__note-eyebrow">{note.eyebrow}</span>
         <span className="spectrum__note-title">{note.title}</span>
         <p className="spectrum__note-body">{note.body}</p>
-        <span className="spectrum__note-hint">hover a line, A, or B</span>
       </aside>
     </div>
   );

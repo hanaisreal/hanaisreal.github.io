@@ -98,6 +98,7 @@
 .spectrum__label { font-family: var(--script); font-size: 22px; fill: var(--pen); }
 .spectrum__label--sm { font-size: 19px; }
 .spectrum__marker { cursor: default; outline: none; }
+.spectrum__direction .rarrow path { stroke-width: 2; }
 .spectrum__example { font-family: var(--script); font-size: 17px; fill: var(--pencil); }
 .spectrum__marker.is-active .spectrum__example,
 .spectrum__marker:focus-visible .spectrum__example { fill: var(--pen); font-weight: 600; }
