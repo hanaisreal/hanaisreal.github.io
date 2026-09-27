@@ -8,16 +8,24 @@ import type { CanvasTone } from '../../components/data/researchCanvasData';
 
 const gen = rough.generator();
 
+// Two instruments only: pen (dark ink) for the main thread and published work,
+// pencil (graphite) for supporting notes. Tone names stay semantic.
+const PEN = { stroke: '#262626', fill: '#ffffff', ink: '#1f1f1f' };
+const PENCIL = { stroke: '#7d7d7d', fill: '#ffffff', ink: '#3b3b3b' };
+
 export const TONES: Record<CanvasTone, { stroke: string; fill: string; ink: string }> = {
-  neutral: { stroke: '#8f8f8f', fill: '#f6f6f4', ink: '#555555' },
-  vision: { stroke: '#cf3f3f', fill: '#ffffff', ink: '#a52a2a' },
-  understanding: { stroke: '#1e88e5', fill: '#ffffff', ink: '#0d47a1' },
-  interfaces: { stroke: '#d81b60', fill: '#ffffff', ink: '#880e4f' },
-  novice: { stroke: '#0288d1', fill: '#e1f5fe', ink: '#01579b' },
-  expert: { stroke: '#7b1fa2', fill: '#f3e5f5', ink: '#4a148c' },
-  paper: { stroke: '#d81b60', fill: '#fff0f5', ink: '#880e4f' },
-  memory: { stroke: '#388e3c', fill: '#e8f5e9', ink: '#1b5e20' },
+  neutral: PENCIL,
+  novice: PENCIL,
+  vision: PEN,
+  understanding: PEN,
+  interfaces: PEN,
+  expert: PEN,
+  paper: PEN,
+  memory: PEN,
 };
+
+// Hatching reads as pencil shading whatever the outline instrument is.
+const SHADE = '#6a6a6a';
 
 export const seedOf = (id: string) => {
   let h = 7;
@@ -79,7 +87,7 @@ export const RoughRect: React.FC<RectProps> = React.memo(({ w, h, tone, seed, va
       <rect x={PAD} y={PAD} width={w} height={h} fill={c.fill} />
       {paths.map((p, i) =>
         p.kind === 'fill' ? (
-          <path key={i} d={p.d} fill="none" stroke={c.stroke} strokeWidth={0.5} opacity={0.16} />
+          <path key={i} d={p.d} fill="none" stroke={SHADE} strokeWidth={0.5} opacity={0.14} />
         ) : (
           <path
             key={i}
@@ -102,7 +110,7 @@ export function roughArrow(points: Point[], seed: number, dashed = false) {
     seed,
     roughness: 0.9,
     bowing: 1.2,
-    stroke: '#2b2b2b',
+    stroke: '#262626',
     strokeWidth: 1.4,
   };
   const line = toRoughPaths(gen.linearPath(points, base)).map((p) => p.d);

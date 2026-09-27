@@ -10,7 +10,7 @@ import { roughEllipse, roughPolygon, roughPolyline, seedOf } from './rough';
 
 type Focus = 'a' | 'b' | 'range';
 
-const INK = '#cf3f3f';
+const INK = '#262626'; // pen
 const MIN_GAP = 0.08;
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
@@ -134,7 +134,7 @@ const SpectrumGraph: React.FC = () => {
             aria-label="Spectrum from functional automation (A) to personal, expert tasks (B)"
           >
             {highlight.map((d, i) => (
-              <path key={i} d={d} fill="none" stroke={INK} strokeWidth={0.8} opacity={0.35} />
+              <path key={i} d={d} fill="none" stroke="#6a6a6a" strokeWidth={0.8} opacity={0.4} />
             ))}
             <Strokes paths={frame.box} />
             <Strokes paths={frame.diagonal} width={1.3} />

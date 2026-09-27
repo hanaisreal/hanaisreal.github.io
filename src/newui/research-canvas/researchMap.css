@@ -1,6 +1,8 @@
 /* ── RESEARCH PAGE (white paper sheet, like the homepage) ── */
 .page--research-sheet {
-  --hand: "Nunito", ui-rounded, system-ui, sans-serif;
+  --hand: "Kalam", "Caveat", cursive;
+  --pen: #262626;
+  --pencil: #6b6b6b;
   --script: "Caveat", "Nunito", cursive;
   --serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   max-width: 1100px;
@@ -76,7 +78,7 @@
   text-align: center;
   font-family: var(--script);
   font-size: 1.45rem;
-  color: #cf3f3f;
+  color: var(--pencil);
 }
 .rdetail-inline { padding: 1.2rem 0 0.6rem; }
 
@@ -114,8 +116,8 @@
 }
 .spectrum__graph { min-width: 0; }
 .spectrum__graph svg { display: block; overflow: visible; touch-action: none; }
-.spectrum__letter { font-family: var(--script); font-size: 28px; fill: #cf3f3f; }
-.spectrum__label { font-family: var(--script); font-size: 22px; fill: #cf3f3f; }
+.spectrum__letter { font-family: var(--script); font-size: 28px; fill: var(--pen); }
+.spectrum__label { font-family: var(--script); font-size: 22px; fill: var(--pen); }
 .spectrum__label--sm { font-size: 19px; }
 .spectrum__bar { cursor: ew-resize; outline: none; }
 .spectrum__bar:focus-visible circle { stroke-width: 3; }
@@ -125,7 +127,7 @@
   gap: 0.15rem;
   min-height: 5.6rem;
 }
-.spectrum__note-eyebrow { font-family: var(--script); font-size: 1.35rem; color: #cf3f3f; }
+.spectrum__note-eyebrow { font-family: var(--script); font-size: 1.35rem; color: var(--pencil); }
 .spectrum__note-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
 .spectrum__note-body { margin: 0.2rem 0 0; font-family: var(--serif); font-size: 1.06rem; line-height: 1.55; }
 .spectrum__note-hint { margin-top: 0.4rem; font-family: var(--script); font-size: 1.1rem; color: var(--muted); }
@@ -133,11 +135,11 @@
 /* ── ARROWS ── */
 .rarrow path {
   fill: none;
-  stroke: #2b2b2b;
+  stroke: var(--pen);
   stroke-width: 1.4;
   stroke-linecap: round;
 }
-.rarrow--dashed path { stroke: #8f8f8f; }
+.rarrow--dashed path { stroke: var(--pencil); }
 .rconnector { position: relative; }
 .rconnector svg { display: block; overflow: visible; }
 
@@ -189,7 +191,7 @@
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #a86a00;
+  color: var(--pen);
 }
 
 /* A gradient instead of two boxes: proficiency is a continuum. */
@@ -198,8 +200,11 @@
   display: block;
   height: 10px;
   border-radius: 6px 4px 7px 5px;
-  background: linear-gradient(90deg, #7cc4ea, #b48ad0);
-  opacity: 0.75;
+  background: repeating-linear-gradient(-45deg, transparent 0 3px, rgba(38, 38, 38, 0.55) 3px 4px),
+    linear-gradient(90deg, rgba(38, 38, 38, 0.04), rgba(38, 38, 38, 0.3));
+  border: 1px solid var(--pencil);
+  -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.35), #000);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.35), #000);
 }
 .sketch__range-ends {
   display: flex;
@@ -209,8 +214,8 @@
   font-size: 12.5px;
   line-height: 1.25;
 }
-.sketch__range-ends span:first-child { text-align: left; color: #01579b; }
-.sketch__range-ends span:last-child { text-align: right; color: #4a148c; }
+.sketch__range-ends span:first-child { text-align: left; color: var(--pencil); }
+.sketch__range-ends span:last-child { text-align: right; color: var(--pen); }
 
 .sketch-link {
   display: block;
@@ -221,7 +226,7 @@
 }
 .sketch-link .sketch { height: 100%; }
 .sketch-link:hover .sketch__title { text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1.5px; }
-.sketch-link:focus-visible { outline: 2px dashed #d81b60; outline-offset: 5px; }
+.sketch-link:focus-visible { outline: 2px dashed var(--pen); outline-offset: 5px; }
 
 .rtrack { display: flex; flex-direction: column; }
 .rrow { display: flex; gap: 12px; }
@@ -244,7 +249,7 @@
   transform: translate(-50%, -50%);
   font-family: var(--script);
   font-size: 1.3rem;
-  color: #6f8f70;
+  color: var(--pencil);
   white-space: nowrap;
 }
 
