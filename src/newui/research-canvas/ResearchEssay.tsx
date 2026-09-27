@@ -145,7 +145,6 @@ const ResearchEssay: React.FC = () => {
       >
         <span className="sketch__eyebrow">{section.number}</span>
         <span className="sketch__title">{section.title}</span>
-        <span className="sketch__body">{section.subtitle}</span>
         <span className="sketch__hint" aria-hidden="true">{narrow ? (isActive ? '−' : '+') : '→'}</span>
       </Sketch>
     );

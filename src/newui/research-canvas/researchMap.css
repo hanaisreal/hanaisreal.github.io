@@ -14,7 +14,7 @@
 /* ── FLOW + HOVER PANELS ── */
 .rmap {
   display: grid;
-  grid-template-columns: 330px minmax(0, 1fr);
+  grid-template-columns: 250px minmax(0, 1fr);
   gap: 56px;
   align-items: start;
   color: var(--text);
@@ -23,20 +23,20 @@
 .rflow { position: relative; }
 
 .sketch.sketch--phase {
-  padding: 0.7rem 2rem 0.75rem 1.1rem;
+  gap: 0;
+  padding: 0.45rem 1.8rem 0.5rem 0.85rem;
   align-items: flex-start;
   text-align: left;
   cursor: pointer;
 }
-.sketch--phase .sketch__eyebrow { font-family: var(--script); font-size: 1.35rem; letter-spacing: 0; text-transform: none; font-weight: 600; }
-.sketch--phase .sketch__title { font-size: 18px; }
-.sketch--phase .sketch__body { font-size: 14px; color: rgba(46, 34, 26, 0.75); }
+.sketch--phase .sketch__eyebrow { font-family: var(--script); font-size: 1.1rem; line-height: 1; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.sketch--phase .sketch__title { font-size: 14.5px; }
 .sketch__hint {
   position: absolute !important;
   right: 0.9rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--accent);
   opacity: 0.35;

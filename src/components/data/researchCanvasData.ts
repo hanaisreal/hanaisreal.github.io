@@ -41,7 +41,6 @@ export interface EssaySection {
   id: string;
   number: string;
   title: string;
-  subtitle: string;
   tone: CanvasTone;
   future?: boolean;        // drawn dashed: where I'm heading, not done yet
   paragraphs: string[];
@@ -53,7 +52,6 @@ export const essaySections: EssaySection[] = [
     id: 'vision',
     number: '00',
     title: 'The Vision of Personalized Agents',
-    subtitle: 'Functional automation ↔ personal, expert tasks',
     tone: 'vision',
     paragraphs: [
       'People use AI across a spectrum, from automating repetitive tasks to navigating personal, expert work. One model cannot serve both ends.',
@@ -64,7 +62,6 @@ export const essaySections: EssaySection[] = [
     id: 'understanding',
     number: '01',
     title: 'Understanding Diverse User Intents',
-    subtitle: 'Exploratory studies across users',
     tone: 'understanding',
     paragraphs: [
       'To see how intent differs across people, I explored two settings: older adults learning about deepfakes, and K-12 students writing with AI. Engagement shifted with proficiency, so AI cannot stay static.',
@@ -96,7 +93,6 @@ export const essaySections: EssaySection[] = [
     id: 'interfaces',
     number: '02',
     title: 'Designing Interpretable Interfaces',
-    subtitle: 'Making tacit judgment visible',
     tone: 'interfaces',
     paragraphs: [
       'Expert judgment is often tacit. ToneCanvas makes a writer’s sense of character tone visible and editable, but once the task ends, that judgment is gone.',
@@ -118,7 +114,6 @@ export const essaySections: EssaySection[] = [
     id: 'memory',
     number: '03',
     title: 'Next: Memory and Workflow Extraction',
-    subtitle: 'Where I’m heading',
     tone: 'memory',
     future: true,
     paragraphs: [
