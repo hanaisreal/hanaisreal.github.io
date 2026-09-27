@@ -1,23 +1,16 @@
 // researchCanvasData.ts
 //
-// The research map on /research. The macro flow runs top to bottom:
-// START → Phase 1 → Phase 2 → LOOP. Hovering (or focusing) a phase
-// opens its detail to the right.
-//
-// A phase's detail is one or more tracks; each track is a list of rows, and
-// each row holds one or more boxes. Arrows connect every box in a row to
-// every box in the next row. Paper boxes point at publications by slug so
-// titles, venues, and links live in publicationsData only.
+// The /research page reads as a short essay: each section pairs a few
+// paragraphs with a hand-drawn sketch. Section 0 is an interactive spectrum,
+// sections 1–2 are rows of sketched boxes, section 3 is a closed loop.
+// Paper boxes point at publications by slug so titles, venues, and links
+// live in publicationsData only.
 
-export type PhaseId = 'p1' | 'p2';
-
-export type BoxKind = 'state' | 'strategy' | 'paper';
+export type BoxKind = 'state' | 'strategy' | 'paper' | 'insight';
 
 // Colour families, echoing the hand-drawn sketches.
 export type CanvasTone =
-  | 'neutral' | 'p1' | 'p2'
-  | 'novice' | 'expert' | 'paper' | 'memory'
-  | 'frame-novice' | 'frame-expert';
+  | 'neutral' | 'novice' | 'expert' | 'paper' | 'memory';
 
 export interface MapBox {
   id: string;
@@ -27,80 +20,118 @@ export interface MapBox {
   title: string;
   body?: string;
   pubSlug?: string;        // links to publicationsData
-  badge?: string;          // e.g. "Best Paper", "Ongoing"
-  pending?: boolean;       // work not yet public
+  badge?: string;          // e.g. "Best Paper"
+  pending?: boolean;       // drawn dashed: an interest, not finished work
+  range?: { left: string; right: string }; // a gradient bar with two ends
 }
 
 export interface MapTrack {
   id: string;
-  frame?: { tone: CanvasTone; eyebrow: string; title: string };
   rows: MapBox[][];
 }
 
-export interface ResearchPhase {
-  id: PhaseId;
+export type EssaySketch =
+  | { kind: 'spectrum' }
+  | { kind: 'track'; track: MapTrack; note?: string }
+  | { kind: 'loop'; steps: MapBox[]; centre: string };
+
+export interface EssaySection {
+  id: string;
   number: string;
-  label: string;
   title: string;
-  subtitle: string;
-  summary: string;
-  tracks: MapTrack[];
+  paragraphs: string[];
+  sketch: EssaySketch;
 }
 
-export const MAP_START = { eyebrow: 'Start', title: 'User Goal & Context' };
-export const MAP_LOOP = { eyebrow: 'Loop', title: 'Continuous Action Loop', label: 'refines intent' };
-
-export const researchPhases: ResearchPhase[] = [
+export const essaySections: EssaySection[] = [
   {
-    id: 'p1',
+    id: 'vision',
+    number: '00',
+    title: 'The Vision of Personalized Agents',
+    paragraphs: [
+      'While AI has evolved into a powerful generalized tool, it fails to adapt to the deeply unique nature of human workflows. User interaction with AI exists on a highly variable spectrum: some leverage AI for functional, procedural automation, while others depend on it to navigate deeply personal, value-centric tasks derived from professional expertise.',
+      'Because a one-size-fits-all model cannot serve both extremes, my goal is to bridge this gap by building truly personalized AI agents.',
+    ],
+    sketch: { kind: 'spectrum' },
+  },
+  {
+    id: 'understanding',
     number: '01',
-    label: 'Phase 1',
-    title: 'Understanding Intent Across Expertise',
-    subtitle: 'Structural execution vs. co-exploration',
-    summary:
-      'Deciphering intent varies across a spectrum of user expertise. Experts often hold a clear mental model of the final output, so a top-down interaction works well. Novices adopt an exploratory approach and, without a strong reference point, can be prone to premature convergence.',
-    tracks: [
-      {
-        id: 'p1-a',
-        frame: { tone: 'frame-novice', eyebrow: 'Track A', title: 'Novice exploration' },
-        rows: [
-          [{ id: 'p1-a-state', kind: 'state', tone: 'novice', eyebrow: 'Novice', title: 'Exploratory approach', body: 'Prone to premature convergence' }],
-          [
-            { id: 'p1-a-scaffold', kind: 'paper', tone: 'paper', pubSlug: 'when-scaffolding-breaks', eyebrow: 'CHI ’26', badge: 'Best Paper', title: 'When Scaffolding Breaks', body: 'K-12 AI writing scaffolding' },
-            { id: 'p1-a-deepaware', kind: 'paper', tone: 'paper', pubSlug: 'deepaware', eyebrow: 'CHI ’26', title: 'DeepAware', body: 'Deepfake awareness among older adults' },
-          ],
-          [{ id: 'p1-a-strategy', kind: 'strategy', tone: 'novice', eyebrow: 'Agent strategy', title: 'Fostering co-exploration' }],
-        ],
-      },
-      {
-        id: 'p1-b',
-        frame: { tone: 'frame-expert', eyebrow: 'Track B', title: 'Expert delegation' },
-        rows: [
-          [{ id: 'p1-b-state', kind: 'state', tone: 'expert', eyebrow: 'Expert', title: 'Clear mental model of the output' }],
-          [{ id: 'p1-b-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Stylistic tone as reusable assets' }],
-          [{ id: 'p1-b-strategy', kind: 'strategy', tone: 'expert', eyebrow: 'Agent strategy', title: 'Top-down delegation', body: 'User communicates the structure' }],
-        ],
-      },
+    title: 'Understanding Diverse User Intents',
+    paragraphs: [
+      'To understand how different demographics and expertise levels shape user intent when interacting with AI, I took an exploratory approach.',
+      'With Prof. Hajin Lim, I designed DeepAware, a system that embeds users’ own faces and voices into simulated scam scenarios to make deepfake threats personally relevant. A study with 21 older adults showed improvements in knowledge, perceived vulnerability, and coping efficacy.',
+      'At Prof. Juho Kim’s KIXLAB, our team deployed WriteAid, an AI writing assistant, in K-12 classrooms and collected over 14,000 conversation logs. I contributed to developing a coding framework to analyze engagement patterns.',
+      'Across these studies, engagement shifted with proficiency. Lower-proficiency students often delegated creative tasks without expressing a specific intent, which led to premature convergence, while higher-proficiency students held a clearer mental model and used AI selectively. AI systems cannot remain static; they need to adapt to where each user is.',
     ],
+    sketch: {
+      kind: 'track',
+      track: {
+        id: 'understanding',
+        rows: [
+          [
+            { id: 'u-deepaware', kind: 'paper', tone: 'paper', pubSlug: 'deepaware', eyebrow: 'CHI ’26', title: 'DeepAware', body: 'Personal relevance in learning, with older adults' },
+            { id: 'u-scaffold', kind: 'paper', tone: 'paper', pubSlug: 'when-scaffolding-breaks', eyebrow: 'CHI ’26', badge: 'Best Paper', title: 'When Scaffolding Breaks', body: '14,000+ logs from K-12 classrooms' },
+          ],
+          [
+            {
+              id: 'u-observed', kind: 'insight', tone: 'neutral', eyebrow: 'What I observed',
+              title: 'Engagement shifted with proficiency',
+              range: { left: 'delegated without a specific intent', right: 'clear mental model, selective use' },
+            },
+          ],
+          [
+            { id: 'u-adapt', kind: 'strategy', tone: 'expert', eyebrow: 'Implication', title: 'Adapt to where each user is', body: 'exploratory scaffolding ↔ interpretable control' },
+          ],
+        ],
+      },
+    },
   },
   {
-    id: 'p2',
+    id: 'interfaces',
     number: '02',
-    label: 'Phase 2',
-    title: 'Long-Term Memory for Personalized Agents',
-    subtitle: 'Proactive questions & verbatim memory',
-    summary:
-      'User intent accumulates over days, weeks, and months. While an agent should ask proactive questions to elicit goals, its memory should record raw facts without judging their importance prematurely, leaving higher-level insights for when more context emerges.',
-    tracks: [
-      {
-        id: 'p2-main',
+    title: 'Designing Interpretable Interfaces',
+    paragraphs: [
+      'To build interpretable systems for value-centric workflows, AI must first externalize tacit human judgment that is otherwise difficult to articulate.',
+      'In ToneCanvas, writers revising a long novel can tell when a character sounds wrong, but that judgment remains tacit and scattered across hundreds of pages. We built an LLM-based editing interface that extracts character tone from a manuscript and represents it as an inspectable visual object. In a study with 16 writers, structuring tone visually helped participants pinpoint cross-chapter inconsistencies and make more precise revisions.',
+      'Yet the judgment made visible did not outlive the task: a writer opening a new manuscript starts with an empty tone map.',
+    ],
+    sketch: {
+      kind: 'track',
+      note: 'but it resets when the task ends',
+      track: {
+        id: 'interfaces',
         rows: [
-          [{ id: 'p2-elicit', kind: 'state', tone: 'memory', eyebrow: 'Active elicitation', title: 'Ask proactive questions', body: 'One level above, for a comprehensive view' }],
-          [{ id: 'p2-recall', kind: 'paper', tone: 'paper', pending: true, eyebrow: 'In preparation', badge: 'Coming soon', title: 'Verbatim phrasing as recall cues', body: 'Details will be updated soon.' }],
-          [{ id: 'p2-episodic', kind: 'strategy', tone: 'memory', eyebrow: 'Episodic memory', title: 'Raw logs of interaction' }],
-          [{ id: 'p2-meta', kind: 'strategy', tone: 'memory', eyebrow: 'User profile', title: 'A third-person metacognitive view', body: 'Extending to skills.md & LLM wikis' }],
+          [{ id: 'i-tacit', kind: 'state', tone: 'novice', eyebrow: 'Tacit judgment', title: '“This character sounds wrong”', body: 'Scattered across hundreds of pages' }],
+          [{ id: 'i-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Character tone as an inspectable visual object' }],
+          [{ id: 'i-visible', kind: 'strategy', tone: 'expert', eyebrow: 'Interpretable', title: 'Judgment made visible', body: 'Pinpointing cross-chapter inconsistencies' }],
         ],
       },
-    ],
+    },
   },
+  {
+    id: 'memory',
+    number: '03',
+    title: 'Next: Memory and Workflow Extraction',
+    paragraphs: [
+      'User intent accumulates over days, weeks, and months. This is where I want to go next: memory that records context without prematurely judging its importance, and keeps the user’s own phrasing instead of lossy summaries.',
+      'Combined with interpretable tools, I envision a closed loop: extracting insights from raw memory, turning them into reusable workflows and skills, executing them with user feedback, and continuously updating them.',
+    ],
+    sketch: {
+      kind: 'loop',
+      centre: 'continuously',
+      steps: [
+        { id: 'm-raw', kind: 'state', tone: 'memory', pending: true, eyebrow: 'Record', title: 'Raw memory', body: 'Without judging importance' },
+        { id: 'm-skills', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Extract', title: 'Reusable workflows & skills' },
+        { id: 'm-execute', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Execute', title: 'With user feedback' },
+        { id: 'm-update', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Update', title: 'Skills keep evolving' },
+      ],
+    },
+  },
+];
+
+// Spring 2026 courses; write-ups to come from the user's course materials.
+export const courseProjects = [
+  { id: 'social-philosophy', course: 'Seminar in Social Philosophy', term: 'Spring 2026' },
+  { id: 'user-experience', course: 'User Experience', term: 'Spring 2026' },
 ];

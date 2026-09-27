@@ -10,14 +10,10 @@ const gen = rough.generator();
 
 export const TONES: Record<CanvasTone, { stroke: string; fill: string; ink: string }> = {
   neutral: { stroke: '#8f8f8f', fill: '#f6f6f4', ink: '#555555' },
-  p1: { stroke: '#1e88e5', fill: '#ffffff', ink: '#0d47a1' },
-  p2: { stroke: '#388e3c', fill: '#ffffff', ink: '#1b5e20' },
   novice: { stroke: '#0288d1', fill: '#e1f5fe', ink: '#01579b' },
   expert: { stroke: '#7b1fa2', fill: '#f3e5f5', ink: '#4a148c' },
   paper: { stroke: '#d81b60', fill: '#fff0f5', ink: '#880e4f' },
   memory: { stroke: '#388e3c', fill: '#e8f5e9', ink: '#1b5e20' },
-  'frame-novice': { stroke: '#dd8fe0', fill: '#fdf3fd', ink: '#6a1b6a' },
-  'frame-expert': { stroke: '#4dccc3', fill: '#effcfb', ink: '#00695c' },
 };
 
 export const seedOf = (id: string) => {
@@ -118,4 +114,17 @@ export function roughArrow(points: Point[], seed: number, dashed = false) {
   });
 
   return { line, head, dashed };
+}
+
+// Loose strokes for free-form drawings (the spectrum graph).
+export function roughPolyline(points: Point[], seed: number, options: Options = {}) {
+  return toRoughPaths(gen.linearPath(points, { seed, roughness: 1, bowing: 1, ...options })).map((p) => p.d);
+}
+
+export function roughPolygon(points: Point[], seed: number, options: Options = {}) {
+  return toRoughPaths(gen.polygon(points, { seed, roughness: 0.8, ...options }));
+}
+
+export function roughEllipse(cx: number, cy: number, w: number, h: number, seed: number, options: Options = {}) {
+  return toRoughPaths(gen.ellipse(cx, cy, w, h, { seed, roughness: 1.2, ...options })).map((p) => p.d);
 }

@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 const interests = [
   {
     title: 'Understanding intent across expertise.',
-    text: 'Experts often hold a clear mental model of the final output, while novices explore and can be prone to premature convergence. I study how personalized agents should adapt: structural execution for experts, co-exploration for novices.',
+    text: 'How people engage with AI shifts with their expertise: some delegate without a specific intent and converge too early, while others hold a clear mental model and use AI selectively. I study how personalized agents can adapt to where each user is.',
   },
   {
     title: 'Long-term memory for personalized agents.',
-    text: 'User intent accumulates over days, weeks, and months. I build memory that records users’ verbatim expressions rather than lossy summaries, so previously minor details can gain relevance later.',
+    text: 'User intent accumulates over days, weeks, and months. I am interested in memory that records context without prematurely judging its importance, keeping the user’s own phrasing rather than lossy summaries.',
   },
 ];
 

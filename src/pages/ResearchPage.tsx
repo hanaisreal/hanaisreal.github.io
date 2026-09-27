@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Masthead from '../newui/Masthead';
 import PublicationsSection from '../newui/PublicationsSection';
 import ProjectsSection from '../newui/ProjectsSection';
-import ResearchMap from '../newui/research-canvas/ResearchMap';
+import ResearchEssay from '../newui/research-canvas/ResearchEssay';
 import '../newui/newPortfolio.css';
 import '../newui/research-canvas/researchMap.css';
 
@@ -75,7 +75,7 @@ const ResearchPage: React.FC = () => {
             faithfully.
           </p>
         </header>
-        <ResearchMap />
+        <ResearchEssay />
         <hr className="sec-rule" />
         <PublicationsSection onOpen={handleOpen} />
         <hr className="sec-rule" />
