@@ -202,11 +202,11 @@ Placing in the Top 10 at the Upstage AI Challenge was a great payoff for all the
     title: "Interactive 3D CT Segmentation Tool for Radiologists (MedSAM)",
     tldr: "A custom DICOM viewer that lets radiologists prompt MedSAM with a click and get 3D CT segmentations propagated through slices.",
     description: "Custom DICOM viewer integrating MedSAM for semi-automatic 3D CT segmentation with LoRA fine-tuning.",
-    narrative: `For a class project, our team of three set out to tackle a major bottleneck in medical imaging: the tedious process of manually tracing 3D CT scans slice by slice. We wanted to build a custom tool that allowed users to segment entire volumes using simple click prompts with MedSAM.
+    narrative: `For a class project, our team of three set out to tackle a major bottleneck in radiologists’ daily work: the tedious process of manually tracing 3D CT scans slice by slice. We wanted to build a custom tool that allowed radiologists to segment entire volumes using simple click prompts with MedSAM.
 
 My main focus was integrating MedSAM into our PyQt5 DICOM viewer and fine-tuning the model for our dataset. On the application side, I decoupled the PyTorch inference engine from the rendering thread so the interface stayed smooth while propagating 2D click prompts across 3D axial slices. On the ML side, base MedSAM struggled with specific organ boundaries, so I fine-tuned it using LoRA to sharpen segmentation accuracy on our target organ types.
 
-Working together to tie the interactive UI with the fine-tuned model pipeline took plenty of iteration and testing within our team. Turning a slow tracing process into a responsive tool was a great experience in making complex vision models practical for real workflows.`,
+Working together to tie the interactive UI with the fine-tuned model pipeline took plenty of iteration and testing within our team. Turning a slow tracing process into a responsive tool was a great experience in making complex vision models practical for radiologists’ real workflows.`,
     contributions: [
       "Custom DICOM viewer with integrated MedSAM for click-prompted 3D segmentation",
       "LoRA fine-tuning on clinical CT dataset to improve robustness on target organ types",
