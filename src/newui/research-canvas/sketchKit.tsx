@@ -15,12 +15,25 @@ export function useSize<T extends HTMLElement>(): [React.RefObject<T>, Size] {
   React.useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const read = () => setSize({ w: Math.round(el.offsetWidth), h: Math.round(el.offsetHeight) });
+    const read = () => {
+      const w = Math.round(el.offsetWidth);
+      const h = Math.round(el.offsetHeight);
+      setSize((prev) => (prev.w === w && prev.h === h ? prev : { w, h }));
+    };
     read();
     if (typeof ResizeObserver === 'undefined') return;
-    const ro = new ResizeObserver(read);
+    // Defer to the next frame so a resize that changes layout doesn't
+    // re-trigger the observer in the same frame ("ResizeObserver loop").
+    let frame = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(read);
+    });
     ro.observe(el);
-    return () => ro.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      ro.disconnect();
+    };
   }, []);
   return [ref, size];
 }
