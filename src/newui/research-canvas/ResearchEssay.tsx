@@ -2,7 +2,6 @@ import React from 'react';
 import {
   EssaySection,
   MapBox,
-  courseProjects,
   essaySections,
 } from '../../components/data/researchCanvasData';
 import SpectrumGraph from './SpectrumGraph';
@@ -173,27 +172,8 @@ const ResearchEssay: React.FC = () => {
     </div>
   );
 
-  const courses = (
-    <section id="courses" className="rcourses">
-      <h2 className="rcourses__title">Course Projects</h2>
-      <ul className="rcourses__list">
-        {courseProjects.map((c) => (
-          <li key={c.id}>
-            <span className="rcourses__course">{c.course}</span>
-            <span className="rcourses__term">{c.term} · write-up coming soon</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-
   if (narrow) {
-    return (
-      <>
-        <div className="rmap rmap--narrow">{flow}</div>
-        {courses}
-      </>
-    );
+    return <div className="rmap rmap--narrow">{flow}</div>;
   }
 
   return (
@@ -224,7 +204,6 @@ const ResearchEssay: React.FC = () => {
           })}
         </div>
       </div>
-      {courses}
     </>
   );
 };

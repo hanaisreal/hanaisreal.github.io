@@ -10,6 +10,10 @@ import '../newui/newPortfolio.css';
 
 
 function renderStoryBlock(block: ProjectStoryBlock, index: number) {
+  if (block.type === 'heading') {
+    return <h2 key={index} className="proj-section-title">{block.text}</h2>;
+  }
+
   if (block.type === 'paragraph') {
     return <p key={index}>{block.text}</p>;
   }

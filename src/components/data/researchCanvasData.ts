@@ -54,7 +54,7 @@ export const essaySections: EssaySection[] = [
     title: 'The Vision of Personalized Agents',
     tone: 'vision',
     paragraphs: [
-      'People use AI across a spectrum, from automating repetitive tasks to navigating personal, expert work. One model cannot serve both ends.',
+      'Human-AI interaction spans a broad spectrum, ranging from routine task automation to value-centric expert workflows. Because human needs vary dramatically across these domains, a single generic model inevitably fails at both extremes.',
     ],
     sketch: { kind: 'spectrum' },
   },
@@ -64,7 +64,7 @@ export const essaySections: EssaySection[] = [
     title: 'Understanding Diverse User Intents',
     tone: 'understanding',
     paragraphs: [
-      'To see how intent differs across people, I explored two settings: older adults learning about deepfakes, and K-12 students writing with AI. Engagement shifted with proficiency, so AI cannot stay static.',
+      'User intent is deeply shaped by domain background and proficiency. Through empirical studies with older adults evaluating deepfakes and K-12 students writing with AI, I observed that user agency shifts significantly as expertise increases. AI systems cannot remain static; they must dynamically adapt to each user’s unique context.',
     ],
     sketch: {
       kind: 'track',
@@ -78,12 +78,12 @@ export const essaySections: EssaySection[] = [
           [
             {
               id: 'u-observed', kind: 'insight', tone: 'neutral', eyebrow: 'What I observed',
-              title: 'Engagement shifts with proficiency',
-              range: { left: 'delegated without a specific intent', right: 'clear mental model, selective use' },
+              title: 'Interaction styles shift with user proficiency',
+              range: { left: 'full delegation (unarticulated intent)', right: 'selective use (clear structural vision)' },
             },
           ],
           [
-            { id: 'u-adapt', kind: 'strategy', tone: 'expert', eyebrow: 'Implication', title: 'Adapt to where each user is', body: 'exploratory scaffolding ↔ interpretable control' },
+            { id: 'u-adapt', kind: 'strategy', tone: 'expert', eyebrow: 'Implication', title: 'Adaptive Scaffolding', body: 'exploratory scaffolding vs. interpretable control' },
           ],
         ],
       },
@@ -95,17 +95,17 @@ export const essaySections: EssaySection[] = [
     title: 'Designing Interpretable Interfaces',
     tone: 'interfaces',
     paragraphs: [
-      'Expert judgment is often tacit. ToneCanvas makes a writer’s sense of character tone visible and editable, but once the task ends, that judgment is gone.',
+      'Domain expertise relies heavily on tacit judgment that is notoriously hard to articulate. ToneCanvas externalizes a writer’s subtle perception of character tone into inspectable visual assets, rendering implicit choices tangible and editable. Yet, once the task ends, this externalized judgment resets, exposing the limit of single-session tools.',
     ],
     sketch: {
       kind: 'track',
-      note: 'but it resets when the task ends',
+      note: 'resets when the session ends (lacks persistent memory)',
       track: {
         id: 'interfaces',
         rows: [
           [{ id: 'i-tacit', kind: 'state', tone: 'novice', eyebrow: 'Tacit judgment', title: '“This character sounds wrong”' }],
-          [{ id: 'i-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Tone as a visual object' }],
-          [{ id: 'i-visible', kind: 'strategy', tone: 'expert', eyebrow: 'Interpretable', title: 'Judgment made visible' }],
+          [{ id: 'i-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Tone as a visual asset' }],
+          [{ id: 'i-visible', kind: 'strategy', tone: 'expert', eyebrow: 'Interpretable', title: 'Tacit judgment made visible and editable' }],
         ],
       },
     },
@@ -117,23 +117,17 @@ export const essaySections: EssaySection[] = [
     tone: 'memory',
     future: true,
     paragraphs: [
-      'Intent builds up over weeks and months. Next, I want memory that keeps people’s own words and turns them into skills that improve with feedback.',
+      'True personalization cannot be achieved in a single session. It requires persistent context accumulated over weeks and months. My next step focuses on building a memory architecture that preserves raw user expressions to continuously extract, execute, and refine reusable skills.',
     ],
     sketch: {
       kind: 'loop',
-      centre: 'continuously',
+      centre: 'continuous learning',
       steps: [
-        { id: 'm-raw', kind: 'state', tone: 'memory', pending: true, eyebrow: 'Record', title: 'People’s own words' },
-        { id: 'm-skills', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Extract', title: 'Reusable workflows & skills' },
-        { id: 'm-execute', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Execute', title: 'With user feedback' },
-        { id: 'm-update', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Update', title: 'Skills keep evolving' },
+        { id: 'm-raw', kind: 'state', tone: 'memory', pending: true, eyebrow: 'Record', title: 'User context' },
+        { id: 'm-skills', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Extract', title: 'Reusable workflows and skills' },
+        { id: 'm-execute', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Execute', title: 'Actionable tool execution' },
+        { id: 'm-update', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Update', title: 'Iterative skill refinement' },
       ],
     },
   },
-];
-
-// Spring 2026 courses; write-ups to come from the user's course materials.
-export const courseProjects = [
-  { id: 'social-philosophy', course: 'Seminar in Social Philosophy', term: 'Spring 2026' },
-  { id: 'user-experience', course: 'User Experience', term: 'Spring 2026' },
 ];

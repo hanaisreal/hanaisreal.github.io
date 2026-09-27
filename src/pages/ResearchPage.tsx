@@ -71,8 +71,8 @@ const ResearchPage: React.FC = () => {
         <header className="page-intro">
           <h1 className="page-intro__title">Research</h1>
           <p className="page-intro__desc">
-            Toward truly personalized agents that elicit intent accurately and remember it
-            faithfully.
+            Toward personalized AI agents that accurately capture intent and persistently
+            preserve context.
           </p>
         </header>
         <ResearchEssay />

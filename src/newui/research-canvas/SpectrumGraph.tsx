@@ -17,13 +17,13 @@ const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v
 const NOTES: Record<Exclude<Focus, 'range'>, { eyebrow: string; title: string; body: string }> = {
   a: {
     eyebrow: 'A · functional',
-    title: 'Automating repetitive tasks',
-    body: 'Functional, procedural automation.',
+    title: 'Procedural Automation',
+    body: 'Automating routine, structured tasks through explicit rules.',
   },
   b: {
-    eyebrow: 'B · experience',
-    title: 'Personal, expert tasks',
-    body: 'Personal, value-centric work from professional expertise.',
+    eyebrow: 'B · personal',
+    title: 'Personal, Expert Work',
+    body: 'Augmenting complex, judgment-driven tasks rooted in individual domain expertise.',
   },
 };
 
@@ -113,9 +113,9 @@ const SpectrumGraph: React.FC = () => {
   const pct = (v: number) => Math.round(v * 100);
   const note = focus === 'range'
     ? {
-        eyebrow: 'We are at this range',
-        title: 'Using AI, harnessing AI toward the extreme',
-        body: `${pct(1 - tb)}–${pct(1 - ta)}% functional · ${pct(ta)}–${pct(tb)}% experience`,
+        eyebrow: 'Target range',
+        title: 'Harnessing AI toward personal expertise',
+        body: 'Exploring the spectrum between procedural automation and personal workflows.',
       }
     : NOTES[focus];
 
@@ -131,7 +131,7 @@ const SpectrumGraph: React.FC = () => {
             onPointerUp={() => { dragging.current = null; }}
             onPointerCancel={() => { dragging.current = null; }}
             role="img"
-            aria-label="Spectrum from functional automation (A) to personal, expert tasks (B)"
+            aria-label="Spectrum from procedural automation (A) to personal, expert work (B)"
           >
             {highlight.map((d, i) => (
               <path key={i} d={d} fill="none" stroke="#6a6a6a" strokeWidth={0.8} opacity={0.4} />
@@ -143,11 +143,11 @@ const SpectrumGraph: React.FC = () => {
             <text className="spectrum__letter" x={x0 - 32} y={y0 + 17} textAnchor="middle">A</text>
             <text className="spectrum__letter" x={x1 + 40} y={y1 - 9} textAnchor="middle">B</text>
             <text className="spectrum__label" x={x0 + 12} y={y0 + 30}>functional</text>
-            <text className="spectrum__label" x={x1 - 12} y={y1 - 14} textAnchor="end">experience</text>
+            <text className="spectrum__label" x={x1 - 12} y={y1 - 14} textAnchor="end">personal</text>
             <text className="spectrum__label spectrum__label--sm" x={x0 - 34} y={y1 + 30}>automating</text>
-            <text className="spectrum__label spectrum__label--sm" x={x0 - 34} y={y1 + 50}>repetitive task</text>
-            <text className="spectrum__label spectrum__label--sm" x={x1 + 60} y={y1 + 30} textAnchor="end">more personal,</text>
-            <text className="spectrum__label spectrum__label--sm" x={x1 + 60} y={y1 + 50} textAnchor="end">specific expert task</text>
+            <text className="spectrum__label spectrum__label--sm" x={x0 - 34} y={y1 + 50}>repetitive tasks</text>
+            <text className="spectrum__label spectrum__label--sm" x={x1 + 60} y={y1 + 30} textAnchor="end">personal &amp;</text>
+            <text className="spectrum__label spectrum__label--sm" x={x1 + 60} y={y1 + 50} textAnchor="end">expert workflows</text>
 
             {/* Hover targets for the two triangles */}
             <polygon
@@ -162,7 +162,7 @@ const SpectrumGraph: React.FC = () => {
             />
 
             <Strokes paths={brace} width={1.3} />
-            <text className="spectrum__label" x={xm} y={y1 + 66} textAnchor="middle">we are at this range</text>
+            <text className="spectrum__label" x={xm} y={y1 + 66} textAnchor="middle">target range</text>
 
             {([xa, xb] as const).map((x, i) => (
               <g

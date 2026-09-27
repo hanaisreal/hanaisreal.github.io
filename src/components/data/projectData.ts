@@ -19,6 +19,7 @@ export interface ProjectVideo {
 }
 
 export type ProjectStoryBlock =
+  | { type: 'heading'; text: string }
   | { type: 'paragraph'; text: string }
   | { type: 'figure'; figure: ProjectFigure }
   | { type: 'figure-row'; figures: ProjectFigure[] }
@@ -39,6 +40,26 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    slug: "ai-journaling",
+    title: "Rethinking AI Journaling through Phenomenological Design",
+    tldr: "A phenomenological AI journaling interface that captures the raw atmosphere of experience through typing rhythm and generative canvases, moving beyond rigid emotion tags.",
+    description: "A phenomenological AI journaling interface that captures the raw atmosphere of experience through typing rhythm and generative canvases, moving beyond rigid emotion tags.",
+    narrative: `Drawing from John Dewey’s philosophy, every human experience is profoundly unique, carrying its own distinct atmosphere and sensory weight. In my personal journaling practice, I have always tried to capture not just the facts of what happened, but the full nuance of those moments in words. This project stems from a central question: How can we convey our lived experiences to technology in a way that feels natural, raw, and therapeutic?
+
+Modern journaling apps flatten this rich human experience into discrete database parameters. They force users to translate complex days into rigid inputs like selecting an emoji, choosing a standardized mood tag (such as "stressed" or "depressed"), or toggling weather icons.
+
+By demanding that users categorize their internal state before they even begin writing, existing interfaces strip away the phenomenological atmosphere of the moment. Instead of letting technology adapt to the complex tangle of human emotion, we are forced to fit our living experiences into pre-built app schemas. My goal was to redesign the Algorithmic Experience (AX) to preserve the raw, atmospheric texture of thought without forcing users into artificial taxonomy.`,
+    contributions: [],
+    tags: ["User Experience course", "AI journaling", "Phenomenological design"],
+    duration: "Spring 2026",
+    storyBlocks: [
+      { type: 'paragraph', text: `Drawing from John Dewey’s philosophy, every human experience is profoundly unique, carrying its own distinct atmosphere and sensory weight. In my personal journaling practice, I have always tried to capture not just the facts of what happened, but the full nuance of those moments in words. This project stems from a central question: How can we convey our lived experiences to technology in a way that feels natural, raw, and therapeutic?` },
+      { type: 'heading', text: 'Problem: The Reduction of Lived Experience' },
+      { type: 'paragraph', text: `Modern journaling apps flatten this rich human experience into discrete database parameters. They force users to translate complex days into rigid inputs like selecting an emoji, choosing a standardized mood tag (such as "stressed" or "depressed"), or toggling weather icons.` },
+      { type: 'paragraph', text: `By demanding that users categorize their internal state before they even begin writing, existing interfaces strip away the phenomenological atmosphere of the moment. Instead of letting technology adapt to the complex tangle of human emotion, we are forced to fit our living experiences into pre-built app schemas. My goal was to redesign the Algorithmic Experience (AX) to preserve the raw, atmospheric texture of thought without forcing users into artificial taxonomy.` },
+    ],
+  },
   {
     slug: "paranmanjang",
     title: "Bookmark-Grounded Writing Recommender (Paranmanjang)",
