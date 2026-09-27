@@ -23,8 +23,11 @@ const backgrounds: BackgroundItem[] = [
   { file: 'sunset/20240814_201907.jpg', timeOfDay: 'sunset', location: '' },
   { file: 'sunset/20241003_181848.jpg', timeOfDay: 'sunset', location: '' },
   { file: 'sunset/IMG_2542.JPG', timeOfDay: 'sunset', location: '' },
-  { file: 'night/20260228_235215.jpg', timeOfDay: 'night', location: '' },
+  { file: 'sunset/palm-silhouettes.jpg', timeOfDay: 'sunset', location: '' },
+  { file: 'sunset/sky-clouds-glow.jpg', timeOfDay: 'sunset', location: '' },
   { file: 'night/IMG_3323.JPG', timeOfDay: 'night', location: '' },
+  { file: 'night/milky-way.jpg', timeOfDay: 'night', location: '' },
+  { file: 'night/stars-over-cloud.jpg', timeOfDay: 'night', location: '' },
 ];
 
 export function pickBackground(hour: number): BackgroundItem {
