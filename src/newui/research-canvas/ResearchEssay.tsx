@@ -15,7 +15,8 @@ import { Arrow, Box, Connector, Sketch, Track, useSize } from './sketchKit';
 
 const NARROW_QUERY = '(max-width: 860px)';
 const GAP = 56;
-const LOOP_GAP = 56;
+const LOOP_GAP = 56;     // matches .rloop column gap
+const LOOP_ROW_GAP = 44; // matches .rloop row gap
 
 type SectionGeo = Record<string, { top: number; mid: number; panelH: number }>;
 
@@ -35,12 +36,12 @@ function useIsNarrow() {
 const LoopSketch: React.FC<{ steps: MapBox[]; centre: string }> = ({ steps, centre }) => {
   const [ref, { w, h }] = useSize<HTMLDivElement>();
   const cw = (w - LOOP_GAP) / 2;
-  const ch = (h - LOOP_GAP) / 2;
+  const ch = (h - LOOP_ROW_GAP) / 2;
   const arrows: [number, number][][] = w > 0 ? [
     [[cw + 6, ch / 2], [cw + LOOP_GAP - 8, ch / 2]],
-    [[cw + LOOP_GAP + cw / 2, ch + 6], [cw + LOOP_GAP + cw / 2, ch + LOOP_GAP - 8]],
-    [[cw + LOOP_GAP - 6, ch + LOOP_GAP + ch / 2], [cw + 8, ch + LOOP_GAP + ch / 2]],
-    [[cw / 2, ch + LOOP_GAP - 6], [cw / 2, ch + 8]],
+    [[cw + LOOP_GAP + cw / 2, ch + 6], [cw + LOOP_GAP + cw / 2, ch + LOOP_ROW_GAP - 8]],
+    [[cw + LOOP_GAP - 6, ch + LOOP_ROW_GAP + ch / 2], [cw + 8, ch + LOOP_ROW_GAP + ch / 2]],
+    [[cw / 2, ch + LOOP_ROW_GAP - 6], [cw / 2, ch + 8]],
   ] : [];
   // Reading order around the cycle, laid into grid cells.
   const cells = [steps[0], steps[1], steps[3], steps[2]];
@@ -154,7 +155,7 @@ const ResearchEssay: React.FC = () => {
     <div className="rflow" ref={flowRef}>
       {essaySections.map((section, i) => (
         <React.Fragment key={section.id}>
-          {i > 0 && <Connector from={1} to={1} id={`into-${section.id}`} height={36} />}
+          {i > 0 && <Connector from={1} to={1} id={`into-${section.id}`} height={26} />}
           <div ref={(el) => { blockRefs.current[section.id] = el; }}>{block(section)}</div>
           {narrow && active === section.id && (
             <div className="rdetail-inline"><SectionDetail section={section} /></div>

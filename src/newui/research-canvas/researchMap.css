@@ -4,9 +4,9 @@
   --script: "Caveat", "Nunito", cursive;
   --serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   max-width: 1100px;
-  padding: 3.6rem clamp(1.2rem, 4.5vw, 3.6rem) 4rem;
+  padding: 2.6rem clamp(1.2rem, 4.5vw, 3.6rem) 4rem;
 }
-.page--research-sheet .page-intro { max-width: 46rem; margin-bottom: 1.4rem; }
+.page--research-sheet .page-intro { max-width: 46rem; margin-bottom: 1.6rem; }
 .page--research-sheet .page-intro__title { font-family: var(--serif); font-weight: 600; }
 .page--research-sheet .page-intro__desc { font-size: 1.14rem; line-height: 1.55; }
 .page--research-sheet .sec-rule { margin: 3rem 0 2.4rem; }
@@ -14,7 +14,7 @@
 /* ── FLOW + HOVER PANELS ── */
 .rmap {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-columns: 330px minmax(0, 1fr);
   gap: 56px;
   align-items: start;
   color: var(--text);
@@ -23,7 +23,7 @@
 .rflow { position: relative; }
 
 .sketch.sketch--phase {
-  padding: 1rem 2rem 1rem 1.1rem;
+  padding: 0.7rem 2rem 0.75rem 1.1rem;
   align-items: flex-start;
   text-align: left;
   cursor: pointer;
@@ -69,7 +69,7 @@
 }
 .rdetail__prose p { margin: 0; }
 .rdetail__prose p + p { margin-top: 0.75rem; }
-.rdetail__sketch { margin-top: 1.4rem; }
+.rdetail__sketch { margin-top: 1rem; }
 .rdetail__sketch .rtrack { max-width: 460px; margin: 0 auto; }
 .rdetail__note {
   margin: 0.6rem 0 0;
@@ -109,7 +109,7 @@
 .spectrum {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.2rem;
+  gap: 0.4rem;
   align-items: center;
 }
 .spectrum__graph { min-width: 0; }
@@ -122,13 +122,11 @@
 .spectrum__note {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  min-height: 9.5rem;
-  padding-left: 1.2rem;
-  border-left: 2px solid rgba(207, 63, 63, 0.35);
+  gap: 0.15rem;
+  min-height: 5.6rem;
 }
 .spectrum__note-eyebrow { font-family: var(--script); font-size: 1.35rem; color: #cf3f3f; }
-.spectrum__note-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 600; line-height: 1.25; }
+.spectrum__note-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; line-height: 1.25; }
 .spectrum__note-body { margin: 0.2rem 0 0; font-family: var(--serif); font-size: 1.06rem; line-height: 1.55; }
 .spectrum__note-hint { margin-top: 0.4rem; font-family: var(--script); font-size: 1.1rem; color: var(--muted); }
 
@@ -235,7 +233,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-auto-rows: 1fr;
-  gap: 56px;
+  gap: 44px 56px;
 }
 .rloop > .sketch { height: 100%; justify-content: center; }
 .rloop__arrows { position: absolute; inset: 0; overflow: visible; pointer-events: none; }

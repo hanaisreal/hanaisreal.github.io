@@ -18,12 +18,12 @@ const NOTES: Record<Exclude<Focus, 'range'>, { eyebrow: string; title: string; b
   a: {
     eyebrow: 'A · functional',
     title: 'Automating repetitive tasks',
-    body: 'AI executes functional, procedural automation.',
+    body: 'Functional, procedural automation.',
   },
   b: {
     eyebrow: 'B · experience',
     title: 'Personal, expert tasks',
-    body: 'AI helps navigate deeply personal, value-centric tasks derived from professional expertise.',
+    body: 'Personal, value-centric work from professional expertise.',
   },
 };
 
@@ -46,8 +46,8 @@ const SpectrumGraph: React.FC = () => {
   const x1 = Math.max(x0 + 200, w - 76);
   const rectW = x1 - x0;
   const y0 = 36;
-  const y1 = y0 + clamp(rectW * 0.46, 150, 260);
-  const height = y1 + 92;
+  const y1 = y0 + clamp(rectW * 0.3, 110, 160);
+  const height = y1 + 80;
   const xAt = (t: number) => x0 + t * rectW;
 
   const frame = React.useMemo(() => ({
@@ -115,7 +115,7 @@ const SpectrumGraph: React.FC = () => {
     ? {
         eyebrow: 'We are at this range',
         title: 'Using AI, harnessing AI toward the extreme',
-        body: `Here, work is ${pct(1 - tb)}–${pct(1 - ta)}% functional and ${pct(ta)}–${pct(tb)}% experience. A one-size-fits-all model cannot serve both ends.`,
+        body: `${pct(1 - tb)}–${pct(1 - ta)}% functional · ${pct(ta)}–${pct(tb)}% experience`,
       }
     : NOTES[focus];
 
@@ -162,7 +162,7 @@ const SpectrumGraph: React.FC = () => {
             />
 
             <Strokes paths={brace} width={1.3} />
-            <text className="spectrum__label" x={xm} y={y1 + 70} textAnchor="middle">we are at this range</text>
+            <text className="spectrum__label" x={xm} y={y1 + 66} textAnchor="middle">we are at this range</text>
 
             {([xa, xb] as const).map((x, i) => (
               <g

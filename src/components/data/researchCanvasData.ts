@@ -56,8 +56,7 @@ export const essaySections: EssaySection[] = [
     subtitle: 'Functional automation ↔ personal, expert tasks',
     tone: 'vision',
     paragraphs: [
-      'While AI has evolved into a powerful generalized tool, it fails to adapt to the deeply unique nature of human workflows. User interaction with AI exists on a highly variable spectrum: some leverage AI for functional, procedural automation, while others depend on it to navigate deeply personal, value-centric tasks derived from professional expertise.',
-      'Because a one-size-fits-all model cannot serve both extremes, my goal is to bridge this gap by building truly personalized AI agents.',
+      'People use AI across a spectrum, from automating repetitive tasks to navigating personal, expert work. One model cannot serve both ends.',
     ],
     sketch: { kind: 'spectrum' },
   },
@@ -68,10 +67,7 @@ export const essaySections: EssaySection[] = [
     subtitle: 'Exploratory studies across users',
     tone: 'understanding',
     paragraphs: [
-      'To understand how different demographics and expertise levels shape user intent when interacting with AI, I took an exploratory approach.',
-      'With Prof. Hajin Lim, I designed DeepAware, a system that embeds users’ own faces and voices into simulated scam scenarios to make deepfake threats personally relevant. A study with 21 older adults showed improvements in knowledge, perceived vulnerability, and coping efficacy.',
-      'At Prof. Juho Kim’s KIXLAB, our team deployed WriteAid, an AI writing assistant, in K-12 classrooms and collected over 14,000 conversation logs. I contributed to developing a coding framework to analyze engagement patterns.',
-      'Across these studies, engagement shifted with proficiency. Lower-proficiency students often delegated creative tasks without expressing a specific intent, which led to premature convergence, while higher-proficiency students held a clearer mental model and used AI selectively. AI systems cannot remain static; they need to adapt to where each user is.',
+      'To see how intent differs across people, I explored two settings: older adults learning about deepfakes, and K-12 students writing with AI. Engagement shifted with proficiency, so AI cannot stay static.',
     ],
     sketch: {
       kind: 'track',
@@ -79,13 +75,13 @@ export const essaySections: EssaySection[] = [
         id: 'understanding',
         rows: [
           [
-            { id: 'u-deepaware', kind: 'paper', tone: 'paper', pubSlug: 'deepaware', eyebrow: 'CHI ’26', title: 'DeepAware', body: 'Personal relevance in learning, with older adults' },
-            { id: 'u-scaffold', kind: 'paper', tone: 'paper', pubSlug: 'when-scaffolding-breaks', eyebrow: 'CHI ’26', badge: 'Best Paper', title: 'When Scaffolding Breaks', body: '14,000+ logs from K-12 classrooms' },
+            { id: 'u-deepaware', kind: 'paper', tone: 'paper', pubSlug: 'deepaware', eyebrow: 'CHI ’26', title: 'DeepAware', body: 'Older adults' },
+            { id: 'u-scaffold', kind: 'paper', tone: 'paper', pubSlug: 'when-scaffolding-breaks', eyebrow: 'CHI ’26', badge: 'Best Paper', title: 'When Scaffolding Breaks', body: 'K-12 classrooms' },
           ],
           [
             {
               id: 'u-observed', kind: 'insight', tone: 'neutral', eyebrow: 'What I observed',
-              title: 'Engagement shifted with proficiency',
+              title: 'Engagement shifts with proficiency',
               range: { left: 'delegated without a specific intent', right: 'clear mental model, selective use' },
             },
           ],
@@ -103,9 +99,7 @@ export const essaySections: EssaySection[] = [
     subtitle: 'Making tacit judgment visible',
     tone: 'interfaces',
     paragraphs: [
-      'To build interpretable systems for value-centric workflows, AI must first externalize tacit human judgment that is otherwise difficult to articulate.',
-      'In ToneCanvas, writers revising a long novel can tell when a character sounds wrong, but that judgment remains tacit and scattered across hundreds of pages. We built an LLM-based editing interface that extracts character tone from a manuscript and represents it as an inspectable visual object. In a study with 16 writers, structuring tone visually helped participants pinpoint cross-chapter inconsistencies and make more precise revisions.',
-      'Yet the judgment made visible did not outlive the task: a writer opening a new manuscript starts with an empty tone map.',
+      'Expert judgment is often tacit. ToneCanvas makes a writer’s sense of character tone visible and editable, but once the task ends, that judgment is gone.',
     ],
     sketch: {
       kind: 'track',
@@ -113,9 +107,9 @@ export const essaySections: EssaySection[] = [
       track: {
         id: 'interfaces',
         rows: [
-          [{ id: 'i-tacit', kind: 'state', tone: 'novice', eyebrow: 'Tacit judgment', title: '“This character sounds wrong”', body: 'Scattered across hundreds of pages' }],
-          [{ id: 'i-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Character tone as an inspectable visual object' }],
-          [{ id: 'i-visible', kind: 'strategy', tone: 'expert', eyebrow: 'Interpretable', title: 'Judgment made visible', body: 'Pinpointing cross-chapter inconsistencies' }],
+          [{ id: 'i-tacit', kind: 'state', tone: 'novice', eyebrow: 'Tacit judgment', title: '“This character sounds wrong”' }],
+          [{ id: 'i-tonecanvas', kind: 'paper', tone: 'paper', pubSlug: 'tonecanvas', eyebrow: 'UIST ’26 Poster', title: 'ToneCanvas', body: 'Tone as a visual object' }],
+          [{ id: 'i-visible', kind: 'strategy', tone: 'expert', eyebrow: 'Interpretable', title: 'Judgment made visible' }],
         ],
       },
     },
@@ -128,14 +122,13 @@ export const essaySections: EssaySection[] = [
     tone: 'memory',
     future: true,
     paragraphs: [
-      'User intent accumulates over days, weeks, and months. This is where I want to go next: memory that records context without prematurely judging its importance, and keeps the user’s own phrasing instead of lossy summaries.',
-      'Combined with interpretable tools, I envision a closed loop: extracting insights from raw memory, turning them into reusable workflows and skills, executing them with user feedback, and continuously updating them.',
+      'Intent builds up over weeks and months. Next, I want memory that keeps people’s own words and turns them into skills that improve with feedback.',
     ],
     sketch: {
       kind: 'loop',
       centre: 'continuously',
       steps: [
-        { id: 'm-raw', kind: 'state', tone: 'memory', pending: true, eyebrow: 'Record', title: 'Raw memory', body: 'Without judging importance' },
+        { id: 'm-raw', kind: 'state', tone: 'memory', pending: true, eyebrow: 'Record', title: 'People’s own words' },
         { id: 'm-skills', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Extract', title: 'Reusable workflows & skills' },
         { id: 'm-execute', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Execute', title: 'With user feedback' },
         { id: 'm-update', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Update', title: 'Skills keep evolving' },
