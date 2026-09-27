@@ -177,9 +177,9 @@ Building this during a fast-paced hackathon with a small, dedicated team and ult
   },
   {
     slug: "upstage-consultation",
-    title: "Document-Grounded AI Consultation System",
-    tldr: "A RAG-based system that grounds AI responses in a user's own documents, making advice feel personal rather than generic.",
-    description: "Full-stack RAG application using Solar LLMs for adaptive, personalized user consulting.",
+    title: "AI Communication Mediator",
+    tldr: "A RAG-based mediator that grounds its responses in shared documents and chat histories, helping people talk through sensitive topics from common facts.",
+    description: "Document-grounded RAG mediator that helps people resolve misunderstandings from shared facts.",
     narrative: `Misunderstandings between people often happen because both sides are operating on different assumptions or incomplete details. I wanted to build an AI mediator that could bridge those gaps. Instead of offering boilerplate advice, the system grounded its responses in uploaded documents and chat histories, acting as a neutral anchor to help people talk through sensitive or complex topics.
 
 Getting RAG to work reliably for interpersonal mediation was tough. Naive context retrieval frequently introduced subtle hallucinations or lost crucial nuances, which instantly destroys trust. Standard character chunking kept slicing up key details, so I overhauled the pipeline: moving to semantic chunking, combining dense vector search with sparse keyword matching, and adding a reranking layer to keep retrieved sources pinpoint accurate.
