@@ -65,11 +65,15 @@ By demanding that users categorize their internal state before they even begin w
     title: "Bookmark-Grounded Writing Recommender (Paranmanjang)",
     tldr: "A bookmark-grounded writing tool that vectorized saved links and surfaced relevant summaries while I was drafting.",
     description: "Writing companion that turned bookmarked links into a retrievable knowledge base for contextual recommendations.",
-    narrative: `Before personal AI writing tools made this pattern familiar, I worked on Paranmanjang, a writing companion that treated bookmarked links as a living reference library instead of a pile of tabs. The goal was simple: when I was writing, the system should bring back the most relevant things I had already saved instead of making me search for them again.
+    narrative: `Why do saved bookmarks always end up in a digital graveyard? I had hundreds of articles saved, but when I actually sat down to write, I never remembered to search through them. I wanted to build a system that brought those forgotten references back to life, transforming a passive bookmark archive into an active context engine that surfaces relevant notes right when you need them.
 
-When a link was saved, the backend crawled the page body, generated a short summary, stored metadata in MySQL, and pushed embeddings into Pinecone. During writing, the system extracted keywords from the current text, embedded that context, and retrieved related bookmarks so the editor could recommend useful material beside the draft.
+Making that vision work took a lot of trial and error on the backend pipeline. On paper, the flow was simple: take a bookmarked URL, extract the body, summarize it, and generate embeddings for Pinecone alongside structured metadata in MySQL. In practice, parsing wildly inconsistent web pages, filtering out junk text, and getting clean summaries without blowing through processing time took heavy tweaking.
 
-What interested me most was workflow fit. Retrieval only helps if it arrives at the right moment, with just enough context to nudge the writer forward without interrupting the act of writing itself. Paranmanjang explored that balance through a bookmark browser, a recommendation sidebar, and a Google Docs-connected writing flow.`,
+The trickiest part was designing the real-time context retrieval for the editor. As someone typed, the FastAPI backend had to analyze the live draft, derive the current context, and query Pinecone without introducing lag into the writing experience. It was a constant balancing act between retrieval frequency, latency, and relevancy. I did not want a generic text generator; I wanted the system to feel like a sharp research partner quietly handing you the exact article you saved six months ago.
+
+To glue everything together, I deployed the services on Naver Cloud infrastructure using Docker containers and built an automated GitHub Actions CI/CD pipeline. On the interface side, I focused heavily on the writing flow, building card components that displayed bookmark summaries and source metadata directly alongside the active draft so referencing felt frictionless.
+
+Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Generation (RAG) system built right before RAG became a standard industry term. The most rewarding part of this project was not just getting the cloud infrastructure and vector database running smoothly, but proving to myself that AI tools are at their best when they are grounded in our own curated knowledge and built directly into how we actually work.`,
     contributions: [
       "Built the writing editor flow and recommendation surfaces that placed retrieved bookmark summaries beside the active draft",
       "Developed bookmark browsing interfaces that turned saved links into readable cards with summaries and source metadata",
@@ -84,7 +88,11 @@ What interested me most was workflow fit. Retrieval only helps if it arrives at 
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `Paranmanjang was a 2023 writing-side project built around a question that still matters to me: how can saved references become useful at the exact moment someone is writing? Instead of treating bookmarks as an archive to revisit later, the system reframed them as a personal knowledge base that could actively support drafting.`,
+        text: `Why do saved bookmarks always end up in a digital graveyard? I had hundreds of articles saved, but when I actually sat down to write, I never remembered to search through them. I wanted to build a system that brought those forgotten references back to life, transforming a passive bookmark archive into an active context engine that surfaces relevant notes right when you need them.`,
+      },
+      {
+        type: 'paragraph',
+        text: `Making that vision work took a lot of trial and error on the backend pipeline. On paper, the flow was simple: take a bookmarked URL, extract the body, summarize it, and generate embeddings for Pinecone alongside structured metadata in MySQL. In practice, parsing wildly inconsistent web pages, filtering out junk text, and getting clean summaries without blowing through processing time took heavy tweaking.`,
       },
       {
         type: 'figure',
@@ -96,7 +104,11 @@ What interested me most was workflow fit. Retrieval only helps if it arrives at 
       },
       {
         type: 'paragraph',
-        text: `The backend pipeline took a bookmarked URL, extracted the article body, summarized it, and stored both the structured bookmark data and its vector representation. When the user wrote inside the editor, the system derived keywords from the current draft, embedded that live context, and returned the most relevant saved links as recommendations. The result felt closer to a personal research assistant than a generic autocomplete tool.`,
+        text: `The trickiest part was designing the real-time context retrieval for the editor. As someone typed, the FastAPI backend had to analyze the live draft, derive the current context, and query Pinecone without introducing lag into the writing experience. It was a constant balancing act between retrieval frequency, latency, and relevancy. I did not want a generic text generator; I wanted the system to feel like a sharp research partner quietly handing you the exact article you saved six months ago.`,
+      },
+      {
+        type: 'paragraph',
+        text: `To glue everything together, I deployed the services on Naver Cloud infrastructure using Docker containers and built an automated GitHub Actions CI/CD pipeline. On the interface side, I focused heavily on the writing flow, building card components that displayed bookmark summaries and source metadata directly alongside the active draft so referencing felt frictionless.`,
       },
       {
         type: 'figure-row',
@@ -115,7 +127,7 @@ What interested me most was workflow fit. Retrieval only helps if it arrives at 
       },
       {
         type: 'paragraph',
-        text: `Looking back, what feels most prescient about the project is that it anticipated a now-common RAG pattern: ground assistance in a user's own collected material rather than generating from nowhere. What I cared about then, and still care about now, was making retrieval feel genuinely situated inside a person's workflow.`,
+        text: `Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Generation (RAG) system built right before RAG became a standard industry term. The most rewarding part of this project was not just getting the cloud infrastructure and vector database running smoothly, but proving to myself that AI tools are at their best when they are grounded in our own curated knowledge and built directly into how we actually work.`,
       },
     ],
   },
