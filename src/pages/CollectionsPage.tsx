@@ -67,10 +67,6 @@ interface ClusterSparkle {
   clusterId: ClusterId;
 }
 
-interface IntroParagraph {
-  content: React.ReactNode;
-  tone?: 'default' | 'cta';
-}
 
 interface KeywordEntry {
   label: string;
@@ -416,17 +412,6 @@ function createRandomUniverseLayout(): RandomUniverseLayout {
 const RANDOM_UNIVERSE = createRandomUniverseLayout();
 const PHOTO_STARS = RANDOM_UNIVERSE.photoStars;
 
-// One concise cue shared by the desktop margin and mobile layout.
-const INTRO_PARAGRAPHS: IntroParagraph[] = [
-  {
-    content: (
-      <>
-        Click a star to explore.
-      </>
-    ),
-    tone: 'cta',
-  },
-];
 
 // ── Sticker layout ──────────────────────────────────────────────────────────
 // depth: px movement per unit tilt. higher = floats more in foreground.
@@ -479,7 +464,7 @@ const FOCUS_SCALE = 2.6;
 
 const CollectionsPage: React.FC = () => {
   const [selected, setSelected] = useState<CollectionItem | null>(null);
-  const [lang, setLang] = useState<Lang>('en');
+  const lang = 'en' as Lang; // the page is English-only
   const [selectedGalleryIndex, setSelectedGalleryIndex] = useState(0);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const portraitRef = useRef<HTMLDivElement>(null);
@@ -960,19 +945,6 @@ const CollectionsPage: React.FC = () => {
             })}
           </div>
 
-          {/* UI overlays — stay fixed, don't zoom */}
-          <button
-            className="collage-lang-toggle"
-            onClick={() => setLang(l => l === 'ko' ? 'en' : 'ko')}
-            aria-label="Toggle language"
-            data-analytics-event="language_toggle"
-            data-analytics-label="Collections language toggle"
-            data-analytics-placement="collections"
-          >
-            <span className={lang === 'ko' ? 'active' : ''}>KO</span>
-            <span className="sep">/</span>
-            <span className={lang === 'en' ? 'active' : ''}>EN</span>
-          </button>
         </div>
       </main>
 
@@ -989,18 +961,7 @@ const CollectionsPage: React.FC = () => {
         <img ref={morphImgRef} alt="" draggable={false} decoding="async" />
       </div>
 
-      <aside className="collage-keywords collage-keywords--left collage-keywords--intro" aria-label="Exploration instructions">
-        {INTRO_PARAGRAPHS.map(({ content, tone }, i) => (
-          <p className={`collage-intro${tone === 'cta' ? ' collage-intro--cta' : ''}`} key={i}>{content}</p>
-        ))}
-      </aside>
 
-      {/* Mobile only — repeat the single exploration cue below the artwork. */}
-      <section className="collage-mobile-intro" data-analytics-section="collections_mobile_intro">
-        {INTRO_PARAGRAPHS.map(({ content, tone }, i) => (
-          <p className={tone === 'cta' ? 'collage-mobile-intro__cta' : undefined} key={i}>{content}</p>
-        ))}
-      </section>
 
       {selected && (
         <div className="collage-modal-backdrop" onClick={closeModal}>

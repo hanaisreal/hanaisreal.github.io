@@ -130,8 +130,8 @@
   border-radius: 50%;
   background: #fff;
   box-shadow:
-    0 0 4px 1px rgba(255, 255, 255, 0.9),
-    0 0 10px 3px rgba(var(--cluster-rgb, 170, 170, 170), 0.42);
+    0 0 6px 2px rgba(255, 255, 255, 1),
+    0 0 16px 5px rgba(var(--cluster-rgb, 200, 200, 200), 0.6);
   pointer-events: none;
   animation-name: collage-sparkle-twinkle;
   animation-timing-function: ease-in-out;
@@ -140,7 +140,7 @@
 
 @keyframes collage-sparkle-twinkle {
   0%, 100% { opacity: 0.1; transform: scale(0.5); }
-  50%      { opacity: 1;   transform: scale(1.4); }
+  50%      { opacity: 1;   transform: scale(1.8); }
 }
 
 /* ── Photos nested among the word cluster ── */
@@ -161,9 +161,24 @@
   will-change: transform, opacity;
   backface-visibility: hidden;
   box-shadow:
-    0 0 7px 2px rgba(255, 255, 255, 0.3),
-    0 0 14px 4px rgba(var(--cluster-rgb, 255, 255, 255), 0.18);
+    0 0 10px 3px rgba(255, 255, 255, 0.55),
+    0 0 24px 8px rgba(var(--cluster-rgb, 255, 255, 255), 0.35);
   transition: box-shadow 0.2s ease;
+  animation: collage-star-glow 3.2s ease-in-out infinite alternate;
+}
+
+/* A slow breathing glow so the clickable stars read as lit, not pasted on. */
+@keyframes collage-star-glow {
+  from {
+    box-shadow:
+      0 0 8px 2px rgba(255, 255, 255, 0.45),
+      0 0 18px 6px rgba(var(--cluster-rgb, 255, 255, 255), 0.28);
+  }
+  to {
+    box-shadow:
+      0 0 16px 5px rgba(255, 255, 255, 0.85),
+      0 0 34px 12px rgba(var(--cluster-rgb, 255, 255, 255), 0.5);
+  }
 }
 
 .collage-photo-star img {
@@ -171,7 +186,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: saturate(0.65) brightness(1.05);
+  filter: saturate(0.85) brightness(1.15);
   transition: filter 0.25s ease;
 }
 
@@ -235,6 +250,7 @@
 }
 
 .collage-photo-star:hover {
+  animation: none;
   box-shadow:
     0 0 16px 4px rgba(255, 255, 255, 0.7),
     0 0 26px 10px rgba(var(--cluster-rgb, 255, 255, 255), 0.35);
@@ -248,6 +264,7 @@
 /* Pulsed on click (its own size/position keep animating via inline styles —
    this just adds the glow) before the card actually opens. */
 .collage-photo-star--focused {
+  animation: none;
   box-shadow:
     0 0 26px 9px rgba(255, 255, 255, 0.9),
     0 0 50px 20px rgba(var(--cluster-rgb, 255, 255, 255), 0.45);
@@ -547,6 +564,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .collage-photo-star { animation: none; }
   .collage-intro__spark {
     animation: none;
   }
