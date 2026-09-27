@@ -5,8 +5,10 @@
   --pencil: #6b6b6b;
   --script: "Caveat", "Nunito", cursive;
   --serif: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  max-width: 1100px;
-  padding: 2.6rem clamp(1.2rem, 4.5vw, 3.6rem) 4rem;
+  /* Same sheet as the homepage (.page--home): width, margin, and padding. */
+  max-width: 1000px;
+  margin-top: 2.8rem;
+  padding: 4.2rem clamp(1.8rem, 5vw, 4rem) 4rem;
 }
 .page--research-sheet .page-intro { max-width: 46rem; margin-bottom: 1.6rem; }
 .page--research-sheet .page-intro__title { font-family: var(--serif); font-weight: 600; }
@@ -95,8 +97,10 @@
 .spectrum__letter { font-family: var(--script); font-size: 28px; fill: var(--pen); }
 .spectrum__label { font-family: var(--script); font-size: 22px; fill: var(--pen); }
 .spectrum__label--sm { font-size: 19px; }
-.spectrum__bar { cursor: ew-resize; outline: none; }
-.spectrum__bar:focus-visible circle { stroke-width: 3; }
+.spectrum__marker { cursor: default; outline: none; }
+.spectrum__example { font-family: var(--script); font-size: 17px; fill: var(--pencil); }
+.spectrum__marker.is-active .spectrum__example,
+.spectrum__marker:focus-visible .spectrum__example { fill: var(--pen); font-weight: 600; }
 .spectrum__note {
   display: flex;
   flex-direction: column;
@@ -229,8 +233,15 @@
   white-space: nowrap;
 }
 
+/* Mirror the homepage sheet's breakpoints so both pages stay the same size. */
+@media (max-width: 820px) {
+  .page--research-sheet { margin-top: 2rem; padding: 3.4rem 1.6rem 3.3rem; }
+}
+@media (max-width: 600px) {
+  .page--research-sheet { margin-top: 1.35rem; padding: 2.7rem 1.1rem 3rem; }
+}
+
 @media (max-width: 860px) {
-  .page--research-sheet { padding-top: 2.6rem; }
   .spectrum__note { min-height: 0; }
 }
 

@@ -2,19 +2,22 @@ import React from 'react';
 import { Point, useSize } from './sketchKit';
 import { roughEllipse, roughPolygon, roughPolyline, seedOf } from './rough';
 
-// The functional ↔ experience spectrum from the hand-drawn sketch. A diagonal
+// The functional ↔ personal spectrum from the hand-drawn sketch. A diagonal
 // splits the box into two triangles: at any point along the axis, the height
 // above the diagonal is the functional share and the height below it is the
-// experiential share. Two draggable bars mark the range we work in today.
-// Hovering a triangle or a bar changes the note on the right.
+// personal share. Vertical lines mark where familiar tools sit, so the
+// spectrum reads through examples. Hovering a triangle or a line changes the
+// note beside the graph.
 
-type Focus = 'a' | 'b' | 'range';
+type Focus = 'a' | 'b' | string | null;
 
 const INK = '#262626'; // pen
-const MIN_GAP = 0.08;
+const PENCIL = '#6b6b6b';
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
 
-const NOTES: Record<Exclude<Focus, 'range'>, { eyebrow: string; title: string; body: string }> = {
+type Note = { eyebrow: string; title: string; body: string };
+
+const NOTES: Record<'a' | 'b' | 'default', Note> = {
   a: {
     eyebrow: 'A · functional',
     title: 'Procedural Automation',
@@ -25,29 +28,65 @@ const NOTES: Record<Exclude<Focus, 'range'>, { eyebrow: string; title: string; b
     title: 'Personal, Expert Work',
     body: 'Augmenting complex, judgment-driven tasks rooted in individual domain expertise.',
   },
+  default: {
+    eyebrow: 'Examples',
+    title: 'Where today’s tools sit',
+    body: 'From rule-based automation on the left to personal agents on the right.',
+  },
 };
 
-const Strokes: React.FC<{ paths: string[]; width?: number; dashed?: boolean }> = ({ paths, width = 1.6, dashed }) => (
+// Position along the axis (0 = A, 1 = B) and the note shown on hover.
+const MARKERS: { id: string; t: number; label: string; note: Note }[] = [
+  {
+    id: 'automation',
+    t: 0.12,
+    label: 'Zapier, UiPath',
+    note: {
+      eyebrow: 'Example · functional',
+      title: 'Zapier, UiPath',
+      body: 'Rule-based workflows that run the same way for everyone.',
+    },
+  },
+  {
+    id: 'assistants',
+    t: 0.46,
+    label: 'ChatGPT, Copilot',
+    note: {
+      eyebrow: 'Example · in between',
+      title: 'ChatGPT, Copilot',
+      body: 'General-purpose assistants: capable, but largely the same model for everyone.',
+    },
+  },
+  {
+    id: 'personal-agents',
+    t: 0.82,
+    label: 'Hermes Agent, OpenClaw',
+    note: {
+      eyebrow: 'Example · personal',
+      title: 'Hermes Agent, OpenClaw',
+      body: 'Personal agents that keep memory and build skills around one user.',
+    },
+  },
+];
+
+const Strokes: React.FC<{ paths: string[]; width?: number; color?: string; dashed?: boolean }> = ({ paths, width = 1.6, color = INK, dashed }) => (
   <>
     {paths.map((d, i) => (
-      <path key={i} d={d} fill="none" stroke={INK} strokeWidth={width} strokeLinecap="round" strokeDasharray={dashed ? '5 6' : undefined} />
+      <path key={i} d={d} fill="none" stroke={color} strokeWidth={width} strokeLinecap="round" strokeDasharray={dashed ? '5 6' : undefined} />
     ))}
   </>
 );
 
 const SpectrumGraph: React.FC = () => {
   const [wrapRef, { w }] = useSize<HTMLDivElement>();
-  const svgRef = React.useRef<SVGSVGElement>(null);
-  const [bars, setBars] = React.useState<[number, number]>([0.32, 0.62]);
-  const [focus, setFocus] = React.useState<Focus>('range');
-  const dragging = React.useRef<0 | 1 | null>(null);
+  const [focus, setFocus] = React.useState<Focus>(null);
 
   const x0 = 64;
   const x1 = Math.max(x0 + 200, w - 76);
   const rectW = x1 - x0;
-  const y0 = 36;
+  const y0 = 40;
   const y1 = y0 + clamp(rectW * 0.3, 110, 160);
-  const height = y1 + 80;
+  const height = y1 + 62;
   const xAt = (t: number) => x0 + t * rectW;
 
   const frame = React.useMemo(() => ({
@@ -58,12 +97,14 @@ const SpectrumGraph: React.FC = () => {
     ],
     circleA: roughEllipse(x0 - 32, y0 + 8, 44, 42, seedOf('circle-a')),
     circleB: roughEllipse(x1 + 40, y1 - 18, 44, 42, seedOf('circle-b')),
+    markers: MARKERS.map((m) => roughPolyline([[xAt(m.t), y0 - 6], [xAt(m.t), y1 + 6]], seedOf(`marker-${m.id}`), { roughness: 0.7 })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [x0, x1, y0, y1]);
 
   const triangleA: Point[] = [[x0, y0], [x1, y0], [x0, y1]];
   const triangleB: Point[] = [[x0, y1], [x1, y0], [x1, y1]];
   const highlight = React.useMemo(() => {
-    if (focus === 'range') return [];
+    if (focus !== 'a' && focus !== 'b') return [];
     const pts = focus === 'a' ? triangleA : triangleB;
     return roughPolygon(pts, seedOf(`fill-${focus}`), {
       fill: INK, fillStyle: 'hachure', hachureGap: 9, hachureAngle: focus === 'a' ? -41 : 41, fillWeight: 0.8, stroke: 'none',
@@ -71,67 +112,18 @@ const SpectrumGraph: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focus, x0, x1, y0, y1]);
 
-  const [ta, tb] = bars;
-  const xa = xAt(ta);
-  const xb = xAt(tb);
-  const xm = (xa + xb) / 2;
-  const barPaths = [
-    roughPolyline([[xa, y0 - 16], [xa, y1 + 14]], seedOf('bar-a'), { roughness: 0.7 }),
-    roughPolyline([[xb, y0 - 16], [xb, y1 + 14]], seedOf('bar-b'), { roughness: 0.7 }),
-  ];
-  const brace = roughPolyline(
-    [[xa + 4, y1 + 20], [xa + 10, y1 + 30], [xm - 9, y1 + 30], [xm, y1 + 42], [xm + 9, y1 + 30], [xb - 10, y1 + 30], [xb - 4, y1 + 20]],
-    seedOf('brace'),
-    { roughness: 0.6, bowing: 0.5 },
-  );
-
-  const moveBar = (i: 0 | 1, t: number) => {
-    setBars(([a, b]) => (i === 0
-      ? [clamp(t, 0.02, b - MIN_GAP), b]
-      : [a, clamp(t, a + MIN_GAP, 0.98)]));
-  };
-
-  const onPointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
-    if (dragging.current === null || !svgRef.current) return;
-    const rect = svgRef.current.getBoundingClientRect();
-    moveBar(dragging.current, (e.clientX - rect.left - x0) / rectW);
-  };
-
-  const startDrag = (i: 0 | 1) => (e: React.PointerEvent) => {
-    dragging.current = i;
-    setFocus('range');
-    svgRef.current?.setPointerCapture(e.pointerId);
-  };
-
-  const onKey = (i: 0 | 1) => (e: React.KeyboardEvent) => {
-    const step = e.key === 'ArrowRight' ? 0.02 : e.key === 'ArrowLeft' ? -0.02 : 0;
-    if (!step) return;
-    e.preventDefault();
-    moveBar(i, bars[i] + step);
-  };
-
-  const pct = (v: number) => Math.round(v * 100);
-  const note = focus === 'range'
-    ? {
-        eyebrow: 'Target range',
-        title: 'Harnessing AI toward personal expertise',
-        body: 'Exploring the spectrum between procedural automation and personal workflows.',
-      }
-    : NOTES[focus];
+  const marker = MARKERS.find((m) => m.id === focus);
+  const note = marker ? marker.note : focus === 'a' || focus === 'b' ? NOTES[focus] : NOTES.default;
 
   return (
     <div className="spectrum">
       <div className="spectrum__graph" ref={wrapRef}>
         {w > 0 && (
           <svg
-            ref={svgRef}
             width={w}
             height={height}
-            onPointerMove={onPointerMove}
-            onPointerUp={() => { dragging.current = null; }}
-            onPointerCancel={() => { dragging.current = null; }}
             role="img"
-            aria-label="Spectrum from procedural automation (A) to personal, expert work (B)"
+            aria-label="Spectrum from procedural automation (A) to personal, expert work (B), with example tools placed along it"
           >
             {highlight.map((d, i) => (
               <path key={i} d={d} fill="none" stroke="#6a6a6a" strokeWidth={0.8} opacity={0.4} />
@@ -153,37 +145,35 @@ const SpectrumGraph: React.FC = () => {
             <polygon
               points={triangleA.map((p) => p.join(',')).join(' ')}
               fill="#fff" fillOpacity={0} pointerEvents="all"
-              onMouseEnter={() => setFocus('a')} onMouseLeave={() => setFocus('range')}
+              onMouseEnter={() => setFocus('a')} onMouseLeave={() => setFocus(null)}
             />
             <polygon
               points={triangleB.map((p) => p.join(',')).join(' ')}
               fill="#fff" fillOpacity={0} pointerEvents="all"
-              onMouseEnter={() => setFocus('b')} onMouseLeave={() => setFocus('range')}
+              onMouseEnter={() => setFocus('b')} onMouseLeave={() => setFocus(null)}
             />
 
-            <Strokes paths={brace} width={1.3} />
-            <text className="spectrum__label" x={xm} y={y1 + 66} textAnchor="middle">target range</text>
-
-            {([xa, xb] as const).map((x, i) => (
-              <g
-                key={i}
-                className="spectrum__bar"
-                tabIndex={0}
-                role="slider"
-                aria-label={i === 0 ? 'Range start' : 'Range end'}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={pct(bars[i])}
-                onPointerDown={startDrag(i as 0 | 1)}
-                onMouseEnter={() => setFocus('range')}
-                onFocus={() => setFocus('range')}
-                onKeyDown={onKey(i as 0 | 1)}
-              >
-                <Strokes paths={barPaths[i]} width={1.8} />
-                <circle cx={x} cy={y1 + 14} r={5} fill="#fff" stroke={INK} strokeWidth={1.6} />
-                <rect x={x - 12} y={y0 - 18} width={24} height={y1 - y0 + 40} fill="#fff" fillOpacity={0} />
-              </g>
-            ))}
+            {/* Example tools, drawn on top so their lines win the hover */}
+            {MARKERS.map((m, i) => {
+              const x = xAt(m.t);
+              const active = focus === m.id;
+              return (
+                <g
+                  key={m.id}
+                  className={`spectrum__marker${active ? ' is-active' : ''}`}
+                  tabIndex={0}
+                  aria-label={`${m.note.title}: ${m.note.body}`}
+                  onMouseEnter={() => setFocus(m.id)}
+                  onMouseLeave={() => setFocus(null)}
+                  onFocus={() => setFocus(m.id)}
+                  onBlur={() => setFocus(null)}
+                >
+                  <Strokes paths={frame.markers[i]} width={active ? 2 : 1.4} color={active ? INK : PENCIL} dashed={!active} />
+                  <text className="spectrum__example" x={x} y={y0 - 12} textAnchor="middle">{m.label}</text>
+                  <rect x={x - 12} y={y0 - 30} width={24} height={y1 - y0 + 36} fill="#fff" fillOpacity={0} />
+                </g>
+              );
+            })}
           </svg>
         )}
       </div>
@@ -191,7 +181,7 @@ const SpectrumGraph: React.FC = () => {
         <span className="spectrum__note-eyebrow">{note.eyebrow}</span>
         <span className="spectrum__note-title">{note.title}</span>
         <p className="spectrum__note-body">{note.body}</p>
-        <span className="spectrum__note-hint">drag the bars · hover A or B</span>
+        <span className="spectrum__note-hint">hover a line, A, or B</span>
       </aside>
     </div>
   );
