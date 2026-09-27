@@ -6,7 +6,7 @@ interface ProjectsSectionProps {
   onOpen?: (path: string, rect: DOMRect) => void;
 }
 
-function getProjectRibbonLabel(project: typeof projects[number]) {
+function getProjectLabel(project: typeof projects[number]) {
   if (project.duration) return project.duration;
   return project.tags.slice(0, 2).join(' · ');
 }
@@ -43,11 +43,9 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpen }) => {
             data-analytics-item-name={project.title}
             data-analytics-placement="projects_list"
           >
-            <div className="project-note__ribbon" aria-label={getProjectRibbonLabel(project)}>
-              <span className="project-note__ribbon-text">{getProjectRibbonLabel(project)}</span>
-            </div>
             <div className="project-note__body">
               <h3 className="project-note__title">{project.title}</h3>
+              <p className="project-note__label">{getProjectLabel(project)}</p>
               <p className="project-note__meta">{project.tags.join(' · ')}</p>
               <p className="project-note__summary">{project.tldr}</p>
               {project.image && (

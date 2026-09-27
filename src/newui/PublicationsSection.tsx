@@ -14,7 +14,7 @@ function getShortVenue(venue: string) {
   return venue.replace(/\b(19|20)(\d{2})\b/g, "'$2");
 }
 
-function getRibbonLabel(pub: typeof publications[number]) {
+function getVenueLabel(pub: typeof publications[number]) {
   const venue = getShortVenue(pub.venue);
   const base = pub.status === 'Accepted'
     ? pub.type === 'workshop'
@@ -90,11 +90,9 @@ const PublicationsSection: React.FC<PublicationsSectionProps> = ({ onOpen }) => 
               data-analytics-item-name={pub.title}
               data-analytics-placement="publications_list"
             >
-              <div className="publication-note__ribbon" aria-label={getRibbonLabel(pub)}>
-                <span className="publication-note__ribbon-text">{getRibbonLabel(pub)}</span>
-              </div>
               <div className="publication-note__body">
                 <h3 className="publication-note__title">{pub.title}</h3>
+                <p className="publication-note__label">{getVenueLabel(pub)}</p>
                 <p className="publication-note__authors">{renderCardAuthors(pub)}</p>
                 <p className="publication-note__summary">{getSummary(pub)}</p>
                 {image && (

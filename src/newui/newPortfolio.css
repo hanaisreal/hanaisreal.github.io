@@ -1169,7 +1169,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 
 .publication-note__title,
 .project-note__title {
-  margin: 0 auto 0.9rem;
+  margin: 0 auto 0.35rem;
   max-width: min(100%, 31ch);
   font-size: clamp(0.98rem, 0.95rem + 0.16vw, 1.06rem);
   line-height: 1.4;
@@ -1179,104 +1179,15 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   text-wrap: pretty;
 }
 
-.publication-note__ribbon,
-.project-note__ribbon {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  width: 108px;
-  height: 108px;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 3;
-}
-
-.publication-note__ribbon::before,
-.project-note__ribbon::before,
-.publication-note__ribbon::after,
-.project-note__ribbon::after {
-  content: '';
-  position: absolute;
-  display: block;
-  z-index: 0;
-}
-
-.publication-note__ribbon::before,
-.project-note__ribbon::before {
-  top: 0;
-  right: 32px;
-  width: 42px;
-  height: 8px;
-  border-radius: 8px 8px 0 0;
-  background:
-    linear-gradient(90deg, rgba(190, 127, 149, 0.96) 0%, rgba(145, 82, 103, 0.98) 72%);
-  box-shadow: 0 1px 1px rgba(255,255,255,0.34) inset;
-}
-
-.publication-note__ribbon::after,
-.project-note__ribbon::after {
-  top: 32px;
-  right: 0;
-  width: 8px;
-  height: 42px;
-  border-radius: 0 8px 8px 0;
-  background:
-    linear-gradient(180deg, rgba(145, 82, 103, 0.98) 0%, rgba(190, 127, 149, 0.94) 100%);
-  box-shadow: 1px 0 1px rgba(255,255,255,0.28) inset;
-}
-
-.publication-note__ribbon-text,
-.project-note__ribbon-text {
-  position: absolute;
-  top: 22px;
-  right: -42px;
-  width: 156px;
-  height: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-  padding: 0 1rem;
-  transform: rotate(45deg);
-  font-size: 0.57rem;
-  line-height: 1;
-  color: rgba(255, 248, 250, 0.98);
+.publication-note__label,
+.project-note__label {
+  margin: 0 auto 0.75rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
-  background:
-    linear-gradient(90deg, rgba(166, 97, 121, 0.98) 0%, rgba(205, 142, 163, 0.98) 54%, rgba(150, 86, 107, 0.98) 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(155, 86, 108, 0.96),
-    inset 0 0 0 3px rgba(87, 46, 61, 0.35),
-    inset 0 0 0 4px rgba(255,255,255,0.34),
-    0 18px 5px -16px rgba(0,0,0,0.48);
-}
-
-.publication-note__ribbon-text::before,
-.project-note__ribbon-text::before,
-.publication-note__ribbon-text::after,
-.project-note__ribbon-text::after {
-  content: '';
-  position: absolute;
-  top: -18px;
-  width: 12px;
-  height: 68px;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.46) 45%, rgba(255,255,255,0) 100%);
-  transform: rotate(45deg);
-  opacity: 0.62;
-}
-
-.publication-note__ribbon-text::before,
-.project-note__ribbon-text::before {
-  left: 28px;
-}
-
-.publication-note__ribbon-text::after,
-.project-note__ribbon-text::after {
-  right: 18px;
+  color: var(--link);
 }
 
 .publication-note__authors,
