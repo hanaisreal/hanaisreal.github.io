@@ -96,7 +96,6 @@ const ProjectPage: React.FC = () => {
   if (!project) return null;
 
   const others = projects.filter(p => p.slug !== project.slug);
-  const year = project.duration ? project.duration.slice(-4) : undefined;
 
   return (
     <div>
@@ -113,53 +112,32 @@ const ProjectPage: React.FC = () => {
         </Link>
 
         <header className="proj-hero" data-analytics-section="project_header">
-          <div className="proj-hero__eyebrow">
-            <span className="proj-chip proj-chip--strong">Project</span>
-            {year && <span className="proj-chip">{year}</span>}
-            {project.tags.map(tag => (
-              <span key={tag} className="proj-chip">{tag}</span>
-            ))}
-          </div>
           <h1 className="proj-hero__title">{project.title}</h1>
+          {/* Timeline, focus, and links on one line so the story starts sooner. */}
+          <p className="proj-hero__meta">
+            {[project.duration, ...project.tags].filter(Boolean).join(' · ')}
+            {project.links?.map((l) => (
+              <React.Fragment key={l.label}>
+                {' · '}
+                <a
+                  href={l.url}
+                  className="proj-hero__link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-analytics-event="external_link_click"
+                  data-analytics-label={l.label}
+                  data-analytics-destination={l.url}
+                  data-analytics-item-id={project.slug}
+                  data-analytics-item-name={project.title}
+                  data-analytics-placement="project_detail"
+                >
+                  {l.label} ↗
+                </a>
+              </React.Fragment>
+            ))}
+          </p>
           <p className="proj-hero__lede">{project.tldr}</p>
         </header>
-
-        <dl className="proj-meta">
-          {project.duration && (
-            <div className="proj-meta__item">
-              <dt>Timeline</dt>
-              <dd>{project.duration}</dd>
-            </div>
-          )}
-          <div className="proj-meta__item">
-            <dt>Focus</dt>
-            <dd>{project.tags.join(', ')}</dd>
-          </div>
-          {project.links && project.links.length > 0 && (
-            <div className="proj-meta__item">
-              <dt>Links</dt>
-              <dd className="proj-meta__links">
-                {project.links.map(l => (
-                  <a
-                    key={l.label}
-                    href={l.url}
-                    className="proj-meta__link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    data-analytics-event="external_link_click"
-                    data-analytics-label={l.label}
-                    data-analytics-destination={l.url}
-                    data-analytics-item-id={project.slug}
-                    data-analytics-item-name={project.title}
-                    data-analytics-placement="project_detail"
-                  >
-                    {l.label} ↗
-                  </a>
-                ))}
-              </dd>
-            </div>
-          )}
-        </dl>
 
         {/* Story pages carry their own figures (often the same image), so the
             cover only shows for projects without a story. */}
