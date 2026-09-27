@@ -10,6 +10,9 @@ const gen = rough.generator();
 
 export const TONES: Record<CanvasTone, { stroke: string; fill: string; ink: string }> = {
   neutral: { stroke: '#8f8f8f', fill: '#f6f6f4', ink: '#555555' },
+  vision: { stroke: '#cf3f3f', fill: '#ffffff', ink: '#a52a2a' },
+  understanding: { stroke: '#1e88e5', fill: '#ffffff', ink: '#0d47a1' },
+  interfaces: { stroke: '#d81b60', fill: '#ffffff', ink: '#880e4f' },
   novice: { stroke: '#0288d1', fill: '#e1f5fe', ink: '#01579b' },
   expert: { stroke: '#7b1fa2', fill: '#f3e5f5', ink: '#4a148c' },
   paper: { stroke: '#d81b60', fill: '#fff0f5', ink: '#880e4f' },

@@ -1,8 +1,9 @@
 // researchCanvasData.ts
 //
-// The /research page reads as a short essay: each section pairs a few
-// paragraphs with a hand-drawn sketch. Section 0 is an interactive spectrum,
-// sections 1–2 are rows of sketched boxes, section 3 is a closed loop.
+// The /research page: a vertical flow of four sections. Hovering a section
+// opens its paragraphs and hand-drawn sketch to the right. Section 0 is an
+// interactive spectrum, sections 1–2 are rows of sketched boxes, section 3
+// is a closed loop.
 // Paper boxes point at publications by slug so titles, venues, and links
 // live in publicationsData only.
 
@@ -10,7 +11,8 @@ export type BoxKind = 'state' | 'strategy' | 'paper' | 'insight';
 
 // Colour families, echoing the hand-drawn sketches.
 export type CanvasTone =
-  | 'neutral' | 'novice' | 'expert' | 'paper' | 'memory';
+  | 'neutral' | 'novice' | 'expert' | 'paper' | 'memory'
+  | 'vision' | 'understanding' | 'interfaces';
 
 export interface MapBox {
   id: string;
@@ -39,6 +41,9 @@ export interface EssaySection {
   id: string;
   number: string;
   title: string;
+  subtitle: string;
+  tone: CanvasTone;
+  future?: boolean;        // drawn dashed: where I'm heading, not done yet
   paragraphs: string[];
   sketch: EssaySketch;
 }
@@ -48,6 +53,8 @@ export const essaySections: EssaySection[] = [
     id: 'vision',
     number: '00',
     title: 'The Vision of Personalized Agents',
+    subtitle: 'Functional automation ↔ personal, expert tasks',
+    tone: 'vision',
     paragraphs: [
       'While AI has evolved into a powerful generalized tool, it fails to adapt to the deeply unique nature of human workflows. User interaction with AI exists on a highly variable spectrum: some leverage AI for functional, procedural automation, while others depend on it to navigate deeply personal, value-centric tasks derived from professional expertise.',
       'Because a one-size-fits-all model cannot serve both extremes, my goal is to bridge this gap by building truly personalized AI agents.',
@@ -58,6 +65,8 @@ export const essaySections: EssaySection[] = [
     id: 'understanding',
     number: '01',
     title: 'Understanding Diverse User Intents',
+    subtitle: 'Exploratory studies across users',
+    tone: 'understanding',
     paragraphs: [
       'To understand how different demographics and expertise levels shape user intent when interacting with AI, I took an exploratory approach.',
       'With Prof. Hajin Lim, I designed DeepAware, a system that embeds users’ own faces and voices into simulated scam scenarios to make deepfake threats personally relevant. A study with 21 older adults showed improvements in knowledge, perceived vulnerability, and coping efficacy.',
@@ -91,6 +100,8 @@ export const essaySections: EssaySection[] = [
     id: 'interfaces',
     number: '02',
     title: 'Designing Interpretable Interfaces',
+    subtitle: 'Making tacit judgment visible',
+    tone: 'interfaces',
     paragraphs: [
       'To build interpretable systems for value-centric workflows, AI must first externalize tacit human judgment that is otherwise difficult to articulate.',
       'In ToneCanvas, writers revising a long novel can tell when a character sounds wrong, but that judgment remains tacit and scattered across hundreds of pages. We built an LLM-based editing interface that extracts character tone from a manuscript and represents it as an inspectable visual object. In a study with 16 writers, structuring tone visually helped participants pinpoint cross-chapter inconsistencies and make more precise revisions.',
@@ -113,6 +124,9 @@ export const essaySections: EssaySection[] = [
     id: 'memory',
     number: '03',
     title: 'Next: Memory and Workflow Extraction',
+    subtitle: 'Where I’m heading',
+    tone: 'memory',
+    future: true,
     paragraphs: [
       'User intent accumulates over days, weeks, and months. This is where I want to go next: memory that records context without prematurely judging its importance, and keeps the user’s own phrasing instead of lossy summaries.',
       'Combined with interpretable tools, I envision a closed loop: extracting insights from raw memory, turning them into reusable workflows and skills, executing them with user feedback, and continuously updating them.',

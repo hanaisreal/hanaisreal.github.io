@@ -42,17 +42,19 @@ export const Sketch: React.FC<{
   variant?: 'node' | 'frame' | 'dashed';
   strokeWidth?: number;
   className?: string;
+  as?: 'div' | 'button';
   children: React.ReactNode;
-}> = ({ tone, id, variant = 'node', strokeWidth, className, children }) => {
-  const [ref, size] = useSize<HTMLDivElement>();
+} & React.HTMLAttributes<HTMLElement>> = ({ tone, id, variant = 'node', strokeWidth, className, as = 'div', children, ...rest }) => {
+  const [ref, size] = useSize<HTMLElement>();
   const style = { '--ink': TONES[tone].ink, '--accent': TONES[tone].stroke } as React.CSSProperties;
+  const Tag = as as any;
   return (
-    <div ref={ref} className={`sketch ${className ?? ''}`} style={style}>
+    <Tag ref={ref} className={`sketch ${className ?? ''}`} style={style} {...rest}>
       {size.w > 0 && (
         <RoughRect w={size.w} h={size.h} tone={tone} seed={seedOf(id)} variant={variant} strokeWidth={strokeWidth} />
       )}
       {children}
-    </div>
+    </Tag>
   );
 };
 
