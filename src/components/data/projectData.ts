@@ -180,11 +180,13 @@ Building this during a fast-paced hackathon with a small, dedicated team and ult
     title: "Document-Grounded AI Consultation System",
     tldr: "A RAG-based system that grounds AI responses in a user's own documents, making advice feel personal rather than generic.",
     description: "Full-stack RAG application using Solar LLMs for adaptive, personalized user consulting.",
-    narrative: `Generic AI responses feel generic. This system uses retrieval-augmented generation to ground every response in a specific user's context — drawing from documents they've uploaded — so that advice reflects their actual situation rather than a statistical average.
+    narrative: `Misunderstandings between people often happen because both sides are operating on different assumptions or incomplete details. I wanted to build an AI mediator that could bridge those gaps. Instead of offering boilerplate advice, the system grounded its responses in uploaded documents and chat histories, acting as a neutral anchor to help people talk through sensitive or complex topics.
 
-The core insight was that personalization isn't about tone; it's about relevance. When the model cites a clause from a user's own contract or references a figure from their own report, the response earns a different kind of trust. The interface was designed to make that grounding visible: sources are shown inline, not buried.
+Getting RAG to work reliably for interpersonal mediation was tough. Naive context retrieval frequently introduced subtle hallucinations or lost crucial nuances, which instantly destroys trust. Standard character chunking kept slicing up key details, so I overhauled the pipeline: moving to semantic chunking, combining dense vector search with sparse keyword matching, and adding a reranking layer to keep retrieved sources pinpoint accurate.
 
-Built for the Upstage AI Challenge, the system placed in the Top 10.`,
+I also designed the chat UI so every recommendation linked directly to inline source excerpts. Seeing the actual document text removed emotional friction and helped users focus on shared facts rather than argument.
+
+Placing in the Top 10 at the Upstage AI Challenge was a great payoff for all the late-night pipeline tuning. More than the award, it showed me that when RAG is built for precision, AI can do something genuinely meaningful: help people understand each other better.`,
     contributions: [
       "RAG pipeline with Solar LLM and vector database for document-grounded responses",
       "Source attribution UI that surfaces retrieved passages inline with the response",
