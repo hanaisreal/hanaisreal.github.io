@@ -2007,7 +2007,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 
 /* ── PROJECT PAGE (case-study layout) ── */
 .page--project {
-  max-width: 880px;
+  max-width: 1000px;
 }
 
 .proj-hero {
@@ -2333,4 +2333,35 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 @media (max-width: 600px) {
   .publication-note__summary,
   .project-note__summary { font-size: 0.98rem; }
+}
+
+/* ── SHARED PAPER SHEET ──
+   Home, research, publication, and project pages use one sheet size and
+   the same breakpoints. Detail pages keep their text in a centred reading
+   column so lines stay short on the wider sheet. */
+.page--home,
+.page--publication {
+  max-width: 1000px;
+  margin-top: 2.8rem;
+  padding: 4.2rem clamp(1.8rem, 5vw, 4rem) 4rem;
+}
+.page--publication:not(.page--research-sheet) > * {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page--publication:not(.page--research-sheet) > .essay-post__back { display: block; }
+@media (max-width: 820px) {
+  .page--home,
+  .page--publication {
+    margin-top: 2rem;
+    padding: 3.4rem 1.6rem 3.3rem;
+  }
+}
+@media (max-width: 600px) {
+  .page--home,
+  .page--publication {
+    margin-top: 1.35rem;
+    padding: 2.7rem 1.1rem 3rem;
+  }
 }
