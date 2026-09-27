@@ -159,7 +159,9 @@ const ProjectPage: React.FC = () => {
           )}
         </dl>
 
-        {project.image && (
+        {/* Story pages carry their own figures (often the same image), so the
+            cover only shows for projects without a story. */}
+        {project.image && !project.storyBlocks && (
           <figure className="proj-cover">
             <img src={project.image} alt={project.title} className="proj-cover__img" />
           </figure>
