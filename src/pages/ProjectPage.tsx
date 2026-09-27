@@ -83,8 +83,10 @@ const ProjectPage: React.FC = () => {
   const navigate = useNavigate();
   const project = getProjectBySlug(slug || '');
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
+  // Before paint, so the page never shows at the previous scroll position.
+  React.useLayoutEffect(() => {
+    // Jump, don't animate: html has scroll-behavior: smooth.
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
   }, [slug]);
 
   React.useEffect(() => {
