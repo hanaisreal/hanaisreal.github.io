@@ -128,7 +128,7 @@ What interested me most was workflow fit. Retrieval only helps if it arrives at 
 
 Looking at the demo now, what thrilled me most during the build was tackling our core design challenge: making the prompts feel like a warm, natural conversation rather than an interrogation. We designed each question to flow organically from the user's previous answer, with the system actively listening for subtle themes to return to later. I really wanted the interaction to feel less like filling out a cold form and more like sitting down with a thoughtful companion who remembers every detail you have shared.
 
-Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Reflecting on the experience now, what stays with me most isn't just the award or the technical mechanics of speech recognition. It was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
+Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Looking back, what resonated with me was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
     contributions: [
       "Voice interaction pipeline using STT/TTS with GPT-4 for adaptive prompt generation",
       "Prompt design framework that maintains narrative coherence across multiple sessions",
@@ -159,7 +159,7 @@ Building this during a fast-paced hackathon with a small, dedicated team and ult
       },
       {
         type: 'paragraph',
-        text: `Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Reflecting on the experience now, what stays with me most isn't just the award or the technical mechanics of speech recognition. It was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
+        text: `Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Looking back, what resonated with me was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
       },
     ],
   },
