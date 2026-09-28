@@ -67,10 +67,6 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
         label: "PDF",
         url: `${BASE}/papers/tonecanvas.pdf`,
       },
-      {
-        label: "DOI",
-        url: "https://doi.org/10.1145/3830397.3841808",
-      },
     ],
     image: `${BASE}/pictures/publications/tonecanvas/tonecanvas-teaser.png`,
     storyBlocks: [
