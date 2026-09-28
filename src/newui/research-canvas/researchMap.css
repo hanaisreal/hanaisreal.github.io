@@ -256,9 +256,9 @@
   font-weight: 700;
 }
 .rcurrent__links a {
-  color: var(--pen);
+  color: #1f5fbf; /* blue ink: the one colour on the map, so links stand out */
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1.5px;
 }
-.rcurrent__links a:hover { text-decoration-thickness: 2.5px; }
+.rcurrent__links a:hover { color: #164a96; text-decoration-thickness: 2.5px; }
