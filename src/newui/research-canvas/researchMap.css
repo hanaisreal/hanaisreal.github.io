@@ -262,3 +262,7 @@
   text-decoration-thickness: 1.5px;
 }
 .rcurrent__links a:hover { color: #164a96; text-decoration-thickness: 2.5px; }
+
+/* Paper boxes on the map are links: blue titles, like every other link. */
+.sketch-link .sketch__title { color: #1f5fbf; }
+.sketch-link:hover .sketch__title { color: #164a96; }

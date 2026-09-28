@@ -2365,3 +2365,46 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
     padding: 2.7rem 1.1rem 3rem;
   }
 }
+
+/* ── LINKS: one blue across paper pages ──
+   Links read as links; non-link accents (venue labels, step numbers) move
+   off the link colour so blue only ever means "clickable". */
+.page--home--paper,
+.page--publication {
+  --link: #1f5fbf;
+  --scarlet: #1f5fbf;
+}
+.text-link:hover,
+.page--home .text-link:hover,
+.pub-page__ext-link:hover,
+.proj-hero__link:hover { color: #164a96; }
+.publication-note__label,
+.project-note__label,
+.proj-built__num { color: #7a2e10; }
+
+/* Publication cards: stretched title link + real PDF/DOI links on top */
+.publication-note__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+.publication-note__title-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.publication-note__title-link:focus-visible { outline: none; }
+.publication-note:focus-within .hand-border path { stroke: #262626; }
+.publication-note__links {
+  position: relative;
+  z-index: 2;
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.publication-note__links a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.publication-note__links a:hover { color: #164a96; }

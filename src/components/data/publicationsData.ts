@@ -202,13 +202,8 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
     ],
     links: [
       {
-        label: "Read Paper",
+        label: "PDF",
         url: `${BASE}/papers/when-scaffolding-breaks.pdf`,
-      },
-      {
-        label: "Download PDF",
-        url: `${BASE}/papers/when-scaffolding-breaks.pdf`,
-        download: "when-scaffolding-breaks.pdf",
       },
       {
         label: "DOI",

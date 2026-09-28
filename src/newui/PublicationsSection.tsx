@@ -81,21 +81,47 @@ const PublicationsSection: React.FC<PublicationsSectionProps> = ({ onOpen }) => 
         {publications.map((pub) => {
           const image = getCardImage(pub);
           return (
-            <Link
-              key={pub.slug}
-              to={`/publications/${pub.slug}`}
-              className="publication-note"
-              onClick={(event) => handleClick(event, `/publications/${pub.slug}`)}
-              data-analytics-event="publication_open"
-              data-analytics-item-id={pub.slug}
-              data-analytics-item-name={pub.title}
-              data-analytics-placement="publications_list"
-            >
+            // The title link stretches over the whole card (see CSS), so the
+            // card stays clickable while the PDF/DOI links remain real links.
+            <article key={pub.slug} className="publication-note">
               <HandDrawnBorder id={`pub-${pub.slug}`} />
               <div className="publication-note__body">
-                <h3 className="publication-note__title">{pub.title}</h3>
+                <h3 className="publication-note__title">
+                  <Link
+                    to={`/publications/${pub.slug}`}
+                    className="publication-note__title-link"
+                    onClick={(event) => handleClick(event, `/publications/${pub.slug}`)}
+                    data-analytics-event="publication_open"
+                    data-analytics-item-id={pub.slug}
+                    data-analytics-item-name={pub.title}
+                    data-analytics-placement="publications_list"
+                  >
+                    {pub.title}
+                  </Link>
+                </h3>
                 <p className="publication-note__label">{getVenueLabel(pub)}</p>
                 <p className="publication-note__authors">{renderCardAuthors(pub)}</p>
+                {pub.links && pub.links.length > 0 && (
+                  <p className="publication-note__links">
+                    {pub.links.map((l, i) => (
+                      <React.Fragment key={l.label}>
+                        {i > 0 && ' · '}
+                        <a
+                          href={l.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-analytics-event="external_link_click"
+                          data-analytics-label={l.label}
+                          data-analytics-destination={l.url}
+                          data-analytics-item-id={pub.slug}
+                          data-analytics-placement="publications_list"
+                        >
+                          {l.label} ↗
+                        </a>
+                      </React.Fragment>
+                    ))}
+                  </p>
+                )}
                 <p className="publication-note__summary">{getSummary(pub)}</p>
                 {image && (
                   <figure className="publication-note__figure">
@@ -108,7 +134,7 @@ const PublicationsSection: React.FC<PublicationsSectionProps> = ({ onOpen }) => 
                   </figure>
                 )}
               </div>
-            </Link>
+            </article>
           );
         })}
       </div>
