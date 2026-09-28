@@ -239,3 +239,26 @@
 @media (prefers-reduced-motion: reduce) {
   .rpanel, .rpanel.is-active { transition: none; }
 }
+
+/* Live work under a section sketch (solid pen: this exists today). */
+.sketch.rcurrent {
+  margin-top: 1.4rem;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.85rem 1rem;
+}
+.rcurrent__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin-top: 0.35rem;
+  font-size: 14px;
+  font-weight: 700;
+}
+.rcurrent__links a {
+  color: var(--pen);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.rcurrent__links a:hover { text-decoration-thickness: 2.5px; }

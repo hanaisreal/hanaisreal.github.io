@@ -45,6 +45,14 @@ export interface EssaySection {
   future?: boolean;        // drawn dashed: where I'm heading, not done yet
   paragraphs: string[];
   sketch: EssaySketch;
+  current?: CurrentWork;   // live work under the sketch, with external links
+}
+
+export interface CurrentWork {
+  eyebrow: string;
+  title: string;
+  body: string;
+  links: { label: string; url: string }[];
 }
 
 export const essaySections: EssaySection[] = [
@@ -127,6 +135,15 @@ export const essaySections: EssaySection[] = [
         { id: 'm-skills', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Extract', title: 'Reusable workflows and skills' },
         { id: 'm-execute', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Execute', title: 'Actionable tool execution' },
         { id: 'm-update', kind: 'strategy', tone: 'memory', pending: true, eyebrow: 'Update', title: 'Iterative skill refinement' },
+      ],
+    },
+    current: {
+      eyebrow: 'Currently working on',
+      title: 'Agent Memory Atlas',
+      body: 'A browsable database of LLM-agent memory systems that keeps every benchmark score with the setting it was measured under.',
+      links: [
+        { label: 'Open the atlas', url: 'https://hanaisreal.github.io/agent-memory-atlas/' },
+        { label: 'GitHub', url: 'https://github.com/hanaisreal/agent-memory-atlas' },
       ],
     },
   },

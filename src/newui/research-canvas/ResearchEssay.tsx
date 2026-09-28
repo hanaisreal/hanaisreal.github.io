@@ -74,6 +74,29 @@ const SectionDetail: React.FC<{ section: EssaySection }> = ({ section }) => {
           </>
         )}
       </div>
+      {section.current && (
+        <Sketch tone={section.tone} id={`current-${section.id}`} className="rcurrent">
+          <span className="sketch__eyebrow">{section.current.eyebrow}</span>
+          <span className="sketch__title">{section.current.title}</span>
+          <span className="sketch__body">{section.current.body}</span>
+          <span className="rcurrent__links">
+            {section.current.links.map((l) => (
+              <a
+                key={l.url}
+                href={l.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-analytics-event="external_link_click"
+                data-analytics-label={`${section.current!.title} ${l.label}`}
+                data-analytics-destination={l.url}
+                data-analytics-placement="research_map"
+              >
+                {l.label} ↗
+              </a>
+            ))}
+          </span>
+        </Sketch>
+      )}
     </div>
   );
 };
