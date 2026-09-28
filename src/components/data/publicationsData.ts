@@ -62,6 +62,16 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
       "An interaction design that separates intention-setting from text editing",
       "Formative study with fiction writers on how tone inconsistency is currently noticed and repaired",
     ],
+    links: [
+      {
+        label: "PDF",
+        url: `${BASE}/papers/tonecanvas.pdf`,
+      },
+      {
+        label: "DOI",
+        url: "https://doi.org/10.1145/3830397.3841808",
+      },
+    ],
     image: `${BASE}/pictures/publications/tonecanvas/tonecanvas-teaser.png`,
     storyBlocks: [
       {
@@ -124,6 +134,10 @@ This work sits at the intersection of cybersecurity education and the ethics of 
       "Design guidelines for protective simulation with vulnerable populations",
     ],
     links: [
+      {
+        label: "PDF",
+        url: `${BASE}/papers/deepaware.pdf`,
+      },
       {
         label: "DOI",
         url: "https://doi.org/10.1145/3772318.3791492",
