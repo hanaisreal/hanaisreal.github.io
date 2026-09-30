@@ -1,7 +1,6 @@
 import React from 'react';
 import Masthead from '../newui/Masthead';
-import PublicationsSection from '../newui/PublicationsSection';
-import ProjectsSection from '../newui/ProjectsSection';
+import { ProjectList, PublicationList } from '../newui/WorkList';
 import ResearchEssay from '../newui/research-canvas/ResearchEssay';
 import '../newui/newPortfolio.css';
 import '../newui/research-canvas/researchMap.css';
@@ -19,9 +18,9 @@ const ResearchPage: React.FC = () => (
       </header>
       <ResearchEssay />
       <hr className="sec-rule" />
-      <PublicationsSection />
+      <PublicationList />
       <hr className="sec-rule" />
-      <ProjectsSection />
+      <ProjectList />
     </main>
     <footer className="site-footer">
       <span>Hana Oh</span>

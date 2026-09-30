@@ -4,7 +4,7 @@ import HeroSection from './HeroSection';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import ResearchOverviewSection from './ResearchOverviewSection';
-import SelectedPublicationsSection from './SelectedPublicationsSection';
+import { PublicationList } from './WorkList';
 import SplashScreen from './SplashScreen';
 import { BackgroundItem } from '../components/data/backgroundsData';
 import './newPortfolio.css';
@@ -35,7 +35,7 @@ const NewPortfolio: React.FC<Props> = ({ bg }) => {
         <div className="intro-flow">
           <NewsSection />
           <ResearchOverviewSection />
-          <SelectedPublicationsSection />
+          <PublicationList />
           <AboutSection />
         </div>
       </div>

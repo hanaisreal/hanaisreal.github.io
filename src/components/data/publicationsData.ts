@@ -35,6 +35,7 @@ export interface Publication {
   contributions: string[];
   links?: PublicationLink[];
   image?: string;
+  thumb?: string;          // 16:10 list thumbnail
   storyBlocks?: PublicationStoryBlock[];
 }
 
@@ -68,6 +69,7 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
         url: `${BASE}/papers/tonecanvas.pdf`,
       },
     ],
+    thumb: `${BASE}/pictures/thumbs/tonecanvas.jpg`,
     image: `${BASE}/pictures/publications/tonecanvas/tonecanvas-teaser.png`,
     storyBlocks: [
       {
@@ -139,6 +141,7 @@ This work sits at the intersection of cybersecurity education and the ethics of 
         url: "https://doi.org/10.1145/3772318.3791492",
       },
     ],
+    thumb: `${BASE}/pictures/thumbs/deepaware.jpg`,
     image: `${BASE}/pictures/publications/deepaware/deepaware-flow.png`,
     storyBlocks: [
       {
@@ -220,6 +223,7 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
         url: "https://doi.org/10.1145/3772318.3791517",
       },
     ],
+    thumb: `${BASE}/pictures/thumbs/when-scaffolding-breaks.jpg`,
     image: `${BASE}/pictures/publications/when-scaffolding-breaks/writeaid-system.png`,
     storyBlocks: [
       {

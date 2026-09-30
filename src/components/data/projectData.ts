@@ -35,6 +35,7 @@ export interface Project {
   tags: string[];
   duration?: string;
   image?: string;
+  thumb?: string;          // 16:10 list thumbnail
   links?: ProjectLink[];
   storyBlocks?: ProjectStoryBlock[];
 }
@@ -52,6 +53,7 @@ Modern journaling apps flatten this rich human experience into discrete database
 By demanding that users categorize their internal state before they even begin writing, existing interfaces strip away the phenomenological atmosphere of the moment. Instead of letting technology adapt to the complex tangle of human emotion, we are forced to fit our living experiences into pre-built app schemas. My goal was to redesign the Algorithmic Experience (AX) to preserve the raw, atmospheric texture of thought without forcing users into artificial taxonomy.`,
     contributions: [],
     tags: ["User Experience course", "AI journaling", "Phenomenological design"],
+    thumb: `${BASE}/pictures/thumbs/ai-journaling.svg`,
     duration: "Spring 2026",
     storyBlocks: [
       { type: 'paragraph', text: `Drawing from John Dewey’s philosophy, every human experience is profoundly unique, carrying its own distinct atmosphere and sensory weight. In my personal journaling practice, I have always tried to capture not just the facts of what happened, but the full nuance of those moments in words. This project stems from a central question: How can we convey our lived experiences to technology in a way that feels natural, raw, and therapeutic?` },
@@ -80,6 +82,7 @@ Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Genera
       "Integrated the frontend with bookmark ingestion and recommendation endpoints across the FastAPI, Pinecone, and MySQL pipeline",
     ],
     tags: ["Side Project", "RAG", "Writing Tools"],
+    thumb: `${BASE}/pictures/thumbs/paranmanjang.jpg`,
     duration: "2023",
     image: `${BASE}/pictures/projects/paranmanjang/paranmanjang-backlogic.png`,
     links: [
@@ -147,6 +150,7 @@ Building this during a fast-paced hackathon with a small, dedicated team and ult
       "User study with older adults, iterated on prompt phrasing and response pacing",
     ],
     tags: ["HCI", "Voice Interaction", "Older Adults"],
+    thumb: `${BASE}/pictures/thumbs/livrecord.jpg`,
     duration: "Feb 2024 – Jun 2024",
     image: `${BASE}/pictures/SPARCS.png`,
     links: [
@@ -193,6 +197,7 @@ Placing in the Top 10 at the Upstage AI Challenge was a great payoff for all the
       "Conversation analysis module that adapts question depth based on user engagement",
     ],
     tags: ["LLM", "RAG", "Personalization"],
+    thumb: `${BASE}/pictures/thumbs/upstage-consultation.jpg`,
     duration: "Apr 2024 – Jun 2024",
     image: `${BASE}/pictures/upstage2.png`,
     links: [],
@@ -213,6 +218,7 @@ Working together to tie the interactive UI with the fine-tuned model pipeline to
       "Prompt design for semi-automatic propagation across axial slices",
     ],
     tags: ["Computer Vision", "Medical AI", "Segmentation"],
+    thumb: `${BASE}/pictures/thumbs/medsam-viewer.jpg`,
     duration: "Mar 2024 – Jun 2024",
     image: `${BASE}/pictures/infinitt healthcare.png`,
     links: [
