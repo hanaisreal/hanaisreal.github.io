@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <!-- ToneCanvas: watercolor tone painted over a character's lines, with a tone palette. -->
+  <defs><filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.26  0 0 0 0.05 0"/></filter><linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf8f3"/><stop offset="1" stop-color="#f4eee6"/></linearGradient></defs><rect width="640" height="400" fill="url(#paper)"/>
+  <rect x="48" y="40" width="330" height="320" rx="6" fill="#fffdf9" stroke="#d9cfc2"/>
+  <text x="70" y="74" font-family="Georgia, serif" font-size="14" fill="#6b5848" font-style="italic">Chapter VII</text>
+  <g filter="url(#soft)" opacity="0.8">
+    <rect x="66" y="98" width="230" height="22" rx="11" fill="#b9a3d6"/>
+    <rect x="66" y="170" width="250" height="22" rx="11" fill="#e9a27c"/>
+    <rect x="66" y="242" width="200" height="22" rx="11" fill="#b9a3d6"/>
+  </g>
+  <g fill="#cbbfb1">
+    <rect x="70" y="104" width="220" height="8" rx="4"/>
+    <rect x="70" y="128" width="286" height="8" rx="4"/>
+    <rect x="70" y="152" width="250" height="8" rx="4"/>
+    <rect x="70" y="176" width="240" height="8" rx="4"/>
+    <rect x="70" y="200" width="200" height="8" rx="4"/>
+    <rect x="70" y="224" width="280" height="8" rx="4"/>
+    <rect x="70" y="248" width="190" height="8" rx="4"/>
+    <rect x="70" y="272" width="266" height="8" rx="4"/>
+    <rect x="70" y="296" width="150" height="8" rx="4"/>
+  </g>
+  <!-- brush -->
+  <g transform="rotate(-38 330 196)">
+    <rect x="322" y="120" width="12" height="70" rx="5" fill="#8a6f5c"/>
+    <rect x="320" y="188" width="16" height="14" rx="2" fill="#b3a79b"/>
+    <path d="M320 202 Q328 236 336 202 Z" fill="#e9a27c" stroke="#3b3029" stroke-width="1.4"/>
+  </g>
+  <!-- tone palette -->
+  <rect x="408" y="40" width="184" height="210" rx="6" fill="#fffdf9" stroke="#d9cfc2"/>
+  <text x="424" y="70" font-family="Georgia, serif" font-size="13" fill="#6b5848" font-style="italic">tone palette</text>
+  <g font-family="Georgia, serif" font-size="11" fill="#8a7868">
+    <text x="424" y="100">cold</text><text x="576" y="100" text-anchor="end">warm</text>
+    <text x="424" y="146">calm</text><text x="576" y="146" text-anchor="end">tense</text>
+    <text x="424" y="192">indirect</text><text x="576" y="192" text-anchor="end">direct</text>
+  </g>
+  <g stroke="#3b3029" stroke-width="1.6" stroke-linecap="round">
+    <line x1="424" y1="112" x2="576" y2="112"/>
+    <line x1="424" y1="158" x2="576" y2="158"/>
+    <line x1="424" y1="204" x2="576" y2="204"/>
+  </g>
+  <circle cx="530" cy="112" r="7" fill="#e9a27c" stroke="#3b3029" stroke-width="1.4"/>
+  <circle cx="468" cy="158" r="7" fill="#8fb3c9" stroke="#3b3029" stroke-width="1.4"/>
+  <circle cx="548" cy="204" r="7" fill="#b9a3d6" stroke="#3b3029" stroke-width="1.4"/>
+  <!-- saved tone chips -->
+  <g filter="url(#soft)">
+    <circle cx="444" cy="310" r="26" fill="#e9a27c"/>
+    <circle cx="500" cy="310" r="26" fill="#b9a3d6"/>
+    <circle cx="556" cy="310" r="26" fill="#9cc2a0"/>
+  </g>
+  <g fill="none" stroke="#3b3029" stroke-width="1.4">
+    <circle cx="444" cy="310" r="22"/><circle cx="500" cy="310" r="22"/><circle cx="556" cy="310" r="22"/>
+  </g>
+  <text x="500" y="356" font-family="Georgia, serif" font-size="12" fill="#6b5848" font-style="italic" text-anchor="middle">tone chips</text>
+  <rect width="640" height="400" filter="url(#grain)"/>
+</svg>

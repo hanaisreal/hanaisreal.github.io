@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <!-- MedSAM viewer: one click segments a structure and carries it through CT slices. -->
+  <defs><filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.26  0 0 0 0.05 0"/></filter><linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf8f3"/><stop offset="1" stop-color="#f4eee6"/></linearGradient></defs><rect width="640" height="400" fill="url(#paper)"/>
+  <g filter="url(#soft)" opacity="0.6">
+    <circle cx="300" cy="200" r="110" fill="#8fb3c9"/>
+    <circle cx="520" cy="160" r="70" fill="#d98a9a"/>
+  </g>
+  <!-- stacked slices (bottom to top) -->
+  <g stroke="#3b3029" stroke-width="1.8" stroke-linejoin="round">
+    <path d="M150 300 L330 300 L420 250 L240 250 Z" fill="#e9e4de"/>
+    <path d="M150 250 L330 250 L420 200 L240 200 Z" fill="#efebe6"/>
+    <path d="M150 200 L330 200 L420 150 L240 150 Z" fill="#f4f1ed"/>
+    <path d="M150 150 L330 150 L420 100 L240 100 Z" fill="#fffdf9"/>
+  </g>
+  <!-- structure and its contours -->
+  <ellipse cx="285" cy="125" rx="40" ry="14" fill="#b3a79b" opacity="0.6"/>
+  <ellipse cx="285" cy="125" rx="44" ry="16" fill="none" stroke="#c0392b" stroke-width="2.4"/>
+  <g fill="none" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="5 4">
+    <ellipse cx="285" cy="175" rx="40" ry="15"/>
+    <ellipse cx="285" cy="225" rx="34" ry="13"/>
+    <ellipse cx="285" cy="275" rx="26" ry="10"/>
+  </g>
+  <!-- click -->
+  <g transform="translate(300 118)">
+    <circle r="12" fill="none" stroke="#3b3029" stroke-width="1.2" opacity="0.5"/>
+    <path d="M0 0 L0 26 L7 19 L12 30 L17 28 L12 17 L22 17 Z" fill="#fffdf9" stroke="#3b3029" stroke-width="1.6" stroke-linejoin="round"/>
+  </g>
+  <text x="440" y="110" font-family="Georgia, serif" font-size="13" fill="#6b5848" font-style="italic">one click</text>
+  <path d="M430 262 C 470 262, 480 230, 480 190" fill="none" stroke="#3b3029" stroke-width="1.6" stroke-dasharray="4 5"/>
+  <text x="440" y="296" font-family="Georgia, serif" font-size="13" fill="#6b5848" font-style="italic">carried through slices</text>
+  <!-- single slice view -->
+  <rect x="490" y="120" width="110" height="110" rx="4" fill="#2f2b28" stroke="#3b3029" stroke-width="1.8"/>
+  <ellipse cx="545" cy="175" rx="38" ry="30" fill="#6f6861"/>
+  <ellipse cx="548" cy="170" rx="16" ry="12" fill="#a39b93"/>
+  <ellipse cx="548" cy="170" rx="19" ry="15" fill="none" stroke="#e74c3c" stroke-width="2"/>
+  <rect width="640" height="400" filter="url(#grain)"/>
+</svg>

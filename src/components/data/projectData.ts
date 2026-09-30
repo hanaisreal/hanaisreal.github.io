@@ -82,7 +82,7 @@ Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Genera
       "Integrated the frontend with bookmark ingestion and recommendation endpoints across the FastAPI, Pinecone, and MySQL pipeline",
     ],
     tags: ["Side Project", "RAG", "Writing Tools"],
-    thumb: `${BASE}/pictures/thumbs/paranmanjang.jpg`,
+    thumb: `${BASE}/pictures/thumbs/paranmanjang.svg`,
     duration: "2023",
     image: `${BASE}/pictures/projects/paranmanjang/paranmanjang-backlogic.png`,
     links: [
@@ -150,7 +150,7 @@ Building this during a fast-paced hackathon with a small, dedicated team and ult
       "User study with older adults, iterated on prompt phrasing and response pacing",
     ],
     tags: ["HCI", "Voice Interaction", "Older Adults"],
-    thumb: `${BASE}/pictures/thumbs/livrecord.jpg`,
+    thumb: `${BASE}/pictures/thumbs/livrecord.svg`,
     duration: "Feb 2024 – Jun 2024",
     image: `${BASE}/pictures/SPARCS.png`,
     links: [
@@ -197,7 +197,7 @@ Placing in the Top 10 at the Upstage AI Challenge was a great payoff for all the
       "Conversation analysis module that adapts question depth based on user engagement",
     ],
     tags: ["LLM", "RAG", "Personalization"],
-    thumb: `${BASE}/pictures/thumbs/upstage-consultation.jpg`,
+    thumb: `${BASE}/pictures/thumbs/upstage-consultation.svg`,
     duration: "Apr 2024 – Jun 2024",
     image: `${BASE}/pictures/upstage2.png`,
     links: [],
@@ -218,7 +218,7 @@ Working together to tie the interactive UI with the fine-tuned model pipeline to
       "Prompt design for semi-automatic propagation across axial slices",
     ],
     tags: ["Computer Vision", "Medical AI", "Segmentation"],
-    thumb: `${BASE}/pictures/thumbs/medsam-viewer.jpg`,
+    thumb: `${BASE}/pictures/thumbs/medsam-viewer.svg`,
     duration: "Mar 2024 – Jun 2024",
     image: `${BASE}/pictures/infinitt healthcare.png`,
     links: [

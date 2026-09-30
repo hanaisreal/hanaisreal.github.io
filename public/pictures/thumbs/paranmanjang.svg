@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <!-- Paranmanjang: saved bookmarks resurface as a card beside the draft. -->
+  <defs><filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="16"/></filter><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0 0.26  0 0 0 0.05 0"/></filter><linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbf8f3"/><stop offset="1" stop-color="#f4eee6"/></linearGradient></defs><rect width="640" height="400" fill="url(#paper)"/>
+  <g filter="url(#soft)" opacity="0.7">
+    <circle cx="130" cy="200" r="86" fill="#b9a3d6"/>
+    <circle cx="470" cy="150" r="80" fill="#f2c98c"/>
+  </g>
+  <!-- bookmarks -->
+  <g stroke="#3b3029" stroke-width="1.8" stroke-linejoin="round">
+    <path d="M64 70 H112 V200 L88 182 L64 200 Z" fill="#e9a27c"/>
+    <path d="M124 90 H172 V220 L148 202 L124 220 Z" fill="#8fb3c9"/>
+    <path d="M84 230 H132 V340 L108 322 L84 340 Z" fill="#9cc2a0"/>
+    <path d="M150 250 H198 V350 L174 332 L150 350 Z" fill="#d98a9a"/>
+  </g>
+  <text x="130" y="44" font-family="Georgia, serif" font-size="13" fill="#6b5848" font-style="italic" text-anchor="middle">saved links</text>
+  <!-- retrieval path -->
+  <path d="M210 210 C 250 210, 262 160, 300 150" fill="none" stroke="#3b3029" stroke-width="1.6" stroke-dasharray="4 5"/>
+  <g fill="#3b3029"><circle cx="232" cy="206" r="3"/><circle cx="252" cy="190" r="3"/><circle cx="270" cy="170" r="3"/></g>
+  <!-- draft -->
+  <rect x="300" y="52" width="170" height="296" rx="6" fill="#fffdf9" stroke="#d9cfc2"/>
+  <text x="318" y="84" font-family="Georgia, serif" font-size="13" fill="#6b5848" font-style="italic">draft</text>
+  <g fill="#cbbfb1">
+    <rect x="318" y="102" width="134" height="7" rx="3.5"/><rect x="318" y="120" width="116" height="7" rx="3.5"/>
+    <rect x="318" y="138" width="128" height="7" rx="3.5"/><rect x="318" y="156" width="80" height="7" rx="3.5"/>
+    <rect x="318" y="184" width="134" height="7" rx="3.5"/><rect x="318" y="202" width="100" height="7" rx="3.5"/>
+  </g>
+  <line x1="420" y1="200" x2="420" y2="214" stroke="#3b3029" stroke-width="2"/>
+  <!-- recommendation card -->
+  <rect x="450" y="176" width="150" height="104" rx="8" fill="#fffdf9" stroke="#3b3029" stroke-width="1.8"/>
+  <path d="M468 190 H484 V218 L476 212 L468 218 Z" fill="#e9a27c" stroke="#3b3029" stroke-width="1.4"/>
+  <g fill="#b3a79b">
+    <rect x="494" y="194" width="92" height="6" rx="3"/><rect x="494" y="208" width="70" height="6" rx="3"/>
+    <rect x="468" y="232" width="118" height="6" rx="3"/><rect x="468" y="246" width="96" height="6" rx="3"/>
+  </g>
+  <text x="525" y="304" font-family="Georgia, serif" font-size="12" fill="#6b5848" font-style="italic" text-anchor="middle">saved six months ago</text>
+  <rect width="640" height="400" filter="url(#grain)"/>
+</svg>
