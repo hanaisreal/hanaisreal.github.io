@@ -1,9 +1,7 @@
 import React from 'react';
 import Masthead from '../newui/Masthead';
 import { ProjectList, PublicationList } from '../newui/WorkList';
-import ResearchEssay from '../newui/research-canvas/ResearchEssay';
 import '../newui/newPortfolio.css';
-import '../newui/research-canvas/researchMap.css';
 
 const ResearchPage: React.FC = () => (
   <div>
@@ -16,8 +14,6 @@ const ResearchPage: React.FC = () => (
           preserve context.
         </p>
       </header>
-      <ResearchEssay />
-      <hr className="sec-rule" />
       <PublicationList />
       <hr className="sec-rule" />
       <ProjectList />

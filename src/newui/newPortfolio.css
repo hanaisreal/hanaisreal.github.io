@@ -865,27 +865,6 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   color: var(--text);
 }
 
-/* ── HOME: RESEARCH INTERESTS ── */
-.interest-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: 1.1rem;
-  line-height: 1.64;
-  color: var(--text);
-}
-.interest-list strong { font-weight: 600; }
-.interest-list__more {
-  display: inline-block;
-  margin-top: 0.8rem;
-  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: 1rem;
-}
-
 /* ── HOME: SELECTED PUBLICATIONS ── */
 .pub-brief {
   list-style: none;
@@ -2216,8 +2195,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 }
 
 .page--home .bio,
-.page--home .news-item,
-.interest-list {
+.page--home .news-item {
   font-size: clamp(1.1rem, 1.02rem + 0.25vw, 1.18rem);
   line-height: 1.62;
 }
@@ -2278,7 +2256,6 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .page--home .bio,
 .page--home .ongoing-copy,
 .page--home .news-item,
-.interest-list,
 .pub-brief__text,
 .pub-brief__note,
 .profile__affil,
@@ -2288,8 +2265,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   font-family: var(--font-body);
 }
 .page--home .bio,
-.page--home .news-item,
-.interest-list {
+.page--home .news-item {
   font-size: 1.06rem;
   line-height: 1.68;
 }
@@ -2490,3 +2466,9 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   .work { grid-template-columns: 1fr; gap: 0.7rem; }
   .work__thumb { max-width: 320px; }
 }
+
+/* ── RESEARCH PAGE HEADER ── */
+.page--research-sheet .page-intro { max-width: 46rem; margin-bottom: 2rem; }
+.page--research-sheet .page-intro__title { font-family: var(--font-display); font-weight: 600; }
+.page--research-sheet .page-intro__desc { font-family: var(--font-body); font-size: 1.08rem; line-height: 1.55; }
+.page--research-sheet .sec-rule { margin: 3rem 0 2.4rem; }
