@@ -1576,7 +1576,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 .pub-page__story-img {
   width: 100%;
   border: 1px solid rgba(84, 68, 55, 0.14);
-  background: rgba(255, 252, 248, 0.9);
+  background: #fffcf8;
 }
 
 .pub-page__story-video {
@@ -2406,12 +2406,13 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 3px;
-  background: #fbf8f3;
+  background: #fffcf8;
 }
 .work__thumb img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  background: #fffcf8;
   display: block;
 }
 .work__text {

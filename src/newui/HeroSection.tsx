@@ -80,8 +80,8 @@ const HeroSection: React.FC = () => (
         </p>
         <div className="bio">
           <p>
-            Hi, I&apos;m Hana. I am an M.S. student in Intelligence and Information at Seoul National
-            University, advised by Prof.{' '}
+            Hi, I&apos;m Hana, an M.S. student in Intelligence and Information at Seoul National
+            University, advised by Professor{' '}
             <a
               className="text-link"
               href="https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
@@ -94,19 +94,39 @@ const HeroSection: React.FC = () => (
             >
               Bongwon Suh
             </a>
-            . My research lies at the intersection of human-computer interaction, social
-            science, and LLMs.
+            . My research focuses on the intersection of human-AI interaction and artificial
+            intelligence.
           </p>
           <p>
-            While human experience is inherently unique, AI outputs are often uniform and impersonal.
-            I am interested in contributing to the evolution of AI from a generalized tool into a{' '}
-            <strong>truly collaborative, personalized agent</strong>: one that elicits intent accurately
-            and remembers it faithfully.
+            Human experiences are incredibly diverse, requiring a range of approaches to understand
+            them. While many AI systems capture experience through multimodal inputs such as images
+            and audio, I believe we also need complementary ways to understand individual intent and
+            values. My work explores a more person-centered direction—starting from what people
+            explicitly express, including their thoughts, everyday conversations, and journal entries.
           </p>
           <p>
-            Prior to my master&apos;s, I graduated from Seoul National University with a B.S. in Computer
-            Science and Engineering and a double major in Business Administration. As an undergraduate,
-            a class project in Prof.{' '}
+            As these personal archives accumulate, a key challenge is how AI agents can organize and
+            decompose them, preserve their original context, and derive meaningful abstractions. I
+            study memory representations and computational methods for managing this process while
+            keeping abstractions grounded in the source material and a person&apos;s perspective. My
+            work combines technical development of these methods with interactive systems and
+            user-centered evaluation. Ultimately, I aim to contribute to the evolution of AI from
+            general-purpose tools into truly collaborative, personalized agents.
+          </p>
+          <p>
+            Before my master&apos;s, I earned a B.S. in Computer Science and Engineering with a double
+            major in Business Administration from Seoul National University. As an undergraduate, I
+            researched deepfake awareness among older adults and published a{' '}
+            <Link
+              className="text-link"
+              to="/publications/deepaware"
+              data-analytics-event="publication_click"
+              data-analytics-label="CHI '26 DeepAware paper"
+              data-analytics-placement="hero"
+            >
+              CHI &apos;26 paper
+            </Link>{' '}
+            under the mentorship of Professor{' '}
             <a
               className="text-link"
               href="https://www.hajinlim.com/"
@@ -119,17 +139,8 @@ const HeroSection: React.FC = () => (
             >
               Hajin Lim
             </a>
-            &apos;s course grew into a{' '}
-            <Link
-              className="text-link"
-              to="/publications/deepaware"
-              data-analytics-event="publication_click"
-              data-analytics-label="DeepAware"
-              data-analytics-placement="hero"
-            >
-              CHI &apos;26 paper on deepfake awareness among older adults
-            </Link>
-            . I also worked with Prof.{' '}
+            . I also expanded my research experience during a summer internship at KAIST, guided by
+            Professor{' '}
             <a
               className="text-link"
               href="https://juhokim.com/"
@@ -142,7 +153,7 @@ const HeroSection: React.FC = () => (
             >
               Juho Kim
             </a>
-            {' '}at KAIST during a summer internship.
+            .
           </p>
           <p>My research is supported by the BK21 FOUR Program.</p>
         </div>

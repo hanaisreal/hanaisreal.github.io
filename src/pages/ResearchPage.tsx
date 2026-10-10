@@ -9,10 +9,6 @@ const ResearchPage: React.FC = () => (
     <main className="page page--publication page--research-sheet">
       <header className="page-intro">
         <h1 className="page-intro__title">Research</h1>
-        <p className="page-intro__desc">
-          Toward personalized AI agents that accurately capture intent and persistently
-          preserve context.
-        </p>
       </header>
       <PublicationList />
       <hr className="sec-rule" />
