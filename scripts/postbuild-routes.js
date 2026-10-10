@@ -5,18 +5,64 @@ const BUILD_DIR = path.join(__dirname, '..', 'build');
 const INDEX_HTML = path.join(BUILD_DIR, 'index.html');
 const ROOT_URL = 'https://hanaisreal.github.io';
 
-function extractSlugs(relativePath) {
-  const filePath = path.join(__dirname, '..', relativePath);
-  const source = fs.readFileSync(filePath, 'utf8');
-  return [...source.matchAll(/slug:\s*"([^"]+)"/g)].map((match) => match[1]);
+function extractEntries(relativePath) {
+  const source = fs.readFileSync(path.join(__dirname, '..', relativePath), 'utf8');
+  const matches = [...source.matchAll(/slug:\s*"([^"]+)"/g)];
+  return matches.map((match, index) => {
+    const start = match.index;
+    const end = index + 1 < matches.length ? matches[index + 1].index : source.length;
+    const entry = source.slice(start, end);
+    const readString = (field) => {
+      const value = entry.match(new RegExp(`\\b${field}:\\s*"((?:\\\\.|[^"\\\\])*)"`));
+      return value ? value[1].replace(/\\"/g, '"').replace(/\\n/g, ' ') : '';
+    };
+    const contributionBlock = entry.match(/contributions:\s*\[([\s\S]*?)\]/);
+    const contributions = contributionBlock
+      ? [...contributionBlock[1].matchAll(/"((?:\\.|[^"\\])*)"/g)].map((item) => item[1])
+      : [];
+    return {
+      slug: match[1],
+      title: readString('title'),
+      description: readString('tldr') || readString('description'),
+      authors: readString('authors'),
+      venue: readString('venue'),
+      status: readString('status'),
+      contributions,
+    };
+  });
 }
 
-function ensureRouteHtml(route) {
+function escapeHtml(value) {
+  return value.replace(/[&<>"']/g, (character) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[character]);
+}
+
+function ensureRouteHtml(route, entry) {
   if (route === '/') return;
 
   const routeDir = path.join(BUILD_DIR, route.replace(/^\//, ''));
   fs.mkdirSync(routeDir, { recursive: true });
-  fs.copyFileSync(INDEX_HTML, path.join(routeDir, 'index.html'));
+  let html = fs.readFileSync(INDEX_HTML, 'utf8');
+  if (entry) {
+    const title = `${entry.title} | Hana Oh`;
+    const description = entry.description || `Research by Hana Oh: ${entry.title}`;
+    const publicationMeta = entry.authors
+      ? `<p>${escapeHtml(entry.authors)}</p><p>${escapeHtml([entry.venue, entry.status].filter(Boolean).join(' · '))}</p>`
+      : '';
+    const staticSummary = `<main><article><h1>${escapeHtml(entry.title)}</h1>${publicationMeta}<p>${escapeHtml(description)}</p>${entry.contributions.length ? `<h2>My contributions</h2><ul>${entry.contributions.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : ''}</article></main>`;
+    html = html
+      .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>`)
+      .replace(/(<meta\s+name="description"\s+content=")[^"]*("\s*\/>)/, `$1${escapeHtml(description)}$2`)
+      .replace(/(<meta\s+property="og:title"\s+content=")[^"]*("\s*\/>)/, `$1${escapeHtml(title)}$2`)
+      .replace(/(<meta\s+name="twitter:title"\s+content=")[^"]*("\s*\/>)/, `$1${escapeHtml(title)}$2`)
+      .replace(/(<meta\s+property="og:description"\s+content=")[^"]*("\s*\/>)/, `$1${escapeHtml(description)}$2`)
+      .replace(/(<meta\s+name="twitter:description"\s+content=")[^"]*("\s*\/>)/, `$1${escapeHtml(description)}$2`)
+      .replace(/(<meta\s+property="og:url"\s+content=")[^"]*("\s*\/>)/, `$1${ROOT_URL}${route}$2`)
+      .replace('</head>', `<link rel="canonical" href="${ROOT_URL}${route}" /></head>`)
+      .replace(/<body>([\s\S]*?)<\/body>/, `<body><noscript>${staticSummary}</noscript>$1</body>`);
+  }
+  fs.writeFileSync(path.join(routeDir, 'index.html'), html);
 }
 
 function buildSitemap(routes) {
@@ -52,8 +98,10 @@ function main() {
     throw new Error('build/index.html not found. Run the build before postbuild.');
   }
 
-  const projectSlugs = extractSlugs('src/components/data/projectData.ts');
-  const publicationSlugs = extractSlugs('src/components/data/publicationsData.ts');
+  const projectEntries = extractEntries('src/components/data/projectData.ts');
+  const publicationEntries = extractEntries('src/components/data/publicationsData.ts');
+  const projectSlugs = projectEntries.map((entry) => entry.slug);
+  const publicationSlugs = publicationEntries.map((entry) => entry.slug);
 
   const routes = [
     '/',
@@ -63,7 +111,16 @@ function main() {
     ...publicationSlugs.map((slug) => `/publications/${slug}`),
   ];
 
-  routes.forEach(ensureRouteHtml);
+  routes.forEach((route) => {
+    const projectMatch = route.match(/^\/projects\/([^/]+)$/);
+    const publicationMatch = route.match(/^\/publications\/([^/]+)$/);
+    const entry = projectMatch
+      ? projectEntries.find((item) => item.slug === projectMatch[1])
+      : publicationMatch
+        ? publicationEntries.find((item) => item.slug === publicationMatch[1])
+        : undefined;
+    ensureRouteHtml(route, entry);
+  });
   fs.copyFileSync(INDEX_HTML, path.join(BUILD_DIR, '404.html'));
   buildSitemap(routes);
 }

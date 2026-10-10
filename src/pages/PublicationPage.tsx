@@ -153,9 +153,9 @@ const PublicationPage: React.FC = () => {
           </div>
         )}
 
-        {!pub.storyBlocks && pub.contributions.length > 0 && (
+        {pub.contributions.length > 0 && (
           <section className="pub-page__contributions" data-analytics-section="publication_contributions">
-            <h2 className="sec-heading">Contributions</h2>
+            <h2 className="sec-heading">My contributions</h2>
             <ul className="pub-page__contrib-list">
               {pub.contributions.map((c, i) => (
                 <li key={i}>{c}</li>

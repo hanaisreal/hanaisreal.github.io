@@ -161,7 +161,7 @@ const ProjectPage: React.FC = () => {
 
         {project.contributions.length > 0 && (
           <section className="proj-built" data-analytics-section="project_contributions">
-            <h2 className="proj-section-title">What I built</h2>
+            <h2 className="proj-section-title">My contributions</h2>
             <ol className="proj-built__grid">
               {project.contributions.map((c, i) => (
                 <li key={i} className="proj-built__item">
