@@ -139,26 +139,26 @@ function getSeoConfig(pathname: string): SeoConfig {
     };
   }
 
-  if (path === '/research') {
+  if (path === '/projects') {
     return {
-      title: 'Research | Hana Oh',
+      title: 'Projects | Hana Oh',
       description:
-        'Publications and research projects by Hana Oh on personalized AI agents, long-term memory, scaffolding and reliance on AI, and creativity support tools.',
-      canonicalPath: '/research',
+        'Projects and ideas by Hana Oh on personalized AI agents, long-term memory, and creativity support tools.',
+      canonicalPath: '/projects',
       type: 'website',
       structuredData: [
         {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
-          name: 'Research',
-          url: absoluteUrl('/research'),
+          name: 'Projects',
+          url: absoluteUrl('/projects'),
           description:
-            'Publications and research projects by Hana Oh on personalized AI agents, long-term memory, scaffolding and reliance on AI, and creativity support tools.',
+            'Projects and ideas by Hana Oh on personalized AI agents, long-term memory, and creativity support tools.',
           isPartOf: absoluteUrl('/'),
         },
         buildBreadcrumb([
           { name: 'Home', path: '/' },
-          { name: 'Research', path: '/research' },
+          { name: 'Projects', path: '/projects' },
         ]),
       ],
     };
@@ -217,7 +217,7 @@ function getSeoConfig(pathname: string): SeoConfig {
           },
           buildBreadcrumb([
             { name: 'Home', path: '/' },
-            { name: 'Research', path: '/research' },
+            { name: 'Projects', path: '/projects' },
             { name: project.title, path: `/projects/${project.slug}` },
           ]),
         ],
@@ -249,7 +249,6 @@ function getSeoConfig(pathname: string): SeoConfig {
           },
           buildBreadcrumb([
             { name: 'Home', path: '/' },
-            { name: 'Research', path: '/research' },
             { name: publication.title, path: `/publications/${publication.slug}` },
           ]),
         ],

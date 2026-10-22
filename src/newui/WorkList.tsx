@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { publications } from '../components/data/publicationsData';
+import { FaBookmark, FaQuoteRight, FaLink, FaRegFilePdf, FaRegNewspaper, FaAward } from 'react-icons/fa';
+import { publications, type Publication } from '../components/data/publicationsData';
 import { projects } from '../components/data/projectData';
 import AuthorList from './AuthorList';
 
 // Publications and projects in one academic list format: a representative
 // thumbnail on the left; title, authors or timeline, venue, and links on the
-// right. Used on both the homepage and the research page.
+// right. Publications are listed on the homepage, projects on the projects page.
 
 interface EntryProps {
   id: string;
@@ -60,20 +61,80 @@ const LinkRow: React.FC<{ links?: { label: string; url: string }[]; itemId: stri
   );
 };
 
+// abs and bib open inline below the entry; details goes to the paper's page.
+const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
+  const [open, setOpen] = useState<'abs' | 'bib' | null>(null);
+  const toggle = (panel: 'abs' | 'bib') => setOpen((cur) => (cur === panel ? null : panel));
+  const to = `/publications/${pub.slug}`;
+  const pdf = pub.links?.find((l) => l.label === 'PDF');
+  const doi = pub.links?.find((l) => l.label === 'DOI');
+  const outbound = (l: { label: string; url: string }, icon: React.ReactNode) => (
+    <a
+      href={l.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-analytics-event="external_link_click"
+      data-analytics-label={l.label}
+      data-analytics-destination={l.url}
+      data-analytics-item-id={pub.slug}
+    >
+      {icon} {l.label.toLowerCase()}
+    </a>
+  );
+
+  return (
+    <li className="work work--pub">
+      <Link className="work__thumb-block" to={to} tabIndex={-1} aria-hidden="true">
+        <span className="work__short">{pub.shortName}</span>
+        {pub.thumb && <span className="work__thumb"><img src={pub.thumb} alt="" loading="lazy" /></span>}
+      </Link>
+      <div className="work__text">
+        <Link
+          className="work__title"
+          to={to}
+          data-analytics-event="publication_open"
+          data-analytics-item-id={pub.slug}
+          data-analytics-item-name={pub.title}
+          data-analytics-placement="publication_list"
+        >
+          {pub.title}
+        </Link>
+        <AuthorList className="work__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} />
+        <span className="work__venue">
+          {pub.venue}
+          {pub.bestPaper && <span className="work__badge"><FaAward /> Best Paper</span>}
+        </span>
+        <p className="work__tldr">{pub.tldr}</p>
+        <span className="work__actions">
+          <button type="button" aria-expanded={open === 'abs'} onClick={() => toggle('abs')}>
+            <FaBookmark /> abs
+          </button>
+          <button type="button" aria-expanded={open === 'bib'} onClick={() => toggle('bib')}>
+            <FaQuoteRight /> bib
+          </button>
+          {doi && outbound(doi, <FaLink />)}
+          {pdf && outbound(pdf, <FaRegFilePdf />)}
+          <Link
+            to={to}
+            data-analytics-event="publication_open"
+            data-analytics-item-id={pub.slug}
+            data-analytics-placement="publication_list_details"
+          >
+            <FaRegNewspaper /> details
+          </Link>
+        </span>
+        {open === 'abs' && <p className="work__panel">{pub.abstract}</p>}
+        {open === 'bib' && <pre className="work__panel work__panel--bib">{pub.bibtex}</pre>}
+      </div>
+    </li>
+  );
+};
+
 export const PublicationList: React.FC<{ heading?: string }> = ({ heading = 'Publications' }) => (
   <section id="publications" className="work-section" data-analytics-section="publications">
     <h2 className="sec-heading">{heading}</h2>
     <ul className="work-list">
-      {publications.map((pub) => (
-        <Entry key={pub.slug} id={pub.slug} to={`/publications/${pub.slug}`} thumb={pub.thumb} title={pub.title} kind="publication">
-          <AuthorList className="work__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} />
-          <span className="work__venue">
-            <em>{pub.venue}</em>
-            {pub.bestPaper && <span className="work__award">Best Paper Award</span>}
-          </span>
-          <LinkRow links={pub.links} itemId={pub.slug} />
-        </Entry>
-      ))}
+      {publications.map((pub) => <PublicationEntry key={pub.slug} pub={pub} />)}
     </ul>
     {publications.some((p) => p.coFirstAuthors?.length) && (
       <p className="work-note"><sup>*</sup> Equal contribution</p>
@@ -81,9 +142,9 @@ export const PublicationList: React.FC<{ heading?: string }> = ({ heading = 'Pub
   </section>
 );
 
-export const ProjectList: React.FC<{ heading?: string }> = ({ heading = 'Projects' }) => (
+export const ProjectList: React.FC<{ heading?: string | null }> = ({ heading = 'Projects' }) => (
   <section id="projects" className="work-section" data-analytics-section="projects">
-    <h2 className="sec-heading">{heading}</h2>
+    {heading && <h2 className="sec-heading">{heading}</h2>}
     <ul className="work-list">
       {projects.map((project) => (
         <Entry key={project.slug} id={project.slug} to={`/projects/${project.slug}`} thumb={project.thumb ?? project.image} title={project.title} kind="project">

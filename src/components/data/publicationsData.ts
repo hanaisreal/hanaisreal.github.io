@@ -27,6 +27,9 @@ export interface Publication {
   status: string;
   type: 'conference' | 'journal' | 'workshop';
   bestPaper?: boolean;
+  shortName: string;       // label above the list thumbnail
+  abstract: string;
+  bibtex: string;
   insight?: string;
   coFirstAuthors?: string[];
   tldr: string;
@@ -49,6 +52,17 @@ export const publications: Publication[] = [
     venue: "UIST 2026 Poster",
     status: "Accepted",
     type: "conference",
+    shortName: 'ToneCanvas',
+    abstract: `Revising long-form fiction requires writers to maintain each character's voice across dialogue that is often dispersed throughout a manuscript. Detecting gradual changes in how a character speaks therefore depends heavily on rereading, memory, and external notes. We present ToneCanvas, an interactive writing interface that uses persistent watercolor gradients to support character-centered tone comparison and revision within and across passages. A formative study with five professionals involved in fiction revision and translation identified four recurring workflow breakdowns, which informed the design of character-focused dialogue views, adjustable tone dimensions, and integrated character references. This work contributes an empirical account of character-tone revision, corresponding design opportunities, and an interactive prototype that instantiates them.`,
+    bibtex: `@inproceedings{kim2026tonecanvas,
+  title     = {ToneCanvas: Visually Painting Character Tone for Narrative Consistency},
+  author    = {Kim, Junghwan and Oh, Hana and Suh, Bongwon},
+  booktitle = {Adjunct Proceedings of the 39th Annual ACM Symposium on User Interface Software and Technology},
+  series    = {UIST Adjunct '26},
+  year      = {2026},
+  address   = {Detroit, MI, USA},
+  publisher = {ACM}
+}`,
     insight: "How can visual interaction help writers keep a character's tone consistent across a narrative?",
     tldr: "A visual interface that lets writers paint tone attributes onto characters, helping them catch stylistic drift before it becomes a structural problem.",
     narrative: `Maintaining character tone consistency across long-form narrative text poses a recurring challenge in creative writing. As drafts expand across chapters, subtle linguistic drift occurs silently, causing character voices to diverge from their intended profiles without the writer noticing.
@@ -116,6 +130,18 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
     venue: "CHI 2026",
     status: "Accepted",
     type: "conference",
+    shortName: 'DeepAware',
+    abstract: `Deepfake scams, which use AI-generated audio or video to impersonate individuals, pose an increasing cybersecurity threat to older adults. Existing educational approaches present threats through generic examples, leaving learners to perceive scams as something that happens to others rather than to themselves. To address this gap, we conducted a formative study with five digital educators to identify design requirements, then developed DeepAware, a self-referential simulation platform that embeds participants' own faces and voices into deepfake scam scenarios. By making learners the target of simulated threats rather than passive observers, DeepAware aims to collapse the psychological distance between abstract warnings and personal vulnerability. A mixed-methods evaluation with 21 older adults found improvements in deepfake knowledge, threat perception, and coping confidence, though responses varied by prior familiarity. This work demonstrates the potential of self-referential simulation for cybersecurity education and offers design implications for future cybersecurity interventions.`,
+    bibtex: `@inproceedings{oh2026deepaware,
+  title     = {DeepAware: Using Experiential Deepfake Simulations to Enhance Cybersecurity Awareness in Older Adults},
+  author    = {Oh, Hana and Lee, Eunbi and Shin, Seungju and Lee, Keyeun and Pyun, Miran and Lim, Hajin},
+  booktitle = {Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems},
+  series    = {CHI '26},
+  year      = {2026},
+  address   = {Barcelona, Spain},
+  publisher = {ACM},
+  doi       = {10.1145/3772318.3791492}
+}`,
     insight: "What if older adults could experience a deepfake before encountering one in the wild?",
     tldr: "Letting older adults safely experience a personalized deepfake scam scenario builds intuition that text-based warnings never could.",
     cardSummary: "DeepAware turns deepfake education into a self-relevant learning experience by placing older adults inside personalized scam and fake-news simulations using their own synthesized face and voice.",
@@ -199,6 +225,18 @@ This work sits at the intersection of cybersecurity education and the ethics of 
     status: "Accepted",
     type: "conference",
     bestPaper: true,
+    shortName: 'When Scaffolding Breaks',
+    abstract: `Large language models (LLMs) are promising tools for scaffolding students' English writing skills, but their effectiveness in real-time K-12 classrooms remains underexplored. Addressing this gap, our study examines the benefits and limitations of using LLMs as real-time learning support, considering how classroom constraints, such as diverse proficiency levels and limited time, affect their effectiveness. We conducted a deployment study with 157 eighth-grade students in a South Korean middle school English class over six weeks. Our findings reveal that while scaffolding improved students' ability to compose grammatically correct sentences, this step-by-step approach demotivated lower-proficiency students and increased their system reliance. We also observed challenges to classroom dynamics, where extroverted students often dominated the teacher's attention, and the system's assistance made it difficult for teachers to identify struggling students. Based on these findings, we discuss design guidelines for integrating LLMs into real-time writing classes as inclusive educational tools.`,
+    bibtex: `@inproceedings{myung2026scaffolding,
+  title     = {When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms},
+  author    = {Myung, Junho and Lim, Hyunseung and Oh, Hana and Jin, Hyoungwook and Kang, Nayeon and Ahn, So-Yeon and Hong, Hwajung and Oh, Alice and Kim, Juho},
+  booktitle = {Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems},
+  series    = {CHI '26},
+  year      = {2026},
+  address   = {Barcelona, Spain},
+  publisher = {ACM},
+  doi       = {10.1145/3772318.3791517}
+}`,
     insight: "When the AI scaffold fails mid-lesson, what do students actually do?",
     tldr: "Deploying LLM writing support in real K-12 classrooms revealed that the most revealing moments were when the AI failed — exposing how students had been relying on it all along.",
     narrative: `AI writing scaffolds behave well in lab conditions. Real classrooms are messier. Connectivity drops, students go off-task, and the AI occasionally outputs something confusing at exactly the wrong moment in a lesson.

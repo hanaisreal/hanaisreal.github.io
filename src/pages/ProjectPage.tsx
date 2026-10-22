@@ -90,7 +90,7 @@ const ProjectPage: React.FC = () => {
   }, [slug]);
 
   React.useEffect(() => {
-    if (!project) navigate('/research');
+    if (!project) navigate('/projects');
   }, [project, navigate]);
 
   if (!project) return null;
@@ -102,10 +102,10 @@ const ProjectPage: React.FC = () => {
       <Masthead />
       <div className="page page--publication page--project">
         <Link
-          to="/research"
+          to="/projects"
           className="essay-post__back"
           data-analytics-event="nav_click"
-          data-analytics-label="Back to research"
+          data-analytics-label="Back to projects"
           data-analytics-placement="project_detail"
         >
           &larr; Research
@@ -206,13 +206,13 @@ const ProjectPage: React.FC = () => {
 
         <div className="essay-post__footer">
           <Link
-            to="/research"
+            to="/projects"
             className="essay-post__back"
             data-analytics-event="nav_click"
-            data-analytics-label="Back to research footer"
+            data-analytics-label="Back to projects footer"
             data-analytics-placement="project_detail_footer"
           >
-            &larr; Back to Research
+            &larr; Back to Projects
           </Link>
         </div>
       </div>

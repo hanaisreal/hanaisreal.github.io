@@ -83,7 +83,7 @@ const PublicationPage: React.FC = () => {
   }, [slug]);
 
   if (!pub) {
-    navigate('/research');
+    navigate('/');
     return null;
   }
 
@@ -94,13 +94,13 @@ const PublicationPage: React.FC = () => {
       <Masthead />
       <div className="page page--publication">
         <Link
-          to="/research"
+          to="/"
           className="essay-post__back"
           data-analytics-event="nav_click"
-          data-analytics-label="Back to research"
+          data-analytics-label="Back to home"
           data-analytics-placement="publication_detail"
         >
-          ← Research
+          ← Home
         </Link>
 
         <header className="pub-page__header" data-analytics-section="publication_header">
@@ -198,13 +198,13 @@ const PublicationPage: React.FC = () => {
 
         <div className="essay-post__footer">
           <Link
-            to="/research"
+            to="/"
             className="essay-post__back"
             data-analytics-event="nav_click"
-            data-analytics-label="Back to research footer"
+            data-analytics-label="Back to home footer"
             data-analytics-placement="publication_detail_footer"
           >
-            ← Back to Research
+            ← Back to Home
           </Link>
         </div>
 

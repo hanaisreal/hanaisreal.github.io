@@ -5,7 +5,16 @@ const newsItems = [
     date: 'Sep 2026',
     text: (
       <>
-        <strong>ToneCanvas</strong> accepted as a poster at <span className="news-item__venue">UIST 2026</span> (Detroit).
+        <strong>ToneCanvas</strong> accepted as a poster at <span className="news-item__venue">UIST 2026</span>. See
+        you in Detroit!
+      </>
+    ),
+  },
+  {
+    date: 'Apr 2026',
+    text: (
+      <>
+        Presenting <strong>DeepAware</strong> at <span className="news-item__venue">CHI 2026</span> in Barcelona.
       </>
     ),
   },
@@ -14,7 +23,7 @@ const newsItems = [
     text: (
       <>
         Two papers accepted to <span className="news-item__venue">CHI 2026</span>: <strong>DeepAware</strong> and{' '}
-        <strong>When Scaffolding Breaks</strong>, with <strong>When Scaffolding Breaks</strong> receiving a{' '}
+        <strong>When Scaffolding Breaks</strong>, with one{' '}
         <span className="news-item__award">Best Paper Award</span>.
       </>
     ),
@@ -23,7 +32,7 @@ const newsItems = [
 
 const NewsSection: React.FC = () => (
   <section id="news" data-analytics-section="home_news">
-    <h2 className="sec-heading">News</h2>
+    <h2 className="sec-heading">Recent Highlights</h2>
     <ul className="news-list">
       {newsItems.map((item, i) => (
         <li key={i} className="news-item">

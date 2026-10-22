@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { pickBackground, BackgroundItem } from './components/data/backgroundsData';
 import AnalyticsTracker from './AnalyticsTracker';
 import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
-import ResearchPage from './pages/ResearchPage';
+import ProjectsPage from './pages/ProjectsPage';
 import CollectionsPage from './pages/CollectionsPage';
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
@@ -37,7 +37,8 @@ const App: React.FC = () => {
       />
       <Routes>
         <Route path="/" element={<NewPortfolio bg={bg} />} />
-        <Route path="/research" element={<ResearchPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
+        <Route path="/research" element={<Navigate to="/projects" replace />} />
         {/* <Route path="/essays" element={<Blog />} /> */}
         {/* <Route path="/essays/:slug" element={<BlogPost />} /> */}
         <Route path="/collections" element={<CollectionsPage />} />

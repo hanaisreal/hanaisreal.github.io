@@ -76,7 +76,7 @@ function buildSitemap(routes) {
     const normalized = route === '/' ? '' : route;
     const priority =
       route === '/' ? '1.0' :
-      route === '/research' ? '0.9' :
+      route === '/projects' ? '0.9' :
       route.startsWith('/publications/') ? '0.8' :
       route.startsWith('/projects/') ? '0.8' :
       route === '/collections' ? '0.6' :
@@ -105,7 +105,7 @@ function main() {
 
   const routes = [
     '/',
-    '/research',
+    '/projects',
     '/collections',
     ...projectSlugs.map((slug) => `/projects/${slug}`),
     ...publicationSlugs.map((slug) => `/publications/${slug}`),

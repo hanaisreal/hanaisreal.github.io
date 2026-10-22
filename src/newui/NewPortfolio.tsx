@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import Masthead from './Masthead';
-import HeroSection from './HeroSection';
+import { ProfileCard, Bio } from './HeroSection';
 import NewsSection from './NewsSection';
 import AboutSection from './AboutSection';
 import { PublicationList } from './WorkList';
@@ -28,11 +28,15 @@ const NewPortfolio: React.FC<Props> = ({ bg }) => {
         <SplashScreen bg={bg} onDone={handleSplashDone} />
       )}
       <Masthead />
-      <div className="page page--home page--home--paper">
-        <HeroSection />
-        <hr className="sec-rule" />
-        <div className="intro-flow">
+      <div className="page page--home page--home--paper home-grid">
+        <aside className="home-grid__side">
+          <ProfileCard />
+        </aside>
+        <aside className="home-grid__news">
           <NewsSection />
+        </aside>
+        <div className="home-grid__main">
+          <Bio />
           <PublicationList />
           <AboutSection />
         </div>
