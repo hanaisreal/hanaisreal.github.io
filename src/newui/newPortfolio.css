@@ -2492,6 +2492,10 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   line-height: 1.55;
 }
 .home-grid__side { grid-area: side; }
+/* The profile column stays in view while the page scrolls (below the nav). */
+@media (min-width: 721px) {
+  .home-grid__side { position: sticky; top: 4rem; }
+}
 .home-grid__main { grid-area: main; display: flex; flex-direction: column; gap: 2rem; min-width: 0; }
 .home-grid__news { grid-area: news; }
 
