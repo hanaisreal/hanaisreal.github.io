@@ -2,28 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
-import { getPostById, blogPosts } from '../components/data/blogData';
+import { getPostById, blogPosts, formatPostDate } from '../components/data/blogData';
 import '../newui/newPortfolio.css';
 
-const EssayPost: React.FC = () => {
+const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [post] = useState(getPostById(slug || ''));
 
   useEffect(() => {
     if (!post) {
-      navigate('/essays');
+      navigate('/blog');
     }
   }, [post, navigate]);
 
   if (!post) return null;
-
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
 
   const inlineHtml = (text: string) =>
     text
@@ -79,13 +72,13 @@ const EssayPost: React.FC = () => {
   return (
     <div>
       <Masthead />
-      <div className="page">
+      <div className="page page--publication page--post">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <Link to="/essays" className="essay-post__back">← Essays</Link>
+          <Link to="/blog" className="essay-post__back">← Blog</Link>
 
           <header className="essay-post__header">
             <span className="essay-tag">{post.category}</span>
@@ -94,7 +87,7 @@ const EssayPost: React.FC = () => {
               <p className="essay-post__subtitle">{post.subtitle}</p>
             )}
             <p className="essay-post__meta">
-              {formatDate(post.date)} · {post.readTime}
+              {formatPostDate(post.date)}
             </p>
           </header>
 
@@ -104,13 +97,13 @@ const EssayPost: React.FC = () => {
 
           {related.length > 0 && (
             <section className="essay-post__related">
-              <h3 className="sec-heading">More Essays</h3>
+              <h3 className="sec-heading">More Posts</h3>
               <ul className="essay-list">
                 {related.map(r => (
                   <li key={r.id} className="essay-item">
                     <span className="essay-tag">{r.category}</span>
                     <h2 className="essay-title">
-                      <Link to={`/essays/${r.id}`}>{r.title}</Link>
+                      <Link to={`/blog/${r.id}`}>{r.title}</Link>
                     </h2>
                     <p className="essay-opening">{r.excerpt}</p>
                   </li>
@@ -120,7 +113,7 @@ const EssayPost: React.FC = () => {
           )}
 
           <div className="essay-post__footer">
-            <Link to="/essays" className="essay-post__back">← Back to Essays</Link>
+            <Link to="/blog" className="essay-post__back">← Back to Blog</Link>
           </div>
         </motion.div>
       </div>
@@ -132,4 +125,4 @@ const EssayPost: React.FC = () => {
   );
 };
 
-export default EssayPost;
+export default BlogPost;

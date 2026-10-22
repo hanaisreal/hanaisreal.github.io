@@ -6,6 +6,7 @@ import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
 import ProjectsPage from './pages/ProjectsPage';
 import CollectionsPage from './pages/CollectionsPage';
+// Blog is hidden until the posts are revised.
 // import Blog from './pages/Blog';
 // import BlogPost from './pages/BlogPost';
 import PublicationPage from './pages/PublicationPage';
@@ -39,11 +40,12 @@ const App: React.FC = () => {
         <Route path="/" element={<NewPortfolio bg={bg} />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/research" element={<Navigate to="/projects" replace />} />
-        {/* <Route path="/essays" element={<Blog />} /> */}
-        {/* <Route path="/essays/:slug" element={<BlogPost />} /> */}
+        {/* <Route path="/blog" element={<Blog />} /> */}
+        {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
         <Route path="/collections" element={<CollectionsPage />} />
         <Route path="/publications/:slug" element={<PublicationPage />} />
         <Route path="/projects/:slug" element={<ProjectPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );

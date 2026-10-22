@@ -2682,13 +2682,13 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
 }
 
 /* ── PROJECTS PAGE: same sheet size and type scale as the homepage ── */
-.page--publication.page--projects {
+.page--publication:is(.page--projects, .page--blog) {
   max-width: 1240px;
   margin-top: 1.6rem;
   padding: 2.4rem 2.6rem 3rem;
 }
-.page--projects .page-intro { margin-bottom: 1.6rem; }
-.page--projects .page-intro__title { font-size: 1.7rem; line-height: 1; letter-spacing: -0.02em; }
+:is(.page--projects, .page--blog) .page-intro { margin-bottom: 1.6rem; }
+:is(.page--projects, .page--blog) .page-intro__title { font-size: 1.7rem; line-height: 1; letter-spacing: -0.02em; }
 .page--projects .work__venue { font-size: 0.8rem; }
 /* Two entries per row so lines stay readable on the wide sheet. */
 @media (min-width: 1081px) {
@@ -2699,7 +2699,106 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   }
 }
 @media (max-width: 720px) {
-  .page--publication.page--projects { padding: 2rem 1.1rem 2.6rem; }
+  .page--publication:is(.page--projects, .page--blog) { padding: 2rem 1.1rem 2.6rem; }
   .page--projects .work { grid-template-columns: minmax(0, 1fr); gap: 0.6rem; }
   .page--projects .work__thumb { max-width: 260px; }
+}
+
+/* ── BLOG LIST ── */
+.page--blog .essay-item { padding: 1.1rem 0; }
+.page--blog .essay-item:first-child { padding-top: 0; }
+.page--blog .essay-item__meta { gap: 0.6rem; margin-bottom: 0.3rem; }
+.page--blog .essay-item__date { font-size: 0.75rem; color: var(--muted); }
+.page--blog .essay-tag { font-size: 0.65rem; }
+.page--blog .essay-title { margin: 0 0 0.25rem; font-family: var(--font-body); font-size: 0.98rem; }
+.page--blog .essay-opening { font-family: var(--font-body); font-size: 0.85rem; line-height: 1.55; }
+@media (min-width: 1081px) {
+  .page--blog .essay-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2.6rem;
+  }
+  .page--blog .essay-item:nth-child(2) { padding-top: 0; }
+  .page--blog .essay-item:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+}
+
+/* ── DETAIL PAGES: publication, project, and blog post ──
+   Same sheet size as the homepage and list pages, with the text kept in a
+   centred reading column and scaled to the homepage's type sizes. */
+.page--publication:not(.page--research-sheet) {
+  max-width: 1240px;
+  margin-top: 1.6rem;
+  padding: 2.4rem 2.6rem 3rem;
+  font-size: 0.875rem;
+}
+/* Blog posts are text only, so they keep a reading column. */
+.page--publication.page--post > * { max-width: 680px; }
+.page--publication:not(.page--research-sheet) :is(.pub-page__title, .proj-hero__title, .essay-post__title) {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+.page--publication:not(.page--research-sheet) :is(.pub-page__authors, .proj-hero__meta, .essay-post__meta) {
+  font-size: 0.85rem;
+}
+.page--publication:not(.page--research-sheet) .pub-page__status-line { font-size: 0.75rem; }
+.page--publication:not(.page--research-sheet) .proj-hero__lede { font-size: 0.95rem; line-height: 1.55; }
+.page--publication:not(.page--research-sheet) :is(.pub-page__narrative, .pub-page__story, .essay-post__para, .essay-post__list li, .essay-post__blockquote) {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+.page--publication:not(.page--research-sheet) .essay-post__heading { font-size: 0.95rem; }
+.page--publication:not(.page--research-sheet) .pub-page__figcaption { font-size: 0.8rem; line-height: 1.5; }
+.page--publication:not(.page--research-sheet) .pub-page__contrib-list li { font-size: 0.875rem; }
+.page--publication:not(.page--research-sheet) :is(.sec-heading, .proj-section-title) {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.page--publication:not(.page--research-sheet) .pub__title { font-size: 0.92rem; }
+.page--publication:not(.page--research-sheet) .proj-card__title { font-size: 0.95rem; }
+.page--publication:not(.page--research-sheet) .proj-card__tldr { font-size: 0.82rem; }
+.page--publication:not(.page--research-sheet) .essay-post__back { font-size: 0.8rem; }
+@media (max-width: 720px) {
+  .page--publication:not(.page--research-sheet) { padding: 2rem 1.1rem 2.6rem; }
+}
+
+/* ── DETAIL PAGES: text fills the sheet, media sits to the right ──
+   The text runs on uninterrupted in the left column. Figures and videos
+   come first in the markup (see storyOrder.ts) and float into a right-hand
+   gutter, stacked from the top. Narrow screens restore the story order. */
+.page--publication:not(.page--research-sheet):not(.page--post) > * { max-width: none; }
+.page--publication:not(.page--research-sheet) :is(.pub-page__header, .proj-hero) { max-width: 880px; margin-left: 0; }
+.page--publication .proj-story { max-width: none; margin: 0; }
+@media (min-width: 901px) {
+  .page--publication :is(.pub-page__story, .pub-page__narrative) {
+    --media: clamp(260px, 34vw, 460px);
+    --media-gap: 2.6rem;
+    display: flow-root;
+    padding-right: calc(var(--media) + var(--media-gap));
+  }
+  .page--publication :is(.pub-page__story, .pub-page__narrative) > :is(figure, .pub-page__figure-row) {
+    float: right;
+    clear: right;
+    width: var(--media);
+    margin: 0.2rem calc(-1 * (var(--media) + var(--media-gap))) 1.4rem 0;
+  }
+  .page--publication .pub-page__figure--narrow { max-width: none; }
+  .page--publication :is(.pub-page__story-img, .pub-page__story-video, .proj-cover__img) {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 340px;
+    margin: 0 auto;
+    object-fit: contain;
+  }
+}
+@media (max-width: 900px) {
+  .page--publication :is(.pub-page__story, .pub-page__narrative) {
+    display: flex;
+    flex-direction: column;
+  }
 }

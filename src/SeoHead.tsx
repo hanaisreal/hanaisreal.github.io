@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { getProjectBySlug } from './components/data/projectData';
 import { getPublicationBySlug } from './components/data/publicationsData';
+import { getPostById } from './components/data/blogData';
 
 const SITE_NAME = 'Hana Oh';
 const SITE_URL = 'https://hanaisreal.github.io';
@@ -162,6 +163,56 @@ function getSeoConfig(pathname: string): SeoConfig {
         ]),
       ],
     };
+  }
+
+  if (path === '/blog') {
+    return {
+      title: 'Blog | Hana Oh',
+      description: 'Essays and notes by Hana Oh on AI, interfaces, memory, and everyday experience.',
+      canonicalPath: '/blog',
+      type: 'website',
+      structuredData: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: 'Blog',
+          url: absoluteUrl('/blog'),
+          isPartOf: absoluteUrl('/'),
+        },
+        buildBreadcrumb([
+          { name: 'Home', path: '/' },
+          { name: 'Blog', path: '/blog' },
+        ]),
+      ],
+    };
+  }
+
+  if (path.startsWith('/blog/')) {
+    const post = getPostById(path.replace('/blog/', ''));
+
+    if (post) {
+      return {
+        title: `${post.title} | Hana Oh`,
+        description: post.excerpt,
+        canonicalPath: `/blog/${post.id}`,
+        type: 'article',
+        structuredData: [
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.title,
+            description: post.excerpt,
+            url: absoluteUrl(`/blog/${post.id}`),
+            author: { '@type': 'Person', name: 'Hana Oh', url: SITE_URL },
+          },
+          buildBreadcrumb([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: post.title, path: `/blog/${post.id}` },
+          ]),
+        ],
+      };
+    }
   }
 
   if (path === '/collections') {

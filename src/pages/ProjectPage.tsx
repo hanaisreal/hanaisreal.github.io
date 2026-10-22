@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
+import { mediaFirst } from '../newui/storyOrder';
 import {
   getProjectBySlug,
   projects,
@@ -11,16 +12,16 @@ import '../newui/newPortfolio.css';
 
 function renderStoryBlock(block: ProjectStoryBlock, index: number) {
   if (block.type === 'heading') {
-    return <h2 key={index} className="proj-section-title">{block.text}</h2>;
+    return <h2 key={index} style={{ order: index }} className="proj-section-title">{block.text}</h2>;
   }
 
   if (block.type === 'paragraph') {
-    return <p key={index}>{block.text}</p>;
+    return <p key={index} style={{ order: index }}>{block.text}</p>;
   }
 
   if (block.type === 'video') {
     return (
-      <figure key={index} className="pub-page__figure">
+      <figure key={index} style={{ order: index }} className="pub-page__figure">
         <video
           className="pub-page__story-video"
           controls
@@ -40,7 +41,7 @@ function renderStoryBlock(block: ProjectStoryBlock, index: number) {
   if (block.type === 'figure') {
     return (
       <figure
-        key={index}
+        key={index} style={{ order: index }}
         className={`pub-page__figure${block.figure.variant === 'narrow' ? ' pub-page__figure--narrow' : ''}`}
       >
         <img
@@ -57,7 +58,7 @@ function renderStoryBlock(block: ProjectStoryBlock, index: number) {
   }
 
   return (
-    <div key={index} className="pub-page__figure-row">
+    <div key={index} style={{ order: index }} className="pub-page__figure-row">
       {block.figures.map((figure, figureIndex) => (
         <figure
           key={`${index}-${figureIndex}`}
@@ -108,7 +109,7 @@ const ProjectPage: React.FC = () => {
           data-analytics-label="Back to projects"
           data-analytics-placement="project_detail"
         >
-          &larr; Research
+          &larr; Projects
         </Link>
 
         <header className="proj-hero" data-analytics-section="project_header">
@@ -139,22 +140,22 @@ const ProjectPage: React.FC = () => {
           <p className="proj-hero__lede">{project.tldr}</p>
         </header>
 
-        {/* Story pages carry their own figures (often the same image), so the
-            cover only shows for projects without a story. */}
-        {project.image && !project.storyBlocks && (
-          <figure className="proj-cover">
-            <img src={project.image} alt={project.title} className="proj-cover__img" />
-          </figure>
-        )}
-
         {project.storyBlocks ? (
           <div className="pub-page__story proj-story" data-analytics-section="project_narrative">
-            {project.storyBlocks.map((block, index) => renderStoryBlock(block, index))}
+            {mediaFirst(project.storyBlocks).map(({ block, index }) => renderStoryBlock(block, index))}
           </div>
         ) : (
           <div className="pub-page__narrative proj-story" data-analytics-section="project_narrative">
+            {/* Story pages carry their own figures (often the same image), so the
+                cover only shows for projects without a story: first in the right
+                column, after the first paragraph on narrow screens. */}
+            {project.image && (
+              <figure className="pub-page__figure proj-cover" style={{ order: 1 }}>
+                <img src={project.image} alt={project.title} className="proj-cover__img" />
+              </figure>
+            )}
             {project.narrative.split('\n\n').map((para, i) => (
-              <p key={i}>{para}</p>
+              <p key={i} style={{ order: i * 2 }}>{para}</p>
             ))}
           </div>
         )}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
+import { mediaFirst } from '../newui/storyOrder';
 import {
   getPublicationBySlug,
   getPublicationStatusLine,
@@ -27,13 +28,13 @@ function formatAuthors(authors: string, coFirst?: string[]) {
 
 function renderStoryBlock(block: PublicationStoryBlock, index: number) {
   if (block.type === 'paragraph') {
-    return <p key={index}>{block.text}</p>;
+    return <p key={index} style={{ order: index }}>{block.text}</p>;
   }
 
   if (block.type === 'figure') {
     return (
       <figure
-        key={index}
+        key={index} style={{ order: index }}
         className={`pub-page__figure${block.figure.variant === 'narrow' ? ' pub-page__figure--narrow' : ''}`}
       >
         <img
@@ -50,7 +51,7 @@ function renderStoryBlock(block: PublicationStoryBlock, index: number) {
   }
 
   return (
-    <div key={index} className="pub-page__figure-row">
+    <div key={index} style={{ order: index }} className="pub-page__figure-row">
       {block.figures.map((figure, figureIndex) => (
         <figure
           key={`${index}-${figureIndex}`}
@@ -143,7 +144,7 @@ const PublicationPage: React.FC = () => {
 
         {pub.storyBlocks ? (
           <div className="pub-page__story" data-analytics-section="publication_narrative">
-            {pub.storyBlocks.map((block, index) => renderStoryBlock(block, index))}
+            {mediaFirst(pub.storyBlocks).map(({ block, index }) => renderStoryBlock(block, index))}
           </div>
         ) : (
           <div className="pub-page__narrative" data-analytics-section="publication_narrative">

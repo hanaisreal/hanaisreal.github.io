@@ -77,6 +77,7 @@ function buildSitemap(routes) {
     const priority =
       route === '/' ? '1.0' :
       route === '/projects' ? '0.9' :
+      route === '/blog' ? '0.8' :
       route.startsWith('/publications/') ? '0.8' :
       route.startsWith('/projects/') ? '0.8' :
       route === '/collections' ? '0.6' :

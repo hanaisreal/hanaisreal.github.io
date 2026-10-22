@@ -122,7 +122,6 @@ export const Bio: React.FC = () => (
         </a>
         .
       </p>
-      <p>My research is supported by the BK21 FOUR Program.</p>
     </div>
   </section>
 );

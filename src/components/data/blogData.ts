@@ -2,7 +2,7 @@ export interface BlogPost {
   id: string;
   title: string;
   subtitle?: string;
-  date: string;
+  date: string;            // ISO date, or a display label such as "Spring 2026"
   readTime: string;
   category: string;
   tags: string[];
@@ -764,6 +764,23 @@ I want interfaces that make life more experienceable.`,
     featured: true
   },
   {
+    id: "ai-journaling",
+    title: "Rethinking AI Journaling through Phenomenological Design",
+    date: "Spring 2026",
+    readTime: "2 min read",
+    category: "AI & Interface",
+    tags: ["User Experience course", "AI journaling", "Phenomenological design"],
+    excerpt: "A phenomenological AI journaling interface that captures the raw atmosphere of experience through typing rhythm and generative canvases, moving beyond rigid emotion tags.",
+    content: `Drawing from John Dewey’s philosophy, every human experience is profoundly unique, carrying its own distinct atmosphere and sensory weight. In my personal journaling practice, I have always tried to capture not just the facts of what happened, but the full nuance of those moments in words. This project stems from a central question: How can we convey our lived experiences to technology in a way that feels natural, raw, and therapeutic?
+
+## Problem: The Reduction of Lived Experience
+
+Modern journaling apps flatten this rich human experience into discrete database parameters. They force users to translate complex days into rigid inputs like selecting an emoji, choosing a standardized mood tag (such as "stressed" or "depressed"), or toggling weather icons.
+
+By demanding that users categorize their internal state before they even begin writing, existing interfaces strip away the phenomenological atmosphere of the moment. Instead of letting technology adapt to the complex tangle of human emotion, we are forced to fit our living experiences into pre-built app schemas. My goal was to redesign the Algorithmic Experience (AX) to preserve the raw, atmospheric texture of thought without forcing users into artificial taxonomy.`,
+    published: true,
+  },
+  {
     id: "ai-research-trajectories-2024",
     title: "The Trajectory of AI Research",
     subtitle: "Economic Structures, Human Agency, and the Next Fifty Years",
@@ -825,4 +842,14 @@ export const getPostsByTag = (tag: string): BlogPost[] =>
 export const getAllCategories = (): string[] => {
   const categories = blogPosts.map(post => post.category);
   return Array.from(new Set(categories)).sort();
+};
+
+// "2026-06-02" → "June 2, 2026"; labels such as "Spring 2026" pass through.
+export const formatPostDate = (date: string): string => {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return date;
+  return new Date(`${date}T00:00:00`).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 };

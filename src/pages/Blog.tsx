@@ -1,31 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
-import { blogPosts } from '../components/data/blogData';
+import { blogPosts, formatPostDate } from '../components/data/blogData';
 import '../newui/newPortfolio.css';
 
-const Essays: React.FC = () => {
-  const essays = blogPosts.filter(p => p.published);
+const Blog: React.FC = () => {
+  const posts = blogPosts.filter(p => p.published);
 
   return (
     <div>
       <Masthead />
-      <div className="page">
+      <main className="page page--publication page--research-sheet page--blog">
+        <header className="page-intro">
+          <h1 className="page-intro__title">Blog</h1>
+        </header>
         <ul className="essay-list">
-          {essays.map(essay => (
-            <li key={essay.id} className="essay-item">
+          {posts.map(post => (
+            <li key={post.id} className="essay-item">
               <div className="essay-item__meta">
-                <span className="essay-tag">{essay.category}</span>
-                <span className="essay-item__date">{essay.date} · {essay.readTime}</span>
+                <span className="essay-tag">{post.category}</span>
+                <span className="essay-item__date">{formatPostDate(post.date)}</span>
               </div>
               <h2 className="essay-title">
-                <Link to={`/essays/${essay.id}`}>{essay.title}</Link>
+                <Link
+                  to={`/blog/${post.id}`}
+                  data-analytics-event="blog_open"
+                  data-analytics-item-id={post.id}
+                  data-analytics-item-name={post.title}
+                  data-analytics-placement="blog_list"
+                >
+                  {post.title}
+                </Link>
               </h2>
-              <p className="essay-opening">{essay.excerpt}</p>
+              <p className="essay-opening">{post.excerpt}</p>
             </li>
           ))}
         </ul>
-      </div>
+      </main>
       <footer className="site-footer">
         <span>Hana Oh</span>
         <span>© {new Date().getFullYear()}</span>
@@ -34,4 +45,4 @@ const Essays: React.FC = () => {
   );
 };
 
-export default Essays;
+export default Blog;
