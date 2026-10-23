@@ -16,7 +16,7 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "kixlab-internship-reflection",
-    thumb: "/pictures/publications/when-scaffolding-breaks/writeaid-system.png",
+    thumb: "/pictures/blog/kixlab-internship-reflection/teaser.jpg",
     title: "Reflection on My KIXLAB Internship",
     date: "Winter 2025",
     readTime: "4 min read",
