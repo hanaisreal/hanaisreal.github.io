@@ -13,12 +13,30 @@ interface Props {
   bg: BackgroundItem;
 }
 
+// The greeting splash plays once per browser: after it has been seen, a flag
+// in localStorage skips it on later visits and page loads. If storage is
+// unavailable (private mode, blocked), it still plays only once per load.
+const SPLASH_SEEN_KEY = 'hana_splash_seen';
 let splashAlreadyShown = false;
 
+const splashSeen = () => {
+  if (splashAlreadyShown) return true;
+  try {
+    return localStorage.getItem(SPLASH_SEEN_KEY) === '1';
+  } catch {
+    return false;
+  }
+};
+
 const NewPortfolio: React.FC<Props> = ({ bg }) => {
-  const [splashDone, setSplashDone] = useState(splashAlreadyShown);
+  const [splashDone, setSplashDone] = useState(splashSeen);
   const handleSplashDone = useCallback(() => {
     splashAlreadyShown = true;
+    try {
+      localStorage.setItem(SPLASH_SEEN_KEY, '1');
+    } catch {
+      // Not remembered across loads; fine.
+    }
     setSplashDone(true);
   }, []);
 

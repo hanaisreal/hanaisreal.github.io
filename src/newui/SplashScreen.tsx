@@ -21,9 +21,13 @@ function getAddress(isReturn: boolean): string {
 
 function checkIsReturn(): boolean {
   const key = 'hana_visited';
-  const visited = !!localStorage.getItem(key);
-  localStorage.setItem(key, '1');
-  return visited;
+  try {
+    const visited = !!localStorage.getItem(key);
+    localStorage.setItem(key, '1');
+    return visited;
+  } catch {
+    return false;
+  }
 }
 
 type Phase = 'text-in' | 'bg-in' | 'hold' | 'fade-out';
