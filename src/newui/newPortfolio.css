@@ -1525,6 +1525,8 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   text-decoration: none;
 }
 .pub-page__ext-link:hover { text-decoration: underline; }
+.pub-page__related { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--muted); }
+.pub-page__related a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
 
 .pub-page__insight {
   font-size: 0.97rem;

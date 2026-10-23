@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
+import { getPostById } from '../components/data/blogData';
 import PlainField from '../newui/PlainField';
 import RichField from '../newui/RichField';
 import { narrativeToHtml, storyToHtml } from '../newui/markdown';
@@ -96,6 +97,8 @@ const PublicationPage: React.FC = () => {
   }
 
   const others = publications.filter(p => p.slug !== pub.slug).slice(0, 2);
+  const relatedPost = pub.relatedPost ? getPostById(pub.relatedPost) : undefined;
+  const related = relatedPost?.published ? relatedPost : undefined;
 
   return (
     <div>
@@ -144,6 +147,19 @@ const PublicationPage: React.FC = () => {
                 </a>
               ))}
             </div>
+          )}
+          {related && (
+            <p className="pub-page__related">
+              Behind the paper:{' '}
+              <Link
+                to={`/blog/${related.id}`}
+                data-analytics-event="blog_open"
+                data-analytics-item-id={related.id}
+                data-analytics-placement="publication_detail"
+              >
+                {related.title} →
+              </Link>
+            </p>
           )}
         </header>
 

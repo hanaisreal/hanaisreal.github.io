@@ -15,6 +15,32 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: "kixlab-internship-reflection",
+    thumb: "/pictures/publications/when-scaffolding-breaks/writeaid-system.png",
+    title: "Reflection on My KIXLAB Internship",
+    date: "Winter 2025",
+    readTime: "4 min read",
+    category: "Research",
+    tags: ["research", "education", "ai-writing", "internship"],
+    excerpt: "During my winter 2025 internship at KIXLAB, I worked on When Scaffolding Breaks, a CHI 2026 Best Paper. Here I write about what makes learning difficult, what AI can do for writing, and why I was drawn to education.",
+    content: `During my winter 2025 internship at KIXLAB, I worked on *[When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms](/publications/when-scaffolding-breaks)*. The paper was accepted to CHI 2026, where it received a Best Paper Award. In this reflection, I want to write about what makes learning difficult, what AI can do for writing, and why I was drawn to education.
+
+I think learning starts with wanting to get better at something. For the students in this project, that could be hard when games and so many other things were competing for their attention. As an English learner and a tutor, I have seen how much effort writing takes. It requires both logic and a feel for language. An AI writing assistant can help with vocabulary and grammar, but can it help students learn to make a claim and support it with reasoning?
+
+My answer is no when AI takes over the decisions students need to practice. Students develop logic and structure by working out what they want to say and how to support it. If AI makes those decisions for them, they may end up with a smoother essay without getting much practice making an argument.
+
+During the project, I analyzed chat logs between students and an AI writing assistant. I expected many students to ask AI to revise their entire essays. Surprisingly, most seemed to have a particular change in mind. Some asked for help with a sentence or passage, while others requested broader revisions. In our statistical analysis, students with stronger writing tended to request more grammar and vocabulary changes. Students with lower writing proficiency tended to make broader requests. To me, this suggested that some students with lower proficiency might be handing more of the creative work to AI.
+
+I spent a lot of time trying to interpret what the differences in the interaction logs meant. Organizing the examples in FigJam did not make the overall pattern obvious, so I looked for frameworks that could help us categorize the interactions. Bloom’s taxonomy stood out because it gave us a way to consider the kinds of thinking involved in different requests. Applying a framework to actual student-AI conversations was difficult and it took care to decide what a request showed about a student’s thinking.
+
+An interview with a teacher brought another part of the problem into focus. When a student goes to AI for help, the teacher may not hear what the student is confused about. I explored dashboards as one way to make students’ writing activity visible, but a live class can produce a lot of information very quickly. I also considered whether a dashboard was the best format, or whether a simpler tool could help a teacher follow students’ progress.
+
+The project also clarified how I learn. I use both bottom-up and top-down approaches. With bottom-up learning, I start with fundamentals, such as vocabulary, grammar, or Python libraries, and build toward an application. With top-down learning, I start with a specific paper or project and work backward to understand its ideas, methods, and code. This made it clear that AI can help me move faster in either direction, but I still need to recognize what I do not understand.
+
+I hope AI can help students get unstuck while they continue to understand the material and make their own decisions. I’m glad I had the chance to work on this project and learn more about what students do with AI as they write.`,
+    published: true,
+  },
+  {
     id: "2024-summer-silicon-valley",
     thumb: "/pictures/blog/2024-summer-silicon-valley/patents-session.jpeg",
     title: "2024 Summer in Silicon Valley",
@@ -65,7 +91,7 @@ Go, SNU in Silicon Valley!`,
   {
     id: "2024-midyear-wrap-up",
     thumb: "/pictures/blog/2024-midyear-wrap-up/yarn-photo.jpg",
-    title: "2024 Midyear Reflection",
+    title: "2024 Mid year Reflection",
     date: "June 2024",
     readTime: "5 min read",
     category: "Life",

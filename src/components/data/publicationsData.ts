@@ -32,6 +32,7 @@ export interface Publication {
   bibtex: string;
   insight?: string;
   coFirstAuthors?: string[];
+  relatedPost?: string;    // id of a blog post about this paper
   tldr: string;
   cardSummary?: string;
   narrative: string;
@@ -217,6 +218,7 @@ This work sits at the intersection of cybersecurity education and the ethics of 
   },
   {
     slug: "when-scaffolding-breaks",
+    relatedPost: "kixlab-internship-reflection",
     year: "2026",
     title: "When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms",
     authors: "Junho Myung, Hyunseung Lim, Hana Oh, Hyoungwook Jin, Nayeon Kang, So-Yeon Ahn, Hwajung Hong, Alice Oh, Juho Kim",
