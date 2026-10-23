@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
+import PlainField from '../newui/PlainField';
+import RichField from '../newui/RichField';
+import { narrativeToHtml, storyToHtml } from '../newui/markdown';
+import publicationHtml from '../content/publications.json';
 import { mediaFirst } from '../newui/storyOrder';
 import {
   getPublicationBySlug,
@@ -9,6 +13,9 @@ import {
   type PublicationStoryBlock,
 } from '../components/data/publicationsData';
 import '../newui/newPortfolio.css';
+
+const IS_DEV = process.env.NODE_ENV === 'development';
+const savedHtml = publicationHtml as Record<string, string>;
 
 
 function formatAuthors(authors: string, coFirst?: string[]) {
@@ -105,7 +112,7 @@ const PublicationPage: React.FC = () => {
         </Link>
 
         <header className="pub-page__header" data-analytics-section="publication_header">
-          <h1 className="pub-page__title">{pub.title}</h1>
+          <PlainField as="h1" className="pub-page__title" file="publications" id={pub.slug} field="title" value={pub.title} />
           <p className="pub-page__status-line">
             {getPublicationStatusLine(pub)}
             {pub.bestPaper ? ' · Best Paper' : ''}
@@ -142,7 +149,18 @@ const PublicationPage: React.FC = () => {
 
         <hr className="sec-rule" />
 
-        {pub.storyBlocks ? (
+        {/* Once saved from the editor (src/content/publications.json) the story is
+            rich HTML; until then the built site keeps the block layout below. */}
+        {savedHtml[pub.slug] || IS_DEV ? (
+          <RichField
+            store="publications"
+            storeKey={pub.slug}
+            html={savedHtml[pub.slug] ?? (pub.storyBlocks ? storyToHtml(pub.storyBlocks) : narrativeToHtml(pub.narrative))}
+            uploadDir={`publications/${pub.slug}`}
+            className="essay-post__rich pub-page__rich"
+            placement="publication_detail"
+          />
+        ) : pub.storyBlocks ? (
           <div className="pub-page__story" data-analytics-section="publication_narrative">
             {mediaFirst(pub.storyBlocks).map(({ block, index }) => renderStoryBlock(block, index))}
           </div>

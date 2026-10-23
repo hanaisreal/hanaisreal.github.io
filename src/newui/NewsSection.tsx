@@ -1,43 +1,26 @@
 import React from 'react';
+import home from '../content/home.json';
+import PlainField from './PlainField';
+import RichField from './RichField';
 
-const newsItems = [
-  {
-    date: 'Sep 2026',
-    text: (
-      <>
-        <strong>ToneCanvas</strong> accepted as a poster at <span className="news-item__venue">UIST 2026</span>. See
-        you in Detroit!
-      </>
-    ),
-  },
-  {
-    date: 'Apr 2026',
-    text: (
-      <>
-        Presenting <strong>DeepAware</strong> at <span className="news-item__venue">CHI 2026</span> in Barcelona.
-      </>
-    ),
-  },
-  {
-    date: 'Jan 2026',
-    text: (
-      <>
-        Two papers accepted to <span className="news-item__venue">CHI 2026</span>: <strong>DeepAware</strong> and{' '}
-        <strong>When Scaffolding Breaks</strong>, with one{' '}
-        <span className="news-item__award">Best Paper Award</span>.
-      </>
-    ),
-  },
-];
-
+// News items live in src/content/home.json; under `npm start` the date and text are editable in place.
 const NewsSection: React.FC = () => (
   <section id="news" data-analytics-section="home_news">
     <h2 className="sec-heading">Recent Highlights</h2>
     <ul className="news-list">
-      {newsItems.map((item, i) => (
+      {home.news.map((item, i) => (
         <li key={i} className="news-item">
-          <span className="news-item__date">[{item.date}]</span>
-          <span>{item.text}</span>
+          <span className="news-item__date">
+            [<PlainField file="home" id={`news.${i}`} field="date" value={item.date} />]
+          </span>
+          <RichField
+            store="home"
+            storeKey={`news.${i}`}
+            html={item.html}
+            uploadDir="home"
+            className="news-item__text"
+            placement="news"
+          />
         </li>
       ))}
     </ul>

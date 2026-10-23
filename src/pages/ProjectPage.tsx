@@ -2,12 +2,19 @@ import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
 import { mediaFirst } from '../newui/storyOrder';
+import PlainField from '../newui/PlainField';
+import RichField from '../newui/RichField';
+import { narrativeToHtml, storyToHtml } from '../newui/markdown';
+import projectHtml from '../content/projects.json';
 import {
   getProjectBySlug,
   projects,
   type ProjectStoryBlock,
 } from '../components/data/projectData';
 import '../newui/newPortfolio.css';
+
+const IS_DEV = process.env.NODE_ENV === 'development';
+const savedHtml = projectHtml as Record<string, string>;
 
 
 function renderStoryBlock(block: ProjectStoryBlock, index: number) {
@@ -91,7 +98,7 @@ const ProjectPage: React.FC = () => {
   }, [slug]);
 
   React.useEffect(() => {
-    if (!project) navigate('/projects');
+    if (!project) navigate('/research');
   }, [project, navigate]);
 
   if (!project) return null;
@@ -103,20 +110,22 @@ const ProjectPage: React.FC = () => {
       <Masthead />
       <div className="page page--publication page--project">
         <Link
-          to="/projects"
+          to="/research"
           className="essay-post__back"
           data-analytics-event="nav_click"
-          data-analytics-label="Back to projects"
+          data-analytics-label="Back to research"
           data-analytics-placement="project_detail"
         >
-          &larr; Projects
+          &larr; Research
         </Link>
 
         <header className="proj-hero" data-analytics-section="project_header">
-          <h1 className="proj-hero__title">{project.title}</h1>
+          <PlainField as="h1" className="proj-hero__title" file="projects" id={project.slug} field="title" value={project.title} />
           {/* Timeline and links on one line so the story starts sooner. */}
           <p className="proj-hero__meta">
-            {project.duration}
+            {project.duration && (
+              <PlainField file="projects" id={project.slug} field="duration" value={project.duration} />
+            )}
             {project.links?.map((l) => (
               <React.Fragment key={l.label}>
                 {project.duration ? ' · ' : ''}
@@ -137,10 +146,23 @@ const ProjectPage: React.FC = () => {
               </React.Fragment>
             ))}
           </p>
-          <p className="proj-hero__lede">{project.tldr}</p>
+          <PlainField as="p" className="proj-hero__lede" file="projects" id={project.slug} field="tldr" value={project.tldr} />
         </header>
 
-        {project.storyBlocks ? (
+        {/* Once saved from the editor (src/content/projects.json) the story is rich
+            HTML; until then the built site keeps the block layout below. */}
+        {savedHtml[project.slug] || IS_DEV ? (
+          <RichField
+            store="projects"
+            storeKey={project.slug}
+            html={savedHtml[project.slug] ?? (project.storyBlocks
+              ? storyToHtml(project.storyBlocks)
+              : narrativeToHtml(project.narrative, project.image, project.title))}
+            uploadDir={`projects/${project.slug}`}
+            className="essay-post__rich pub-page__rich"
+            placement="project_detail"
+          />
+        ) : project.storyBlocks ? (
           <div className="pub-page__story proj-story" data-analytics-section="project_narrative">
             {mediaFirst(project.storyBlocks).map(({ block, index }) => renderStoryBlock(block, index))}
           </div>
@@ -207,13 +229,13 @@ const ProjectPage: React.FC = () => {
 
         <div className="essay-post__footer">
           <Link
-            to="/projects"
+            to="/research"
             className="essay-post__back"
             data-analytics-event="nav_click"
-            data-analytics-label="Back to projects footer"
+            data-analytics-label="Back to research footer"
             data-analytics-placement="project_detail_footer"
           >
-            &larr; Back to Projects
+            &larr; Back to Research
           </Link>
         </div>
       </div>

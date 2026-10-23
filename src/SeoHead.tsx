@@ -140,26 +140,26 @@ function getSeoConfig(pathname: string): SeoConfig {
     };
   }
 
-  if (path === '/projects') {
+  if (path === '/research') {
     return {
-      title: 'Projects | Hana Oh',
+      title: 'Research | Hana Oh',
       description:
-        'Projects and ideas by Hana Oh on personalized AI agents, long-term memory, and creativity support tools.',
-      canonicalPath: '/projects',
+        'Publications and projects by Hana Oh on personalized AI agents, long-term memory, and creativity support tools.',
+      canonicalPath: '/research',
       type: 'website',
       structuredData: [
         {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
-          name: 'Projects',
-          url: absoluteUrl('/projects'),
+          name: 'Research',
+          url: absoluteUrl('/research'),
           description:
-            'Projects and ideas by Hana Oh on personalized AI agents, long-term memory, and creativity support tools.',
+            'Publications and projects by Hana Oh on personalized AI agents, long-term memory, and creativity support tools.',
           isPartOf: absoluteUrl('/'),
         },
         buildBreadcrumb([
           { name: 'Home', path: '/' },
-          { name: 'Projects', path: '/projects' },
+          { name: 'Research', path: '/research' },
         ]),
       ],
     };
@@ -268,7 +268,7 @@ function getSeoConfig(pathname: string): SeoConfig {
           },
           buildBreadcrumb([
             { name: 'Home', path: '/' },
-            { name: 'Projects', path: '/projects' },
+            { name: 'Research', path: '/research' },
             { name: project.title, path: `/projects/${project.slug}` },
           ]),
         ],

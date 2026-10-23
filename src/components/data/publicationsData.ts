@@ -238,7 +238,7 @@ This work sits at the intersection of cybersecurity education and the ethics of 
   doi       = {10.1145/3772318.3791517}
 }`,
     insight: "When the AI scaffold fails mid-lesson, what do students actually do?",
-    tldr: "Deploying LLM writing support in real K-12 classrooms revealed that the most revealing moments were when the AI failed — exposing how students had been relying on it all along.",
+    tldr: "A six-week deployment with 157 eighth graders found that step-by-step LLM writing support helped students write grammatically correct sentences, but demotivated lower-proficiency students, deepened their reliance on the system, and made it harder for teachers to spot who was struggling.",
     narrative: `AI writing scaffolds behave well in lab conditions. Real classrooms are messier. Connectivity drops, students go off-task, and the AI occasionally outputs something confusing at exactly the wrong moment in a lesson.
 
 We deployed an LLM-based writing support system in live K-12 EFL (English as a Foreign Language) classrooms and observed what happened over multiple sessions — including what happened when things went wrong. The disruptions turned out to be the most informative part of the data.

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { pickBackground, BackgroundItem } from './components/data/backgroundsData';
 import AnalyticsTracker from './AnalyticsTracker';
 import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
-import ProjectsPage from './pages/ProjectsPage';
+import ResearchPage from './pages/ResearchPage';
 import CollectionsPage from './pages/CollectionsPage';
-// Blog is hidden until the posts are revised.
-// import Blog from './pages/Blog';
-// import BlogPost from './pages/BlogPost';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import PublicationPage from './pages/PublicationPage';
 import ProjectPage from './pages/ProjectPage';
+
+// Under `npm start` the page editor (floating toolbar + editable fields) wraps
+// every route; the built site never includes it.
+const EditHost = process.env.NODE_ENV === 'development' ? React.lazy(() => import('./newui/edit/EditHost')) : null;
 
 const App: React.FC = () => {
   const [bg] = useState<BackgroundItem>(() => pickBackground(new Date().getHours()));
@@ -24,6 +27,20 @@ const App: React.FC = () => {
     img.src = `/pictures/backgrounds/${bg.file}`;
   }, [bg.file]);
 
+  const routes = (
+    <Routes>
+      <Route path="/" element={<NewPortfolio bg={bg} />} />
+      <Route path="/research" element={<ResearchPage />} />
+      <Route path="/projects" element={<Navigate to="/research" replace />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/collections" element={<CollectionsPage />} />
+      <Route path="/publications/:slug" element={<PublicationPage />} />
+      <Route path="/projects/:slug" element={<ProjectPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+
   return (
     <>
       <AnalyticsTracker />
@@ -36,17 +53,13 @@ const App: React.FC = () => {
         ].join(' ').trim()}
         style={{ backgroundImage: `url('/pictures/backgrounds/${bg.file}')` }}
       />
-      <Routes>
-        <Route path="/" element={<NewPortfolio bg={bg} />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-        <Route path="/research" element={<Navigate to="/projects" replace />} />
-        {/* <Route path="/blog" element={<Blog />} /> */}
-        {/* <Route path="/blog/:slug" element={<BlogPost />} /> */}
-        <Route path="/collections" element={<CollectionsPage />} />
-        <Route path="/publications/:slug" element={<PublicationPage />} />
-        <Route path="/projects/:slug" element={<ProjectPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      {EditHost ? (
+        <Suspense fallback={null}>
+          <EditHost>{routes}</EditHost>
+        </Suspense>
+      ) : (
+        routes
+      )}
     </>
   );
 };

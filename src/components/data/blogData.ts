@@ -10,9 +10,138 @@ export interface BlogPost {
   content: string;
   published: boolean;
   featured?: boolean;
+  thumb?: string;          // teaser image beside the post in the blog list
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: "2024-summer-silicon-valley",
+    thumb: "/pictures/blog/2024-summer-silicon-valley/patents-session.jpeg",
+    title: "2024 Summer in Silicon Valley",
+    date: "Summer 2024",
+    readTime: "5 min read",
+    category: "Life",
+    tags: ["life", "silicon-valley", "travel", "retrospective"],
+    excerpt: "In summer 2024, I joined SNU in the World Program’s course Silicon Valley and Innovative Thinking, in partnership with UC Berkeley.",
+    content: `This is a reworked version of a post I first wrote on my [Naver Blog](https://blog.naver.com/thinker-/223772804696).
+
+In summer 2024, I joined SNU in the World Program’s three-credit course, *Silicon Valley and Innovative Thinking*, led by Professor Seung-Woo Seo of SNU’s Department of Electrical and Computer Engineering, in partnership with UC Berkeley.
+
+## The Future of AI
+
+Dr. Hyung Won Chung gave a talk about the future of AI. I remember thinking about how much AI could change people’s lives, and how responsibility would matter more as it became part of everyday life. I also wondered whether people’s desire to live longer, perhaps even forever, would make biotechnology increasingly important.
+
+Thinking about a longer life made me wonder what gives a life its shape as it changes. I find it beautiful when patterns emerge from disorder. Stars look like scattered points until we connect them into constellations. The points haven’t changed, but suddenly we can see a shape.
+
+Maybe our lives are like that, too. We change, but when we look back, we can see certain ideas and questions appearing across different moments. Seeing them together reveals a pattern we might not notice while living through each moment.
+
+## Silicon Valley
+
+I’d heard Silicon Valley called the center of innovation. Its roots in the semiconductor industry, nearby universities like UC Berkeley and Stanford, and the concentration of technology companies all stood out to me. Being there helped me see how people, ideas, and institutions can shape one another.
+
+The program also gave me a closer look at how new ideas develop. In a session led by Matthew Rappaport, we learned how to find, read, and analyze patents we had not seen before, then use them to develop ideas. I liked figuring out how to approach an unfamiliar subject and discover what might be possible within it.
+
+![The class during the patents and ideas session](/pictures/blog/2024-summer-silicon-valley/patents-session.jpeg)
+
+I also got to experience some of the technology firsthand. I rode in a Waymo self-driving car in San Francisco and tried Apple Vision Pro. Vision Pro made mixed reality feel much closer to everyday life. I was fascinated by the idea of bringing old photos and videos into the present, and capturing moments to revisit later.
+
+![A Waymo self-driving car in San Francisco, and Apple Vision Pro on display](/pictures/blog/2024-summer-silicon-valley/waymo-vision-pro.png)
+
+And, of course, In-N-Out Burger.
+
+## Reflection on Writing
+
+After the trip, I reread the application materials I had written before leaving. I had put together an application, a business plan, and a personal essay. Rereading them brought back how I felt at the time. I even received an honorable mention in the SWPP essay contest, so maybe I’m not bad at writing after all. Haha.
+
+My business plan was for “Life Story,” an AI autobiography service that helps people write their life stories through voice conversations. I focused on people approaching retirement, a transition that can bring uncertainty and, for some, depression. In my essay, I wrote about why I wanted to visit Silicon Valley. At the time, I was considering entrepreneurship, graduate school, and what I might do in the future.
+
+While writing this post, I was reminded why I like looking back at old writing. It brings back what I was thinking and what I promised myself. Sometimes it feels like meeting a different version of myself. It’s refreshing to see how much can change.
+
+I’m grateful to Professor Seo and everyone who made the program possible.
+
+Go, SNU in Silicon Valley!`,
+    published: true,
+  },
+  {
+    id: "2024-midyear-wrap-up",
+    thumb: "/pictures/blog/2024-midyear-wrap-up/yarn-photo.jpg",
+    title: "2024 Midyear Reflection",
+    date: "June 2024",
+    readTime: "5 min read",
+    category: "Life",
+    tags: ["life", "hackathon", "research", "retrospective"],
+    excerpt: "The first half of 2024 felt a little like a tangled ball of yarn. I tried many things, learned a lot, and wanted to write everything down before the details became blurry.",
+    content: `This is an English translation of a post I wrote on my Naver Blog. You can find the original here: [2024년 상반기 Wrap up](https://blog.naver.com/thinker-/223494931641)
+
+The first half of 2024 felt a little like a tangled ball of yarn. I tried many things, learned a lot, and wanted to write everything down before the details became blurry. Now that I’m putting it all into words, it feels like I’m untangling those memories a little.
+
+![A tangled ball of colorful yarn](/pictures/blog/2024-midyear-wrap-up/yarn-photo.jpg){80%}
+![Close-up of threads in many colors](/pictures/blog/2024-midyear-wrap-up/yarn-dalle.jpg)
+
+## Winter Break
+
+### HCC Lab Intern
+
+I started the year with an internship at an HCI lab advised by Professor Bongwon Suh. For two months, I studied LoRA fine-tuning and tried applying it to an educational counseling model. I had imagined fine-tuning would be a huge, complicated process, but once I looked into it, it felt more manageable than I expected. Some parts didn’t work, and I remember feeling frustrated. Still, it was exciting to change existing code and get something to run.
+
+I also had to think about private information. The model couldn’t reliably filter it out, so I had to preprocess identifying information before giving the text to the model. It was my first time seeing up close how research happens in a lab. The researchers were working on different questions, including accessibility. I began to understand that research starts with a problem someone wants to solve. I hadn’t thought much about that before.
+
+### HCIK Conference
+
+I went to the HCIK conference for the first time, too. There were so many topics I wanted to learn more about. I was especially interested in using AI to help people tell stories. It felt like a new possibility, and I remember thinking about how much I wanted to write my own story someday. I kept telling myself, “I should write this down before I forget.”
+
+![The 2024 HCI Korea banner at Sono Belle Vivaldi Park](/pictures/blog/2024-midyear-wrap-up/hcik-2024.jpg){35%}
+
+### KAIST SPARCS Hackathon
+
+In February, I joined a hackathon about local problems in Daejeon. I was nervous because I had only recently started studying frontend development, and I almost talked myself out of applying. But I decided to give it a try, and it became one of the best decisions I made that semester.
+
+Our team made a voice-based autobiography tool. We used the Whisper API, and I was surprised by how naturally the conversation went back and forth. People came over to try it, and a lot of them were excited. Some said they wanted to keep talking with it and tell their stories through conversation. Seeing people respond that way made the project feel real to me. It had started as an idea we weren’t sure we could build, and then people were actually using it. I’m still very fond of that first project.
+
+![The LivRecord pitch slide: Life Story, your life story told your way, to pass on to your children](/pictures/blog/2024-midyear-wrap-up/sparcs-livrecord.webp){78%}
+
+![Our demo on two laptops at booth A3](/pictures/blog/2024-midyear-wrap-up/sparcs-demo.jpg){77%}
+![Holding the award board outside at night after the hackathon](/pictures/blog/2024-midyear-wrap-up/sparcs-award.jpg)
+
+## Spring Semester
+
+### SKYST Hackathon
+
+A second hackathon later in the semester brought a very different idea. The topic was love, which I hadn’t expected. I joined with some of the people I’d met at the first hackathon. We already had a sense of how each other worked, and this time it felt easier to get into the project together. As we stayed up building, we got closer, too.
+
+![The SKYST Hackathon 2 venue and poster](/pictures/blog/2024-midyear-wrap-up/skyst.webp){41%}
+
+Our idea was a writing tool for people who love to write but sometimes need a little inspiration. It would recommend things they had bookmarked that might connect with what they were writing at the moment. We had to decide quickly what the most important part of the product was, what we could build as an MVP, and who would take on each task. The communication mattered a lot. We had to say what we wanted to work on and make sure everyone knew what they were responsible for. It took a lot of focus to work through the night, but it was fun to see us find our rhythm and put the pieces together.
+
+### SNU × Upstage LLM Project
+
+During the semester, I also joined an LLM project using Upstage’s Solar model. Our team built a conversational coaching service. We started development on a Saturday morning and had about five hours to make a proof of concept and present it. It was hectic, and I was nervous about presenting, but I did it anyway. Afterward, I realized that presenting felt a little less intimidating than before. I think I got more comfortable simply by doing it.
+
+![The SNU × Upstage Full-Stack LLM Project course poster](/pictures/blog/2024-midyear-wrap-up/upstage-llm-project.png)
+
+### Creative Integrated Design: Infinite Healthcare
+
+One of my biggest projects that semester was with Infinite Healthcare. We explored 3D medical-image segmentation using DICOM Viewer and MedSAM. At first, I had to read papers I didn’t fully understand and learn tools I had never used before. I sometimes felt lost. I also studied with friends, and because we were working on something people might actually use, we kept thinking about how to improve the interface. That made the project feel different from just reading about a model. We were trying to make the whole experience work better for someone using it.
+
+![MedSAM segmentation shown in our DICOM viewer across axial, sagittal, and coronal views](/pictures/blog/2024-midyear-wrap-up/medsam-dicom-viewer.png)
+
+### Learning to Think Things Through
+
+I had so many team projects this semester, and they made me think a lot about communication. I didn’t realize how hard it could be to express clearly what I wanted to say. In meetings with the company and in our team meetings, we had to make decisions again and again, and I often found that difficult.
+
+Someone has to spend extra time setting an agenda, guiding the meeting, listening carefully, giving feedback, and helping the team decide what to do next. I felt that I could give feedback, but I wasn’t as good at deciding which direction we should take.
+
+I kept thinking about something I’d heard: at school, someone gives you a problem to solve, but in the real world, you have to find the problem yourself. Figuring out what the problem is, and then finding the energy to work on it, is harder than I had expected. Looking back at my team projects, I think I often relied on other people to make decisions while I focused on the tasks in front of me. I want to get better at thinking things through and making decisions for myself.
+
+Maybe that starts with learning more about the world, paying closer attention to what other people mean and want, and staying curious about them. Lately, I’ve been trying to read more widely and learn about the social issues people care about.
+
+## Looking Back
+
+Wow, that semester was full. Looking back, I can still remember how nervous I was before my first hackathon, and how excited I felt when people tried our voice-based autobiography tool. I tried things I hadn’t tried before, met people I ended up becoming close with, and learned a little more each time I started something new.
+
+I still have a lot to learn, but when I look back at the first half of 2024, I feel like I did more than I thought I could. At the time, I just wanted to try different things. I’m glad I did, and I hope I remember what this part of my life felt like.`,
+    published: true,
+  },
   {
     id: "why-is-it-hard-to-answer-favorite-food",
     title: "Why Is It Hard to Answer \"Your Favorite Food?\"",
@@ -191,7 +320,7 @@ If I still cannot answer the question right away, that may be fine.
 Maybe the hesitation is the point.
 
 Inside that hesitation are the things that outlast taste.`,
-    published: true,
+    published: false,
     featured: true
   },
   {
@@ -357,7 +486,7 @@ Maybe they should ask which kinds of cognitive load are worth protecting.
 Because sometimes the difficulty is not a bug.
 
 Sometimes it is the place where the thought becomes yours.`,
-    published: true,
+    published: false,
     featured: true
   },
   {
@@ -555,7 +684,7 @@ Sometimes it should help me speak.
 Sometimes it should help me wait.
 
 Sometimes it should stay out.`,
-    published: true,
+    published: false,
     featured: true
   },
   {
@@ -760,7 +889,7 @@ Maybe seamlessness no longer feels exciting because it has become too good at re
 I do not want interfaces that only make life easier.
 
 I want interfaces that make life more experienceable.`,
-    published: true,
+    published: false,
     featured: true
   },
   {
@@ -778,7 +907,7 @@ I want interfaces that make life more experienceable.`,
 Modern journaling apps flatten this rich human experience into discrete database parameters. They force users to translate complex days into rigid inputs like selecting an emoji, choosing a standardized mood tag (such as "stressed" or "depressed"), or toggling weather icons.
 
 By demanding that users categorize their internal state before they even begin writing, existing interfaces strip away the phenomenological atmosphere of the moment. Instead of letting technology adapt to the complex tangle of human emotion, we are forced to fit our living experiences into pre-built app schemas. My goal was to redesign the Algorithmic Experience (AX) to preserve the raw, atmospheric texture of thought without forcing users into artificial taxonomy.`,
-    published: true,
+    published: false,
   },
   {
     id: "ai-research-trajectories-2024",
@@ -816,7 +945,7 @@ We are not powerless in this. Researchers can ask not just "can we build this" b
 But time compounds. Each system deployed, each delegation normalized, each capability assumed rather than developed makes the next step feel more inevitable. We are not building a single AI—we are building the conditions under which humans will or will not develop their own capacities. This is the urgency: not that AI will become too powerful, but that we will design our own diminishment and call it progress.
 
 The next five years will reveal whether we recognize this. The next fifty will reveal whether recognition mattered.`,
-    published: true,
+    published: false,
     featured: true
   }
 ];

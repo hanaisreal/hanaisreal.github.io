@@ -1,16 +1,19 @@
 import React from 'react';
 import Masthead from '../newui/Masthead';
-import { ProjectList } from '../newui/WorkList';
+import { ProjectList, PublicationList } from '../newui/WorkList';
 import '../newui/newPortfolio.css';
 
-const ProjectsPage: React.FC = () => (
+// Publications first, then projects, on one sheet.
+const ResearchPage: React.FC = () => (
   <div>
     <Masthead />
     <main className="page page--publication page--research-sheet page--projects">
       <header className="page-intro">
-        <h1 className="page-intro__title">Projects</h1>
+        <h1 className="page-intro__title">Research</h1>
       </header>
-      <ProjectList heading={null} />
+      <PublicationList />
+      <hr className="sec-rule" />
+      <ProjectList />
     </main>
     <footer className="site-footer">
       <span>Hana Oh</span>
@@ -19,4 +22,4 @@ const ProjectsPage: React.FC = () => (
   </div>
 );
 
-export default ProjectsPage;
+export default ResearchPage;

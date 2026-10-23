@@ -4,6 +4,7 @@ import { FaBookmark, FaQuoteRight, FaLink, FaRegFilePdf, FaRegNewspaper, FaAward
 import { publications, type Publication } from '../components/data/publicationsData';
 import { projects } from '../components/data/projectData';
 import AuthorList from './AuthorList';
+import PlainField from './PlainField';
 
 // Publications and projects in one academic list format: a representative
 // thumbnail on the left; title, authors or timeline, venue, and links on the
@@ -104,7 +105,7 @@ const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
           {pub.venue}
           {pub.bestPaper && <span className="work__badge"><FaAward /> Best Paper</span>}
         </span>
-        <p className="work__tldr">{pub.tldr}</p>
+        <PlainField as="p" className="work__tldr" file="publications" id={pub.slug} field="tldr" value={pub.tldr} />
         <span className="work__actions">
           <button type="button" aria-expanded={open === 'abs'} onClick={() => toggle('abs')}>
             <FaBookmark /> abs
@@ -148,7 +149,7 @@ export const ProjectList: React.FC<{ heading?: string | null }> = ({ heading = '
     <ul className="work-list">
       {projects.map((project) => (
         <Entry key={project.slug} id={project.slug} to={`/projects/${project.slug}`} thumb={project.thumb ?? project.image} title={project.title} kind="project">
-          <span className="work__summary">{project.tldr}</span>
+          <PlainField className="work__summary" file="projects" id={project.slug} field="tldr" value={project.tldr} />
           {project.duration && <span className="work__venue"><em>{project.duration}</em></span>}
           <LinkRow links={project.links} itemId={project.slug} />
         </Entry>

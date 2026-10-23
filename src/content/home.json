@@ -1,0 +1,20 @@
+{
+  "name": "Hana Oh",
+  "affiliation": "<p>M.S. Student, Intelligence and Information<br>Seoul National University</p>",
+  "bio": "<p>Hi, I'm Hana, an M.S. student in Intelligence and Information at Seoul National University, advised by Professor <a href=\"https://scholar.google.com/citations?user=-nlhtEkAAAAJ&amp;hl=en\">Bongwon Suh</a>. My research focuses on the intersection of human-AI interaction and artificial intelligence.</p><p>Human experiences are incredibly diverse, requiring a range of approaches to understand them. While many AI systems capture experience through multimodal inputs such as images and audio, I believe we also need complementary ways to understand individual intent and values. My work explores a more person-centered direction—starting from what people explicitly express, including their thoughts, everyday conversations, and journal entries.</p><p>As these personal archives accumulate, a key challenge is how AI agents can organize and decompose them, preserve their original context, and derive meaningful abstractions. I study memory representations and computational methods for managing this process while keeping abstractions grounded in the source material and a person's perspective. My work combines technical development of these methods with interactive systems and user-centered evaluation. Ultimately, I aim to contribute to the evolution of AI from general-purpose tools into truly collaborative, personalized agents.</p><p>Before my master's, I earned a B.S. in Computer Science and Engineering with a double major in Business Administration from Seoul National University. As an undergraduate, I researched deepfake awareness among older adults and published a <a href=\"/publications/deepaware\">CHI '26 paper</a> under the mentorship of Professor <a href=\"https://www.hajinlim.com/\">Hajin Lim</a>. I also expanded my research experience during a summer internship at KAIST, guided by Professor <a href=\"https://juhokim.com/\">Juho Kim</a>.</p>",
+  "news": [
+    {
+      "date": "Sep 2026",
+      "html": "<p><strong>ToneCanvas</strong> accepted as a poster at UIST 2026. See you in Detroit!</p>"
+    },
+    {
+      "date": "Apr 2026",
+      "html": "<p>Presenting <strong>DeepAware</strong> at CHI 2026 in Barcelona.</p>"
+    },
+    {
+      "date": "Jan 2026",
+      "html": "<p>Two papers accepted to CHI 2026: <strong>DeepAware</strong> and <strong>When Scaffolding Breaks</strong>, with one <strong><span style=\"color: #8e6418\">Best Paper Award</span></strong>.</p>"
+    }
+  ],
+  "outside": "<p>Alongside that work, I have been building a small <strong><a href=\"/collections\">world building</a></strong> project: one place to keep the words, images, sites, people, and traces that matter to me beyond research.</p><p>I use it to collect things that do not fit neatly into academic categories, but still shape how I think and what I want to keep learning from.</p><p>Right now it includes a small Daemari translation archive, SHANUM community work, and references I keep returning to, alongside my interest in <strong>speculative thought</strong> and speculative ways of thinking.</p><p>I also like playing <em>tennis</em> and <em>drawing</em>, especially watercolor and small doodles, and I keep a drawing journal when I travel or visit new places.</p>"
+}

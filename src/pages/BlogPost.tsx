@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
+import PlainField from '../newui/PlainField';
+import RichField from '../newui/RichField';
+import { markdownToHtml } from '../newui/markdown';
+import postHtml from '../content/posts.json';
 import { getPostById, blogPosts, formatPostDate } from '../components/data/blogData';
 import '../newui/newPortfolio.css';
+
+const savedHtml = postHtml as Record<string, string>;
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [post] = useState(getPostById(slug || ''));
+  // Unpublished drafts stay unreachable by URL too.
+  const post = useMemo(() => {
+    const found = getPostById(slug || '');
+    return found?.published ? found : undefined;
+  }, [slug]);
 
   useEffect(() => {
     if (!post) {
@@ -18,52 +28,8 @@ const BlogPost: React.FC = () => {
 
   if (!post) return null;
 
-  const inlineHtml = (text: string) =>
-    text
-      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g, '<em>$1</em>');
+  const html = savedHtml[post.id] ?? markdownToHtml(post.content);
 
-  const formatContent = (content: string) =>
-    content
-      .split('\n\n')
-      .map((para, i) => {
-        const trimmed = para.trim();
-        if (!trimmed) return null;
-
-        if (trimmed.startsWith('## ')) {
-          return <h2 key={i} className="essay-post__heading">{trimmed.slice(3)}</h2>;
-        }
-
-        if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
-          return <h3 key={i} className="essay-post__heading">{trimmed.slice(2, -2)}</h3>;
-        }
-
-        const lines = trimmed.split('\n');
-
-        if (lines.every(l => l.startsWith('> '))) {
-          return (
-            <blockquote key={i} className="essay-post__blockquote">
-              {lines.map(l => l.slice(2)).join(' ')}
-            </blockquote>
-          );
-        }
-
-        if (lines.every(l => l.startsWith('- '))) {
-          return (
-            <ul key={i} className="essay-post__list">
-              {lines.map((l, j) => (
-                <li key={j} dangerouslySetInnerHTML={{ __html: inlineHtml(l.slice(2)) }} />
-              ))}
-            </ul>
-          );
-        }
-
-        return (
-          <p key={i} className="essay-post__para"
-            dangerouslySetInnerHTML={{ __html: inlineHtml(trimmed) }} />
-        );
-      })
-      .filter(Boolean);
 
   const related = blogPosts
     .filter(p => p.category === post.category && p.id !== post.id && p.published)
@@ -80,20 +46,32 @@ const BlogPost: React.FC = () => {
         >
           <Link to="/blog" className="essay-post__back">← Blog</Link>
 
+          {/* Under `npm start` the title, date, body, and tags are editable in place. */}
           <header className="essay-post__header">
-            <span className="essay-tag">{post.category}</span>
-            <h1 className="essay-post__title">{post.title}</h1>
+            <PlainField as="h1" className="essay-post__title" file="blog" id={post.id} field="title" value={post.title} />
             {post.subtitle && (
-              <p className="essay-post__subtitle">{post.subtitle}</p>
+              <PlainField as="p" className="essay-post__subtitle" file="blog" id={post.id} field="subtitle" value={post.subtitle} />
             )}
             <p className="essay-post__meta">
-              {formatPostDate(post.date)}
+              <PlainField file="blog" id={post.id} field="date" value={post.date} display={formatPostDate(post.date)} />
             </p>
           </header>
 
+          {/* A body saved from the editor (src/content/posts.json) wins over the markdown content. */}
           <article className="essay-post__body">
-            {formatContent(post.content)}
+            <RichField store="posts" storeKey={post.id} html={html} uploadDir={`blog/${post.id}`} placement="blog_post" />
           </article>
+
+          {post.tags.length > 0 && (
+            <PlainField
+              as="p"
+              className="essay-post__tags"
+              file="blog"
+              id={post.id}
+              field="tags"
+              value={post.tags.map(t => `#${t}`).join(' ')}
+            />
+          )}
 
           {related.length > 0 && (
             <section className="essay-post__related">
@@ -101,7 +79,6 @@ const BlogPost: React.FC = () => {
               <ul className="essay-list">
                 {related.map(r => (
                   <li key={r.id} className="essay-item">
-                    <span className="essay-tag">{r.category}</span>
                     <h2 className="essay-title">
                       <Link to={`/blog/${r.id}`}>{r.title}</Link>
                     </h2>
