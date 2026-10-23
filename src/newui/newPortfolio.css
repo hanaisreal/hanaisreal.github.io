@@ -2541,8 +2541,17 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   gap: 0.2rem;
   font-size: 0.85rem;
 }
-.profile-card__links a { color: var(--text); text-decoration: none; }
-.profile-card__links a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
+/* The wavy underline from the editor's accents fades in on hover. */
+.profile-card__links a {
+  color: var(--text);
+  text-decoration: underline wavy transparent;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.24em;
+  text-decoration-skip-ink: none;
+  transition: text-decoration-color 0.2s;
+}
+.profile-card__links a:hover,
+.profile-card__links a:focus-visible { text-decoration-color: var(--link); }
 
 .home-grid .bio,
 .home-grid .news-item,

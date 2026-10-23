@@ -40,7 +40,7 @@ export const ProfileCard: React.FC = () => (
             data-analytics-destination={l.href}
             data-analytics-placement="hero"
           >
-            {l.label} →
+            {l.label}
           </a>
         </li>
       ))}
