@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 interface Props {
   authors: string;
@@ -17,7 +16,7 @@ const AuthorList: React.FC<Props> = ({ authors, coFirst = [], links = {}, classN
     <span className={className}>
       {names.map((name, i) => (
         <React.Fragment key={name}>
-          {name === SELF ? <Link to="/" className="author-self"><strong>{name}</strong></Link> : links[name] ? (
+          {name === SELF ? <strong>{name}</strong> : links[name] ? (
             <a href={links[name]} target="_blank" rel="noopener noreferrer">{name}</a>
           ) : name}
           {coFirst.includes(name) && <sup>*</sup>}
