@@ -73,14 +73,20 @@ type StoryBlock =
 // Figures and videos float to the right with the text wrapping beside them,
 // close to the two-column layout the unedited page uses. Captions become the
 // image's alt and title text.
-export function storyToHtml(blocks: StoryBlock[]): string {
+// With { inline: true } (paper pages) pictures stay in place, centred at the
+// column width, with their captions underneath as caption blocks.
+export function storyToHtml(blocks: StoryBlock[], { inline = false } = {}): string {
   const img = (f: StoryFigure, attrs: string) =>
-    `<img src="${escapeHtml(f.src)}" alt="${escapeHtml(f.caption || f.alt)}" title="${escapeHtml(f.caption || '')}" ${attrs}>`;
+    `<img src="${escapeHtml(f.src)}" alt="${escapeHtml(inline ? f.alt : f.caption || f.alt)}" title="${escapeHtml(inline ? '' : f.caption || '')}" ${attrs}>`;
+  const caption = (f: StoryFigure) => (inline && f.caption ? `<p data-caption class="figure-caption">${escapeHtml(f.caption)}</p>` : '');
   return blocks.map(block => {
     switch (block.type) {
       case 'paragraph': return `<p>${escapeHtml(block.text)}</p>`;
       case 'heading': return `<h2>${escapeHtml(block.text)}</h2>`;
-      case 'figure': return `<p>${img(block.figure, `width="${block.figure.variant === 'narrow' ? 360 : 480}" data-float="right"`)}</p>`;
+      case 'figure':
+        return inline
+          ? `<p style="text-align: center">${img(block.figure, `width="${block.figure.variant === 'narrow' ? 520 : 820}"`)}</p>${caption(block.figure)}`
+          : `<p>${img(block.figure, `width="${block.figure.variant === 'narrow' ? 360 : 480}" data-float="right"`)}</p>`;
       case 'figure-row': return `<p style="text-align: center">${block.figures.map(f => img(f, 'width="360"')).join(' ')}</p>`;
       case 'video': {
         const poster = block.video.poster ? ` poster="${escapeHtml(block.video.poster)}"` : '';

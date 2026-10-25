@@ -100,7 +100,7 @@ const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
         >
           {pub.title}
         </Link>
-        <AuthorList className="work__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} />
+        <AuthorList className="work__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} links={pub.authorLinks} />
         <span className="work__venue">
           {pub.venue}
           {pub.bestPaper && <span className="work__badge"><FaAward /> Best Paper</span>}

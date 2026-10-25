@@ -42,23 +42,75 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "paranmanjang",
-    title: "Bookmark-Grounded Writing Recommender (Paranmanjang)",
-    tldr: "A bookmark-grounded writing tool that vectorized saved links and surfaced relevant summaries while I was drafting.",
-    description: "Writing companion that turned bookmarked links into a retrievable knowledge base for contextual recommendations.",
-    narrative: `Why do saved bookmarks always end up in a digital graveyard? I had hundreds of articles saved, but when I actually sat down to write, I never remembered to search through them. I wanted to build a system that brought those forgotten references back to life, transforming a passive bookmark archive into an active context engine that surfaces relevant notes right when you need them.
-
-Making that vision work took a lot of trial and error on the backend pipeline. On paper, the flow was simple: take a bookmarked URL, extract the body, summarize it, and generate embeddings for Pinecone alongside structured metadata in MySQL. In practice, parsing wildly inconsistent web pages, filtering out junk text, and getting clean summaries without blowing through processing time took heavy tweaking.
-
-The trickiest part was designing the real-time context retrieval for the editor. As someone typed, the FastAPI backend had to analyze the live draft, derive the current context, and query Pinecone without introducing lag into the writing experience. It was a constant balancing act between retrieval frequency, latency, and relevancy. I did not want a generic text generator; I wanted the system to feel like a sharp research partner quietly handing you the exact article you saved six months ago.
-
-To glue everything together, I deployed the services on Naver Cloud infrastructure using Docker containers and built an automated GitHub Actions CI/CD pipeline. On the interface side, I focused heavily on the writing flow, building card components that displayed bookmark summaries and source metadata directly alongside the active draft so referencing felt frictionless.
-
-Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Generation (RAG) system built right before RAG became a standard industry term. The most rewarding part of this project was not just getting the cloud infrastructure and vector database running smoothly, but proving to myself that AI tools are at their best when they are grounded in our own curated knowledge and built directly into how we actually work.`,
+    slug: "medsam-viewer",
+    title: "Interactive 3D CT Segmentation with MedSAM",
+    tldr: "A CT viewer where one prompt segments a target across scan slices, so radiologists don't have to trace each slice by hand.",
+    description: "A CT viewer integrating MedSAM for click-prompted segmentation across slices.",
+    narrative: "Our three-person team built a course-project prototype for outlining structures in CT scans. A user supplies a click prompt, and MedSAM propagates the segmentation through axial slices.\n\nI integrated model inference into a PyQt5 DICOM viewer and kept it separate from rendering so the interface could remain responsive during processing. I also used LoRA, a parameter-efficient fine-tuning method, to adapt the model to the target CT data.\n\nThe result connects interactive prompts, volume viewing, and segmentation in one tool. It is a course prototype rather than a clinically validated system.",
     contributions: [
-      "Built the writing editor flow and recommendation surfaces that placed retrieved bookmark summaries beside the active draft",
-      "Developed bookmark browsing interfaces that turned saved links into readable cards with summaries and source metadata",
-      "Integrated the frontend with bookmark ingestion and recommendation endpoints across the FastAPI, Pinecone, and MySQL pipeline",
+      "Integrated MedSAM into a PyQt5 DICOM viewer",
+      "Fine-tuned the model with LoRA for the target CT data",
+      "Implemented prompt propagation across axial slices"
+    ],
+    tags: ["Computer Vision", "Medical AI", "Segmentation"],
+    thumb: `${BASE}/pictures/thumbs/medsam-viewer.jpg`,
+    duration: "Mar 2024 – Jun 2024",
+    image: `${BASE}/pictures/infinitt healthcare.png`,
+    links: [
+      { label: "GitHub", url: "https://github.com/sggithi/DICOM-Viewer-MedSAM" },
+    ],
+  },
+  {
+    slug: "livrecord",
+    title: "LivRecord: Voice-Based Life Stories",
+    tldr: "A voice-based storytelling tool that helps older adults turn spoken memories into a personal narrative.",
+    description: "A voice-based tool for collecting memories and shaping autobiographical stories.",
+    narrative: "LivRecord lets older adults tell their stories aloud. The system transcribes their responses and helps organize the memories into a narrative they can revisit and share.\n\nThe main interaction challenge was asking follow-up questions that build on the previous answer. We focused on conversational pacing and continuity so users could reflect without feeling they were completing a form.\n\nI worked on the speech pipeline and adaptive prompts. The prototype won the Grand Prize at the KAIST Social Impact Challenge; the demo shows the storytelling flow.",
+    contributions: [
+      "Connected speech recognition, voice output, and GPT-4 prompts",
+      "Designed follow-up prompts to maintain narrative continuity",
+      "Iterated on question wording and response pacing with older adults"
+    ],
+    tags: ["HCI", "Voice Interaction", "Older Adults"],
+    thumb: `${BASE}/pictures/thumbs/livrecord.jpg`,
+    duration: "Feb 2024 – Jun 2024",
+    image: `${BASE}/pictures/SPARCS-enhanced.png`,
+    links: [
+      { label: "Demo", url: `${BASE}/videos/LivRecord.mp4` },
+    ],
+    storyBlocks: [
+      {
+        type: 'paragraph',
+        text: "LivRecord lets older adults tell their stories aloud. The system transcribes their responses and helps organize the memories into a narrative they can revisit and share.",
+      },
+      {
+        type: 'video',
+        video: {
+          src: `${BASE}/videos/LivRecord.mp4`,
+          poster: `${BASE}/pictures/SPARCS-enhanced.png`,
+          caption: 'Demo of LivRecord, showing how spoken memories are scaffolded into a reflective narrative flow.',
+        },
+      },
+      {
+        type: 'paragraph',
+        text: "The main interaction challenge was asking follow-up questions that build on the previous answer. We focused on conversational pacing and continuity so users could reflect without feeling they were completing a form.",
+      },
+      {
+        type: 'paragraph',
+        text: "I worked on the speech pipeline and adaptive prompts. The prototype won the Grand Prize at the KAIST Social Impact Challenge; the demo shows the storytelling flow.",
+      },
+    ],
+  },
+  {
+    slug: "paranmanjang",
+    title: "Writing with Saved References",
+    tldr: "A writing tool that brings relevant saved articles beside the draft, so bookmarks can become useful references.",
+    description: "A writing editor that retrieves relevant summaries from a personal bookmark library.",
+    narrative: "Paranmanjang brings a writer's saved reading into the drafting process. Instead of searching a separate bookmark archive, writers see related articles and summaries alongside their text.\n\nThe pipeline extracts and summarizes bookmarked pages, stores their embeddings in Pinecone, and keeps source metadata in MySQL. A FastAPI service retrieves relevant bookmarks from the draft's context.\n\nMy work focused on the editor, bookmark cards, and frontend integration. The interface keeps source information beside each summary so writers can return to the original article.\n\nThe service architecture used Docker on Naver Cloud, with GitHub Actions for deployment. The diagrams show the ingestion, retrieval, and deployment flows.",
+    contributions: [
+      "Built the editor and recommendation cards beside the draft",
+      "Designed bookmark browsing with summaries and source metadata",
+      "Connected the frontend to bookmark ingestion and retrieval endpoints"
     ],
     tags: ["Side Project", "RAG", "Writing Tools"],
     thumb: `${BASE}/pictures/thumbs/paranmanjang.jpg`,
@@ -70,11 +122,11 @@ Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Genera
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `Why do saved bookmarks always end up in a digital graveyard? I had hundreds of articles saved, but when I actually sat down to write, I never remembered to search through them. I wanted to build a system that brought those forgotten references back to life, transforming a passive bookmark archive into an active context engine that surfaces relevant notes right when you need them.`,
+        text: "Paranmanjang brings a writer's saved reading into the drafting process. Instead of searching a separate bookmark archive, writers see related articles and summaries alongside their text.",
       },
       {
         type: 'paragraph',
-        text: `Making that vision work took a lot of trial and error on the backend pipeline. On paper, the flow was simple: take a bookmarked URL, extract the body, summarize it, and generate embeddings for Pinecone alongside structured metadata in MySQL. In practice, parsing wildly inconsistent web pages, filtering out junk text, and getting clean summaries without blowing through processing time took heavy tweaking.`,
+        text: "The pipeline extracts and summarizes bookmarked pages, stores their embeddings in Pinecone, and keeps source metadata in MySQL. A FastAPI service retrieves relevant bookmarks from the draft's context.",
       },
       {
         type: 'figure',
@@ -86,11 +138,11 @@ Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Genera
       },
       {
         type: 'paragraph',
-        text: `The trickiest part was designing the real-time context retrieval for the editor. As someone typed, the FastAPI backend had to analyze the live draft, derive the current context, and query Pinecone without introducing lag into the writing experience. It was a constant balancing act between retrieval frequency, latency, and relevancy. I did not want a generic text generator; I wanted the system to feel like a sharp research partner quietly handing you the exact article you saved six months ago.`,
+        text: "My work focused on the editor, bookmark cards, and frontend integration. The interface keeps source information beside each summary so writers can return to the original article.",
       },
       {
         type: 'paragraph',
-        text: `To glue everything together, I deployed the services on Naver Cloud infrastructure using Docker containers and built an automated GitHub Actions CI/CD pipeline. On the interface side, I focused heavily on the writing flow, building card components that displayed bookmark summaries and source metadata directly alongside the active draft so referencing felt frictionless.`,
+        text: "The service architecture used Docker on Naver Cloud, with GitHub Actions for deployment. The diagrams show the ingestion, retrieval, and deployment flows.",
       },
       {
         type: 'figure-row',
@@ -107,102 +159,24 @@ Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Genera
           },
         ],
       },
-      {
-        type: 'paragraph',
-        text: `Looking back, Paranmanjang was essentially a personal Retrieval-Augmented Generation (RAG) system built right before RAG became a standard industry term. The most rewarding part of this project was not just getting the cloud infrastructure and vector database running smoothly, but proving to myself that AI tools are at their best when they are grounded in our own curated knowledge and built directly into how we actually work.`,
-      },
-    ],
-  },
-  {
-    slug: "livrecord",
-    title: "Voice-Based Autobiographical Storytelling System (LivRecord)",
-    tldr: "A voice-first AI system that helps older adults turn spoken memories into a personal narrative.",
-    description: "Voice-first AI pipeline with STT/TTS that scaffolds older adults through autobiographical storytelling.",
-    narrative: `I have always been moved by the fact that older adults carry incredible stories that so often remain untold, not because they don't want to share them, but simply because the friction of writing gets in the way. That realization was what made starting LivRecord so deeply inspiring for me. We wanted to eliminate that barrier completely by making voice the primary spark: users simply respond to autobiographical prompts out loud, while our system transcribes and weaves those spoken memories into a meaningful narrative they can revisit and share.
-
-Looking at the demo now, what thrilled me most during the build was tackling our core design challenge: making the prompts feel like a warm, natural conversation rather than an interrogation. We designed each question to flow organically from the user's previous answer, with the system actively listening for subtle themes to return to later. I really wanted the interaction to feel less like filling out a cold form and more like sitting down with a thoughtful companion who remembers every detail you have shared.
-
-Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Looking back, what resonated with me was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
-    contributions: [
-      "Voice interaction pipeline using STT/TTS with GPT-4 for adaptive prompt generation",
-      "Prompt design framework that maintains narrative coherence across multiple sessions",
-      "User study with older adults, iterated on prompt phrasing and response pacing",
-    ],
-    tags: ["HCI", "Voice Interaction", "Older Adults"],
-    thumb: `${BASE}/pictures/thumbs/livrecord.jpg`,
-    duration: "Feb 2024 – Jun 2024",
-    image: `${BASE}/pictures/SPARCS.png`,
-    links: [
-      { label: "Demo", url: `${BASE}/videos/LivRecord.mp4` },
-    ],
-    storyBlocks: [
-      {
-        type: 'paragraph',
-        text: `I have always been moved by the fact that older adults carry incredible stories that so often remain untold, not because they don't want to share them, but simply because the friction of writing gets in the way. That realization was what made starting LivRecord so deeply inspiring for me. We wanted to eliminate that barrier completely by making voice the primary spark: users simply respond to autobiographical prompts out loud, while our system transcribes and weaves those spoken memories into a meaningful narrative they can revisit and share.`,
-      },
-      {
-        type: 'video',
-        video: {
-          src: `${BASE}/videos/LivRecord.mp4`,
-          poster: `${BASE}/pictures/SPARCS.png`,
-          caption: 'Demo of LivRecord, showing how spoken memories are scaffolded into a reflective narrative flow.',
-        },
-      },
-      {
-        type: 'paragraph',
-        text: `Looking at the demo now, what thrilled me most during the build was tackling our core design challenge: making the prompts feel like a warm, natural conversation rather than an interrogation. We designed each question to flow organically from the user's previous answer, with the system actively listening for subtle themes to return to later. I really wanted the interaction to feel less like filling out a cold form and more like sitting down with a thoughtful companion who remembers every detail you have shared.`,
-      },
-      {
-        type: 'paragraph',
-        text: `Building this during a fast-paced hackathon with a small, dedicated team and ultimately winning the Grand Prize at the KAIST Social Impact Challenge was an unforgettable milestone. Looking back, what resonated with me was learning how to design the pacing of reflection itself, creating a quiet and supportive space that allows someone to linger in their own memories long enough for a real story to emerge.`,
-      },
     ],
   },
   {
     slug: "upstage-consultation",
     title: "AI Communication Mediator",
-    tldr: "A RAG-based mediator that grounds its responses in shared documents and chat histories, helping people talk through sensitive topics from common facts.",
-    description: "Document-grounded RAG mediator that helps people resolve misunderstandings from shared facts.",
-    narrative: `Misunderstandings between people often happen because both sides are operating on different assumptions or incomplete details. I wanted to build an AI mediator that could bridge those gaps. Instead of offering boilerplate advice, the system grounded its responses in uploaded documents and chat histories, acting as a neutral anchor to help people talk through sensitive or complex topics.
-
-Getting RAG to work reliably for interpersonal mediation was tough. Naive context retrieval frequently introduced subtle hallucinations or lost crucial nuances, which instantly destroys trust. Standard character chunking kept slicing up key details, so I overhauled the pipeline: moving to semantic chunking, combining dense vector search with sparse keyword matching, and adding a reranking layer to keep retrieved sources pinpoint accurate.
-
-I also designed the chat UI so every recommendation linked directly to inline source excerpts. Seeing the actual document text removed emotional friction and helped users focus on shared facts rather than argument.
-
-Placing in the Top 10 at the Upstage AI Challenge was a great payoff for all the late-night pipeline tuning. More than the award, it showed me that when RAG is built for precision, AI can do something genuinely meaningful: help people understand each other better.`,
+    tldr: "An AI mediator that uses shared documents and chat histories to give people a common reference during difficult conversations.",
+    description: "An AI mediator that connects responses to source passages in shared documents and chat histories.",
+    narrative: "The mediator uses uploaded documents and chat histories to address gaps in shared information. Each response points back to relevant passages so users can inspect the basis for a suggestion.\n\nTo preserve context during retrieval, I used semantic chunking to keep related ideas together, combined meaning-based and keyword search, and reranked the retrieved passages before generating a response.\n\nI built the retrieval pipeline and source attribution interface. The prototype placed in the Top 10 at the Upstage AI Challenge; it explores how shared evidence can support mediation.",
     contributions: [
-      "RAG pipeline with Solar LLM and vector database for document-grounded responses",
-      "Source attribution UI that surfaces retrieved passages inline with the response",
-      "Conversation analysis module that adapts question depth based on user engagement",
+      "Built document retrieval with Solar LLM and a vector database",
+      "Designed inline source excerpts for checking responses",
+      "Adapted follow-up question depth to user engagement"
     ],
     tags: ["LLM", "RAG", "Personalization"],
     thumb: `${BASE}/pictures/thumbs/upstage-consultation.jpg`,
     duration: "Apr 2024 – Jun 2024",
     image: `${BASE}/pictures/upstage2.png`,
     links: [],
-  },
-  {
-    slug: "medsam-viewer",
-    title: "Interactive 3D CT Segmentation Tool for Radiologists (MedSAM)",
-    tldr: "A custom DICOM viewer that lets radiologists prompt MedSAM with a click and get 3D CT segmentations propagated through slices.",
-    description: "Custom DICOM viewer integrating MedSAM for semi-automatic 3D CT segmentation with LoRA fine-tuning.",
-    narrative: `For a class project, our team of three set out to tackle a major bottleneck in radiologists’ daily work: the tedious process of manually tracing 3D CT scans slice by slice. We wanted to build a custom tool that allowed radiologists to segment entire volumes using simple click prompts with MedSAM.
-
-My main focus was integrating MedSAM into our PyQt5 DICOM viewer and fine-tuning the model for our dataset. On the application side, I decoupled the PyTorch inference engine from the rendering thread so the interface stayed smooth while propagating 2D click prompts across 3D axial slices. On the ML side, base MedSAM struggled with specific organ boundaries, so I fine-tuned it using LoRA to sharpen segmentation accuracy on our target organ types.
-
-Working together to tie the interactive UI with the fine-tuned model pipeline took plenty of iteration and testing within our team. Turning a slow tracing process into a responsive tool was a great experience in making complex vision models practical for radiologists’ real workflows.`,
-    contributions: [
-      "Custom DICOM viewer with integrated MedSAM for click-prompted 3D segmentation",
-      "LoRA fine-tuning on clinical CT dataset to improve robustness on target organ types",
-      "Prompt design for semi-automatic propagation across axial slices",
-    ],
-    tags: ["Computer Vision", "Medical AI", "Segmentation"],
-    thumb: `${BASE}/pictures/thumbs/medsam-viewer.jpg`,
-    duration: "Mar 2024 – Jun 2024",
-    image: `${BASE}/pictures/infinitt healthcare.png`,
-    links: [
-      { label: "GitHub", url: "https://github.com/sggithi/DICOM-Viewer-MedSAM" },
-    ],
   },
 ];
 

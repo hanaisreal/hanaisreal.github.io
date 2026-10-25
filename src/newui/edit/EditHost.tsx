@@ -109,7 +109,7 @@ const FormatControls: React.FC<{ editor: Editor; onPickImage: () => void }> = ({
   const s = useEditorState({
     editor,
     selector: ({ editor: e }) => ({
-      block: e.isActive('heading', { level: 2 }) ? 'h2' : e.isActive('heading', { level: 3 }) ? 'h3' : 'p',
+      block: e.isActive('heading', { level: 2 }) ? 'h2' : e.isActive('heading', { level: 3 }) ? 'h3' : e.isActive('caption') ? 'caption' : 'p',
       bold: e.isActive('bold'),
       italic: e.isActive('italic'),
       underline: e.isActive('underline'),
@@ -153,12 +153,14 @@ const FormatControls: React.FC<{ editor: Editor; onPickImage: () => void }> = ({
         onChange={e => {
           const v = e.target.value;
           if (v === 'p') chain().setParagraph().run();
+          else if (v === 'caption') chain().setNode('caption').run();
           else chain().toggleHeading({ level: v === 'h2' ? 2 : 3 }).run();
         }}
       >
         <option value="p">Paragraph</option>
         <option value="h2">Heading</option>
         <option value="h3">Subheading</option>
+        <option value="caption">Caption</option>
       </select>
       <select
         className="editor-select"

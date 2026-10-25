@@ -50,7 +50,7 @@ function ensureRouteHtml(route, entry) {
     const publicationMeta = entry.authors
       ? `<p>${escapeHtml(entry.authors)}</p><p>${escapeHtml([entry.venue, entry.status].filter(Boolean).join(' · '))}</p>`
       : '';
-    const staticSummary = `<main><article><h1>${escapeHtml(entry.title)}</h1>${publicationMeta}<p>${escapeHtml(description)}</p>${entry.contributions.length ? `<h2>My contributions</h2><ul>${entry.contributions.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : ''}</article></main>`;
+    const staticSummary = `<main><article><h1>${escapeHtml(entry.title)}</h1>${publicationMeta}<p>${escapeHtml(description)}</p>${entry.contributions.length ? `<h2>${entry.authors ? 'Contributions' : 'My contributions'}</h2><ul>${entry.contributions.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : ''}</article></main>`;
     html = html
       .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)}</title>`)
       .replace(/(<meta\s+name="description"\s+content=")[^"]*("\s*\/>)/, `$1${escapeHtml(description)}$2`)

@@ -16,16 +16,16 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     id: "kixlab-internship-reflection",
-    thumb: "/pictures/blog/kixlab-internship-reflection/teaser.jpg",
+    thumb: "/pictures/blog/kixlab-internship-reflection/teaser.png",
     title: "Reflection on My KIXLAB Internship",
     date: "Winter 2025",
     readTime: "4 min read",
     category: "Research",
     tags: ["research", "education", "ai-writing", "internship"],
-    excerpt: "During my winter 2025 internship at KIXLAB, I worked on When Scaffolding Breaks, a CHI 2026 Best Paper. Here I write about what makes learning difficult, what AI can do for writing, and why I was drawn to education.",
-    content: `During my winter 2025 internship at KIXLAB, I worked on *[When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms](/publications/when-scaffolding-breaks)*. The paper was accepted to CHI 2026, where it received a Best Paper Award. In this reflection, I want to write about what makes learning difficult, what AI can do for writing, and why I was drawn to education.
+    excerpt: "A reflection on how AI writing support can help students develop as writers while preserving the reasoning and decision-making that writing requires.",
+    content: `During my winter 2025 internship at KIXLAB, I worked on *[When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms](/publications/when-scaffolding-breaks)*, a study of middle school students’ interactions with AI writing support. The paper was accepted to CHI 2026 and received a Best Paper Award. The project led me to consider whether AI can help students develop as writers while giving them practice in the reasoning and decision-making that writing requires.
 
-I think learning starts with wanting to get better at something. For the students in this project, that could be hard when games and so many other things were competing for their attention. As an English learner and a tutor, I have seen how much effort writing takes. It requires both logic and a feel for language. An AI writing assistant can help with vocabulary and grammar, but can it help students learn to make a claim and support it with reasoning?
+As an English learner and a tutor, I have seen how writing draws on both language knowledge and the ability to organize and support ideas. For the students in this project, staying engaged could also be difficult when games and other distractions competed for their attention. These experiences shaped my interest in how AI can support students as they write and learn.
 
 My answer is no when AI takes over the decisions students need to practice. Students develop logic and structure by working out what they want to say and how to support it. If AI makes those decisions for them, they may end up with a smoother essay without getting much practice making an argument.
 

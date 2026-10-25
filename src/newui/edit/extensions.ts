@@ -93,6 +93,20 @@ export const Accent = Mark.create({
   },
 });
 
+// A figure caption: a small centred line under a picture. Saved as
+// <p data-caption class="figure-caption">; older <figcaption>s read in too.
+export const Caption = Node.create({
+  name: 'caption',
+  group: 'block',
+  content: 'inline*',
+  parseHTML() {
+    return [{ tag: 'p[data-caption]', priority: 60 }, { tag: 'figcaption' }];
+  },
+  renderHTML({ HTMLAttributes }) {
+    return ['p', mergeAttributes(HTMLAttributes, { 'data-caption': '', class: 'figure-caption' }), 0];
+  },
+});
+
 export const editorExtensions = [
   StarterKit.configure({
     heading: { levels: [2, 3] },
@@ -112,6 +126,7 @@ export const editorExtensions = [
     },
   }),
   Video,
+  Caption,
   Accent,
   Columns,
   Column,

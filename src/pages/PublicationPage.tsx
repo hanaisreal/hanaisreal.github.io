@@ -2,14 +2,14 @@ import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
 import { getPostById } from '../components/data/blogData';
-import PlainField from '../newui/PlainField';
+import { BibtexBlock, PaperHero } from '../newui/PaperHero';
+import AuthorList from '../newui/AuthorList';
 import RichField from '../newui/RichField';
 import { narrativeToHtml, storyToHtml } from '../newui/markdown';
 import publicationHtml from '../content/publications.json';
 import { mediaFirst } from '../newui/storyOrder';
 import {
   getPublicationBySlug,
-  getPublicationStatusLine,
   publications,
   type PublicationStoryBlock,
 } from '../components/data/publicationsData';
@@ -18,21 +18,6 @@ import '../newui/newPortfolio.css';
 const IS_DEV = process.env.NODE_ENV === 'development';
 const savedHtml = publicationHtml as Record<string, string>;
 
-
-function formatAuthors(authors: string, coFirst?: string[]) {
-  return authors.split(', ').map((name, i, arr) => {
-    const isMe = name === 'Hana Oh';
-    const isCo = coFirst?.includes(name);
-    return (
-      <span key={i}>
-        <span className={isMe ? 'pub__me' : undefined}>
-          {name}{isCo ? <sup>*</sup> : null}
-        </span>
-        {i < arr.length - 1 ? ', ' : ''}
-      </span>
-    );
-  });
-}
 
 function renderStoryBlock(block: PublicationStoryBlock, index: number) {
   if (block.type === 'paragraph') {
@@ -103,7 +88,7 @@ const PublicationPage: React.FC = () => {
   return (
     <div>
       <Masthead />
-      <div className="page page--publication">
+      <div className="page page--publication page--paper">
         <Link
           to="/"
           className="essay-post__back"
@@ -114,56 +99,12 @@ const PublicationPage: React.FC = () => {
           ← Home
         </Link>
 
-        <header className="pub-page__header" data-analytics-section="publication_header">
-          <PlainField as="h1" className="pub-page__title" file="publications" id={pub.slug} field="title" value={pub.title} />
-          <p className="pub-page__status-line">
-            {getPublicationStatusLine(pub)}
-            {pub.bestPaper ? ' · Best Paper' : ''}
-          </p>
-          <p className="pub-page__authors">
-            {formatAuthors(pub.authors, pub.coFirstAuthors)}
-          </p>
-          {pub.coFirstAuthors && (
-            <p className="pub-page__cofirst">* equal contribution</p>
-          )}
-          {pub.links && pub.links.length > 0 && (
-            <div className="pub-page__links">
-              {pub.links.map(l => (
-                <a
-                  key={l.label}
-                  href={l.url}
-                  className="pub-page__ext-link"
-                  target={l.download ? undefined : '_blank'}
-                  rel={l.download ? undefined : 'noopener noreferrer'}
-                  download={l.download}
-                  data-analytics-event="external_link_click"
-                  data-analytics-label={l.label}
-                  data-analytics-destination={l.url}
-                  data-analytics-item-id={pub.slug}
-                  data-analytics-item-name={pub.title}
-                  data-analytics-placement="publication_detail"
-                >
-                  {l.label}{l.download ? ' ↓' : ' ↗'}
-                </a>
-              ))}
-            </div>
-          )}
-          {related && (
-            <p className="pub-page__related">
-              Behind the paper:{' '}
-              <Link
-                to={`/blog/${related.id}`}
-                data-analytics-event="blog_open"
-                data-analytics-item-id={related.id}
-                data-analytics-placement="publication_detail"
-              >
-                {related.title} →
-              </Link>
-            </p>
-          )}
-        </header>
+        <PaperHero pub={pub} related={related} />
 
-        <hr className="sec-rule" />
+        <section className="paper-section" data-analytics-section="publication_abstract">
+          <h2 className="paper-section__title">Abstract</h2>
+          <p className="paper-abstract">{pub.abstract}</p>
+        </section>
 
         {/* Once saved from the editor (src/content/publications.json) the story is
             rich HTML; until then the built site keeps the block layout below. */}
@@ -171,7 +112,7 @@ const PublicationPage: React.FC = () => {
           <RichField
             store="publications"
             storeKey={pub.slug}
-            html={savedHtml[pub.slug] ?? (pub.storyBlocks ? storyToHtml(pub.storyBlocks) : narrativeToHtml(pub.narrative))}
+            html={savedHtml[pub.slug] ?? (pub.storyBlocks ? storyToHtml(pub.storyBlocks, { inline: true }) : narrativeToHtml(pub.narrative))}
             uploadDir={`publications/${pub.slug}`}
             className="essay-post__rich pub-page__rich"
             placement="publication_detail"
@@ -189,8 +130,8 @@ const PublicationPage: React.FC = () => {
         )}
 
         {pub.contributions.length > 0 && (
-          <section className="pub-page__contributions" data-analytics-section="publication_contributions">
-            <h2 className="sec-heading">My contributions</h2>
+          <section className="paper-section" data-analytics-section="publication_contributions">
+            <h2 className="paper-section__title">Contributions</h2>
             <ul className="pub-page__contrib-list">
               {pub.contributions.map((c, i) => (
                 <li key={i}>{c}</li>
@@ -198,6 +139,8 @@ const PublicationPage: React.FC = () => {
             </ul>
           </section>
         )}
+
+        <BibtexBlock bibtex={pub.bibtex} />
 
         {others.length > 0 && (
           <section className="pub-page__other" data-analytics-section="publication_related">
@@ -219,7 +162,7 @@ const PublicationPage: React.FC = () => {
                         {p.title}
                       </Link>
                     </p>
-                    <p className="pub__authors">{formatAuthors(p.authors, p.coFirstAuthors)}</p>
+                    <p className="pub__authors"><AuthorList authors={p.authors} coFirst={p.coFirstAuthors} links={p.authorLinks} /></p>
                     <div className="pub__meta">
                       <span className="pub__venue">{p.venue}</span>
                       {p.bestPaper && <span className="pub__best-paper">★ Best Paper</span>}

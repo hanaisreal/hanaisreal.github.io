@@ -108,7 +108,7 @@ const ProjectPage: React.FC = () => {
   return (
     <div>
       <Masthead />
-      <div className="page page--publication page--project">
+      <div className="page page--publication page--project page--paper">
         <Link
           to="/research"
           className="essay-post__back"
@@ -210,9 +210,9 @@ const ProjectPage: React.FC = () => {
                     data-analytics-item-name={p.title}
                     data-analytics-placement="project_related"
                   >
-                    {p.image && (
+                    {(p.thumb ?? p.image) && (
                       <span className="proj-card__media">
-                        <img src={p.image} alt="" loading="lazy" />
+                        <img src={p.thumb ?? p.image} alt="" loading="lazy" />
                       </span>
                     )}
                     <span className="proj-card__body">

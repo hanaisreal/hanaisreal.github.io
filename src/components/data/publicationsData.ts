@@ -33,6 +33,11 @@ export interface Publication {
   insight?: string;
   coFirstAuthors?: string[];
   relatedPost?: string;    // id of a blog post about this paper
+  location?: string;       // where the venue took place, e.g. "Barcelona, Spain"
+  affiliations?: string[]; // numbered 1, 2, … in this order on the paper page
+  authorAffiliations?: Record<string, number[]>; // author -> affiliation numbers; omit when all share one
+  authorLinks?: Record<string, string>;          // author -> homepage
+  correspondingAuthors?: string[];
   tldr: string;
   cardSummary?: string;
   narrative: string;
@@ -46,6 +51,12 @@ export interface Publication {
 export const publications: Publication[] = [
   {
     slug: "tonecanvas",
+    location: "Detroit, MI, USA",
+    affiliations: ["Seoul National University"],
+    authorLinks: {
+      "JungHwan Kim": "https://jhbale11.github.io/",
+      "Bongwon Suh": "https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
+    },
     year: "2026",
     title: "ToneCanvas: Visually Painting Character Tone for Narrative Consistency",
     authors: "JungHwan Kim, Hana Oh, Bongwon Suh",
@@ -65,18 +76,12 @@ export const publications: Publication[] = [
   publisher = {ACM}
 }`,
     insight: "How can visual interaction help writers keep a character's tone consistent across a narrative?",
-    tldr: "A visual interface that lets writers paint tone attributes onto characters, helping them catch stylistic drift before it becomes a structural problem.",
-    narrative: `Maintaining character tone consistency across long-form narrative text poses a recurring challenge in creative writing. As drafts expand across chapters, subtle linguistic drift occurs silently, causing character voices to diverge from their intended profiles without the writer noticing.
-
-In this project, we framed narrative tone management as a visual analytics and spatial interaction problem rather than a standard text editing task. We developed ToneCanvas, an interactive system that decouples narrative prose into structured canvas and character layers, turning abstract stylistic attributes into explicit visual parameters.
-
-Writers define multidimensional tone baselines for individual characters, specifying dimensions such as assertiveness, warmth, formality, and emotional register. The system analyzes the text against these profiles, surfacing tonal mismatches directly within the draft as visual anomalies rather than generic system warnings.
-
-The core interaction model relies on a spatial metaphor: writers manipulate visual tone controls to shape intent, which the underlying system uses to construct structured prompts for context-aware generative rewriting. This human-in-the-loop workflow keeps the writer in full control of the narrative direction while reducing the cognitive load of tracking character voices across complex, multi-chapter texts.`,
+    tldr: "ToneCanvas uses watercolor overlays to help writers compare and revise a character's tone across a manuscript.",
+    narrative: "Writers need to distinguish intentional changes in a character's voice from accidental inconsistency. Here, tone means how a character speaks, including warmth, directness, and formality. It can evolve with the story without losing a recognizable voice.\n\nFive professionals in fiction revision and translation described four recurring challenges: comparing scattered dialogue, naming what feels inconsistent, consulting external character notes, and tracking names or terminology. These interviews shaped the prototype.\n\nWatercolor overlays keep tone visible on the manuscript. Focus Mode gathers one character's dialogue; the Tone Palette adjusts individual dimensions with a live preview. Writers can sample a passage's tone, save it as a preset, and review suggested rewrites before accepting them.\n\nCharacter Layers keep voice notes and references beside the draft. A terminology tool groups aliases and recurring terms for review. Evaluating the prototype on writers' own manuscripts is future work.",
     contributions: [
-      "A visual metaphor for character tone that makes stylistic drift visible during drafting",
-      "An interaction design that separates intention-setting from text editing",
-      "Formative study with fiction writers on how tone inconsistency is currently noticed and repaired",
+      "An empirical account of character-tone revision in long-form fiction",
+      "Four design opportunities derived from recurring workflow breakdowns",
+      "An interactive prototype that realizes these opportunities through persistent tone visualization, parameterized control, and integrated character references"
     ],
     links: [
       {
@@ -89,7 +94,7 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `Maintaining character tone consistency across long-form narrative text poses a recurring challenge in creative writing. As drafts expand across chapters, subtle linguistic drift occurs silently, causing character voices to diverge from their intended profiles without the writer noticing.`,
+        text: "Writers need to distinguish intentional changes in a character's voice from accidental inconsistency. Here, tone means how a character speaks, including warmth, directness, and formality. It can evolve with the story without losing a recognizable voice.",
       },
       {
         type: 'figure',
@@ -102,7 +107,7 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
       },
       {
         type: 'paragraph',
-        text: `In this project, we framed narrative tone management as a visual analytics and spatial interaction problem rather than a standard text editing task. We developed ToneCanvas, an interactive system that decouples narrative prose into structured canvas and character layers, turning abstract stylistic attributes into explicit visual parameters.`,
+        text: "Five professionals in fiction revision and translation described four recurring challenges: comparing scattered dialogue, naming what feels inconsistent, consulting external character notes, and tracking names or terminology. These interviews shaped the prototype.",
       },
       {
         type: 'figure',
@@ -115,16 +120,24 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
       },
       {
         type: 'paragraph',
-        text: `Writers define multidimensional tone baselines for individual characters, specifying dimensions such as assertiveness, warmth, formality, and emotional register. The system analyzes the text against these profiles, surfacing tonal mismatches directly within the draft as visual anomalies rather than generic system warnings.`,
+        text: "Watercolor overlays keep tone visible on the manuscript. Focus Mode gathers one character's dialogue; the Tone Palette adjusts individual dimensions with a live preview. Writers can sample a passage's tone, save it as a preset, and review suggested rewrites before accepting them.",
       },
       {
         type: 'paragraph',
-        text: `The core interaction model relies on a spatial metaphor: writers manipulate visual tone controls to shape intent, which the underlying system uses to construct structured prompts for context-aware generative rewriting. This human-in-the-loop workflow keeps the writer in full control of the narrative direction while reducing the cognitive load of tracking character voices across complex, multi-chapter texts.`,
+        text: "Character Layers keep voice notes and references beside the draft. A terminology tool groups aliases and recurring terms for review. Evaluating the prototype on writers' own manuscripts is future work.",
       },
     ],
   },
   {
     slug: "deepaware",
+    location: "Barcelona, Spain",
+    affiliations: ["Seoul National University"],
+    correspondingAuthors: ["Hajin Lim"],
+    authorLinks: {
+      "Keyeun Lee": "https://www.keyeun.com/",
+      "Miran Pyun": "https://scholar.google.com/citations?user=AgQ16g8AAAAJ&hl=ko",
+      "Hajin Lim": "https://www.hajinlim.com/"
+    },
     year: "2026",
     title: "DeepAware: Using Experiential Deepfake Simulations to Enhance Cybersecurity Awareness in Older Adults",
     authors: "Hana Oh, Eunbi Lee, Seungju Shin, Keyeun Lee, Miran Pyun, Hajin Lim",
@@ -144,19 +157,13 @@ The core interaction model relies on a spatial metaphor: writers manipulate visu
   doi       = {10.1145/3772318.3791492}
 }`,
     insight: "What if older adults could experience a deepfake before encountering one in the wild?",
-    tldr: "Letting older adults safely experience a personalized deepfake scam scenario builds intuition that text-based warnings never could.",
-    cardSummary: "DeepAware turns deepfake education into a self-relevant learning experience by placing older adults inside personalized scam and fake-news simulations using their own synthesized face and voice.",
-    narrative: `Older adults are the most targeted demographic for deepfake-based scams. They're also the group least served by existing cybersecurity education, which tends to be abstract, text-heavy, and designed with a younger mental model in mind.
-
-DeepAware started from a simple premise: a warning tells you something is dangerous, but an experience makes you feel it. We built a simulation system that places participants inside a realistic deepfake encounter — a video call from a synthetic "family member" asking for urgent financial help — in a controlled, debrief-ready setting. The scenario is personalized: participants see a face they recognize, hear a voice that sounds familiar, and face social pressure that mirrors what real scams exploit.
-
-The study measured whether this experiential exposure changed how participants recognized and responded to deepfake cues compared to conventional informational training. It did. But more interesting were the qualitative findings: what people reported feeling during the simulation, and how that feeling changed their understanding of their own vulnerability.
-
-This work sits at the intersection of cybersecurity education and the ethics of simulation. Building something distressing on purpose, for someone's benefit, requires care about consent, debrief, and the line between informative and traumatic.`,
+    tldr: "After using personalized deepfake simulations, 21 older adults reported greater deepfake knowledge, perceived risk, and confidence in responding.",
+    cardSummary: "Personalized deepfake simulations help older adults explore scam risks using their own faces and voices.",
+    narrative: "We interviewed five digital educators and observed a smartphone class for older adults. Educators described limited time for security lessons and warned that realistic, personalized scenarios could overwhelm learners if introduced abruptly.\n\nDeepAware uses a learner's photo and voice recording to create identity-theft and fake-news scenarios. Each module moves from an explanation and real examples to personalized simulation, coping strategies, and a review quiz. Audio guidance supports learners at each step.\n\nIn an exploratory study, 21 older adults completed surveys before and after using DeepAware and took part in interviews. Reported deepfake knowledge rose from 3.10 to 4.10 on a five-point scale; perceived threat and coping efficacy also increased. The single-group design does not establish an advantage over conventional training or lasting protection against scams.\n\nParticipants found their own faces and voices engaging, but reactions ranged from recognizing obvious flaws to feeling overwhelmed. The findings suggest adapting scenario intensity to prior experience and adding opportunities to rehearse responses. Participants could pause or exit, received a debriefing, and had their uploaded photos and voice recordings deleted after the session.",
     contributions: [
-      "Experiential simulation system for deepfake awareness, personalizable to individual participants",
-      "Mixed-methods evaluation comparing experiential vs. informational cybersecurity training",
-      "Design guidelines for protective simulation with vulnerable populations",
+      "Identifying design requirements for deepfake scam education tailored to older adults through a formative study with five digital educators.",
+      "Designing and implementing DeepAware, a personalized deepfake simulation system to investigate how embedding users’ own faces and voices into simulated scenarios can support deepfake scam education for older adults.",
+      "Demonstrating through evaluating with 21 older adults that personalized simulations strengthen perceived threat, coping efficacy, and engagement, with design implications for experiential deepfake education."
     ],
     links: [
       {
@@ -173,7 +180,7 @@ This work sits at the intersection of cybersecurity education and the ethics of 
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `AI-generated faces and voices are increasingly used in social engineering scams, yet current cybersecurity education often introduces deepfakes through definitions, warning signs, and examples involving strangers. Learners may understand that such scams exist without feeling that they or people close to them could actually become targets. DeepAware began from this gap: how can personalized deepfake simulations make scam risks personally meaningful to older adults without causing unnecessary anxiety or disengagement?`,
+        text: "We interviewed five digital educators and observed a smartphone class for older adults. Educators described limited time for security lessons and warned that realistic, personalized scenarios could overwhelm learners if introduced abruptly.",
       },
       {
         type: 'figure',
@@ -186,7 +193,7 @@ This work sits at the intersection of cybersecurity education and the ethics of 
       },
       {
         type: 'paragraph',
-        text: `To understand how deepfake risks are currently taught, we interviewed five digital educators with more than five years of experience teaching older adults and observed a smartphone education class during the formative research phase. Educators described cybersecurity as a small add-on within broader smartphone classes, where limited time is already spent on account management, messaging, and basic device use. They also noted that older adults respond more strongly when examples involve family, acquaintances, or their own identities, while highly realistic material can backfire if introduced too abruptly.`,
+        text: "DeepAware uses a learner's photo and voice recording to create identity-theft and fake-news scenarios. Each module moves from an explanation and real examples to personalized simulation, coping strategies, and a review quiz. Audio guidance supports learners at each step.",
       },
       {
         type: 'figure',
@@ -199,7 +206,7 @@ This work sits at the intersection of cybersecurity education and the ethics of 
       },
       {
         type: 'paragraph',
-        text: `Based on these findings, we built DeepAware, a web-based learning platform that embeds a learner's own face and voice into simulated identity theft and fake news scenarios. The experience moves from concept introduction and real-world examples to personalized simulation, coping strategies, and short review quizzes. Rather than asking learners to watch how someone else might be deceived, the system positions them as the direct target of a carefully staged threat and then immediately connects that experience to concrete actions such as verifying suspicious requests through another channel or asking questions only the real person would know.`,
+        text: "In an exploratory study, 21 older adults completed surveys before and after using DeepAware and took part in interviews. Reported deepfake knowledge rose from 3.10 to 4.10 on a five-point scale; perceived threat and coping efficacy also increased. The single-group design does not establish an advantage over conventional training or lasting protection against scams.",
       },
       {
         type: 'figure',
@@ -212,12 +219,34 @@ This work sits at the intersection of cybersecurity education and the ethics of 
       },
       {
         type: 'paragraph',
-        text: `We evaluated DeepAware with 21 older adults in South Korea. After completing the program, participants reported gains in deepfake knowledge, perceived vulnerability and severity, self-efficacy, and response efficacy. Many said that seeing or hearing themselves made the threat feel more immediate than ordinary educational examples, while others warned that highly realistic scenarios could overwhelm less experienced learners. The study suggests that personalized security education is most effective when it adapts emotional intensity, supports rehearsal of real responses, and helps learners leave with practical confidence rather than fear.`,
+        text: "Participants found their own faces and voices engaging, but reactions ranged from recognizing obvious flaws to feeling overwhelmed. The findings suggest adapting scenario intensity to prior experience and adding opportunities to rehearse responses. Participants could pause or exit, received a debriefing, and had their uploaded photos and voice recordings deleted after the session.",
       },
     ],
   },
   {
     slug: "when-scaffolding-breaks",
+    location: "Barcelona, Spain",
+    affiliations: ["KAIST", "Seoul National University", "University of Michigan", "Gyeonggido Office of Education"],
+    authorAffiliations: {
+      "Junho Myung": [1],
+      "Hyunseung Lim": [1],
+      "Hana Oh": [2],
+      "Hyoungwook Jin": [3],
+      "Nayeon Kang": [4],
+      "So-Yeon Ahn": [1],
+      "Hwajung Hong": [1],
+      "Alice Oh": [1],
+      "Juho Kim": [1],
+    },
+    authorLinks: {
+      "Junho Myung": "https://junhomyung.github.io/",
+      "Hyunseung Lim": "https://hyunseunglim.com/",
+      "Hyoungwook Jin": "https://jhw123.github.io/",
+      "So-Yeon Ahn": "https://sites.google.com/view/soyeonahn/about",
+      "Hwajung Hong": "https://galaxytourist.notion.site/galaxytourist/Hwajung-Hong-cc10b0291bbe4ca38dbf4882cd687423",
+      "Alice Oh": "https://aliceoh9.github.io/",
+      "Juho Kim": "https://juhokim.com/",
+    },
     relatedPost: "kixlab-internship-reflection",
     year: "2026",
     title: "When Scaffolding Breaks: Investigating Student Interaction with LLM-Based Writing Support in Real-Time K-12 EFL Classrooms",
@@ -240,18 +269,12 @@ This work sits at the intersection of cybersecurity education and the ethics of 
   doi       = {10.1145/3772318.3791517}
 }`,
     insight: "When the AI scaffold fails mid-lesson, what do students actually do?",
-    tldr: "A six-week deployment with 157 eighth graders found that step-by-step LLM writing support helped students write grammatically correct sentences, but demotivated lower-proficiency students, deepened their reliance on the system, and made it harder for teachers to spot who was struggling.",
-    narrative: `AI writing scaffolds behave well in lab conditions. Real classrooms are messier. Connectivity drops, students go off-task, and the AI occasionally outputs something confusing at exactly the wrong moment in a lesson.
-
-We deployed an LLM-based writing support system in live K-12 EFL (English as a Foreign Language) classrooms and observed what happened over multiple sessions — including what happened when things went wrong. The disruptions turned out to be the most informative part of the data.
-
-When the scaffold failed, students revealed the strategies they'd been using behind it. Some had been outsourcing judgment entirely — using the AI's feedback as a proxy for their own evaluation. Others had developed genuinely adaptive relationships with the tool, treating its breakdowns as problems to work around rather than reasons to stop. The gap between these groups was not predicted by language proficiency.
-
-The findings have implications beyond EFL classrooms: they speak to how dependency forms in any context where AI assistance is persistent and the cost of disengaging feels high. Scaffolding that works smoothly may be obscuring the degree to which students have stopped scaffolding themselves.`,
+    tldr: "A six-week classroom study found that AI writing support helped sentence accuracy but left lower-proficiency students frustrated and reliant on assistance.",
+    narrative: "We co-designed WriteAid with a middle school English teacher. Four tabs provide a sample essay, sentence construction, vocabulary and grammar explanations, and grammar checking. The AI gives step-by-step guidance in Korean rather than immediately supplying answers.\n\n157 eighth graders used WriteAid across six weeks of English classes in South Korea. Analysis drew on consented data from 133 students: 14,863 query-response pairs, classroom observations, a teacher interview, and unaided writing assessments 2–3 weeks later.\n\nHigher-performing students used the AI for vocabulary and checking; lower-performing students more often requested sentence generation and expressed frustration with repeated guidance. In the later unaided assessment, high-performing students correctly reused 65.8% of AI-assisted sentences, compared with 14.0% for the low-performing group.\n\nThe teacher reported that more students completed their work, but questions moving to the AI made shared difficulties harder to notice. Support should adapt to proficiency and time pressure, clarify when to involve the teacher, and keep signs of over-reliance visible.",
     contributions: [
-      "Longitudinal classroom deployment study of LLM writing support across real K-12 EFL lessons",
-      "Taxonomy of student responses to AI scaffold failure",
-      "Analysis of how reliance patterns differ from what surface-level engagement metrics suggest",
+      "We provide a large-scale dataset (14,863 utterances) from a real-time K-12 classroom, and reveals a divergence in how students use the LLM: higher-proficiency students delegate lower-order tasks (e.g., vocabulary translation), while lower-proficiency students outsource core higher-order writing tasks (e.g., sentence generation).",
+      "We identify limitations in LLM scaffolding, revealing that for lower-proficiency students in time-constrained classrooms, it can be counterproductive by fostering dependency and demotivation.",
+      "Through a naturalistic observation study, we uncover new challenges related to the use of LLMs in educational contexts, particularly concerning issues of fairness and the impact on student-teacher dynamics."
     ],
     links: [
       {
@@ -262,13 +285,25 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
         label: "DOI",
         url: "https://doi.org/10.1145/3772318.3791517",
       },
+      {
+        label: "arXiv",
+        url: "https://arxiv.org/abs/2512.05506",
+      },
+      {
+        label: "Dataset",
+        url: "https://github.com/JunhoMyung/WriteAid-Data",
+      },
+      {
+        label: "Project page",
+        url: "https://scaffoldingbreaks.kixlab.org/",
+      },
     ],
     thumb: `${BASE}/pictures/publications/when-scaffolding-breaks/writeaid-system.png`,
     image: `${BASE}/pictures/publications/when-scaffolding-breaks/writeaid-system.png`,
     storyBlocks: [
       {
         type: 'paragraph',
-        text: `LLM writing tools are often evaluated as if every learner has unlimited time and can work independently. Real classrooms are different: a teacher is supporting many students at once, proficiency levels vary widely, and every writing activity must fit within a short lesson. We studied what AI scaffolding looks like under those constraints by deploying WriteAid with 157 eighth-grade students in a South Korean middle school over six weeks.`,
+        text: "We co-designed WriteAid with a middle school English teacher. Four tabs provide a sample essay, sentence construction, vocabulary and grammar explanations, and grammar checking. The AI gives step-by-step guidance in Korean rather than immediately supplying answers.",
       },
       {
         type: 'figure',
@@ -281,7 +316,7 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
       },
       {
         type: 'paragraph',
-        text: `WriteAid was co-designed with a middle school English teacher. Instead of presenting students with one open-ended chatbot, the interface separates support into familiar, task-specific tabs: a sample essay, collaborative sentence construction, vocabulary and grammar explanations, and grammar checking. This structure lowered the barrier for students with little prior experience using conversational AI while keeping their writing and the lesson requirements visible.`,
+        text: "157 eighth graders used WriteAid across six weeks of English classes in South Korea. Analysis drew on consented data from 133 students: 14,863 query-response pairs, classroom observations, a teacher interview, and unaided writing assessments 2–3 weeks later.",
       },
       {
         type: 'figure',
@@ -294,7 +329,7 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
       },
       {
         type: 'paragraph',
-        text: `Across the deployment, students exchanged 14,863 messages with the system. Sentence construction accounted for most use, but engagement differed by proficiency. High-performing students tended to resolve questions in fewer turns and moved into grammar revision earlier. Middle- and lower-performing students made more iterative revision requests and were more likely to follow the system's step-by-step guidance without independently evaluating it.`,
+        text: "Higher-performing students used the AI for vocabulary and checking; lower-performing students more often requested sentence generation and expressed frustration with repeated guidance. In the later unaided assessment, high-performing students correctly reused 65.8% of AI-assisted sentences, compared with 14.0% for the low-performing group.",
       },
       {
         type: 'figure',
@@ -307,7 +342,7 @@ The findings have implications beyond EFL classrooms: they speak to how dependen
       },
       {
         type: 'paragraph',
-        text: `The same scaffold could therefore function as a learning aid for one student and a source of dependency or frustration for another. WriteAid helped more students complete their assignments, but it also made some struggles less visible to the teacher and changed how attention was distributed in the room. These findings point toward adaptive scaffolding that considers proficiency, monitors over-reliance, and keeps teachers aware of when students need human support.`,
+        text: "The teacher reported that more students completed their work, but questions moving to the AI made shared difficulties harder to notice. Support should adapt to proficiency and time pressure, clarify when to involve the teacher, and keep signs of over-reliance visible.",
       },
     ],
   },
