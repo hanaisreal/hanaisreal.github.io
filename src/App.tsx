@@ -29,7 +29,7 @@ const App: React.FC = () => {
 
   const routes = (
     <Routes>
-      <Route path="/" element={<NewPortfolio bg={bg} />} />
+      <Route path="/" element={<NewPortfolio />} />
       <Route path="/research" element={<ResearchPage />} />
       <Route path="/projects" element={<Navigate to="/research" replace />} />
       <Route path="/blog" element={<Blog />} />

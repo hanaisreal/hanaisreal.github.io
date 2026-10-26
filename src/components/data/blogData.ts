@@ -48,42 +48,42 @@ I hope AI can help students get unstuck while they continue to understand the ma
     readTime: "5 min read",
     category: "Life",
     tags: ["life", "silicon-valley", "travel", "retrospective"],
-    excerpt: "In summer 2024, I joined SNU in the World Program’s course Silicon Valley and Innovative Thinking, in partnership with UC Berkeley.",
+    excerpt: "A reflection on technology, innovation, and the questions about life and direction I carried home from SNU’s Silicon Valley program.",
     content: `This is a reworked version of a post I first wrote on my [Naver Blog](https://blog.naver.com/thinker-/223772804696).
 
-In summer 2024, I joined SNU in the World Program’s three-credit course, *Silicon Valley and Innovative Thinking*, led by Professor Seung-Woo Seo of SNU’s Department of Electrical and Computer Engineering, in partnership with UC Berkeley.
+In summer 2024, I joined the SNU in the World Program’s three-credit course *Silicon Valley and Innovative Thinking*, led by Professor Seung-Woo Seo of SNU’s Department of Electrical and Computer Engineering in partnership with UC Berkeley. The program offered a chance to learn about the region’s technology ecosystem while reflecting on the ideas and ambitions I was carrying with me.
 
 ## The Future of AI
 
-Dr. Hyung Won Chung gave a talk about the future of AI. I remember thinking about how much AI could change people’s lives, and how responsibility would matter more as it became part of everyday life. I also wondered whether people’s desire to live longer, perhaps even forever, would make biotechnology increasingly important.
+Dr. Hyung Won Chung spoke about the future of AI. His talk left me with two questions. As AI becomes part of everyday life, who is it designed to help? Whose needs shape how it is built? I also began to wonder how people’s desire to live longer might make biotechnology more important.
 
-Thinking about a longer life made me wonder what gives a life its shape as it changes. I find it beautiful when patterns emerge from disorder. Stars look like scattered points until we connect them into constellations. The points haven’t changed, but suddenly we can see a shape.
+The possibility of a longer life led me to think about how a life acquires meaning as it changes. I have always been drawn to the way patterns emerge from apparent disorder. Stars remain scattered points until we connect them into a constellation; the points are unchanged, but the relationships among them become visible.
 
-Maybe our lives are like that, too. We change, but when we look back, we can see certain ideas and questions appearing across different moments. Seeing them together reveals a pattern we might not notice while living through each moment.
+Looking back at our lives can work in a similar way. Ideas and questions recur across moments that once seemed unrelated. We may not recognize the pattern as it forms, but reflection can make those connections visible and help us understand how our interests have developed.
 
 ## Silicon Valley
 
-I’d heard Silicon Valley called the center of innovation. Its roots in the semiconductor industry, nearby universities like UC Berkeley and Stanford, and the concentration of technology companies all stood out to me. Being there helped me see how people, ideas, and institutions can shape one another.
+I had often heard Silicon Valley described as a center of innovation. Seeing its semiconductor history, nearby universities such as UC Berkeley and Stanford, and concentration of technology companies helped me understand the region as an ecosystem rather than a collection of individual firms. People, institutions, and ideas seemed to reinforce one another over time.
 
-The program also gave me a closer look at how new ideas develop. In a session led by Matthew Rappaport, we learned how to find, read, and analyze patents we had not seen before, then use them to develop ideas. I liked figuring out how to approach an unfamiliar subject and discover what might be possible within it.
+A session led by Matthew Rappaport offered a practical view of how ideas can develop. We learned to locate and analyze unfamiliar patents, then use them as material for generating new possibilities. I enjoyed the process of entering an unfamiliar area, learning how it was structured, and identifying where a new idea might fit.
 
 ![The class during the patents and ideas session](/pictures/blog/2024-summer-silicon-valley/patents-session.jpeg)
 
-I also got to experience some of the technology firsthand. I rode in a Waymo self-driving car in San Francisco and tried Apple Vision Pro. Vision Pro made mixed reality feel much closer to everyday life. I was fascinated by the idea of bringing old photos and videos into the present, and capturing moments to revisit later.
+I also encountered emerging technologies firsthand. Riding in a Waymo vehicle in San Francisco and trying Apple Vision Pro made ideas I had previously known mostly through demonstrations feel more tangible. Vision Pro especially led me to imagine how mixed reality might bring archival photos and videos into the present, or let people revisit moments they had chosen to preserve.
 
 ![A Waymo self-driving car in San Francisco, and Apple Vision Pro on display](/pictures/blog/2024-summer-silicon-valley/waymo-vision-pro.png)
 
-And, of course, In-N-Out Burger.
+The trip also included a first visit to In-N-Out Burger, a small but memorable part of experiencing the region beyond its technology landscape.
 
 ## Reflection on Writing
 
-After the trip, I reread the application materials I had written before leaving. I had put together an application, a business plan, and a personal essay. Rereading them brought back how I felt at the time. I even received an honorable mention in the SWPP essay contest, so maybe I’m not bad at writing after all. Haha.
+After returning, I reread the application materials I had prepared for the program, including an application, a business plan, and a personal essay. The writing brought back the questions and expectations I had carried with me. Receiving an honorable mention in the SWPP essay contest was encouraging, but the more meaningful part was seeing how I had tried to explain my interests at that point in my life.
 
-My business plan was for “Life Story,” an AI autobiography service that helps people write their life stories through voice conversations. I focused on people approaching retirement, a transition that can bring uncertainty and, for some, depression. In my essay, I wrote about why I wanted to visit Silicon Valley. At the time, I was considering entrepreneurship, graduate school, and what I might do in the future.
+My business plan described “Life Story,” an AI autobiography service designed to help people record their lives through voice conversations. I focused on people approaching retirement, a transition that can bring uncertainty and, for some, depression. My essay explained why I wanted to visit Silicon Valley. At the time, I was weighing entrepreneurship, graduate school, and several possible futures; rereading the materials reminded me that **these were open questions, not decisions I had already made**.
 
-While writing this post, I was reminded why I like looking back at old writing. It brings back what I was thinking and what I promised myself. Sometimes it feels like meeting a different version of myself. It’s refreshing to see how much can change.
+Returning to that writing helped me recover not only what I was thinking, but also what I hoped for. Reading an earlier version of myself can feel like meeting someone familiar whose assumptions have changed. The distance makes growth easier to see, while reminding me that the questions I once asked still shape the choices I make.
 
-I’m grateful to Professor Seo and everyone who made the program possible.
+I am grateful to Professor Seo and everyone who made the program possible, and to the people who shared their ideas and time with us.
 
 Go, SNU in Silicon Valley!`,
     published: true,
@@ -96,10 +96,10 @@ Go, SNU in Silicon Valley!`,
     readTime: "5 min read",
     category: "Life",
     tags: ["life", "hackathon", "research", "retrospective"],
-    excerpt: "The first half of 2024 felt a little like a tangled ball of yarn. I tried many things, learned a lot, and wanted to write everything down before the details became blurry.",
+    excerpt: "A reflection on research, team projects, and the questions about people and problem solving that began to take shape in the first half of 2024.",
     content: `This is an English translation of a post I wrote on my Naver Blog. You can find the original here: [2024년 상반기 Wrap up](https://blog.naver.com/thinker-/223494931641)
 
-The first half of 2024 felt a little like a tangled ball of yarn. I tried many things, learned a lot, and wanted to write everything down before the details became blurry. Now that I’m putting it all into words, it feels like I’m untangling those memories a little.
+The first half of 2024 felt like a tangled ball of yarn. I moved between research, design projects, and hackathons, often before I had time to make sense of what I was learning. Writing this reflection is a way to trace how those experiences connected and what they taught me.
 
 ![A tangled ball of colorful yarn](/pictures/blog/2024-midyear-wrap-up/yarn-photo.jpg){80%}
 ![Close-up of threads in many colors](/pictures/blog/2024-midyear-wrap-up/yarn-dalle.jpg)
@@ -108,21 +108,21 @@ The first half of 2024 felt a little like a tangled ball of yarn. I tried many t
 
 ### HCC Lab Intern
 
-I started the year with an internship at an HCI lab advised by Professor Bongwon Suh. For two months, I studied LoRA fine-tuning and tried applying it to an educational counseling model. I had imagined fine-tuning would be a huge, complicated process, but once I looked into it, it felt more manageable than I expected. Some parts didn’t work, and I remember feeling frustrated. Still, it was exciting to change existing code and get something to run.
+I began the year with a two-month internship in Professor Bongwon Suh’s HCI lab, where I studied LoRA fine-tuning and explored its use in an educational counseling model. Fine-tuning had seemed daunting from a distance, but breaking the process into smaller steps made it more approachable. Experiments did not always work, yet modifying existing code and seeing a model run gave me a concrete first experience of research as iterative work.
 
-I also had to think about private information. The model couldn’t reliably filter it out, so I had to preprocess identifying information before giving the text to the model. It was my first time seeing up close how research happens in a lab. The researchers were working on different questions, including accessibility. I began to understand that research starts with a problem someone wants to solve. I hadn’t thought much about that before.
+Privacy became an important part of the work. Because the model could not reliably filter identifying information, I had to preprocess the text before providing it to the model. This was also my first close look at research in a lab, where people were pursuing distinct questions, including accessibility. I began to see research less as the application of a technique and more as the sustained effort to address a problem that matters to people.
 
 ### HCIK Conference
 
-I went to the HCIK conference for the first time, too. There were so many topics I wanted to learn more about. I was especially interested in using AI to help people tell stories. It felt like a new possibility, and I remember thinking about how much I wanted to write my own story someday. I kept telling myself, “I should write this down before I forget.”
+At my first HCIK conference, I encountered more topics than I could follow up on at once. I was especially drawn to the possibility of using AI to help people tell stories. The idea stayed with me, partly because I had long wanted to write my own story and had not yet found a way to begin.
 
 ![The 2024 HCI Korea banner at Sono Belle Vivaldi Park](/pictures/blog/2024-midyear-wrap-up/hcik-2024.jpg){35%}
 
 ### KAIST SPARCS Hackathon
 
-In February, I joined a hackathon about local problems in Daejeon. I was nervous because I had only recently started studying frontend development, and I almost talked myself out of applying. But I decided to give it a try, and it became one of the best decisions I made that semester.
+In February, I joined a hackathon focused on local problems in Daejeon. I had only recently begun learning frontend development and nearly talked myself out of applying. Taking part became a turning point in the semester because it moved me from learning about development to building something with a team.
 
-Our team made a voice-based autobiography tool. We used the Whisper API, and I was surprised by how naturally the conversation went back and forth. People came over to try it, and a lot of them were excited. Some said they wanted to keep talking with it and tell their stories through conversation. Seeing people respond that way made the project feel real to me. It had started as an idea we weren’t sure we could build, and then people were actually using it. I’m still very fond of that first project.
+Our team built a voice-based autobiography tool using the Whisper API. I was struck by how naturally people could move through a conversation with it. Visitors tried the prototype, and some said they wanted to continue talking and telling their stories. Their responses changed how I understood the project. What had begun as an uncertain idea had become something people could use and imagine making their own. That experience remains an important reference point for me when I think about designing AI around people’s stories.
 
 ![The LivRecord pitch slide: Life Story, your life story told your way, to pass on to your children](/pictures/blog/2024-midyear-wrap-up/sparcs-livrecord.webp){78%}
 
@@ -133,39 +133,39 @@ Our team made a voice-based autobiography tool. We used the Whisper API, and I w
 
 ### SKYST Hackathon
 
-A second hackathon later in the semester brought a very different idea. The topic was love, which I hadn’t expected. I joined with some of the people I’d met at the first hackathon. We already had a sense of how each other worked, and this time it felt easier to get into the project together. As we stayed up building, we got closer, too.
+A second hackathon later that semester began with a theme I had not expected, love. I joined several teammates from the first event, so we already had some understanding of how one another worked. That familiarity helped us move into the project more quickly, and the long hours of building brought us closer as a team.
 
 ![The SKYST Hackathon 2 venue and poster](/pictures/blog/2024-midyear-wrap-up/skyst.webp){41%}
 
-Our idea was a writing tool for people who love to write but sometimes need a little inspiration. It would recommend things they had bookmarked that might connect with what they were writing at the moment. We had to decide quickly what the most important part of the product was, what we could build as an MVP, and who would take on each task. The communication mattered a lot. We had to say what we wanted to work on and make sure everyone knew what they were responsible for. It took a lot of focus to work through the night, but it was fun to see us find our rhythm and put the pieces together.
+We designed a writing tool that surfaced relevant items from a person’s bookmarks when they needed inspiration. With little time, we had to identify the product’s central idea, choose what was feasible for an MVP, and divide the work. The experience made clear that collaboration depends on making assumptions and responsibilities explicit. Once we communicated those choices, we found a rhythm and brought the prototype together overnight.
 
 ### SNU × Upstage LLM Project
 
-During the semester, I also joined an LLM project using Upstage’s Solar model. Our team built a conversational coaching service. We started development on a Saturday morning and had about five hours to make a proof of concept and present it. It was hectic, and I was nervous about presenting, but I did it anyway. Afterward, I realized that presenting felt a little less intimidating than before. I think I got more comfortable simply by doing it.
+I also joined a project using Upstage’s Solar model, where our team built a conversational coaching service. We had about five hours on a Saturday to develop a proof of concept and present it. The pace was intense, and I was nervous about presenting, but completing the presentation made the next one feel more manageable. Confidence, I learned, can grow through repeated practice rather than waiting until the nerves disappear.
 
 ![The SNU × Upstage Full-Stack LLM Project course poster](/pictures/blog/2024-midyear-wrap-up/upstage-llm-project.png)
 
 ### Creative Integrated Design: Infinite Healthcare
 
-One of my biggest projects that semester was with Infinite Healthcare. We explored 3D medical-image segmentation using DICOM Viewer and MedSAM. At first, I had to read papers I didn’t fully understand and learn tools I had never used before. I sometimes felt lost. I also studied with friends, and because we were working on something people might actually use, we kept thinking about how to improve the interface. That made the project feel different from just reading about a model. We were trying to make the whole experience work better for someone using it.
+One of the semester’s largest projects was a collaboration with Infinite Healthcare on 3D medical-image segmentation using DICOM Viewer and MedSAM. I had to work through papers I did not yet understand and learn unfamiliar tools, and at times I felt lost. Studying with friends helped, while the possibility of real use pushed us to think beyond the model itself. We considered how the interface could make the workflow more useful for the people relying on it. I began to understand that a technical result is only one part of a working system; the surrounding experience matters too.
 
 ![MedSAM segmentation shown in our DICOM viewer across axial, sagittal, and coronal views](/pictures/blog/2024-midyear-wrap-up/medsam-dicom-viewer.png)
 
 ### Learning to Think Things Through
 
-I had so many team projects this semester, and they made me think a lot about communication. I didn’t realize how hard it could be to express clearly what I wanted to say. In meetings with the company and in our team meetings, we had to make decisions again and again, and I often found that difficult.
+The number of team projects also made communication a central part of my learning. I had not realized how difficult it could be to articulate what I meant, especially when company and team meetings required us to make decisions repeatedly. I often found myself unsure how to move a discussion forward.
 
-Someone has to spend extra time setting an agenda, guiding the meeting, listening carefully, giving feedback, and helping the team decide what to do next. I felt that I could give feedback, but I wasn’t as good at deciding which direction we should take.
+I began to notice the work that makes a meeting productive: setting an agenda, guiding discussion, listening closely, offering feedback, and helping a group choose a next step. I was more comfortable responding to an idea than deciding which direction the team should pursue. Recognizing that difference gave me a more specific skill to work on.
 
-I kept thinking about something I’d heard: at school, someone gives you a problem to solve, but in the real world, you have to find the problem yourself. Figuring out what the problem is, and then finding the energy to work on it, is harder than I had expected. Looking back at my team projects, I think I often relied on other people to make decisions while I focused on the tasks in front of me. I want to get better at thinking things through and making decisions for myself.
+In coursework, the problem is often defined for you. In collaborative work, the harder task can be **deciding which problem deserves attention in the first place**. I found that identifying a problem and building the momentum to address it required more judgment than I expected. Looking back, I often concentrated on the tasks in front of me while relying on others to set direction. I want to become more deliberate about weighing options and taking responsibility for decisions.
 
-Maybe that starts with learning more about the world, paying closer attention to what other people mean and want, and staying curious about them. Lately, I’ve been trying to read more widely and learn about the social issues people care about.
+That growth begins, I think, with understanding more of the world beyond a project brief. I have been trying to read more widely, pay closer attention to what people need and value, and learn about the social issues shaping their lives. Curiosity about people is not separate from problem solving; it helps determine which problems are worth solving.
 
 ## Looking Back
 
-Wow, that semester was full. Looking back, I can still remember how nervous I was before my first hackathon, and how excited I felt when people tried our voice-based autobiography tool. I tried things I hadn’t tried before, met people I ended up becoming close with, and learned a little more each time I started something new.
+The semester was full. Its most lasting moments are still clear, from the nerves before my first hackathon to the excitement of watching people try our autobiography tool. I entered unfamiliar settings, formed friendships, and learned by taking on work I had not done before. Each experience gave me a more concrete sense of what I could learn next.
 
-I still have a lot to learn, but when I look back at the first half of 2024, I feel like I did more than I thought I could. At the time, I just wanted to try different things. I’m glad I did, and I hope I remember what this part of my life felt like.`,
+I still have much to learn, but the first half of 2024 showed me that trying unfamiliar things can reveal capacities I would not have discovered by planning alone. I began with a general wish to explore; I ended with **clearer questions about research, collaboration, and the kinds of problems I want to understand**. I hope to remember not only what I accomplished, but also how those questions began to take shape.`,
     published: true,
   },
   {
