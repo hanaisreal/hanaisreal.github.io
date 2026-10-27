@@ -143,6 +143,67 @@ export const PublicationList: React.FC<{ heading?: string }> = ({ heading = 'Pub
   </section>
 );
 
+// Homepage cards: a full teaser on top; venue, award, title, authors, TL;DR, and
+// links below. Three across on desktop, stacked on phones.
+export const PublicationCards: React.FC = () => (
+  <section id="publications" className="home-sec" data-analytics-section="publications">
+    <div className="home-sec__head">
+      <h2 className="home-sec__heading">Publications</h2>
+      <Link className="home-sec__more" to="/research" data-analytics-event="nav_click" data-analytics-label="All research" data-analytics-placement="publication_cards">
+        all research →
+      </Link>
+    </div>
+    <ul className="pub-cards">
+      {publications.map((pub) => {
+        const to = `/publications/${pub.slug}`;
+        return (
+          <li key={pub.slug} className="pub-card">
+            <Link className="pub-card__thumb" to={to} tabIndex={-1} aria-hidden="true">
+              {pub.thumb && <img src={pub.thumb} alt="" loading="lazy" />}
+            </Link>
+            <span className="pub-card__venue">{pub.venue}</span>
+            {pub.bestPaper && <span className="pub-card__award">🏆 Best Paper Award</span>}
+            <Link
+              className="pub-card__title"
+              to={to}
+              data-analytics-event="publication_open"
+              data-analytics-item-id={pub.slug}
+              data-analytics-item-name={pub.title}
+              data-analytics-placement="publication_cards"
+            >
+              {pub.title}
+            </Link>
+            <AuthorList className="pub-card__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} links={pub.authorLinks} />
+            <p className="pub-card__tldr">{pub.tldr}</p>
+            <span className="pub-card__links">
+              {pub.links?.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-analytics-event="external_link_click"
+                  data-analytics-label={l.label}
+                  data-analytics-destination={l.url}
+                  data-analytics-item-id={pub.slug}
+                >
+                  {l.label === 'PDF' ? <FaRegFilePdf /> : <FaLink />} {l.label.toLowerCase()}
+                </a>
+              ))}
+              <Link to={to} data-analytics-event="publication_open" data-analytics-item-id={pub.slug} data-analytics-placement="publication_cards_details">
+                <FaRegNewspaper /> details
+              </Link>
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+    {publications.some((p) => p.coFirstAuthors?.length) && (
+      <p className="work-note"><sup>*</sup> Equal contribution</p>
+    )}
+  </section>
+);
+
 export const ProjectList: React.FC<{ heading?: string | null }> = ({ heading = 'Projects' }) => (
   <section id="projects" className="work-section" data-analytics-section="projects">
     {heading && <h2 className="sec-heading">{heading}</h2>}

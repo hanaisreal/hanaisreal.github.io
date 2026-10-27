@@ -5,16 +5,73 @@
   "news": [
     {
       "date": "Sep 2026",
-      "html": "<p><strong>ToneCanvas</strong> accepted as a poster at UIST 2026. See you in Detroit!</p>"
+      "icon": "📄",
+      "title": "ToneCanvas accepted to UIST 2026",
+      "html": "<p>Our poster on painting character tone for narrative consistency will appear at UIST 2026 in Detroit.</p>"
+    },
+    {
+      "date": "Summer 2026",
+      "icon": "🧑‍🏫",
+      "title": "Teaching Assistant, Digital Forensics Practicum",
+      "html": "<p>TA for the Digital Forensics Practicum at Seoul National University.</p>"
     },
     {
       "date": "Apr 2026",
-      "html": "<p>Presenting <strong>DeepAware</strong> at CHI 2026 in Barcelona.</p>"
+      "icon": "🇪🇸",
+      "title": "Presented DeepAware at CHI 2026 in Barcelona",
+      "html": "<p>Experiential deepfake simulations to raise cybersecurity awareness among older adults.</p>"
     },
     {
       "date": "Jan 2026",
-      "html": "<p>Two papers accepted to CHI 2026: <strong>DeepAware</strong> and <strong>When Scaffolding Breaks</strong>, with one <strong><span style=\"color: #8e6418\">Best Paper Award</span></strong>.</p>"
+      "icon": "🏆",
+      "title": "Two papers accepted to CHI 2026",
+      "html": "<p><strong>DeepAware</strong> and <strong>When Scaffolding Breaks</strong>, which received a <strong><span style=\"color: #8e6418\">Best Paper Award</span></strong>.</p>"
+    },
+    {
+      "date": "Sep 2025",
+      "icon": "🎓",
+      "title": "Started my M.S. at Seoul National University",
+      "html": "<p>Joined the Human-Centered Computing Lab, advised by Prof. Bongwon Suh.</p>"
     }
+  ],
+  "upcoming": [
+    {
+      "date": "Nov 2026",
+      "icon": "🎤",
+      "text": "ToneCanvas poster at UIST 2026, Detroit"
+    }
+  ],
+  "honors": [
+    {
+      "year": "2026",
+      "text": "Best Paper Award, ACM CHI"
+    },
+    {
+      "year": "2024",
+      "text": "Grand Prize, KAIST Social Impact Challenge"
+    },
+    {
+      "year": "2024",
+      "text": "Top 10 Finalist, Upstage AI Innovation Challenge"
+    }
+  ],
+  "education": [
+    {
+      "years": "2025–",
+      "degree": "M.S., Intelligence and Information",
+      "school": "Seoul National University"
+    },
+    {
+      "years": "2019–2025",
+      "degree": "B.S., Computer Science and Engineering",
+      "school": "Seoul National University"
+    }
+  ],
+  "interests": [
+    "Human-AI Interaction",
+    "LLM Agent Memory",
+    "Personalized AI",
+    "AI in Education"
   ],
   "outside": "<p>Alongside that work, I have been building a small <strong><a href=\"/collections\">world building</a></strong> project: one place to keep the words, images, sites, people, and traces that matter to me beyond research.</p><p>I use it to collect things that do not fit neatly into academic categories, but still shape how I think and what I want to keep learning from.</p><p>Right now it includes a small Daemari translation archive, SHANUM community work, and references I keep returning to, alongside my interest in <strong>speculative thought</strong> and speculative ways of thinking.</p><p>I also like playing <em>tennis</em> and <em>drawing</em>, especially watercolor and small doodles, and I keep a drawing journal when I travel or visit new places.</p>"
 }

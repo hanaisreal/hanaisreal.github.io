@@ -1,9 +1,9 @@
 import React from 'react';
 import Masthead from './Masthead';
-import { ProfileCard, Bio } from './HeroSection';
-import NewsSection from './NewsSection';
+import { HomeHero } from './HeroSection';
+import NewsSection, { SideSections } from './NewsSection';
 import AboutSection from './AboutSection';
-import { PublicationList } from './WorkList';
+import { PublicationCards } from './WorkList';
 import './newPortfolio.css';
 
 
@@ -11,18 +11,16 @@ const NewPortfolio: React.FC = () => {
   return (
     <div>
       <Masthead />
-      <div className="page page--home page--home--paper home-grid">
-        <aside className="home-grid__side">
-          <ProfileCard />
-        </aside>
-        <aside className="home-grid__news">
+      <div className="page page--home page--home--paper home-ac">
+        <HomeHero />
+        <PublicationCards />
+        <div className="home-ac__cols">
           <NewsSection />
-        </aside>
-        <div className="home-grid__main">
-          <Bio />
-          <PublicationList />
-          <AboutSection />
+          <aside className="home-ac__side">
+            <SideSections />
+          </aside>
         </div>
+        <AboutSection />
       </div>
       <footer className="site-footer">
         <span>Hana Oh</span>

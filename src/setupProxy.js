@@ -101,7 +101,7 @@ module.exports = function devEndpoints(app) {
     if (file === 'home') {
       const home = readJson(HOME_FILE);
       if (id === 'profile' && field === 'name') home.name = value.trim();
-      else if (field === 'date') home.news[newsIndex(id)].date = value.trim();
+      else if (field === 'date' || field === 'title') home.news[newsIndex(id)][field] = value.trim();
       else throw new HttpError(400, 'unknown homepage field');
       writeJson(HOME_FILE, home);
       return {};
