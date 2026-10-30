@@ -19,7 +19,7 @@ const DATA_FILES = {
   publications: { file: path.join(DATA, 'publicationsData.ts'), idKey: 'slug', store: 'publications' },
 };
 const PLAIN_FIELDS = ['title', 'subtitle', 'tldr', 'excerpt', 'date', 'category', 'duration', 'tags'];
-const HOME_HTML_KEYS = ['affiliation', 'bio', 'outside'];
+const HOME_HTML_KEYS = ['affiliation', 'bio', 'researchIntro', 'themes', 'outside'];
 const IMAGE_TYPES = /\.(png|jpe?g|gif|webp)$/i;
 
 class HttpError extends Error {

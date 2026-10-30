@@ -101,6 +101,10 @@ const PublicationPage: React.FC = () => {
 
         <PaperHero pub={pub} related={related} />
 
+        {pub.video && (
+          <video className="paper-video" src={pub.video} poster={pub.cardPoster} controls playsInline preload="metadata" />
+        )}
+
         <section className="paper-section" data-analytics-section="publication_abstract">
           <h2 className="paper-section__title">Abstract</h2>
           <p className="paper-abstract">{pub.abstract}</p>

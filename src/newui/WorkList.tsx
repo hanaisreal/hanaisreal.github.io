@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBookmark, FaQuoteRight, FaLink, FaRegFilePdf, FaRegNewspaper, FaAward } from 'react-icons/fa';
 import { publications, type Publication } from '../components/data/publicationsData';
 import { projects } from '../components/data/projectData';
 import AuthorList from './AuthorList';
 import PlainField from './PlainField';
+import RichField from './RichField';
+import home from '../content/home.json';
 
 // Publications and projects in one academic list format: a representative
 // thumbnail on the left; title, authors or timeline, venue, and links on the
@@ -62,9 +64,37 @@ const LinkRow: React.FC<{ links?: { label: string; url: string }[]; itemId: stri
   );
 };
 
+// A muted clip in place of the teaser: it plays while the card is hovered and,
+// on touch screens with no hover, while the card is on screen.
+const CardVideo: React.FC<{ src: string; poster?: string; active: boolean }> = ({ src, poster, active }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    if (active) video.play().catch(() => {});
+    else video.pause();
+  }, [active]);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video || window.matchMedia('(hover: hover)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.6 });
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  return <video ref={ref} src={src} poster={poster} muted loop playsInline preload="auto" aria-hidden="true" />;
+};
+
 // abs and bib open inline below the entry; details goes to the paper's page.
 const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
   const [open, setOpen] = useState<'abs' | 'bib' | null>(null);
+  const [hovered, setHovered] = useState(false);
   const toggle = (panel: 'abs' | 'bib') => setOpen((cur) => (cur === panel ? null : panel));
   const to = `/publications/${pub.slug}`;
   const pdf = pub.links?.find((l) => l.label === 'PDF');
@@ -84,10 +114,12 @@ const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
   );
 
   return (
-    <li className="work work--pub">
+    <li className="work work--pub" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <Link className="work__thumb-block" to={to} tabIndex={-1} aria-hidden="true">
         <span className="work__short">{pub.shortName}</span>
-        {pub.thumb && <span className="work__thumb"><img src={pub.thumb} alt="" loading="lazy" /></span>}
+        {pub.cardVideo ? (
+          <span className="work__thumb"><CardVideo src={pub.cardVideo} poster={pub.cardPoster} active={hovered} /></span>
+        ) : pub.thumb && <span className="work__thumb"><img src={pub.thumb} alt="" loading="lazy" /></span>}
       </Link>
       <div className="work__text">
         <Link
@@ -143,60 +175,57 @@ export const PublicationList: React.FC<{ heading?: string }> = ({ heading = 'Pub
   </section>
 );
 
-// Homepage cards: a full teaser on top; venue, award, title, authors, TL;DR, and
-// links below. Three across on desktop, stacked on phones.
+// Homepage cards: a teaser on top; venue, award, title, authors, TL;DR, and
+// keywords below. The whole card opens the paper page. Three across on desktop, stacked on phones.
+const PublicationCard: React.FC<{ pub: Publication }> = ({ pub }) => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <li>
+      <Link
+        className="pub-card"
+        to={`/publications/${pub.slug}`}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocus={() => setHovered(true)}
+        onBlur={() => setHovered(false)}
+        data-analytics-event="publication_open"
+        data-analytics-item-id={pub.slug}
+        data-analytics-item-name={pub.title}
+        data-analytics-placement="publication_cards"
+      >
+        <span className={`pub-card__thumb${pub.cardVideo ? ' pub-card__thumb--video' : ''}`}>
+          {pub.cardVideo
+            ? <CardVideo src={pub.cardVideo} poster={pub.cardPoster} active={hovered} />
+            : pub.thumb && <img src={pub.thumb} alt="" loading="lazy" />}
+        </span>
+        <span className="pub-card__meta">
+          <span className="pub-card__venue">{pub.venue}</span>
+          {pub.bestPaper && <span className="pub-card__award">🏆 Best Paper</span>}
+        </span>
+        <span className="pub-card__title">{pub.title}</span>
+        <AuthorList className="pub-card__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} />
+        <span className="pub-card__tldr">{pub.tldr}</span>
+        {pub.keywords && (
+          <span className="pub-card__tags">
+            {pub.keywords.map((k) => <span key={k}>{k}</span>)}
+          </span>
+        )}
+      </Link>
+    </li>
+  );
+};
+
 export const PublicationCards: React.FC = () => (
   <section id="publications" className="home-sec" data-analytics-section="publications">
     <div className="home-sec__head">
-      <h2 className="home-sec__heading">Publications</h2>
+      <h2 className="home-sec__heading">Research Highlights</h2>
       <Link className="home-sec__more" to="/research" data-analytics-event="nav_click" data-analytics-label="All research" data-analytics-placement="publication_cards">
         all research →
       </Link>
     </div>
+    <RichField store="home" storeKey="researchIntro" html={home.researchIntro} uploadDir="home" className="home-sec__intro" placement="publication_cards" />
     <ul className="pub-cards">
-      {publications.map((pub) => {
-        const to = `/publications/${pub.slug}`;
-        return (
-          <li key={pub.slug} className="pub-card">
-            <Link className="pub-card__thumb" to={to} tabIndex={-1} aria-hidden="true">
-              {pub.thumb && <img src={pub.thumb} alt="" loading="lazy" />}
-            </Link>
-            <span className="pub-card__venue">{pub.venue}</span>
-            {pub.bestPaper && <span className="pub-card__award">🏆 Best Paper Award</span>}
-            <Link
-              className="pub-card__title"
-              to={to}
-              data-analytics-event="publication_open"
-              data-analytics-item-id={pub.slug}
-              data-analytics-item-name={pub.title}
-              data-analytics-placement="publication_cards"
-            >
-              {pub.title}
-            </Link>
-            <AuthorList className="pub-card__authors" authors={pub.authors} coFirst={pub.coFirstAuthors} links={pub.authorLinks} />
-            <p className="pub-card__tldr">{pub.tldr}</p>
-            <span className="pub-card__links">
-              {pub.links?.map((l) => (
-                <a
-                  key={l.label}
-                  href={l.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-analytics-event="external_link_click"
-                  data-analytics-label={l.label}
-                  data-analytics-destination={l.url}
-                  data-analytics-item-id={pub.slug}
-                >
-                  {l.label === 'PDF' ? <FaRegFilePdf /> : <FaLink />} {l.label.toLowerCase()}
-                </a>
-              ))}
-              <Link to={to} data-analytics-event="publication_open" data-analytics-item-id={pub.slug} data-analytics-placement="publication_cards_details">
-                <FaRegNewspaper /> details
-              </Link>
-            </span>
-          </li>
-        );
-      })}
+      {publications.map((pub) => <PublicationCard key={pub.slug} pub={pub} />)}
     </ul>
     {publications.some((p) => p.coFirstAuthors?.length) && (
       <p className="work-note"><sup>*</sup> Equal contribution</p>

@@ -35,7 +35,6 @@ type ClusterId = 'words' | 'poetry' | 'community' | 'references';
 interface ClusterDef {
   id: ClusterId;
   label: string;
-  note: string;
   systemPhase0: number;
   rotationDeg: number;
   angularSpeed: number;
@@ -148,13 +147,6 @@ function getCardPalette(item: CollectionItem): CardPalette {
         text: 'rgba(11, 54, 31, 0.96)',
         glowRgb: '106, 214, 144',
       };
-    case 'Alan Kay':
-      return {
-        start: 'rgba(116, 191, 255, 0.96)',
-        end: 'rgba(58, 107, 255, 0.94)',
-        text: 'rgba(12, 31, 78, 0.96)',
-        glowRgb: '88, 154, 255',
-      };
     case 'Bret Victor':
       return {
         start: 'rgba(255, 194, 97, 0.97)',
@@ -183,8 +175,7 @@ const SYSTEM_ORBIT = {
 
 const WORD_CLUSTER: ClusterDef = {
   id: 'words',
-  label: 'Collected Words',
-  note: 'living collection',
+  label: 'Words',
   systemPhase0: 0.52,
   rotationDeg: -18,
   angularSpeed: (2 * Math.PI) / 156,
@@ -194,8 +185,7 @@ const WORD_CLUSTER: ClusterDef = {
 
 const POETRY_CLUSTER: ClusterDef = {
   id: 'poetry',
-  label: 'Poetry Archive',
-  note: 'Daemari · archived',
+  label: 'Translation',
   systemPhase0: 3.67,
   rotationDeg: 18,
   angularSpeed: (2 * Math.PI) / 192,
@@ -205,8 +195,7 @@ const POETRY_CLUSTER: ClusterDef = {
 
 const COMMUNITY_CLUSTER: ClusterDef = {
   id: 'community',
-  label: 'Community Care',
-  note: 'SHANUM · multicultural service',
+  label: 'Community',
   systemPhase0: 1.88,
   rotationDeg: -8,
   angularSpeed: (2 * Math.PI) / 174,
@@ -216,8 +205,7 @@ const COMMUNITY_CLUSTER: ClusterDef = {
 
 const REFERENCES_CLUSTER: ClusterDef = {
   id: 'references',
-  label: 'Saved References',
-  note: 'works I return to',
+  label: 'References',
   systemPhase0: 5.08,
   rotationDeg: 12,
   angularSpeed: (2 * Math.PI) / 186,
@@ -415,7 +403,7 @@ const PHOTO_STARS = RANDOM_UNIVERSE.photoStars;
 
 // ── Sticker layout ──────────────────────────────────────────────────────────
 // depth: px movement per unit tilt. higher = floats more in foreground.
-// z-order: plant-eye(12) → path(13) → flowers+pine(14) → frog+clouds(15)
+// z-order: path(13) → flowers+pine(14) → frog+clouds(15)
 //          → cloud-large(16) → butterfly+frog-pixel+crane(17)
 // Shifted up (+10) so the orbiting photo bubbles (z-index ~2-11, see depthZ)
 // always sit behind every sticker — just in front of the background, never on
@@ -433,7 +421,7 @@ interface Sticker {
 
 const STICKERS: Sticker[] = [
   // ground — most anchored, barely moves
-  { src: 'plant-eye.png',    style: { left: '-4%',   bottom: '14%', width: '32%', zIndex: 12 }, depth: 3,  flyDir: { x: -1,   y: 1   } },
+  // { src: 'plant-eye.png', style: { left: '-4%',   bottom: '14%', width: '32%', zIndex: 12 }, depth: 3,  flyDir: { x: -1,   y: 1   } },
   { src: 'path.png',         style: { left:  '4%',   bottom: '-4%', width: '92%', zIndex: 13 }, depth: 2,  flyDir: { x: 0,    y: 1   } },
   // foreground — slightly lifted off ground
   { src: 'flowers.png',      style: { left: '-4%',   bottom:  '0%', width: '67%', zIndex: 14 }, depth: 7,  flyDir: { x: -1,   y: 1   } },
@@ -603,10 +591,7 @@ const CollectionsPage: React.FC = () => {
   const getCardSubtitle = (item: CollectionItem) => {
     if (lang === 'en' && item.cardLabelEn) return item.cardLabelEn;
     if (lang === 'ko' && item.cardLabel) return item.cardLabel;
-    if (item.kind === 'poetry') return 'translation archive';
-    if (item.kind === 'reference') return 'saved reference';
-    if (item.kind === 'activity') return 'community thread';
-    return item.language;
+    return null;
   };
 
   const showPreviousImage = () => {
@@ -838,7 +823,6 @@ const CollectionsPage: React.FC = () => {
                       <span className="collage-cluster__anchor" />
                       <span className="collage-cluster__label">
                         <strong>{cluster.label}</strong>
-                        <span>{cluster.note}</span>
                       </span>
                     </>
                   )}
@@ -900,14 +884,14 @@ const CollectionsPage: React.FC = () => {
                       <img src={item.src} alt="" draggable={false} loading="lazy" decoding="async" />
                       {item.kind === 'reference' && (
                         <span className="collage-photo-star__badge" aria-hidden="true">
-                          Ori Ease · screenshot
+                          Ori Ease
                         </span>
                       )}
                     </>
                   ) : (
                     <span className="collage-photo-star__card" aria-hidden="true">
                       <strong>{getCardTitle(item)}</strong>
-                      <span>{getCardSubtitle(item)}</span>
+                      {getCardSubtitle(item) && <span>{getCardSubtitle(item)}</span>}
                     </span>
                   )}
                 </button>
@@ -918,7 +902,7 @@ const CollectionsPage: React.FC = () => {
               // Foreground stuff (high depth — clouds, butterfly) blows up huge and flies
               // outward toward whichever edge it's already near — passing right through
               // the frame and out the side, fully opaque the whole way, rather than fading
-              // out in place. Grounded stuff (path, plant-eye) barely moves.
+              // out in place. Grounded stuff (the path) barely moves.
               // vw/vh, not %, and placed outside the scale() in the transform chain — a
               // %-based translate is relative to the element's OWN (unscaled) size, so as
               // flyScale grows that fixed offset becomes proportionally tiny and the thing

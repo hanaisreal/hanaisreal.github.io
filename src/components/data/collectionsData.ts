@@ -31,20 +31,10 @@ export const poetryProjects: CollectionItem[] = [
     language: "poetry",
     cardLabel: "번역 아카이브",
     cardLabelEn: "translation archive",
-    meta: "2020.07 · 정춘근 · 대마리, 지뢰꽃마을",
-    metaEn: "July 2020 · Jeong Choon-geun · Daemari, The Village of Landmine Flower",
-    description:
-      "2020년 7월, 정춘근 시집 『대마리, 지뢰꽃마을』 속 두 편의 시를 번역하며 남긴 작은 번역 아카이브.",
-    descriptionEn:
-      "A small translation archive built around two poems I translated in July 2020 from Jeong Choon-geun's Daemari, The Village of Landmine Flower.",
-    glance: "시 번역, 장소, 기억에 대한 개인 아카이브.",
-    glanceEn: "A small archive of poetry translation, place, and memory.",
-    curatorNote:
-      "번역을 통해 장소의 공기와 정서를 얼마나 옮길 수 있는지 궁금해서 시작했던 작업이다. 대마리는 철원의 실제 마을이고, 시집은 분단과 지뢰의 긴장이 남아 있는 풍경을 계속 돌아본다.",
-    curatorNoteEn:
-      "I started this to see how much translation could hold onto a place's atmosphere as well as its meaning. Daemari is a real village in Cheorwon, and the collection keeps returning to its landscape, division, and the quiet tension of landmine-marked borders.",
-    source: "정춘근, 『대마리, 지뢰꽃마을』",
-    sourceEn: "Jeong Choon-geun, Daemari, The Village of Landmine Flower",
+    meta: "2020.07",
+    metaEn: "July 2020",
+    description: "정춘근 시집 『대마리, 지뢰꽃마을』에서 시 두 편을 번역했다.",
+    descriptionEn: "Two poems I translated from Jeong Choon-geun's Daemari, The Village of Landmine Flower.",
   },
 ];
 
@@ -199,23 +189,9 @@ export const communityActivities: CollectionItem[] = [
     language: "community",
     meta: "2026.05.19 · Seoul National University & Gwanaksan",
     metaEn: "May 19, 2026 · Seoul National University & Gwanaksan",
-    description:
-      "서울대학교와 관악산 일대에서 쓰레기를 수거하며, 지역 사회와 함께 환경 지속가능성을 실천한 플로깅 활동.",
-    descriptionEn:
-      "Collected litter around Seoul National University and Gwanaksan while promoting environmental sustainability through community volunteering.",
-    glance: "지역 돌봄, 지속가능성, 다문화 커뮤니티 활동.",
-    glanceEn: "A local thread of care, sustainability, and multicultural community work.",
+    description: "샤눔과 함께 캠퍼스와 관악산에서 플로깅을 했다.",
+    descriptionEn: "Plogging around campus and Gwanaksan with SHANUM.",
     src: `${BASE}/pictures/community/shanum-plogging-forest.webp`,
-    gallery: [
-      `${BASE}/pictures/community/shanum-plogging-forest.webp`,
-      `${BASE}/pictures/community/shanum-plogging-gate.webp`,
-    ],
-    curatorNote:
-      "서울대학교 사회적 책임 다문화 봉사 동아리 샤눔에서 진행한 활동이다. 지역 안에서 지속가능성과 돌봄을 함께 실천하는 방식에 더 가깝다.",
-    curatorNoteEn:
-      "This was organized through SHANUM, the multicultural volunteer society for social responsibility at Seoul National University. For me, it sits within a broader thread of local care, shared responsibility, and multicultural community work.",
-    source: "서울대학교 샤눔 다문화 봉사 활동",
-    sourceEn: "Volunteer at SHANUM Multicultural Society for Social Responsibility at Seoul National University",
   },
 ];
 
@@ -228,15 +204,6 @@ export const referenceProjects: CollectionItem[] = [
     keywordLabel: "Engelbart",
     meta: "1962 · Augmenting Human Intellect",
     href: "https://www.dougengelbart.org/pubs/papers/scanned/Doug_Engelbart-AugmentingHumanIntellect.pdf",
-  },
-  {
-    kind: 'reference',
-    korean: "Alan Kay",
-    original: "Alan Kay",
-    language: "reference",
-    keywordLabel: "Alan Kay",
-    meta: "1977 · Personal Dynamic Media",
-    href: "https://augmentingcognition.com/assets/Kay1977.pdf",
   },
   {
     kind: 'reference',

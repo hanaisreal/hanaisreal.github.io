@@ -1,43 +1,57 @@
 {
   "name": "Hana Oh",
   "affiliation": "<p>M.S. Student, Intelligence and Information<br>Seoul National University</p>",
-  "bio": "<p>Hello! I am an HCI Master’s student at Seoul National University, advised by Prof. <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://scholar.google.com/citations?user=-nlhtEkAAAAJ&amp;hl=en\">Bongwon Suh</a>. My current research asks: How can LLM agents remember a person’s experiences over time and use those memories in future interactions?</p><p>During my undergraduate studies at SNU, I worked with Prof. <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.hajinlim.com/\">Hajin Lim</a> on personalized AI simulations and with Prof. <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://juhokim.com/\">Juho Kim</a> at KAIST on LLM use in real classrooms.</p><p>Across my projects, I have learned to:</p><ul><li><p><strong>Design evaluations beyond standard metrics.</strong> Analyzing K–12 students’ interactions with AI writing support, I examined how students with different levels of writing proficiency used AI and incorporated AI-generated sentences into their essays.</p></li><li><p><strong>Build robust LLM memory systems.</strong> Developing a conversational memory architecture, I focused on retrieving episodes with temporal context and preserving source dialogue to retain details that summaries may lose.</p></li><li><p><strong>Study people in real-world contexts.</strong> Designing personalized AI simulations with participants’ own faces and voices, I evaluated how 21 older adults experienced them in a real-world setting.</p></li></ul><p></p>",
+  "bio": "<p>Hello! I am an HCI Master’s student at Seoul National University, advised by Prof. <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://scholar.google.com/citations?user=-nlhtEkAAAAJ&amp;hl=en\">Bongwon Suh</a>. My research focuses on building and evaluating human-centered AI systems. Most recently, I have been studying how conversational systems can model long-term human memory and evaluating them with long-dialogue benchmarks.</p><p>During my undergraduate studies at SNU, I worked with Prof. <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://www.hajinlim.com/\">Hajin Lim</a> on personalized AI simulations and with Prof. <a target=\"_blank\" rel=\"noopener noreferrer nofollow\" href=\"https://juhokim.com/\">Juho Kim</a> at KAIST on LLM use in real classrooms.</p>",
+  "researchIntro": "<p>Human-centered AI systems for <strong>writing</strong>, <strong>learning</strong>, and <strong>online safety</strong>, evaluated with the people who use them.</p>",
+  "themes": "<p>Across my projects, I have learned to:</p><ul><li><p><strong>Design evaluations beyond standard metrics.</strong> Analyzing K–12 students’ interactions with AI writing support, I examined how students with different levels of writing proficiency used AI and incorporated AI-generated sentences into their essays.</p></li><li><p><strong>Build robust LLM memory systems.</strong> Developing a conversational memory architecture, I focused on retrieving episodes with temporal context and preserving source dialogue to retain details that summaries may lose.</p></li><li><p><strong>Study people in real-world contexts.</strong> Designing personalized AI simulations with participants’ own faces and voices, I evaluated how 21 older adults experienced them in a real-world setting.</p></li></ul><p></p>",
   "news": [
     {
       "date": "Sep 2026",
-      "icon": "📄",
+      "icon": "research-paper",
       "title": "ToneCanvas accepted to UIST 2026",
       "html": "<p>Our poster on painting character tone for narrative consistency will appear at UIST 2026 in Detroit.</p>"
     },
     {
       "date": "Summer 2026",
-      "icon": "🧑‍🏫",
+      "icon": "teaching",
       "title": "Teaching Assistant, Digital Forensics Practicum",
       "html": "<p>TA for the Digital Forensics Practicum at Seoul National University.</p>"
     },
     {
       "date": "Apr 2026",
-      "icon": "🇪🇸",
+      "icon": "conference-talk",
       "title": "Presented DeepAware at CHI 2026 in Barcelona",
       "html": "<p>Experiential deepfake simulations to raise cybersecurity awareness among older adults.</p>"
     },
     {
       "date": "Jan 2026",
-      "icon": "🏆",
+      "icon": "award",
       "title": "Two papers accepted to CHI 2026",
       "html": "<p><strong>DeepAware</strong> and <strong>When Scaffolding Breaks</strong>, which received a <strong><span style=\"color: #8e6418\">Best Paper Award</span></strong>.</p>"
     },
     {
       "date": "Sep 2025",
-      "icon": "🎓",
+      "icon": "graduate-school",
       "title": "Started my M.S. at Seoul National University",
       "html": "<p>Joined the Human-Centered Computing Lab, advised by Prof. Bongwon Suh.</p>"
+    },
+    {
+      "date": "Aug 2025",
+      "icon": "graduation",
+      "title": "Graduated from Seoul National University",
+      "html": "<p>B.S. in Computer Science and Engineering, with a double major in Business Administration.</p>"
+    },
+    {
+      "date": "Summer 2024",
+      "icon": "travel",
+      "title": "SNU in Silicon Valley Program at UC Berkeley",
+      "html": "<p>Spent the summer at UC Berkeley through the SNU in Silicon Valley Program.</p>"
     }
   ],
   "upcoming": [
     {
       "date": "Nov 2026",
-      "icon": "🎤",
+      "icon": "conference-talk",
       "text": "ToneCanvas poster at UIST 2026, Detroit"
     }
   ],
@@ -73,5 +87,5 @@
     "Personalized AI",
     "AI in Education"
   ],
-  "outside": "<p>Alongside that work, I have been building a small <strong><a href=\"/collections\">world building</a></strong> project: one place to keep the words, images, sites, people, and traces that matter to me beyond research.</p><p>I use it to collect things that do not fit neatly into academic categories, but still shape how I think and what I want to keep learning from.</p><p>Right now it includes a small Daemari translation archive, SHANUM community work, and references I keep returning to, alongside my interest in <strong>speculative thought</strong> and speculative ways of thinking.</p><p>I also like playing <em>tennis</em> and <em>drawing</em>, especially watercolor and small doodles, and I keep a drawing journal when I travel or visit new places.</p>"
+  "outside": "<p>Outside research, I keep a small <strong><a href=\"/collections\">world building</a></strong> page. It holds words from other languages, my translation of poems about Daemari, volunteer work with SHANUM, and references I keep coming back to.</p><p>I also like playing <em>tennis</em> and <em>drawing</em>, especially watercolor and small doodles, and I keep a drawing journal when I travel or visit new places.</p>"
 }
