@@ -46,7 +46,7 @@ export interface Publication {
   links?: PublicationLink[];
   image?: string;
   thumb?: string;          // 16:10 list thumbnail
-  cardVideo?: string;      // muted clip that plays over the homepage card thumbnail on hover
+  cardVideo?: string;      // muted looping clip shown in place of the card and list thumbnail
   cardPoster?: string;     // still shown before a video plays
   video?: string;          // full video with sound, shown at the top of the paper page
   storyBlocks?: PublicationStoryBlock[];

@@ -64,26 +64,18 @@ const LinkRow: React.FC<{ links?: { label: string; url: string }[]; itemId: stri
   );
 };
 
-// A muted clip in place of the teaser: it plays while the card is hovered and,
-// on touch screens with no hover, while the card is on screen.
-const CardVideo: React.FC<{ src: string; poster?: string; active: boolean }> = ({ src, poster, active }) => {
+// A muted clip in place of the teaser. It loops while on screen and pauses
+// when scrolled away; with reduced motion it stays on the poster.
+const CardVideo: React.FC<{ src: string; poster?: string }> = ({ src, poster }) => {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const video = ref.current;
-    if (!video) return;
-    if (active) video.play().catch(() => {});
-    else video.pause();
-  }, [active]);
-
-  useEffect(() => {
-    const video = ref.current;
-    if (!video || window.matchMedia('(hover: hover)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) video.play().catch(() => {});
       else video.pause();
-    }, { threshold: 0.6 });
+    }, { threshold: 0.25 });
     observer.observe(video);
     return () => observer.disconnect();
   }, []);
@@ -94,7 +86,6 @@ const CardVideo: React.FC<{ src: string; poster?: string; active: boolean }> = (
 // abs and bib open inline below the entry; details goes to the paper's page.
 const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
   const [open, setOpen] = useState<'abs' | 'bib' | null>(null);
-  const [hovered, setHovered] = useState(false);
   const toggle = (panel: 'abs' | 'bib') => setOpen((cur) => (cur === panel ? null : panel));
   const to = `/publications/${pub.slug}`;
   const pdf = pub.links?.find((l) => l.label === 'PDF');
@@ -114,11 +105,11 @@ const PublicationEntry: React.FC<{ pub: Publication }> = ({ pub }) => {
   );
 
   return (
-    <li className="work work--pub" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <li className="work work--pub">
       <Link className="work__thumb-block" to={to} tabIndex={-1} aria-hidden="true">
         <span className="work__short">{pub.shortName}</span>
         {pub.cardVideo ? (
-          <span className="work__thumb"><CardVideo src={pub.cardVideo} poster={pub.cardPoster} active={hovered} /></span>
+          <span className="work__thumb"><CardVideo src={pub.cardVideo} poster={pub.cardPoster} /></span>
         ) : pub.thumb && <span className="work__thumb"><img src={pub.thumb} alt="" loading="lazy" /></span>}
       </Link>
       <div className="work__text">
@@ -178,16 +169,11 @@ export const PublicationList: React.FC<{ heading?: string }> = ({ heading = 'Pub
 // Homepage cards: a teaser on top; venue, award, title, authors, TL;DR, and
 // keywords below. The whole card opens the paper page. Three across on desktop, stacked on phones.
 const PublicationCard: React.FC<{ pub: Publication }> = ({ pub }) => {
-  const [hovered, setHovered] = useState(false);
   return (
     <li>
       <Link
         className="pub-card"
         to={`/publications/${pub.slug}`}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onFocus={() => setHovered(true)}
-        onBlur={() => setHovered(false)}
         data-analytics-event="publication_open"
         data-analytics-item-id={pub.slug}
         data-analytics-item-name={pub.title}
@@ -195,7 +181,7 @@ const PublicationCard: React.FC<{ pub: Publication }> = ({ pub }) => {
       >
         <span className={`pub-card__thumb${pub.cardVideo ? ' pub-card__thumb--video' : ''}`}>
           {pub.cardVideo
-            ? <CardVideo src={pub.cardVideo} poster={pub.cardPoster} active={hovered} />
+            ? <CardVideo src={pub.cardVideo} poster={pub.cardPoster} />
             : pub.thumb && <img src={pub.thumb} alt="" loading="lazy" />}
         </span>
         <span className="pub-card__meta">
