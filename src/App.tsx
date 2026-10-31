@@ -1,6 +1,5 @@
-import React, { Suspense, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { pickBackground, BackgroundItem } from './components/data/backgroundsData';
+import React, { Suspense } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import AnalyticsTracker from './AnalyticsTracker';
 import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
@@ -16,17 +15,6 @@ import ProjectPage from './pages/ProjectPage';
 const EditHost = process.env.NODE_ENV === 'development' ? React.lazy(() => import('./newui/edit/EditHost')) : null;
 
 const App: React.FC = () => {
-  const [bg] = useState<BackgroundItem>(() => pickBackground(new Date().getHours()));
-  const [bgLoaded, setBgLoaded] = useState(false);
-  const location = useLocation();
-  const isCollections = location.pathname.startsWith('/collections');
-
-  React.useEffect(() => {
-    const img = new window.Image();
-    img.onload = () => setBgLoaded(true);
-    img.src = `/pictures/backgrounds/${bg.file}`;
-  }, [bg.file]);
-
   const routes = (
     <Routes>
       <Route path="/" element={<NewPortfolio />} />
@@ -45,14 +33,6 @@ const App: React.FC = () => {
     <>
       <AnalyticsTracker />
       <SeoHead />
-      <div
-        id="site-bg"
-        className={[
-          bgLoaded ? 'is-loaded' : '',
-          isCollections ? 'site-bg--blurred' : '',
-        ].join(' ').trim()}
-        style={{ backgroundImage: `url('/pictures/backgrounds/${bg.file}')` }}
-      />
       {EditHost ? (
         <Suspense fallback={null}>
           <EditHost>{routes}</EditHost>

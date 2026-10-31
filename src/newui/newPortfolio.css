@@ -30,38 +30,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── PERSISTENT BACKGROUND ── */
-#site-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0;
-  transition: opacity 0.8s ease, filter 0.4s ease;
-}
-#site-bg.is-loaded {
-  opacity: 1;
-}
-#site-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.42);
-  transition: background 0.4s ease;
-}
-
-/* Collections page: the framed illustration sits in front, so push the
-   rotating photo back into soft ambient light instead of competing detail. */
-#site-bg.site-bg--blurred {
-  filter: blur(28px) saturate(0.85);
-  transform: scale(1.1);
-}
-#site-bg.site-bg--blurred::after {
-  background: rgba(0,0,0,0.6);
-}
-
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { font: inherit; cursor: pointer; background: none; border: none; padding: 0; color: inherit; }
@@ -3238,8 +3206,9 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   color: var(--text);
   text-decoration: none;
 }
-.home-hero__links .home-icon { flex: none; width: 1.25rem; height: 1.25rem; object-fit: contain; }
-.home-hero__links a:hover { color: var(--link); }
+.home-hero__links .home-icon { flex: none; width: 0.95rem; height: 0.95rem; color: var(--text); }
+.home-hero__links a:hover,
+.home-hero__links a:hover .home-icon { color: var(--link); }
 
 .home-sec__head,
 .home-sec__heading {
@@ -3401,9 +3370,9 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   gap: 0.75rem;
   font-family: var(--font-body);
 }
-.home-news__item { display: grid; grid-template-columns: 2rem minmax(0, 1fr); column-gap: 0.6rem; }
-.home-news__icon { width: 2rem; height: 2rem; object-fit: contain; margin-top: 0.1rem; }
-.home-side-list__icon { flex: none; width: 1.45rem; height: 1.45rem; object-fit: contain; }
+.home-news__item { display: grid; grid-template-columns: 1rem minmax(0, 1fr); column-gap: 0.6rem; }
+.home-news__icon { width: 0.9rem; height: 0.9rem; margin-top: 0.25rem; color: var(--text); }
+.home-side-list__icon { flex: none; width: 0.85rem; height: 0.85rem; margin-top: 0.3rem; color: var(--text); }
 .home-news__date { display: block; font-size: 0.76rem; color: var(--muted); }
 .home-news__title { margin: 0.05rem 0 0.1rem; font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
 .home-news__text { font-size: 0.88rem; line-height: 1.45; color: var(--muted); }
@@ -3421,7 +3390,7 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   font-size: 0.88rem;
   line-height: 1.38;
 }
-.home-side-list li { display: grid; grid-template-columns: 1.45rem minmax(0, 1fr); column-gap: 0.55rem; align-items: start; }
+.home-side-list li { display: grid; grid-template-columns: 0.9rem minmax(0, 1fr); column-gap: 0.55rem; align-items: start; }
 .home-side-list__date { display: block; font-size: 0.78rem; color: var(--muted); }
 .home-side-list__sub { display: block; font-size: 0.86rem; color: var(--muted); }
 .home-chips {
@@ -3487,3 +3456,37 @@ button { font: inherit; cursor: pointer; background: none; border: none; padding
   .pub-card__tldr { min-height: 0; margin-top: 0.35rem; }
   .home-ac__cols { row-gap: 2.6rem; }
 }
+
+/* ── PLAIN PAGES ──
+   White page with no background photo: sheets drop their card frame and the
+   nav switches to dark ink. Kept last so it wins over the rules above. */
+:root {
+  --text: #1c1410;
+  --muted: #6b5d52;
+  --link: #1f5fbf;
+  --border: rgba(0, 0, 0, 0.12);
+}
+body { background-color: #fff; }
+:is(.page, .page--home--paper, .page--research) {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
+}
+.site-nav,
+.site-nav.is-scrolled { text-shadow: none; }
+.site-nav.is-scrolled .site-nav__inner {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: var(--border);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.site-nav__link { color: var(--muted); text-shadow: none; }
+.site-nav__link:hover,
+.site-nav__link.is-active { color: var(--text); }
+/* Worldbuilding: the nav floats over the dark night-sky picture, so it stays light there. */
+.collage-page .site-nav__link { color: rgba(255, 255, 255, 0.78); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); }
+.collage-page .site-nav__link:hover,
+.collage-page .site-nav__link.is-active { color: #fff; }
