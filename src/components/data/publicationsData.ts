@@ -90,6 +90,10 @@ export const publications: Publication[] = [
     ],
     links: [
       {
+        label: "UIST Program",
+        url: "https://programs.sigchi.org/uist/2026/program/session/278204",
+      },
+      {
         label: "PDF",
         url: `${BASE}/papers/tonecanvas.pdf`,
       },
