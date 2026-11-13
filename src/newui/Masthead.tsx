@@ -5,7 +5,6 @@ const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
   { to: '/research', label: 'Research', end: false },
   { to: '/blog', label: 'Blog', end: false },
-  { to: '/collections', label: 'Worldbuilding', end: false },
 ];
 
 const Masthead: React.FC = () => {

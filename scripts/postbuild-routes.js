@@ -80,7 +80,6 @@ function buildSitemap(routes) {
       route === '/blog' ? '0.8' :
       route.startsWith('/publications/') ? '0.8' :
       route.startsWith('/projects/') ? '0.8' :
-      route === '/collections' ? '0.6' :
       '0.5';
 
     lines.push('  <url>');
@@ -108,7 +107,6 @@ function main() {
     '/',
     '/research',
     '/blog',
-    '/collections',
     ...projectSlugs.map((slug) => `/projects/${slug}`),
     ...publicationSlugs.map((slug) => `/publications/${slug}`),
   ];

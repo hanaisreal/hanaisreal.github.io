@@ -2,7 +2,6 @@ import React from 'react';
 import Masthead from './Masthead';
 import { HomeHero } from './HeroSection';
 import NewsSection, { SideSections } from './NewsSection';
-import AboutSection from './AboutSection';
 import { PublicationCards } from './WorkList';
 import './newPortfolio.css';
 
@@ -20,7 +19,6 @@ const NewPortfolio: React.FC = () => {
             <SideSections />
           </aside>
         </div>
-        <AboutSection />
       </div>
       <footer className="site-footer">
         <span>Hana Oh</span>

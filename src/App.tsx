@@ -4,7 +4,6 @@ import AnalyticsTracker from './AnalyticsTracker';
 import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
 import ResearchPage from './pages/ResearchPage';
-import CollectionsPage from './pages/CollectionsPage';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import PublicationPage from './pages/PublicationPage';
@@ -22,7 +21,6 @@ const App: React.FC = () => {
       <Route path="/projects" element={<Navigate to="/research" replace />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
-      <Route path="/collections" element={<CollectionsPage />} />
       <Route path="/publications/:slug" element={<PublicationPage />} />
       <Route path="/projects/:slug" element={<ProjectPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />

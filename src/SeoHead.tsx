@@ -215,31 +215,6 @@ function getSeoConfig(pathname: string): SeoConfig {
     }
   }
 
-  if (path === '/collections') {
-    return {
-      title: 'Collections | Hana Oh',
-      description:
-        'A personal worldbuilding and visual archive by Hana Oh, gathering words, images, and references into an interactive collection.',
-      canonicalPath: '/collections',
-      type: 'website',
-      structuredData: [
-        {
-          '@context': 'https://schema.org',
-          '@type': 'WebPage',
-          name: 'Collections',
-          url: absoluteUrl('/collections'),
-          description:
-            'A personal worldbuilding and visual archive by Hana Oh, gathering words, images, and references into an interactive collection.',
-          isPartOf: absoluteUrl('/'),
-        },
-        buildBreadcrumb([
-          { name: 'Home', path: '/' },
-          { name: 'Collections', path: '/collections' },
-        ]),
-      ],
-    };
-  }
-
   if (path.startsWith('/projects/')) {
     const slug = path.replace('/projects/', '');
     const project = getProjectBySlug(slug);
