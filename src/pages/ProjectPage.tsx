@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import Masthead from '../newui/Masthead';
 import { mediaFirst } from '../newui/storyOrder';
 import PlainField from '../newui/PlainField';
 import RichField from '../newui/RichField';
@@ -98,7 +97,7 @@ const ProjectPage: React.FC = () => {
   }, [slug]);
 
   React.useEffect(() => {
-    if (!project) navigate('/research');
+    if (!project) navigate('/');
   }, [project, navigate]);
 
   if (!project) return null;
@@ -107,16 +106,15 @@ const ProjectPage: React.FC = () => {
 
   return (
     <div>
-      <Masthead />
       <div className="page page--publication page--project page--paper">
         <Link
-          to="/research"
+          to="/"
           className="essay-post__back"
           data-analytics-event="nav_click"
-          data-analytics-label="Back to research"
+          data-analytics-label="Back to home"
           data-analytics-placement="project_detail"
         >
-          &larr; Research
+          &larr; Home
         </Link>
 
         <header className="proj-hero" data-analytics-section="project_header">
@@ -229,13 +227,13 @@ const ProjectPage: React.FC = () => {
 
         <div className="essay-post__footer">
           <Link
-            to="/research"
+            to="/"
             className="essay-post__back"
             data-analytics-event="nav_click"
-            data-analytics-label="Back to research footer"
+            data-analytics-label="Back to home footer"
             data-analytics-placement="project_detail_footer"
           >
-            &larr; Back to Research
+            &larr; Back to Home
           </Link>
         </div>
       </div>

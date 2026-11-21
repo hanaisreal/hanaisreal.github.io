@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBookmark, FaQuoteRight, FaLink, FaRegFilePdf, FaRegNewspaper, FaAward } from 'react-icons/fa';
+import { FaBookmark, FaQuoteRight, FaLink, FaRegFilePdf, FaRegNewspaper, FaAward, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { publications, type Publication } from '../components/data/publicationsData';
 import { projects } from '../components/data/projectData';
 import AuthorList from './AuthorList';
@@ -203,12 +203,7 @@ const PublicationCard: React.FC<{ pub: Publication }> = ({ pub }) => {
 
 export const PublicationCards: React.FC = () => (
   <section id="publications" className="home-sec" data-analytics-section="publications">
-    <div className="home-sec__head">
-      <h2 className="home-sec__heading">Research Highlights</h2>
-      <Link className="home-sec__more" to="/research" data-analytics-event="nav_click" data-analytics-label="All research" data-analytics-placement="publication_cards">
-        all research →
-      </Link>
-    </div>
+    <h2 className="home-sec__heading">Research Highlights</h2>
     <RichField store="home" storeKey="researchIntro" html={home.researchIntro} uploadDir="home" className="home-sec__intro" placement="publication_cards" />
     <ul className="pub-cards">
       {publications.map((pub) => <PublicationCard key={pub.slug} pub={pub} />)}
@@ -218,6 +213,50 @@ export const PublicationCards: React.FC = () => (
     )}
   </section>
 );
+
+// The homepage's last section: earlier projects in one row that scrolls
+// sideways (swipe, trackpad, or the arrow buttons). Each card opens its page.
+export const ProjectStrip: React.FC = () => {
+  const row = useRef<HTMLUListElement>(null);
+  const scrollBy = (dir: 1 | -1) => {
+    const el = row.current;
+    const card = el?.querySelector('li');
+    if (el && card) el.scrollBy({ left: dir * (card.getBoundingClientRect().width + 16), behavior: 'smooth' });
+  };
+
+  return (
+    <section id="projects" className="home-sec" data-analytics-section="projects">
+      <div className="home-sec__head">
+        <h2 className="home-sec__heading">Other Projects</h2>
+        <span className="proj-strip__arrows">
+          <button type="button" aria-label="Previous projects" onClick={() => scrollBy(-1)}><FaChevronLeft /></button>
+          <button type="button" aria-label="More projects" onClick={() => scrollBy(1)}><FaChevronRight /></button>
+        </span>
+      </div>
+      <ul className="proj-strip" ref={row}>
+        {projects.map((project) => (
+          <li key={project.slug}>
+            <Link
+              className="proj-strip__card"
+              to={`/projects/${project.slug}`}
+              data-analytics-event="project_open"
+              data-analytics-item-id={project.slug}
+              data-analytics-item-name={project.title}
+              data-analytics-placement="project_strip"
+            >
+              <span className="proj-strip__thumb">
+                <img src={project.thumb ?? project.image} alt="" loading="lazy" />
+              </span>
+              {project.duration && <span className="proj-strip__date">{project.duration}</span>}
+              <span className="proj-strip__title">{project.title}</span>
+              <span className="proj-strip__tldr">{project.tldr}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
 
 export const ProjectList: React.FC<{ heading?: string | null }> = ({ heading = 'Projects' }) => (
   <section id="projects" className="work-section" data-analytics-section="projects">

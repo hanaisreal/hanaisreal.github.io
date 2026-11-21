@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import Masthead from '../newui/Masthead';
 import { BibtexBlock, PaperHero } from '../newui/PaperHero';
 import AuthorList from '../newui/AuthorList';
 import RichField from '../newui/RichField';
@@ -84,7 +83,6 @@ const PublicationPage: React.FC = () => {
 
   return (
     <div>
-      <Masthead />
       <div className="page page--publication page--paper">
         <Link
           to="/"

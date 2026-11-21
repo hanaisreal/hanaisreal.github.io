@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AnalyticsTracker from './AnalyticsTracker';
 import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
-import ResearchPage from './pages/ResearchPage';
 import PublicationPage from './pages/PublicationPage';
 import ProjectPage from './pages/ProjectPage';
 
@@ -15,8 +14,10 @@ const App: React.FC = () => {
   const routes = (
     <Routes>
       <Route path="/" element={<NewPortfolio />} />
-      <Route path="/research" element={<ResearchPage />} />
-      <Route path="/projects" element={<Navigate to="/research" replace />} />
+      {/* The Research page is hidden for now: publications and projects are on the
+          homepage. To bring it back, route /research to <ResearchPage /> from ./pages. */}
+      <Route path="/research" element={<Navigate to="/" replace />} />
+      <Route path="/projects" element={<Navigate to="/" replace />} />
       {/* Blog is hidden for now: its pages send visitors home. To bring it back,
           route /blog to <Blog /> and /blog/:slug to <BlogPost /> from ./pages. */}
       <Route path="/blog/*" element={<Navigate to="/" replace />} />

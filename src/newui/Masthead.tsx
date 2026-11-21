@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
-  { to: '/research', label: 'Research', end: false },
-  // Blog is hidden for now; restore this line (and the routes in App.tsx) to bring it back.
+  // The visible pages no longer show this menu; Research and Blog are hidden for now.
+  // { to: '/research', label: 'Research', end: false },
   // { to: '/blog', label: 'Blog', end: false },
 ];
 
