@@ -4,7 +4,8 @@ import { NavLink } from 'react-router-dom';
 const NAV_LINKS = [
   { to: '/', label: 'Home', end: true },
   { to: '/research', label: 'Research', end: false },
-  { to: '/blog', label: 'Blog', end: false },
+  // Blog is hidden for now; restore this line (and the routes in App.tsx) to bring it back.
+  // { to: '/blog', label: 'Blog', end: false },
 ];
 
 const Masthead: React.FC = () => {

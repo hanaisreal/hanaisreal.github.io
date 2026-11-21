@@ -4,8 +4,6 @@ import AnalyticsTracker from './AnalyticsTracker';
 import SeoHead from './SeoHead';
 import NewPortfolio from './newui/NewPortfolio';
 import ResearchPage from './pages/ResearchPage';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
 import PublicationPage from './pages/PublicationPage';
 import ProjectPage from './pages/ProjectPage';
 
@@ -19,8 +17,9 @@ const App: React.FC = () => {
       <Route path="/" element={<NewPortfolio />} />
       <Route path="/research" element={<ResearchPage />} />
       <Route path="/projects" element={<Navigate to="/research" replace />} />
-      <Route path="/blog" element={<Blog />} />
-      <Route path="/blog/:slug" element={<BlogPost />} />
+      {/* Blog is hidden for now: its pages send visitors home. To bring it back,
+          route /blog to <Blog /> and /blog/:slug to <BlogPost /> from ./pages. */}
+      <Route path="/blog/*" element={<Navigate to="/" replace />} />
       <Route path="/publications/:slug" element={<PublicationPage />} />
       <Route path="/projects/:slug" element={<ProjectPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />

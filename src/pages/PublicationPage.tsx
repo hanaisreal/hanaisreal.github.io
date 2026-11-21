@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import Masthead from '../newui/Masthead';
-import { getPostById } from '../components/data/blogData';
 import { BibtexBlock, PaperHero } from '../newui/PaperHero';
 import AuthorList from '../newui/AuthorList';
 import RichField from '../newui/RichField';
@@ -82,8 +81,6 @@ const PublicationPage: React.FC = () => {
   }
 
   const others = publications.filter(p => p.slug !== pub.slug).slice(0, 2);
-  const relatedPost = pub.relatedPost ? getPostById(pub.relatedPost) : undefined;
-  const related = relatedPost?.published ? relatedPost : undefined;
 
   return (
     <div>
@@ -99,7 +96,8 @@ const PublicationPage: React.FC = () => {
           ← Home
         </Link>
 
-        <PaperHero pub={pub} related={related} />
+        {/* No related blog post link while the blog is hidden. */}
+        <PaperHero pub={pub} />
 
         {pub.video && (
           <video className="paper-video" src={pub.video} poster={pub.cardPoster} controls playsInline preload="metadata" />
