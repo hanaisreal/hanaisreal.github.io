@@ -62,7 +62,7 @@ export const publications: Publication[] = [
       "Bongwon Suh": "https://scholar.google.com/citations?user=-nlhtEkAAAAJ&hl=en"
     },
     year: "2026",
-    title: "ToneCanvas: Visually Painting Character Tone for Narrative Consistency",
+    title: "ToneCanvas: Visually Painting Character Tone and Terms for Narrative Consistency",
     authors: "JungHwan Kim, Hana Oh, Bongwon Suh",
     coFirstAuthors: ["JungHwan Kim", "Hana Oh"],
     venue: "UIST 2026 Poster",
@@ -71,13 +71,14 @@ export const publications: Publication[] = [
     shortName: 'ToneCanvas',
     abstract: `Revising long-form fiction requires writers to maintain each character's voice across dialogue that is often dispersed throughout a manuscript. Detecting gradual changes in how a character speaks therefore depends heavily on rereading, memory, and external notes. We present ToneCanvas, an interactive writing interface that uses persistent watercolor gradients to support character-centered tone comparison and revision within and across passages. A formative study with five professionals involved in fiction revision and translation identified four recurring workflow breakdowns, which informed the design of character-focused dialogue views, adjustable tone dimensions, and integrated character references. This work contributes an empirical account of character-tone revision, corresponding design opportunities, and an interactive prototype that instantiates them.`,
     bibtex: `@inproceedings{kim2026tonecanvas,
-  title     = {ToneCanvas: Visually Painting Character Tone for Narrative Consistency},
+  title     = {ToneCanvas: Visually Painting Character Tone and Terms for Narrative Consistency},
   author    = {Kim, Junghwan and Oh, Hana and Suh, Bongwon},
   booktitle = {Adjunct Proceedings of the 39th Annual ACM Symposium on User Interface Software and Technology},
   series    = {UIST Adjunct '26},
   year      = {2026},
   address   = {Detroit, MI, USA},
-  publisher = {ACM}
+  publisher = {ACM},
+  doi       = {10.1145/3830397.3841808}
 }`,
     insight: "How can visual interaction help writers keep a character's tone consistent across a narrative?",
     tldr: "ToneCanvas uses watercolor overlays to help writers compare and revise a character's tone across a manuscript.",
@@ -96,6 +97,10 @@ export const publications: Publication[] = [
       {
         label: "PDF",
         url: `${BASE}/papers/tonecanvas.pdf`,
+      },
+      {
+        label: "DOI",
+        url: "https://doi.org/10.1145/3830397.3841808",
       },
     ],
     thumb: `${BASE}/pictures/publications/tonecanvas/tonecanvas-teaser.png`,

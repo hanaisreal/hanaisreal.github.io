@@ -4,11 +4,13 @@ import {
   FaChalkboardTeacher, FaEnvelope, FaGithub, FaGraduationCap, FaLinkedin,
   FaMicrophone, FaPlane, FaRegFileAlt, FaTrophy, FaUniversity,
 } from 'react-icons/fa';
+import { SiGooglescholar } from 'react-icons/si';
 
 // Plain one-colour glyphs, picked by name (the names in home.json's news "icon").
 const ICONS: Record<string, IconType> = {
   email: FaEnvelope,
   cv: FaRegFileAlt,
+  scholar: SiGooglescholar,
   github: FaGithub,
   linkedin: FaLinkedin,
   'research-paper': FaRegFileAlt,

@@ -7,6 +7,7 @@ import HomeIcon from './HomeIcon';
 const LINKS = [
   { label: 'hana2001@snu.ac.kr', href: 'mailto:hana2001@snu.ac.kr', icon: 'email', event: 'contact_click', external: false },
   { label: 'CV', href: `${process.env.PUBLIC_URL}/HanaOh_CV.pdf`, icon: 'cv', event: 'cv_download', external: true },
+  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=7rt12gkAAAAJ', icon: 'scholar', event: 'social_click', external: true },
   { label: 'GitHub', href: 'https://github.com/hanaisreal', icon: 'github', event: 'social_click', external: true },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/hana-oh-921945290/', icon: 'linkedin', event: 'social_click', external: true },
 ];

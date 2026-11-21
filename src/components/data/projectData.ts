@@ -65,7 +65,7 @@ export const projects: Project[] = [
     title: "LivRecord: Voice-Based Life Stories",
     tldr: "A voice-based storytelling tool that helps older adults turn spoken memories into a personal narrative.",
     description: "A voice-based tool for collecting memories and shaping autobiographical stories.",
-    narrative: "LivRecord lets older adults tell their stories aloud. The system transcribes their responses and helps organize the memories into a narrative they can revisit and share.\n\nThe main interaction challenge was asking follow-up questions that build on the previous answer. We focused on conversational pacing and continuity so users could reflect without feeling they were completing a form.\n\nI worked on the speech pipeline and adaptive prompts. The prototype won the Grand Prize at the KAIST Social Impact Challenge; the demo shows the storytelling flow.",
+    narrative: "LivRecord lets older adults tell their stories aloud. The system transcribes their responses and helps organize the memories into a narrative they can revisit and share.\n\nThe main interaction challenge was asking follow-up questions that build on the previous answer. We focused on conversational pacing and continuity so users could reflect without feeling they were completing a form.\n\nI worked on the speech pipeline and adaptive prompts. The prototype won 2nd place at the SPARCS Service Hackathon 2024 at KAIST; the demo shows the storytelling flow.",
     contributions: [
       "Connected speech recognition, voice output, and GPT-4 prompts",
       "Designed follow-up prompts to maintain narrative continuity",
@@ -97,7 +97,7 @@ export const projects: Project[] = [
       },
       {
         type: 'paragraph',
-        text: "I worked on the speech pipeline and adaptive prompts. The prototype won the Grand Prize at the KAIST Social Impact Challenge; the demo shows the storytelling flow.",
+        text: "I worked on the speech pipeline and adaptive prompts. The prototype won 2nd place at the SPARCS Service Hackathon 2024 at KAIST; the demo shows the storytelling flow.",
       },
     ],
   },
